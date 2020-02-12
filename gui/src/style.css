@@ -1,0 +1,10 @@
+body {
+	background: grey;
+}
+
+.lcd-wrapper {
+	width: 480px;
+	height: 320px;
+	margin: 2rem auto;
+	background: white;
+}
