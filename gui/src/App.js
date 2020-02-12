@@ -1,9 +1,12 @@
 import React from 'react';
+import { Segment } from 'semantic-ui-react';
 
 export function App() {
 	return (
 		<div>
-			Hello world
+			<Segment>
+				Hello world
+			</Segment>
 		</div>
 	);
 }
