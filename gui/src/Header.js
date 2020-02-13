@@ -1,14 +1,18 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { Icon, Menu, Segment } from 'semantic-ui-react';
 
 export function Header(props) {
+	const history = useHistory();
+	const match = useRouteMatch();
+
 	return (
-		<div className='lcd-wrapper'>
+		<div>
 			<Menu>
 				<Menu.Item
 					icon
-					onClick={console.log}
+					onClick={history.goBack}
+					disabled={match.path === '/'}
 				>
 					<Icon name='chevron left' />
 				</Menu.Item>

@@ -12,3 +12,12 @@ body {
 	margin: 2rem auto;
 	background: white;
 }
+
+.button-menu {
+	margin: 2rem;
+}
+
+.button-menu .ui.button {
+	display: block;
+	margin-bottom: 1rem;
+}
