@@ -7,6 +7,7 @@ Click==7.0
 cryptography==1.7.1
 enum34==1.1.6
 Flask==1.1.1
+Flask-Cors==3.0.8
 Flask-RESTful==0.3.6
 future==0.16.0
 gevent-socketio==0.3.6
@@ -32,7 +33,7 @@ PyYAML==3.13
 requests==2.19.1
 RPi.GPIO==0.6.5
 SecretStorage==2.3.1
-six==1.12.0
+six==1.14.0
 supervisor==3.3.1
 urllib3==1.23
 virtualenv==15.1.0
