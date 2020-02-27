@@ -30,7 +30,7 @@ pygobject==3.22.0
 pytz==2018.5
 pyxdg==0.25
 PyYAML==3.13
-requests==2.19.1
+requests==2.20.0
 RPi.GPIO==0.6.5
 SecretStorage==2.3.1
 six==1.14.0
