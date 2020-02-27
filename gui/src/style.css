@@ -20,4 +20,5 @@ body {
 .button-menu .ui.button {
 	display: block;
 	margin-bottom: 1rem;
+	width: 100%;
 }

@@ -4,22 +4,14 @@ import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
 import './style.css';
 import { Header } from './Header.js';
 
-export function Home() {
+export function Tests() {
 	return (
 		<div>
-			<Header>Home</Header>
+			<Header>Hardware Tests</Header>
 
 			<div className='button-menu'>
-				<Button as={Link} to='/reactions'>
-					Reactions
-				</Button>
-
-				<Button as={Link} to='/tests'>
-					Hardware Tests
-				</Button>
-
-				<Button as={Link} to='/settings'>
-					Settings
+				<Button onClick={console.log}>
+					Test Relays
 				</Button>
 			</div>
 		</div>

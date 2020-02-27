@@ -5,6 +5,7 @@ import './style.css';
 import { Header } from './Header.js';
 import { Home } from './Home.js';
 import { Reactions } from './Reactions.js';
+import { Tests } from './Tests.js';
 import { Settings } from './Settings.js';
 
 export function App() {
@@ -17,6 +18,10 @@ export function App() {
 
 				<Route path='/reactions'>
 					<Reactions />
+				</Route>
+
+				<Route path='/tests'>
+					<Tests />
 				</Route>
 
 				<Route path='/settings'>
