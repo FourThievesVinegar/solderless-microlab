@@ -14,11 +14,11 @@ body {
 }
 
 .button-menu {
-	margin: 2rem;
+	margin: .34rem;
 }
 
 .button-menu .ui.button {
 	display: block;
-	margin-bottom: 1rem;
+	margin-bottom: .75rem;
 	width: 100%;
 }
