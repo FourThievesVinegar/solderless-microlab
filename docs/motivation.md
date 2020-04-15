@@ -1,6 +1,6 @@
 # Motivation
 
-This document describes the project we are working on and it's purpose.
+This document describes the project we are working on and its purpose.
 
 ## Background
 
@@ -52,6 +52,8 @@ Going left to right:
 - Arduino + stepper motor shield
 - stepper motors
 
+(the stirring rod DC motor and limit switches are missing)
+
 The user will select a recipe to make in the touch screen menu. The controller
 will them guide them, step-by-step, through the recipe and dispense the correct
 amount of reagents for them.
@@ -60,5 +62,5 @@ amount of reagents for them.
 
 The [previous solution](https://github.com/FourThievesVinegar/microlab-pcb) used
 a PCB that users would have to get manufactured and then assemble by hand. We
-came to the realization that soldering is a skill out of reach many, so the goal
-of this version is to be completely solderless.
+came to the realization that soldering is a skill out of reach for many, so the
+goal of this version is to be completely solderless.
