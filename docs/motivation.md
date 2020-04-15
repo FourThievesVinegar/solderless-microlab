@@ -57,11 +57,11 @@ Going left to right:
 - Arduino + stepper motor shield
 - stepper motors
 
-(the stirring rod DC motor and limit switches are missing)
+(the stirring rod's DC motor and limit switches are missing)
 
 The user will select a recipe to make in the touch screen menu. The controller
-will them guide them, step-by-step, through the recipe and dispense the correct
-amount of reagents for them.
+will guide them, step-by-step, through the recipe and automatically dispense the
+correct amount of reagents at the right times.
 
 ## Previous Solution
 
