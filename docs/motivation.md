@@ -4,10 +4,10 @@ This document describes the project we are working on and its purpose.
 
 ## Background
 
-Our goal is to design an open-source DIY jacketed lab reactor that people can
-assemble with parts they can buy online. The result will be analogous to a 3D
-printer for chemistry. This will allow people to make their own medicine at
-home.
+Our goal is to design an open-source DIY automated jacketed lab reactor that
+people can assemble with parts they can buy online. The result will be
+analogous to a 3D printer for chemistry. This will allow people to make their
+own medicine at home.
 
 A commercial one looks like this:
 
@@ -19,26 +19,31 @@ Its reaction vessel looks like this:
 
 ![commercial reaction vessel](media/commercial-reaction-vessel.jpg)
 
-The reaction happens in the inner chamber, and hot or cold water is pumped
+The reaction happens in the inner chamber, and hot or cold liquid is pumped
 through the outer jacket as thermal regulator fluid. Reagents are dispensed
 through ports on top and a stirring rod is sent through the center.
 
-## Apothecary MicroLab
+## Apothecary Microlab
 
-Our solution, the Apothecary MicroLab, will use two concentric mason jars that
+Our solution, the Apothecary Microlab, will use two concentric mason jars that
 screw into a 3D printed manifold with ports for reagents, a temperature probe, a
 stirring rod, and thermal regulator fluid input / output.
 
+![von hippel reactor](media/von-hippel-reactor.png)
+
+A small mason jar screws into the bottom, while a larger mason jar screws into
+the top.
+
 The reagents will be held in large syringes and loaded into 3D printed linear
-drivers powered by stepper motors. The thermal regulator fluid will be delivered
-by a pump controlled by a relay. We can heat the water with a kettle or cool it
-with an ice water bucket.
+drivers powered by stepper motors. The thermal regulator fluid will be
+delivered by a pump controlled by a relay. We can heat the liquid with a tea
+warmer coil or cool it with an ice water bucket.
 
 All of the hardware will be controlled by a Raspberry Pi with various shields
 and USB devices plugged into it. We've found parts online that can all be
 snapped together without soldering.
 
-What we currently have is this:
+The hardware we currently have selected is this:
 
 ![solderless microlab parts](media/solderless-microlab-parts.jpg)
 
