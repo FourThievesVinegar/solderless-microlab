@@ -4,11 +4,7 @@ import recipes
 
 @app.route('/status')
 def status():
-    message = {
-        'status':'idle',
-        'recipe':None
-    }
-    return jsonify(message)
+    return jsonify(recipes.status())
 
 @app.route('/list')
 def list():
@@ -18,6 +14,19 @@ def list():
 @app.route('/start/<name>')
 def start(name):
     (state,msg) = recipes.start(name)
+    if state:
+        return jsonify({'response':'ok'})
+    else:
+        return jsonify({'response':'error','message':msg})
+
+@app.route('/stop')
+def stop():
+    recipes.stop()
+    return jsonify({'response':'ok'})
+
+@app.route('/select/option/<name>')
+def selectOption(name):
+    (state,msg) = recipes.selectOption(name)
     if state:
         return jsonify({'response':'ok'})
     else:

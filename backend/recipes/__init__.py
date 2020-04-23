@@ -17,6 +17,7 @@ def getList():
 
 list = getList()
 currentRecipe = None
+completedRecipe = None
 
 def refresh():
     global list
@@ -31,12 +32,42 @@ def start(name):
 
     currentRecipe = name
     exec('from recipes import ' + name)
-    currentStep = eval(name + '.getNextStep()')
+    currentStep = eval(name + '.start()')
 
-    print (currentStep)
     return True,''
 
 # Return the current status of the recipe
 def status():
-    a = 1
+    global currentRecipe
+    message = {
+        'status':'idle',
+        'recipe':currentRecipe,
+        'step':-1,
+        'message':None,
+        'options':[]
+    }
+    if currentRecipe is None:
+        if not completedRecipe is None:
+            message['status'] = 'completed'
+            message['recipe'] = completedRecipe
+    else:
+        exec('from recipes import ' + currentRecipe)
+        message['status'] = 'running'
+        message['step'] =  eval(currentRecipe + '.step')
+        message['message'] =  eval(currentRecipe + '.message')
+        message['options'] =  eval(currentRecipe + '.options')
+    return message
 
+def stop():
+    global currentRecipe
+    if not currentRecipe is None:
+        exec('from recipes import ' + currentRecipe)
+        exec(currentRecipe + '.stop()')
+        currentRecipe = None
+
+def selectOption(option):
+    global currentRecipe
+    if not currentRecipe is None:
+        exec('from recipes import ' + currentRecipe)
+        return eval(currentRecipe + '.selectOption("' + option + '")')
+    return False,'No recipe running.'
