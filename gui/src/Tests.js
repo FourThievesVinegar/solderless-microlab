@@ -40,6 +40,15 @@ export function Tests() {
 			<div className='button-menu'>
 				<TestButton name='relays' label='Test Relays' />
 			</div>
+			<div className='button-menu'>
+				<TestButton name='usbtherm' label='USB Thermometer' />
+			</div>
+			<div className='button-menu'>
+				<TestButton name='motors' label='Stepper Motors' />
+			</div>
+			<div className='button-menu'>
+				<TestButton name='stirringrod' label='Stirring Rod' />
+			</div>
 		</div>
 	);
 };
