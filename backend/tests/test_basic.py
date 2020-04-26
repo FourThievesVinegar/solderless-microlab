@@ -2,9 +2,11 @@ import pytest
 import os
 import api
 import json
+import hardware
 
 @pytest.fixture
 def client():
+    hardware.package = 'simulation'
     return api.app.test_client()
 
 def run(client,uri):
@@ -19,6 +21,10 @@ def test_idle(client):
     assert message['recipe'] == None
     assert message['status'] == 'idle'
     assert message['step'] == -1
+
+def test_list(client):
+    message = run(client,'/list')
+    assert message[0] == 'boilegg'
 
 def test_start_boilegg(client):
     message = run(client,'/start/boilegg')
@@ -35,7 +41,7 @@ def test_boilegg_step1(client):
 
     message = run(client,'/status')
     assert message['recipe'] == 'boilegg'
-    assert message['status'] == 'running'
+    assert message['status'] == 'user_input'
     assert message['step'] == 1
     assert message['message'] == 'Place egg in chamber'
     assert message['options'][0] == 'Done'
@@ -50,7 +56,7 @@ def test_boilegg_step1(client):
 
     message = run(client,'/status')
     assert message['recipe'] == 'boilegg'
-    assert message['status'] == 'running'
+    assert message['status'] == 'user_input'
     assert message['step'] == 2
     assert message['message'] == 'Add enough water to cover egg'
     assert message['options'][0] == 'Done'

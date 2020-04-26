@@ -2,14 +2,14 @@ from api import app
 from flask import jsonify
 import recipes
 
-@app.route('/status')
-def status():
-    return jsonify(recipes.status())
-
 @app.route('/list')
 def list():
     recipes.refresh()
     return jsonify(recipes.list)
+
+@app.route('/status')
+def status():
+    return jsonify(recipes.status())
 
 @app.route('/start/<name>')
 def start(name):

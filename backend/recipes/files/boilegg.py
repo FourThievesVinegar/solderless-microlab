@@ -1,5 +1,6 @@
 step = 0
 message = ''
+status = 'idle'
 options = []
 
 #import hardware
@@ -14,8 +15,9 @@ def start():
     runStep()
 
 def stop():
-    global step, message, options
+    global step, status, message, options
     step = -1
+    status = 'idle'
     message = ''
     options = []
 
@@ -32,17 +34,21 @@ def selectOption(option):
     
 
 def runStep():
-    global step, message, options
+    global step, status,  message, options
     options = []
+    status = 'running'
     if step == 1:
+        status = 'user_input'
         message = 'Place egg in chamber'
         options = ['Done']
     elif step == 2:
+        status = 'user_input'
         message = 'Add enough water to cover egg'
         options = ['Done']
     elif step == 3:
         message = 'Heating water...'
     else:
+        status = 'erorr'
         message = 'Invalid step'
         return False
     
