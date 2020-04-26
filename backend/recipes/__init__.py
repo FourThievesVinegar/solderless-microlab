@@ -4,10 +4,10 @@ from os import listdir
 from os.path import isfile, join
 import config
 
-recipesPackage = 'recipes.files'
+package = config.recipesPackage
 
 def getList():
-    path = './' + recipesPackage.replace('.','/')
+    path = './' + package.replace('.', '/')
     files = [f for f in listdir(path) if isfile(join(path, f))]
     list = []
 
@@ -34,7 +34,7 @@ def start(name):
         return False,'Recipe unknown.'
 
     currentRecipe = name
-    exec('from ' + recipesPackage + ' import ' + name)
+    exec('from ' + package + ' import ' + name)
     currentStep = eval(name + '.start()')
 
     return True,''
@@ -54,7 +54,7 @@ def status():
             message['status'] = 'completed'
             message['recipe'] = completedRecipe
     else:
-        exec('from '  + recipesPackage + ' import ' + currentRecipe)
+        exec('from ' + package + ' import ' + currentRecipe)
         message['status'] =  eval(currentRecipe + '.status')
         message['step'] =  eval(currentRecipe + '.step')
         message['message'] =  eval(currentRecipe + '.message')
@@ -64,14 +64,14 @@ def status():
 def stop():
     global currentRecipe
     if not currentRecipe is None:
-        exec('from ' + recipesPackage + ' import ' + currentRecipe)
+        exec('from ' + package + ' import ' + currentRecipe)
         exec(currentRecipe + '.stop()')
         currentRecipe = None
 
 def selectOption(option):
     global currentRecipe
     if not currentRecipe is None:
-        exec('from ' + recipesPackage + ' import ' + currentRecipe)
+        exec('from ' + package + ' import ' + currentRecipe)
         return eval(currentRecipe + '.selectOption("' + option + '")')
     return False,'No recipe running.'
 

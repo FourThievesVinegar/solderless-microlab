@@ -1,1 +1,3 @@
-package = 'real'
+import config
+
+package = config.hardwarePackage
