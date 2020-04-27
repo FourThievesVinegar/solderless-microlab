@@ -1,6 +1,5 @@
 from recipes import celery
-import time
-
+import hardware
 
 step = 0
 message = ''
@@ -64,7 +63,7 @@ def runStep():
         message = 'Add enough water to cover egg'
         options = ['Done']
     elif step == 3:
-        if celery.runTask('heatWater', None):
+        if celery.runTask('heatWater', {'temp':100}):
             message = 'Heating water...'
         else:
             message = 'Internal error. Task already running.'
@@ -79,6 +78,8 @@ def runStep():
 
 
 def heatWater(parameters):
-    celery.logger.info('heating water...')
-    time.sleep(1)
-    return 5
+    celery.logger.info('heating water to ' + str(parameters['temp']) + '...')
+    hardware.turnHeatOn()
+    hardware.sleep(2)
+
+    #while hardware.

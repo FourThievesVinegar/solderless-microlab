@@ -2,14 +2,16 @@ import pytest
 import os
 import api
 import json
-import hardware
 import config
 from tests import celeryMock
 
 @pytest.fixture
 def client():
-    hardware.package = 'simulation'
+    config.hardwarePackage = 'simulation'
+    config.hardwareSpeedup = 10
+
     config.celeryMode = 'test'
+
     return api.app.test_client()
 
 def run(client,uri):
@@ -83,3 +85,5 @@ def test_boilegg(client):
     assert message['step'] == 4
     assert message['message'] == 'Water boiling. Waiting for 1 minute.'
     assert len(message['options']) == 0
+
+    #assert False

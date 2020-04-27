@@ -1,8 +1,14 @@
-from hardware import package
+# Does nothing. The real package is configured in config.hardwarePackage and imported in __init__.py
+# This file is basically here to get rid of error highlights in PyCharm
 
-exec('from hardware.' + package + ' import interface as hw')
+def sleep(seconds):
+    a = 1
 
-def heat():
-    global package
-    print(package)
-    hw.heat()
+def turnHeatOn():
+    a = 1
+
+def turnHeatOff():
+    a = 1
+
+def getTemp():
+    a = 1
