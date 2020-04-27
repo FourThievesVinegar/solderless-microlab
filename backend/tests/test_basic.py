@@ -47,7 +47,7 @@ def test_boilegg(client):
     message = run(client,'/status')
     assert message['recipe'] == 'boilegg'
     assert message['status'] == 'user_input'
-    assert message['step'] == 1
+    assert message['step'] == 0
     assert message['message'] == 'Place egg in chamber'
     assert message['options'][0] == 'Done'
     assert len(message['options']) == 1
@@ -62,7 +62,7 @@ def test_boilegg(client):
     message = run(client,'/status')
     assert message['recipe'] == 'boilegg'
     assert message['status'] == 'user_input'
-    assert message['step'] == 2
+    assert message['step'] == 1
     assert message['message'] == 'Add enough water to cover egg'
     assert message['options'][0] == 'Done'
     assert len(message['options']) == 1
@@ -74,7 +74,7 @@ def test_boilegg(client):
     message = run(client,'/status')
     assert message['recipe'] == 'boilegg'
     assert message['status'] == 'running'
-    assert message['step'] == 3
+    assert message['step'] == 2
     assert message['message'] == 'Heating water...'
     assert len(message['options']) == 0
 
@@ -82,8 +82,7 @@ def test_boilegg(client):
     message = run(client,'/status')
     assert message['recipe'] == 'boilegg'
     assert message['status'] == 'running'
-    assert message['step'] == 4
+    assert message['step'] == 3
     assert message['message'] == 'Water boiling. Waiting for 1 minute.'
     assert len(message['options']) == 0
 
-    #assert False

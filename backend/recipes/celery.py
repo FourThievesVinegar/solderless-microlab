@@ -1,10 +1,16 @@
 import config
-from recipes import package
-from recipes import currentRecipe
+from recipes import state
 
 from celery import Celery
 from celery.utils.log import get_task_logger
 
+import sys
+import os
+
+# Celery changes the current directory after startup so we need to add it to the path.
+# Not sure why this would work, I guess it changes it after it initializes the module.
+# Either way it works. Reference: https://stackoverflow.com/questions/39438504/dynamically-importing-a-module-in-a-celery-task
+sys.path.append(os.getcwd())
 
 logger = get_task_logger(__name__)
 if config.celeryMode == 'real':
@@ -23,9 +29,9 @@ def runInBackground(package,currentRecipe,task,parameters):
     return eval(currentRecipe + '.' + task + '(parameters)')
 
 def runTask(task,parameters):
-    global result, package, currentRecipe
+    global result
     if isTaskComplete():
-        result = runInBackground.delay(package, currentRecipe, task, parameters)
+        result = runInBackground.delay(state.package, state.currentRecipe, task, parameters)
         return True
 
     return False
