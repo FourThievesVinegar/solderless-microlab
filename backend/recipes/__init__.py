@@ -1,10 +1,11 @@
-## TODO: This only works if you run the app from the expected directory
-
 from os import listdir
 from os.path import isfile, join
 import config
 
+# TODO: This only works if you run the app from the expected directory
+
 package = config.recipesPackage
+
 
 def getList():
     path = './' + package.replace('.', '/')
@@ -18,17 +19,20 @@ def getList():
 
     return list
 
+
 list = getList()
 currentRecipe = None
 completedRecipe = None
+
 
 def refresh():
     global list
     list = getList()
 
+
 def start(name):
-    global list,currentRecipe
-    if not currentRecipe is None:
+    global list, currentRecipe, package
+    if not (currentRecipe is None):
         return False,'Recipe ' + currentRecipe + ' is running. Stop it first.'
     if not (name in list):
         return False,'Recipe unknown.'
@@ -39,9 +43,10 @@ def start(name):
 
     return True,''
 
+
 # Return the current status of the recipe
 def status():
-    global currentRecipe
+    global currentRecipe, package
     message = {
         'status':'idle',
         'recipe':currentRecipe,
@@ -61,17 +66,18 @@ def status():
         message['options'] =  eval(currentRecipe + '.options')
     return message
 
+
 def stop():
-    global currentRecipe
+    global currentRecipe, package
     if not currentRecipe is None:
         exec('from ' + package + ' import ' + currentRecipe)
         exec(currentRecipe + '.stop()')
         currentRecipe = None
 
+
 def selectOption(option):
-    global currentRecipe
+    global currentRecipe, package
     if not currentRecipe is None:
         exec('from ' + package + ' import ' + currentRecipe)
         return eval(currentRecipe + '.selectOption("' + option + '")')
     return False,'No recipe running.'
-

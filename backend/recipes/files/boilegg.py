@@ -1,18 +1,15 @@
+
 step = 0
 message = ''
 status = 'idle'
 options = []
 
-#import hardware
-#hardware.package = 'simulation'
-#from hardware import interface
-
-#interface.heat()
 
 def start():
     global step, message, options
     step = 1
     runStep()
+
 
 def stop():
     global step, status, message, options
@@ -20,6 +17,7 @@ def stop():
     status = 'idle'
     message = ''
     options = []
+
 
 def selectOption(option):
     global step, message, options
@@ -29,12 +27,14 @@ def selectOption(option):
         # Can have more complex behaviour here with different goto step 
         # associated with each option
         step = step + 1
-        runStep()
-        return True,''
-    
+        if runStep():
+            return True,''
+        else:
+            return False,message
+
 
 def runStep():
-    global step, status,  message, options
+    global step, status, message, options
     options = []
     status = 'running'
     if step == 1:
@@ -48,7 +48,9 @@ def runStep():
     elif step == 3:
         message = 'Heating water...'
     else:
-        status = 'erorr'
+        status = 'error'
         message = 'Invalid step'
         return False
-    
+    return True
+
+
