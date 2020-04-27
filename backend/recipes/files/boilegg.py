@@ -1,3 +1,6 @@
+from recipes import celery
+import time
+
 
 step = 0
 message = ''
@@ -17,6 +20,21 @@ def stop():
     status = 'idle'
     message = ''
     options = []
+
+
+def updateStatus():
+    global step, status, message, options
+    if step == 3:
+        if celery.isTaskComplete():
+            step = step + 1
+            runStep()
+    ret = {
+        'status':status,
+        'step':step,
+        'message':message,
+        'options':options
+        }
+    return ret
 
 
 def selectOption(option):
@@ -46,7 +64,13 @@ def runStep():
         message = 'Add enough water to cover egg'
         options = ['Done']
     elif step == 3:
-        message = 'Heating water...'
+        if celery.runTask('heatWater', None):
+            message = 'Heating water...'
+        else:
+            message = 'Internal error. Task already running.'
+            return False
+    elif step == 4:
+        message = 'Water boiling. Waiting for 1 minute.'
     else:
         status = 'error'
         message = 'Invalid step'
@@ -54,3 +78,7 @@ def runStep():
     return True
 
 
+def heatWater(parameters):
+    celery.logger.info('heating water...')
+    time.sleep(1)
+    return 5

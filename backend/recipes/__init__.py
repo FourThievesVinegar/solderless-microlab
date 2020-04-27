@@ -60,10 +60,11 @@ def status():
             message['recipe'] = completedRecipe
     else:
         exec('from ' + package + ' import ' + currentRecipe)
-        message['status'] =  eval(currentRecipe + '.status')
-        message['step'] =  eval(currentRecipe + '.step')
-        message['message'] =  eval(currentRecipe + '.message')
-        message['options'] =  eval(currentRecipe + '.options')
+        recipeMessage =  eval(currentRecipe + '.updateStatus()')
+        message['status'] = recipeMessage['status']
+        message['step'] = recipeMessage['step']
+        message['message'] = recipeMessage['message']
+        message['options'] = recipeMessage['options']
     return message
 
 

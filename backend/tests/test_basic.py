@@ -3,10 +3,13 @@ import os
 import api
 import json
 import hardware
+import config
+from tests import celeryMock
 
 @pytest.fixture
 def client():
     hardware.package = 'simulation'
+    config.celeryMode = 'test'
     return api.app.test_client()
 
 def run(client,uri):
@@ -32,7 +35,7 @@ def test_start_boilegg(client):
     message = run(client,'/start/boilegg')
     assert message['response'] == 'error'
 
-def test_boilegg_step1(client):
+def test_boilegg(client):
     message = run(client,'/stop')
     assert message['response'] == 'ok'
 
@@ -65,6 +68,7 @@ def test_boilegg_step1(client):
     message = run(client,'/select/option/Done')
     assert message['response'] == 'ok'
 
+    celeryMock.taskComplete = False
     message = run(client,'/status')
     assert message['recipe'] == 'boilegg'
     assert message['status'] == 'running'
@@ -72,3 +76,10 @@ def test_boilegg_step1(client):
     assert message['message'] == 'Heating water...'
     assert len(message['options']) == 0
 
+    celeryMock.taskComplete = True
+    message = run(client,'/status')
+    assert message['recipe'] == 'boilegg'
+    assert message['status'] == 'running'
+    assert message['step'] == 4
+    assert message['message'] == 'Water boiling. Waiting for 1 minute.'
+    assert len(message['options']) == 0
