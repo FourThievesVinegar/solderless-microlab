@@ -32,7 +32,7 @@ def runInBackground(package,currentRecipe,task,parameters):
 
 
 @app.task
-def updateStatus(param):
+def updateStatus(*args):
     requests.get(url=config.localUrl + '/status')
 
 

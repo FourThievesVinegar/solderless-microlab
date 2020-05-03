@@ -13,13 +13,28 @@ class task(object):
     def __init__(self, f):
         self.f = f
 
+
     def __call__(self, *args):
         return self.f(*args)
+
 
     def delay(self,*args):
         res = response()
         res.response = self.f(*args)
         return res
+
+
+    def apply_async(self, args=None, kwargs=None, **options):
+        res = response()
+        res.response = self.f(*args)
+        return res
+
+
+    def s(self, *args):
+        res = response()
+        #res.response = self.f(*args)
+        return res
+
 
 class response:
     task_id = None
