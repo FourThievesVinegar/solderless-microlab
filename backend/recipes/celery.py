@@ -40,7 +40,11 @@ def runTask(task,parameters):
 def isTaskComplete():
     if not(result is None):
         res = app.AsyncResult(result.task_id)
-        return res.ready()
+        if res.ready():
+            res = None
+            return True
+        else:
+            return False
 
     return True
 

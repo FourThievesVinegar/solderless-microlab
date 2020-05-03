@@ -1,5 +1,6 @@
 
-hardwarePackage = 'real'
+#hardwarePackage = 'real'
+hardwarePackage = 'simulation'
 recipesPackage = 'recipes.files'
 
 celeryMode = 'real'

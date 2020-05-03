@@ -43,10 +43,11 @@ class Recipe:
 
     def selectOption(self,optionValue):
         found = False
-        for option in self.plan['steps'][self.step]['options']:
-            if option['text'] == optionValue:
-                self.step = option['next']
-                found = True
+        if 'options' in self.plan['steps'][self.step]:
+            for option in self.plan['steps'][self.step]['options']:
+                if option['text'] == optionValue:
+                    self.step = option['next']
+                    found = True
 
         if not found:
             return False, 'Invalid option ' + optionValue
@@ -56,6 +57,7 @@ class Recipe:
 
 
     def runStep(self):
+        print('Running step ' + str(self.step))
         step = self.plan['steps'][self.step]
         self.message = step['message']
         options = []
@@ -75,5 +77,9 @@ class Recipe:
                 self.status = 'error'
                 message = 'Internal error. Task already running.'
                 return False
+
+        if 'done' in step:
+            if step['done'] == True:
+                self.status = 'complete'
 
         return True

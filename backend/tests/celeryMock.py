@@ -4,7 +4,9 @@
 taskComplete = True
 
 def AsyncResult(id):
-    return response()
+    ret = response()
+    taskComplete = False
+    return ret
 
 class task(object):
 

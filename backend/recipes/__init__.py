@@ -28,7 +28,10 @@ def refresh():
 def start(name):
     global list
     if not (state.currentRecipe is None):
-        return False,'Recipe ' + state.currentRecipe + ' is running. Stop it first.'
+        exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
+        recipeMessage = eval('recipe.getStatus()')
+        if not recipeMessage['status'] == 'complete':
+            return False,'Recipe ' + state.currentRecipe + ' is running. Stop it first.'
     if not (name in list):
         return False,'Recipe unknown.'
 
