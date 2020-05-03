@@ -4,6 +4,7 @@ from recipes import state
 
 # TODO: This only works if you run the app from the expected directory
 
+
 def getList():
     path = './' + state.package.replace('.', '/')
     files = [f for f in listdir(path) if isfile(join(path, f))]

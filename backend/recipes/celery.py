@@ -1,3 +1,4 @@
+import requests
 import config
 from recipes import state
 
@@ -23,15 +24,22 @@ elif config.celeryMode == 'test':
 
 result = None
 
+
 @app.task
 def runInBackground(package,currentRecipe,task,parameters):
     exec('from ' + package + ' import ' + currentRecipe)
     return eval(currentRecipe + '.' + task + '(parameters)')
 
+
+@app.task
+def updateStatus(param):
+    requests.get(url=config.localUrl + '/status')
+
+
 def runTask(task,parameters):
     global result
     if isTaskComplete():
-        result = runInBackground.delay(state.package, state.currentRecipe, task, parameters)
+        result = runInBackground.apply_async((state.package, state.currentRecipe, task, parameters),link=updateStatus.s())
         return True
 
     return False

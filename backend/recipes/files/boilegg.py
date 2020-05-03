@@ -67,6 +67,7 @@ def heatWater(parameters):
     while hardware.getTemp() < targetTemp:
         hardware.sleep(0.5)
 
+
 def maintain(parameters):
     duration = parameters['time']
     targetTemp = parameters['temp']

@@ -1,4 +1,6 @@
 
+localUrl = 'http://localhost:5000/'
+
 #hardwarePackage = 'real'
 hardwarePackage = 'simulation'
 recipesPackage = 'recipes.files'

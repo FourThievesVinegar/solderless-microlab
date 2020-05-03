@@ -3,3 +3,4 @@ flask-cors==3.0.8
 pytest==5.4.1
 celery==4.4.2
 redis==3.4.1
+requests==2.23.0
