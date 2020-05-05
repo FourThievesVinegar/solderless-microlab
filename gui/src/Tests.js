@@ -43,7 +43,8 @@ export function Tests() {
 					</Button> 
 
 				 <Button as={Link} to='/therm'>
-					USB Thermometer</Button>
+					USB Thermometer
+					</Button>
 
 				<Button as={Link} to='/motors'>
 					Stirring Motors
