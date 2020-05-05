@@ -40,11 +40,11 @@ export function Tests() {
 			<div className='button-menu'>
 				<Button as={Link} to='/relays'>
 					Relays
-					</Button> 
+				</Button> 
 
 				 <Button as={Link} to='/therm'>
 					USB Thermometer
-					</Button>
+				</Button>
 
 				<Button as={Link} to='/motors'>
 					Stirring Motors
