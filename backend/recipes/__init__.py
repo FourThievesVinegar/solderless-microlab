@@ -5,6 +5,7 @@ from recipes import state
 # TODO: This only works if you run the app from the expected directory
 
 
+# Not used for now. Recipe list hardcoded below
 def getList():
     path = './' + state.package.replace('.', '/')
     files = [f for f in listdir(path) if isfile(join(path, f))]
@@ -18,12 +19,12 @@ def getList():
     return list
 
 
-list = getList()
-
+#list = getList()
+list = ['boilegg']
 
 def refresh():
     global list
-    list = getList()
+    #list = getList()
 
 
 def start(name):
