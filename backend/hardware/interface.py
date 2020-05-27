@@ -1,5 +1,7 @@
-# Does nothing. The real package is configured in config.hardwarePackage and imported in __init__.py
-# This file is basically here to get rid of error highlights in PyCharm
+"""
+Does nothing. The real package is configured in config.hardwarePackage and imported in __init__.py
+This file is basically here to get rid of error highlights in PyCharm
+"""
 
 
 def secondSinceStart():
@@ -19,4 +21,4 @@ def turnHeatOff():
 
 
 def getTemp():
-    a = 1
+    return -1

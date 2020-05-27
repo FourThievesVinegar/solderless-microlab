@@ -24,7 +24,7 @@ recipe = base.Recipe(
                 'nr': 3,
                 'message': 'Heating water...',
                 'next': 4,
-                'task':' heatWater',
+                'task':'heatWater',
                 'parameters':{'temp':100}
             },
             {
