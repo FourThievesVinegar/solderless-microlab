@@ -44,7 +44,7 @@ def getList():
 
 #list = getList()
 # Hardcoded list of recipes.
-list = ['boilegg']
+list = ['aspirin']
 
 def refresh():
     """
