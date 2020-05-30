@@ -49,19 +49,19 @@ def runInBackground(package,currentRecipe,task,parameters):
     Celery task for running a recipe task in the background.
 
     :param package:
-    Base package for the recipe modules.
+        Base package for the recipe modules.
 
     :param currentRecipe:
-    Recipe module under which to run the task.
+        Recipe module under which to run the task.
 
     :param task:
-    Task to actually run. This is really just a method to run.
+        Task to actually run. This is really just a method to run.
 
     :param parameters:
-    Parameters to pass to the task/method.
+        Parameters to pass to the task/method.
 
     :return:
-    Returns any object returned by the recipe task. This is generally None.
+        Returns any object returned by the recipe task. This is generally None.
     """
     exec('from ' + package + ' import ' + currentRecipe)
     return eval(currentRecipe + '.' + task + '(parameters)')
@@ -75,30 +75,60 @@ def updateStatus(*args):
 
     :param args:
     :return:
-    None
+        None
     """
     requests.get(url=config.localUrl + '/status')
 
 
-def runTask(task,parameters):
+def runBaseTask(task,parameters):
     """
-    Run a recipe task in the background through Celery.
+    Run a base task/function in the background through Celery.
+    These would be define in the recipes.base module
 
     :param task:
-    Task to run under the currently running recipe.
+        Task to run under the currently running recipe.
 
     :param parameters:
-    Parameters to pass to the task. The actual object definition depends on the task.
+        Parameters to pass to the task. The actual object definition depends on the task.
 
     :return:
-    True
-        If the celery task was started successfully.
-    False
-        If there is an already running Celery task.
+        True
+            If the celery task was started successfully.
+        False
+            If there is an already running Celery task.
+    """
+    runTask(task,parameters,True)
+
+
+def runTask(task,parameters,base = False):
+    """
+    Run a recipe task/function in the background through Celery.
+    These would be defined the recipe file itself.
+
+    :param task:
+        Task to run under the currently running recipe.
+
+    :param parameters:
+        Parameters to pass to the task. The actual object definition depends on the task.
+
+    :param base:
+        Is this task part of the base module or in the recipe module.
+
+    :return:
+        True
+            If the celery task was started successfully.
+        False
+            If there is an already running Celery task.
     """
     global result
     if isTaskComplete():
-        result = runInBackground.apply_async((state.package, state.currentRecipe, task, parameters),link=updateStatus.s())
+        if base:
+            package = 'recipes'
+            recipe = 'base'
+        else:
+            package = state.package
+            recipe = state.currentRecipe
+        result = runInBackground.apply_async((package, recipe, task, parameters),link=updateStatus.s())
         return True
 
     return False

@@ -12,13 +12,33 @@ def sleep(seconds):
     a = 1
 
 
-def turnHeatOn():
+def turnHeaterOn():
     a = 1
 
 
-def turnHeatOff():
+def turnHeaterOff():
+    a = 1
+
+
+def turnCoolerOn():
+    a = 1
+
+
+def turnCoolerOff():
+    a = 1
+
+
+def turnStirrerOn():
+    a = 1
+
+
+def turnStirrerOff():
     a = 1
 
 
 def getTemp():
     return -1
+
+
+def pumpDispense(pumpId,volume):
+    a = 1

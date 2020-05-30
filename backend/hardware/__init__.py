@@ -18,10 +18,10 @@ def log(message):
     somewhere sensible. Look at the implementation for details.
 
     :param message:
-    The actual message
+        The actual message
 
     :return:
-    None
+        None
     """
     hw.log(message)
 
@@ -35,7 +35,7 @@ def secondSinceStart():
     the unix epoch.
 
     :return:
-    Number of seconds since the hardware module was started... or unix epoch.
+        Number of seconds since the hardware module was started... or unix epoch.
     """
     return hw.secondSinceStart()
 
@@ -51,29 +51,71 @@ def sleep(seconds):
     Number of seconds to sleep.
 
     :return:
-    None
+        None
     """
     hw.sleep(seconds)
 
 
-def turnHeatOn():
+def turnHeaterOn():
     """
     Start heating the jacket.
 
     :return:
-    None
+        None
     """
-    hw.turnHeatOn()
+    hw.turnCoolerOff()
+    hw.turnHeaterOn()
 
 
-def turnHeatOff():
+def turnHeaterOff():
     """
     Stop heating the jacket.
 
     :return:
-    None
+        None
     """
-    hw.turnHeatOff()
+    hw.turnHeaterOff()
+
+
+def turnCoolerOn():
+    """
+    Start cooling the jacket.
+
+    :return:
+        None
+    """
+    hw.turnHeaterOff()
+    hw.turnCoolerOn()
+
+
+def turnCoolerOff():
+    """
+    Stop cooling the jacket.
+
+    :return:
+        None
+    """
+    hw.turnCoolerOff()
+
+
+def turnStirrerOn():
+    """
+    Start stirrer.
+
+    :return:
+        None
+    """
+    hw.turnStirrerOn()
+
+
+def turnStirrerOff():
+    """
+    Start stirrer.
+
+    :return:
+        None
+    """
+    hw.turnStirrerOff()
 
 
 def getTemp():
@@ -81,6 +123,20 @@ def getTemp():
     Return the temperature.
 
     :return:
-    The temperature as read from the sensor in Celsius
+        The temperature as read from the sensor in Celsius
     """
     return hw.getTemp()
+
+
+def pumpDispense(pumpId,volume):
+    """
+    Dispense a number of ml from a particular pump.
+
+    :param pumpId:
+        The pump id. One of 'A' or 'B'
+    :param volume:
+        The number ml to dispense
+    :return:
+        None
+    """
+    return hw.pumpDispense(pumpId,volume)
