@@ -24,7 +24,7 @@ recipe = base.Recipe(
                 'nr': 3,
                 'message': 'Heating water...',
                 'next': 4,
-                'task':' heatWater',
+                'baseTask':'heat',
                 'parameters':{'temp':100}
             },
             {
@@ -32,8 +32,8 @@ recipe = base.Recipe(
                 'message': 'Water boiling. Waiting for 2 minutes.',
                 # 60s for soft boiled
                 'next': 5,
-                'task': 'maintain',
-                'parameters':{'time':120, 'temp':100, 'tolerance':2}
+                'baseTask': 'maintain',
+                'parameters':{'time':120, 'temp':100, 'tolerance':2, 'type':'heat'}
             },
             {
                 'nr': 5,
@@ -44,7 +44,7 @@ recipe = base.Recipe(
                 'nr': 6,
                 'message': 'Heating water...',
                 'next': 7,
-                'task': ' heatWater',
+                'task': ' heat',
                 'parameters': {'temp': 100}
             },
             {
@@ -52,7 +52,7 @@ recipe = base.Recipe(
                 'message': 'Water boiling. Waiting for 1 minute.',
                 # 60s for soft boiled
                 'next': 5,
-                'task': 'maintain',
+                'baseTask': 'maintainHeat',
                 'parameters': {'time': 60, 'temp': 100, 'tolerance': 2}
             }
         ]
@@ -60,28 +60,10 @@ recipe = base.Recipe(
 )
 
 
-def heatWater(parameters):
+def heat(parameters):
     targetTemp = parameters['temp']
     celery.logger.info('heating water to ' + str(targetTemp) + '...')
-    hardware.turnHeatOn()
+    hardware.turnHeaterOn()
     while hardware.getTemp() < targetTemp:
         hardware.sleep(0.5)
 
-
-def maintain(parameters):
-    duration = parameters['time']
-    targetTemp = parameters['temp']
-    tolerance = parameters['tolerance']
-
-    timeSpent = 0
-    interval = 0.5
-    start = hardware.secondSinceStart()
-    while (hardware.secondSinceStart() - start) < duration:
-        hardware.sleep(interval)
-        timeSpent = timeSpent + interval
-        currentTemp = hardware.getTemp()
-        celery.logger.info('temperature @ ' + str(currentTemp))
-        if currentTemp - tolerance > targetTemp:
-            hardware.turnHeatOff()
-        if currentTemp + tolerance < targetTemp:
-            hardware.turnHeatOn()

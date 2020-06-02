@@ -4,6 +4,8 @@ import api
 import json
 import config
 import time
+import recipes
+from recipes import state
 from tests import celeryMock
 
 
@@ -13,6 +15,9 @@ def client():
     config.hardwareSpeedup = 10
 
     config.celeryMode = 'test'
+    config.recipesPackage = 'tests.recipe'
+    state.package = config.recipesPackage
+    recipes.list = recipes.getList()
 
     return api.app.test_client()
 

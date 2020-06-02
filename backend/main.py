@@ -1,3 +1,6 @@
+# Start the application on the default port (5000)
+# Look in api.routes for the actual api code
+
 from api import app
 import config
 
