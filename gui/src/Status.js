@@ -23,7 +23,7 @@ export function Status(props) {
 					<p>{status.message}</p>
 
 					{status.options.map(x =>
-						<Button onClick={() => selectOption(x)}>
+						<Button key={x} onClick={() => selectOption(x)}>
 							{x}
 						</Button>
 					)}

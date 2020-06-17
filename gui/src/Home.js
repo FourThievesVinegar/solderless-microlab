@@ -12,7 +12,7 @@ export function Home(props) {
 			<Header>Home</Header>
 
 			<div className='button-menu'>
-				{status &&
+				{status && status.recipe &&
 					<Button as={Link} to='/status'>
 						{status.recipe.toUpperCase()} Status
 					</Button>

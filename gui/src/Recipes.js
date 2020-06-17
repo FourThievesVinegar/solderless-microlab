@@ -30,7 +30,7 @@ export function Recipes() {
 			{recipies ?
 				<div className='button-menu'>
 					{recipies.map(x =>
-						<Button onClick={() => startRecipe(x)}>
+						<Button key={x} onClick={() => startRecipe(x)}>
 							{x.toUpperCase()}
 						</Button>
 					)}
