@@ -10,8 +10,8 @@ export function Home() {
 			<Header>Home</Header>
 
 			<div className='button-menu'>
-				<Button as={Link} to='/reactions'>
-					Reactions
+				<Button as={Link} to='/recipes'>
+					Recipes
 				</Button>
 
 				<Button as={Link} to='/tests'>

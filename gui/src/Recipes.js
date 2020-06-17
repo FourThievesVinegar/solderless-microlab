@@ -4,12 +4,12 @@ import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
 import './style.css';
 import { Header } from './Header.js';
 
-export function Reactions() {
+export function Recipes() {
 	return (
 		<div>
-			<Header>Reactions</Header>
+			<Header>Recipes</Header>
 
-			<p>Reactions page here...</p>
+			<p>Recipes page here...</p>
 		</div>
 	);
 }

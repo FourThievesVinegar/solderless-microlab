@@ -4,7 +4,7 @@ import { Icon, Menu, Segment } from 'semantic-ui-react';
 import './style.css';
 import { Header } from './Header.js';
 import { Home } from './Home.js';
-import { Reactions } from './Reactions.js';
+import { Recipes } from './Recipes.js';
 import { Tests } from './Tests.js';
 import { Settings } from './Settings.js';
 import { apiUrl } from './utils.js';
@@ -34,8 +34,8 @@ export function App() {
 					<Home />
 				</Route>
 
-				<Route path='/reactions'>
-					<Reactions />
+				<Route path='/recipes'>
+					<Recipes />
 				</Route>
 
 				<Route path='/tests'>
