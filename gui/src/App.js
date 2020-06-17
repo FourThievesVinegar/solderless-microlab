@@ -7,6 +7,7 @@ import { Home } from './Home.js';
 import { Recipes } from './Recipes.js';
 import { Tests } from './Tests.js';
 import { Settings } from './Settings.js';
+import { Status } from './Status.js';
 import { apiUrl } from './utils.js';
 
 export function App() {
@@ -44,6 +45,10 @@ export function App() {
 
 				<Route path='/settings'>
 					<Settings />
+				</Route>
+
+				<Route path='/status'>
+					<Status status={status}/>
 				</Route>
 			</Switch>
 		</div>
