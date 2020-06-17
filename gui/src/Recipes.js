@@ -21,7 +21,13 @@ export function Recipes() {
 			<Header>Recipes</Header>
 
 			{recipies ?
-				<p>{recipies}</p>
+				<div className='button-menu'>
+					{recipies.map(x =>
+						<Button>
+							{x.toUpperCase()}
+						</Button>
+					)}
+				</div>
 			:
 				<p>Loading...</p>
 			}
