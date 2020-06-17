@@ -12,7 +12,15 @@ export function Status(props) {
 			<Header>Status</Header>
 
 			{status ?
-				<p>{JSON.stringify(status)}</p>
+				<div className='button-menu'>
+					<p>{status.message}</p>
+
+					{status.options.map(x =>
+						<Button>
+							{x}
+						</Button>
+					)}
+				</div>
 			:
 				<p>Loading...</p>
 			}
