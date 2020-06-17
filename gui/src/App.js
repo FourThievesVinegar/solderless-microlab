@@ -32,7 +32,7 @@ export function App() {
 		<div className='lcd-wrapper'>
 			<Switch>
 				<Route exact path='/'>
-					<Home />
+					<Home status={status} />
 				</Route>
 
 				<Route path='/recipes'>
