@@ -38,7 +38,21 @@ export function Tests() {
 			<Header>Hardware Tests</Header>
 
 			<div className='button-menu'>
-				<TestButton name='relays' label='Test Relays' />
+				<Button as={Link} to='/relays'>
+					Relays
+				</Button> 
+
+				 <Button as={Link} to='/therm'>
+					USB Thermometer
+				</Button>
+
+				<Button as={Link} to='/motors'>
+					Stirring Motors
+				</Button>
+
+				<Button as={Link} to='/stirring'>
+					Stirring Rod
+				</Button>
 			</div>
 		</div>
 	);
