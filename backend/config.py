@@ -8,6 +8,13 @@ localUrl = 'http://localhost:5000/'
 # Which hardware implementation to use. Currently only 'real' or 'simulation' are supported.
 #hardwarePackage = 'real'
 hardwarePackage = 'simulation'
+hardwareSpeedup = 10
+
+# port for temperature sensor... eventually we want to automatically detect this
+hardwareTempPort = '/dev/ttyUSB0'
+hardwareHeaterPin = 19
+hardwareCoolearPin = 26
+hardwareStirrerPin = 20
 
 # Where the recipe files are located. You should never need to change this.
 recipesPackage = 'recipes.files'
