@@ -5,21 +5,66 @@ import config
 import serial
 import RPi.GPIO as GPIO
 
+
+def serReadUntil(ser, expected):
+    """
+    Read from a serial port until the expected text appears
+
+    :param ser:
+        The serial port to read from
+    :param expected:
+        The expected string
+    :return:
+        The last line read
+    """
+    line = ""
+    while(not(expected in str(line))):
+        line = ser.readline()
+    return line
+
+
 # Init timer for secondsSinceStart()
 timer = time.time();
-
-# Init serial port for temp sensor
-ser = serial.Serial(config.hardwareTempPort)
-
-# Init relays
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(config.hardwareHeaterPin, GPIO.OUT)
-GPIO.setup(config.hardwareCoolearPin, GPIO.OUT)
-GPIO.setup(config.hardwareStirrerPin, GPIO.OUT)
+initialized = False
+tempSer = None
+grblSer = None
 
 RELAY_ON = False
 RELAY_OFF = True
+
+
+def initHardware():
+    """
+    Initialize the hardware.
+
+    Can't do this in the general module code as both flask and celery include this module
+    and we don't want to open up the serial ports on flask.
+
+    :return:
+    None
+    """
+    global tempSer, grblSer, initialized
+
+    if not initialized:
+        # Init serial port for temp sensor
+        tempSer = serial.Serial(config.hardwareTempPort)
+
+        # Init relays
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup(config.hardwareHeaterPin, GPIO.OUT)
+        GPIO.setup(config.hardwareCoolearPin, GPIO.OUT)
+        GPIO.setup(config.hardwareStirrerPin, GPIO.OUT)
+
+        GPIO.output(config.hardwareHeaterPin, RELAY_OFF)
+        GPIO.output(config.hardwareCoolearPin, RELAY_OFF)
+        GPIO.output(config.hardwareStirrerPin, RELAY_OFF)
+
+        # Init serial port for grbl sensor
+        grblSer = serial.Serial(config.hardwareArduinoPort,115200,timeout=1)
+        serReadUntil(grblSer,'Grbl')
+
+        initialized = True
 
 
 def log(message):
@@ -60,6 +105,7 @@ def turnHeaterOn():
     :return:
     None
     """
+    initHardware()
     GPIO.output(config.hardwareHeaterPin, RELAY_ON)
 
 
@@ -70,6 +116,7 @@ def turnHeaterOff():
     :return:
     None
     """
+    initHardware()
     GPIO.output(config.hardwareHeaterPin, RELAY_OFF)
 
 
@@ -80,6 +127,7 @@ def turnCoolerOn():
     :return:
     None
     """
+    initHardware()
     GPIO.output(config.hardwareCoolearPin, RELAY_ON)
 
 
@@ -90,6 +138,7 @@ def turnCoolerOff():
     :return:
     None
     """
+    initHardware()
     GPIO.output(config.hardwareCoolearPin, RELAY_OFF)
 
 
@@ -99,14 +148,16 @@ def getTemp():
     :return:
     The temperature of the temperature sensor.
     """
-    while (ser.read(1)[0] != 116):
+    initHardware()
+    while (tempSer.read(1)[0] != 116):
         a = 1
-    ser.read(2)
+    tempSer.read(2)
     sign = -1
-    if (ser.read(1)[0] == 43):
+    if (tempSer.read(1)[0] == 43):
         sign = 1
-    temperature = sign * float(ser.read(5).decode("ascii"))
+    temperature = sign * float(tempSer.read(5).decode("ascii"))
 
+    print('Read temperature ' + str(temperature))
     return temperature
 
 
@@ -117,6 +168,7 @@ def turnStirrerOn():
     :return:
     None
     """
+    initHardware()
     GPIO.output(config.hardwareStirrerPin, RELAY_ON)
 
 
@@ -127,6 +179,7 @@ def turnStirrerOff():
     :return:
     None
     """
+    initHardware()
     GPIO.output(config.hardwareStirrerPin, RELAY_OFF)
 
 
@@ -141,4 +194,24 @@ def pumpDispense(pumpId,volume):
     :return:
         None
     """
-    a = 1
+    global grblSer
+
+    initHardware()
+
+    dispense = config.hardwareGcode1ml
+    retract = config.hardwareGcodeRetract
+    if pumpId == 'B':
+        dispense = dispense.replace('X','Y')
+        retract = retract.replace('X','Y')
+
+    for i in range(volume):
+        grblSer.write(dispense)
+        serReadUntil(grblSer,'ok')
+
+    # Grbl will execute commands in serial as soon as the previous is completed.
+    # No need to wait until previous commands are complete. Ok only signifies that it
+    # parsed the command
+    grblSer.write(retract)
+    serReadUntil(grblSer, 'ok')
+
+
