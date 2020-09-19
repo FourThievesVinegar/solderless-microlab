@@ -24,7 +24,7 @@ def serReadUntil(ser, expected):
 
 
 # Init timer for secondsSinceStart()
-timer = time.time();
+timer = time.time()
 initialized = False
 tempSer = None
 grblSer = None
@@ -47,7 +47,7 @@ def initHardware():
 
     if not initialized:
         # Init serial port for temp sensor
-        tempSer = serial.Serial(config.hardwareTempPort)
+        tempSer = serial.Serial(config.hardwareTempPort,timeout=0.5)
 
         # Init relays
         GPIO.setmode(GPIO.BCM)
@@ -149,15 +149,21 @@ def getTemp():
     The temperature of the temperature sensor.
     """
     initHardware()
-    while (tempSer.read(1)[0] != 116):
-        a = 1
-    tempSer.read(2)
-    sign = -1
-    if (tempSer.read(1)[0] == 43):
-        sign = 1
-    temperature = sign * float(tempSer.read(5).decode("ascii"))
 
-    print('Read temperature ' + str(temperature))
+    line = "12345678901"
+    lastLine = ""
+    while (len(line) > 10):
+        lastLine = line
+        line = tempSer.readline()
+        print('ser read ' + str(len(line)) + ' ' + str(line) )
+
+    lastLine = str(lastLine)
+    start = lastLine.find('t1=') + len('t1=')
+    end = lastLine.find(' ',start)
+    print('found ' + str(start) + ' ' + str(end) + ' ' + lastLine)
+    temperature = float(lastLine[start:end])
+
+    print('Read temperature ' + str(temperature)) # + ' ' + str(lastLine))
     return temperature
 
 
@@ -198,11 +204,11 @@ def pumpDispense(pumpId,volume):
 
     initHardware()
 
-    dispense = config.hardwareGcode1ml
-    retract = config.hardwareGcodeRetract
+    dispense = config.hardwarePumpAGcode1ml
+    retract = config.hardwarePumpAGcodeRetract
     if pumpId == 'B':
-        dispense = dispense.replace('X','Y')
-        retract = retract.replace('X','Y')
+        dispense = config.hardwarePumpBGcode1ml
+        retract = config.hardwarePumpBGcodeRetract
 
     for i in range(volume):
         grblSer.write(dispense)

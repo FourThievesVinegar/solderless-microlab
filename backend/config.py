@@ -18,8 +18,10 @@ hardwareStirrerPin = 20
 
 # port for Arduino... again need to auto-detect as the temp sensor may or may not be detected first
 hardwareArduinoPort = '/dev/ttyUSB0'
-hardwareGcode1ml = b'G91X1.1\n'
-hardwareGcodeRetract = b'G91X-0.25\n'
+hardwarePumpAGcode1ml = b'G91X1.1\n'
+hardwarePumpAGcodeRetract = b'G91X-0.25\n'
+hardwarePumpBGcode1ml = b'G91Y1.1\n'
+hardwarePumpBGcodeRetract = b'G91Y-0.25\n'
 
 # Where the recipe files are located. You should never need to change this.
 recipesPackage = 'recipes.files'
