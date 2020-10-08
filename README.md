@@ -17,9 +17,19 @@ $ cd solderless-microlab
 
 Add dependencies:
 
+#### For Debian / Ubuntu:
+
 ```text
 $ sudo apt update
 $ sudo apt install python3 python3-pip python-virtualenv python3-virtualenv
+```
+
+#### For macOS:
+
+```text
+$ brew update
+$ brew install python3
+$ pip3 install virtualenv
 ```
 
 Set up a Python virtual environment:
@@ -39,6 +49,10 @@ Start the server:
 
 ### Web GUI
 
+Add dependencies:
+
+#### For Debian / Ubuntu:
+
 Follow a guide to install yarn for Debian:
 
 https://classic.yarnpkg.com/en/docs/install/#debian-stable
@@ -50,6 +64,13 @@ $ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 $ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 $ sudo apt update
 $ sudo apt install yarn
+```
+
+#### For macOS:
+
+```text
+$ brew update
+$ brew install yarn
 ```
 
 Run the GUI:
