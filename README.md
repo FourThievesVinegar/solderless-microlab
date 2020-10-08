@@ -17,14 +17,14 @@ $ cd solderless-microlab
 
 Add dependencies:
 
-#### For Debian / Ubuntu:
+(for Debian / Ubuntu)
 
 ```text
 $ sudo apt update
 $ sudo apt install python3 python3-pip python-virtualenv python3-virtualenv
 ```
 
-#### For macOS:
+(for macOS)
 
 ```text
 $ brew update
@@ -51,7 +51,7 @@ Start the server:
 
 Add dependencies:
 
-#### For Debian / Ubuntu:
+(for Debian / Ubuntu)
 
 Follow a guide to install yarn for Debian:
 
@@ -66,7 +66,7 @@ $ sudo apt update
 $ sudo apt install yarn
 ```
 
-#### For macOS:
+(for macOS)
 
 ```text
 $ brew update
