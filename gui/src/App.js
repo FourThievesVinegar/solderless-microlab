@@ -14,6 +14,8 @@ import { apiUrl } from './utils.js';
 export function App() {
 	//this creates a variable 'status', initializes its value to null, 
 	//and says that to change the state value of 'status' we use setStatus
+	//we'll pass 'status' to Home.js and Status.js as a prop
+	//maybe it should be stored in a reducer instead?
 	const [status, setStatus] = useState();
 	//this just sends a get request(?) to 'http://localhost(or whatever the user has):5000/status'
 	const getStatus = () => {
