@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Link, useHistory } from 'react-router-dom';
-import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
+// import { Switch, Route, Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+// import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
+import { Button} from 'semantic-ui-react';
+
 import './style.css';
 import { Header } from './Header.js';
 import { apiUrl } from './utils.js';
