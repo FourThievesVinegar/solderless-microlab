@@ -6,6 +6,7 @@ import './style.css';
 // import { Header } from './Header.js';
 import { Home } from './Home.js';
 import { Recipes } from './Recipes.js';
+import { RecipeDetails } from './RecipeDetails.js';
 import { Tests } from './Tests.js';
 import { Settings } from './Settings.js';
 import { Status } from './Status.js';
@@ -43,8 +44,12 @@ export function App() {
 					<Home status={status} />
 				</Route>
 
-				<Route path='/recipes'>
+				<Route exact path='/recipes'>
 					<Recipes />
+				</Route>
+
+				<Route path='/recipes/:recipeName'>
+					<RecipeDetails />
 				</Route>
 
 				<Route path='/tests'>

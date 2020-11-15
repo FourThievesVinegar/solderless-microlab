@@ -33,8 +33,8 @@ export function Home(props) {
 					<Button as={Link} to='/recipes'>Start a Reaction</Button>
 				}
 				{/* should this be a verb like 'view recipes' (as opposed to choose one) */}
-				<Button as={Link} to='/nothinghereyet'>
-					Just View Recipes, Don't Start Reaction
+				<Button as={Link} to='/recipes'>
+					Recipes
 				</Button>
 
 				{/* should hardware be test-able mid recipe? maybe there

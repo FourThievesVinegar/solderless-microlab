@@ -18,11 +18,11 @@ export function Recipes() {
 			.then(data => setRecipies(data));
 	}, []);
 
-	const startRecipe = (name) => {
-		fetch(apiUrl + 'start/' + name)
-			.then(response => response.json())
-			.then(data => history.push('/status'));
-	};
+	// const startRecipe = (name) => {
+	// 	fetch(apiUrl + 'start/' + name)
+	// 		.then(response => response.json())
+	// 		.then(data => history.push('/status'));
+	// };
 
 	console.log(recipies);
 
@@ -32,9 +32,10 @@ export function Recipes() {
 
 			{recipies ?
 				<div className='button-menu'>
-					{recipies.map(x =>
-						<Button key={x} onClick={() => startRecipe(x)}>
-							{x.toUpperCase()}
+					{recipies.map(recipe =>
+						// click on recipe to view details
+						<Button key={recipe} onClick={() => history.push(`/recipes/${recipe}`)}>
+							{recipe.toUpperCase()} (click to view details)
 						</Button>
 					)}
 				</div>
