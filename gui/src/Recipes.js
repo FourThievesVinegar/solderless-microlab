@@ -25,11 +25,12 @@ export function Recipes() {
 			.then(data => setRecipies(data));
 	}, []);
 
-	// console.log(recipies);
+	console.log("recipes:", recipies);
 
 	return (
 		<div>
-			<Header>Recipes</Header>
+			<Header>Recipes</Header> 
+			{/* this could be "choose a recipe" if in 'I want to start a reaction' mode */}
 
 			{recipies ?
 				<div className='button-menu'>
