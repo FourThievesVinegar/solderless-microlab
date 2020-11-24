@@ -32,6 +32,11 @@ export function Home(props) {
 					:
 					<Button as={Link} to='/recipes'>Start a Reaction</Button>
 				}
+				
+				<Button as={Link} to='/reaction-history'>
+					Reaction History
+				</Button>
+
 				{/* should this be a verb like 'view recipes' (as opposed to choose one) */}
 				<Button as={Link} to='/recipes'>
 					Recipes

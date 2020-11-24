@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-// import { Switch, Route, Link } from 'react-router-dom';
 import { Switch, Route } from 'react-router-dom';
 // import { Icon, Menu, Segment } from 'semantic-ui-react';
 import './style.css';
-// import { Header } from './Header.js';
+
 import { Home } from './Home.js';
 import { Recipes } from './Recipes.js';
 import { RecipeDetails } from './RecipeDetails.js';
+import { ReactionHistory } from './ReactionHistory'
 import { Tests } from './Tests.js';
 import { Settings } from './Settings.js';
 import { Status } from './Status.js';
+
 import { apiUrl } from './utils.js';
 
 export function App() {
@@ -50,6 +51,10 @@ export function App() {
 
 				<Route path='/recipes/:recipeName'>
 					<RecipeDetails />
+				</Route>
+
+				<Route path='/reaction-history'>
+					<ReactionHistory />
 				</Route>
 
 				<Route path='/tests'>
