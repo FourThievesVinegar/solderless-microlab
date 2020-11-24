@@ -27,6 +27,15 @@ export function Header(props) {
 					icon
 					position='right'
 					as={Link}
+					to='/settings'
+				>
+					<Icon name='setting' />
+				</Menu.Item>
+
+				<Menu.Item
+					icon
+					position='right'
+					as={Link}
 					to='/'
 				>
 					<Icon name='home' />

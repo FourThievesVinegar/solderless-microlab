@@ -48,12 +48,6 @@ export function Home(props) {
 				<Button as={Link} to='/tests'>
 					Test Hardware
 				</Button>
-
-				{/* same question- should settings be change-able mid recipe? 
-				or just viewable? */}
-				<Button as={Link} to='/settings'>
-					Settings
-				</Button>
 			</div>
 		</div>
 	);
