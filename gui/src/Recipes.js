@@ -1,37 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Link, useHistory } from 'react-router-dom';
-import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
-import './style.css';
+import { useHistory } from 'react-router-dom';
+import { Button} from 'semantic-ui-react';
+
 import { Header } from './Header.js';
 import { apiUrl } from './utils.js';
+
+// This component, Recipes.js, requests a list of recipe names to display on the screen
+// It seems like App.js could also request this list and make it available to Recipes.js with redux. 
+
+// It makes sense to use this component whenever the user wants to see a list of all the recipes (obviously)
+// which would either be before choosing a reaction to run, or just browsing
+// If they select a recipe when they're in browsing mode, they probably want to see a list of materials and steps.
+// If they select a recipe when they're in 'I want to run a reaction' mode, they probably want a quick summary/confirmation before proceeding
+// These two modes could be differentiated based on parent component passing props to this component
+// or in the redux store with a reducer 
 
 export function Recipes() {
 	const [recipies, setRecipies] = useState(false);
 	const history = useHistory();
 
 	useEffect(() => {
-		fetch(apiUrl + 'list')
+		fetch(apiUrl + 'list')//this route returns an array with all the names ex: ['recipe1',recipe2']
 			.then(response => response.json())
 			.then(data => setRecipies(data));
 	}, []);
 
-	const startRecipe = (name) => {
-		fetch(apiUrl + 'start/' + name)
-			.then(response => response.json())
-			.then(data => history.push('/status'));
-	};
-
-	console.log(recipies);
+	console.log("recipes:", recipies);
 
 	return (
 		<div>
-			<Header>Recipes</Header>
+			<Header>Recipes</Header> 
 
 			{recipies ?
 				<div className='button-menu'>
-					{recipies.map(x =>
-						<Button key={x} onClick={() => startRecipe(x)}>
-							{x.toUpperCase()}
+					{recipies.map(recipe =>
+						// click on recipe to view details
+						<Button key={recipe} onClick={() => history.push(`/recipes/${recipe}`)}>
+							{recipe.toUpperCase()} (click to view details)
 						</Button>
 					)}
 				</div>

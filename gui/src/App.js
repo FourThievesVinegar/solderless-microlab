@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
-import { Icon, Menu, Segment } from 'semantic-ui-react';
+import { Switch, Route } from 'react-router-dom';
 import './style.css';
-import { Header } from './Header.js';
+
 import { Home } from './Home.js';
 import { Recipes } from './Recipes.js';
+import { RecipeDetails } from './RecipeDetails.js';
+import { ReactionHistory } from './ReactionHistory'
 import { Tests } from './Tests.js';
 import { Settings } from './Settings.js';
 import { Status } from './Status.js';
+
 import { apiUrl } from './utils.js';
 
 export function App() {
 	const [status, setStatus] = useState();
-
 	const getStatus = () => {
 		fetch(apiUrl + 'status')
 			.then(response => response.json())
 			.then(data => setStatus(data));
 	};
-
 	useEffect(() => {
 		const interval = setInterval(() => {
 			getStatus();
 		}, 1000);
 		return () => clearInterval(interval);
 	}, []);
-
-	console.log(status);
-
+	console.log("status: ", status);
+	//these are the routes. is it in a div instead of Router for any reason?
+	//^i think becuase in style.css it sets the maybe-size of the screen
 	return (
 		<div className='lcd-wrapper'>
 			<Switch>
@@ -35,8 +35,16 @@ export function App() {
 					<Home status={status} />
 				</Route>
 
-				<Route path='/recipes'>
+				<Route exact path='/recipes'>
 					<Recipes />
+				</Route>
+
+				<Route path='/recipes/:recipeName'>
+					<RecipeDetails />
+				</Route>
+
+				<Route path='/reaction-history'>
+					<ReactionHistory />
 				</Route>
 
 				<Route path='/tests'>

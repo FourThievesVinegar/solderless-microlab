@@ -1,6 +1,6 @@
 import React from 'react';
-import { Switch, Route, Link, useHistory, useRouteMatch } from 'react-router-dom';
-import { Icon, Menu, Segment } from 'semantic-ui-react';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { Icon, Menu } from 'semantic-ui-react';
 
 export function Header(props) {
 	const history = useHistory();
@@ -19,6 +19,15 @@ export function Header(props) {
 
 				<Menu.Item header>
 					{props.children}
+				</Menu.Item>
+
+				<Menu.Item
+					icon
+					position='center'
+					as={Link}
+					to='/settings'
+				>
+					<Icon name='setting' />
 				</Menu.Item>
 
 				<Menu.Item
