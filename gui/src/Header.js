@@ -1,7 +1,5 @@
 import React from 'react';
-// import { Switch, Route, Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
-// import { Icon, Menu, Segment } from 'semantic-ui-react';
 import { Icon, Menu } from 'semantic-ui-react';
 
 export function Header(props) {
@@ -25,7 +23,7 @@ export function Header(props) {
 
 				<Menu.Item
 					icon
-					position='right'
+					position='center'
 					as={Link}
 					to='/settings'
 				>

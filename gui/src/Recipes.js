@@ -30,7 +30,6 @@ export function Recipes() {
 	return (
 		<div>
 			<Header>Recipes</Header> 
-			{/* this could be "choose a recipe" if in 'I want to start a reaction' mode */}
 
 			{recipies ?
 				<div className='button-menu'>

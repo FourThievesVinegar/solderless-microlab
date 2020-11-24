@@ -1,13 +1,10 @@
 import React from 'react';
-// import { Switch, Route, Link } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-// import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
 import { Button } from 'semantic-ui-react';
 import './style.css';
 import { Header } from './Header.js';
 
 export function Home(props) {
-	//this is the same as saying status = props.status
 	const { status } = props;
 
 	return (
@@ -37,14 +34,14 @@ export function Home(props) {
 					Reaction History
 				</Button>
 
-				{/* should this be a verb like 'view recipes' (as opposed to choose one) */}
+				{/* should this be a verb like 'view recipes' (as opposed to choose one to start) */}
 				<Button as={Link} to='/recipes'>
 					Recipes
 				</Button>
 
 				{/* should hardware be test-able mid recipe? maybe there
 				should be one home screen for if there is a recipe going,
-				and one for if there isn't? */}
+				and one for if there isn't? or tests could be inside settings? */}
 				<Button as={Link} to='/tests'>
 					Test Hardware
 				</Button>
