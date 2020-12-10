@@ -1,17 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
-import './style.css';
-import { Header } from './Header.js';
 
 export function Home(props) {
 	const { status } = props;
 
 	return (
-		<div>
-			<Header>Home</Header>
-
-			<div className='button-menu'>
+		<div className="home-page page">
+			<h2>Welcome!</h2>
+			<div className='button-list'>
 				{(status && status.recipe) ?
 					//if there's a recipe in progress, give a link to see its status
 					//if not, offer option to start reaction
@@ -29,10 +26,6 @@ export function Home(props) {
 					:
 					<Button as={Link} to='/recipes'>Start a Reaction</Button>
 				}
-				
-				<Button as={Link} to='/reaction-history'>
-					Reaction History
-				</Button>
 
 				{/* should this be a verb like 'view recipes' (as opposed to choose one to start) */}
 				<Button as={Link} to='/recipes'>

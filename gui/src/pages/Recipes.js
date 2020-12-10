@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button} from 'semantic-ui-react';
 
-import { Header } from './Header.js';
-import { apiUrl } from './utils.js';
+import { apiUrl } from '../utils.js';
 
 // This component, Recipes.js, requests a list of recipe names to display on the screen
 // It seems like App.js could also request this list and make it available to Recipes.js with redux. 
@@ -29,10 +28,8 @@ export function Recipes() {
 
 	return (
 		<div>
-			<Header>Recipes</Header> 
-
 			{recipies ?
-				<div className='button-menu'>
+				<div className='button-list'>
 					{recipies.map(recipe =>
 						// click on recipe to view details
 						<Button key={recipe} onClick={() => history.push(`/recipes/${recipe}`)}>

@@ -1,3 +1,5 @@
+/* Global Resets and layouts */
+
 html {
 	font-size: 20px;
 }
@@ -7,18 +9,45 @@ body {
 }
 
 .lcd-wrapper {
+	position: relative;
 	width: 480px;
 	height: 320px;
 	margin: 0 auto;
 	background: white;
 }
 
-.button-menu {
+.main-menu {
+	position: absolute;
+	top: 60px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+	transition: transform 0.4s ease;
+	transform: translateX(100vw);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.main-menu.active {
+	transform: translateX(0);
+}
+
+.button-list {
 	margin: .34rem;
 }
 
-.button-menu .ui.button {
+.button-list .ui.button {
 	display: block;
 	margin-bottom: .75rem;
 	width: 100%;
 }
+
+.home-page {
+	text-align: center;
+}
+
+/* Pages */
+/* Break this out into separate sections */
