@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './style.css';
 
-import { Home } from './Home.js';
-import { Recipes } from './Recipes.js';
-import { RecipeDetails } from './RecipeDetails.js';
-import { ReactionHistory } from './ReactionHistory'
+import { Header } from './components/Header.js';
+import { Home } from './pages/Home.js';
+import { Recipes } from './pages/Recipes.js';
+import { RecipeDetails } from './pages/RecipeDetails.js';
+import { ReactionHistory } from './pages/ReactionHistory'
 import { Tests } from './Tests.js';
-import { Settings } from './Settings.js';
+import { Settings } from './pages/Settings.js';
 import { Status } from './Status.js';
 
 import { apiUrl } from './utils.js';
+
+import './style.css';
 
 export function App() {
 	const [status, setStatus] = useState();
@@ -30,6 +33,7 @@ export function App() {
 	//^i think becuase in style.css it sets the maybe-size of the screen
 	return (
 		<div className='lcd-wrapper'>
+			<Header>Lab status: {status?.status || 'loading...'}</Header> 
 			<Switch>
 				<Route exact path='/'>
 					<Home status={status} />

@@ -3,8 +3,7 @@ import { useParams} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 
-import { Header } from './Header.js';
-import { apiUrl } from './utils.js';
+import { apiUrl } from '../utils.js';
 
 export function RecipeDetails() {
     const [recipeDetails, setRecipeDetails] = useState(false);
@@ -28,7 +27,6 @@ export function RecipeDetails() {
 
     return (
         <div>
-            <Header>Recipe Details</Header>
             <h1>{ recipeName }</h1>
                 {/* 
                 display details of the selected recipe.

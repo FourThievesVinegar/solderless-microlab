@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
 
-import { Header } from './Header.js';
+import { Header } from './components/Header.js';
 import { apiUrl } from './utils.js';
 
 export function Status(props) {
@@ -26,7 +26,7 @@ export function Status(props) {
 			<Header>Status</Header>
 
 			{status ?
-				<div className='button-menu'>
+				<div className='button-list'>
 					<p>{status.message}</p>
 
 					{status.options.map(x =>
