@@ -10,20 +10,16 @@ import { Tests } from "./Tests";
 import { Settings } from "./pages/Settings";
 import { Status } from "./Status";
 
-import { apiUrl } from "./utils";
+import { getStatus } from "./utils";
 
 import "./styles/app.css";
 
 export function App() {
   const [status, setStatus] = useState();
-  const getStatus = () => {
-    fetch(apiUrl + "status")
-      .then((response) => response.json())
-      .then((data) => setStatus(data));
-  };
+
   useEffect(() => {
     const interval = setInterval(() => {
-      getStatus();
+      getStatus(setStatus);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
