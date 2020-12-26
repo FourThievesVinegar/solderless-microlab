@@ -1,0 +1,12 @@
+.column {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.column * {
+    max-width: 100%;
+}
+
+.column-span-50 {
+    width: 50%;
+}
