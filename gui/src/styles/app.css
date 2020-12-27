@@ -31,6 +31,10 @@ body {
 	align-items: center;
 }
 
+.menu .header.item {
+	flex-grow: 1;
+}
+
 .main-menu.active {
 	transform: translateX(0);
 }

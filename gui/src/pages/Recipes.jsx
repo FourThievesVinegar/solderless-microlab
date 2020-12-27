@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button} from 'semantic-ui-react';
 
-import { apiUrl } from '../utils.js';
+import { apiUrl } from '../utils';
 
 // This component, Recipes.js, requests a list of recipe names to display on the screen
 // It seems like App.js could also request this list and make it available to Recipes.js with redux. 

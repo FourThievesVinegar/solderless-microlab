@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
 
-import { Header } from '../components/Header.js';
+import { Header } from '../components/Header';
 
 export function ReactionHistory() {
     return (
