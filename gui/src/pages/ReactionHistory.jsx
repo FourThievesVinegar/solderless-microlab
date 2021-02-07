@@ -1,14 +1,9 @@
-import React from 'react';
-// import { Button, Icon, Menu, Segment } from 'semantic-ui-react';
-
-import { Header } from '../components/Header';
+import React from 'react'
 
 export function ReactionHistory() {
-    return (
-        <div>
-            <Header>Reaction History</Header>
-
-            <p>Reaction History page here...</p>
-        </div>
-    );
+  return (
+    <div>
+      <p>Reaction History page here...</p>
+    </div>
+  )
 }

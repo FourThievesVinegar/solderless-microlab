@@ -16,6 +16,10 @@ body {
 	background: white;
 }
 
+.page {
+	padding: 0.5rem 1rem;
+}
+
 .main-menu {
 	position: absolute;
 	top: 60px;
@@ -49,9 +53,12 @@ body {
 	width: 100%;
 }
 
+/* Pages */
 .home-page {
 	text-align: center;
 }
 
-/* Pages */
-/* Break this out into separate sections */
+.status-page .status-message {
+	font-size: 20px;
+}
+/* TODO: Break this out into separate files */
