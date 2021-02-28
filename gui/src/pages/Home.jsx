@@ -20,10 +20,6 @@ export function Home(props) {
               {status && status.recipe ? (
                 //if there's a recipe in progress, give a link to see its status
                 //if not, offer option to start reaction
-                //doing this ternary operator leads to it showing the
-                //second option for up to a second before the server
-                //comes back with the status.
-                //is this a case for useEffect?
                 <div>
                   <p>{status.recipe} reaction in progress.</p>
                   <Button color="green" as={Link} to="/status">
@@ -36,17 +32,8 @@ export function Home(props) {
                   Start a Reaction
                 </Button>
               )}
-
-              {/* should this be a verb like 'view recipes' (as opposed to choose one to start) */}
               <Button as={Link} to="/recipes">
-                Recipes
-              </Button>
-
-              {/* should hardware be test-able mid recipe? maybe there
-				should be one home screen for if there is a recipe going,
-				and one for if there isn't? or tests could be inside settings? */}
-              <Button as={Link} to="/tests">
-                Test Hardware
+                View Recipes
               </Button>
             </div>
           </Grid.Column>

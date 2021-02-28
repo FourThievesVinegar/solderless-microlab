@@ -26,6 +26,7 @@ body {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: 100;
 	background-color: white;
 	transition: transform 0.4s ease;
 	transform: translateX(100vw);
