@@ -27,14 +27,14 @@ export function Status(props) {
   return (
     <section className="page status-page">
       {status ? (
-        <Grid divided>
+        <Grid divided className="status-page-grid">
           <Grid.Row columns={2}>
             <Grid.Column>
               <Container>
                 <p className="status-message">{status.message}</p>
               </Container>
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column className="status-page-menu">
               <div className="button-list">
                 {status.options.map(x => (
                   <Button color="green" key={x} onClick={() => handleOptionButtonClick(x)} loading={loading}>

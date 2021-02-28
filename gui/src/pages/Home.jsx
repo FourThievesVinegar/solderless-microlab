@@ -15,7 +15,7 @@ export function Home(props) {
             <img src={Logo} alt="Four Thieves Vinegar Logo" style={{ width: '80%', paddingTop: '2%' }} />
             <p>Four Thieves Vinegar Microlab</p>
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column className="home-page-menu">
             <div className="button-list">
               {status && status.recipe ? (
                 //if there's a recipe in progress, give a link to see its status
@@ -26,15 +26,15 @@ export function Home(props) {
                     Resume {status.recipe.toUpperCase()} Reaction
                     {/* maybe this would be a good place to preview next step? */}
                   </Button>
+                  <Button as={Link} to="/recipes">
+                    View Recipes
+                  </Button>
                 </div>
               ) : (
                 <Button color="green" as={Link} to="/recipes">
-                  Start a Reaction
+                  View Recipes
                 </Button>
               )}
-              <Button as={Link} to="/recipes">
-                View Recipes
-              </Button>
             </div>
           </Grid.Column>
         </Grid.Row>
