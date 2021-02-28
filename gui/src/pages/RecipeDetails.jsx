@@ -9,14 +9,6 @@ export function RecipeDetails() {
   const { recipeName } = useParams()
   const history = useHistory()
 
-  // fetch recipe details, such as steps, ingredients, time
-  /* useEffect(() => {
-    fetch(apiUrl + '___________')
-      .then(response => response.json())
-      .then(data => setRecipeDetails(data))
-  }, [])
-  */
-
   const handleStartClick = () => {
     startRecipe(recipeName)
     history.push('/status')
@@ -25,14 +17,6 @@ export function RecipeDetails() {
   return (
     <section className="page recipe-details">
       <h1>{recipeName}</h1>
-      {/* 
-        display details of the selected recipe.
-        having the fetch be based on the url makes it so that if a user visits 
-        the address it'll get the right info- but is that even relevant with the hardware being used?
-        If no one's ever going to visit .../recipes/this-specific-recipe other than by clicking on 
-        the name in Recipes.js, then the fetch could just come from the "see details" button 
-        in Recipes and be provided to this component with props or with a redux store.
-        */}
 
       {recipeDetails ? (
         // might make sense to have individual "Materials", "Time", "Steps" components
@@ -52,9 +36,6 @@ export function RecipeDetails() {
         <p>loading...</p>
       )}
 
-      {/* this button should only be clickable/present if there isn't a reaction going, 
-            meaning this component needs to know status, either from props passed to it 
-            or from a redux store store.*/}
       <Button color="green" onClick={() => handleStartClick()}>
         Start A Reaction Using This Recipe
       </Button>

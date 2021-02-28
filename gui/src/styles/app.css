@@ -18,6 +18,27 @@ body {
 
 .page {
 	padding: 0.5rem 1rem;
+	height: 260px;
+}
+
+/* Override "special snowflakes" to vertically center the home page button(s) */
+.home-page-menu.home-page-menu.home-page-menu.home-page-menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+/* And to make the status page buttons FAR APART */
+.status-page-menu.status-page-menu.status-page-menu.status-page-menu {
+	height: 100%;
+}
+.status-page-menu .button-list {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.status-page-grid {
+	height: 100%
 }
 
 .main-menu {
@@ -26,6 +47,7 @@ body {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: 100;
 	background-color: white;
 	transition: transform 0.4s ease;
 	transform: translateX(100vw);

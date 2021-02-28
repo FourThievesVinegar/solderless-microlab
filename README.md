@@ -15,7 +15,9 @@ $ cd solderless-microlab
 
 ### API Server
 
-Add dependencies:
+#### Install dependencies:
+
+##### Python
 
 (for Debian / Ubuntu)
 
@@ -41,7 +43,31 @@ $ source env/bin/activate
 (env) $ pip install -r requirements.txt
 ```
 
-Start the server:
+##### Redis
+
+(on the Pi)
+
+```text
+sudo apt -y install screen git redis-server python-celery-common python3-flask python3-pip python3-rpi.gpio python3-serial
+
+```
+
+(for Debian / Ubuntu)
+
+```text
+sudo apt update
+sudo apt install redis-server
+```
+
+To run Resis as a service,
+
+```text
+sudo nano /etc/redis/redis.conf
+```
+
+and change the option for `supervised` from `no` to `systemd`
+
+#### Start the server:
 
 ```text
 (env) $ python main.py
@@ -49,7 +75,7 @@ Start the server:
 
 ### Web GUI
 
-Add dependencies:
+#### Install dependencies:
 
 (for Debian / Ubuntu)
 
@@ -73,7 +99,7 @@ $ brew update
 $ brew install yarn
 ```
 
-Run the GUI:
+#### Run the GUI:
 
 ```text
 $ cd gui

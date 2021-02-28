@@ -36,6 +36,10 @@ export function Header(props) {
           <Button as={Link} to="/reaction-history">
             Reaction History
           </Button>
+          {/* TODO: disable this button if a recipe is running */}
+          <Button as={Link} to="/tests">
+            Test Hardware
+          </Button>
         </div>
       </aside>
     </>
