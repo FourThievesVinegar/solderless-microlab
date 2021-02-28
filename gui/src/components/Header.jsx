@@ -36,9 +36,7 @@ export function Header(props) {
           <Button as={Link} to="/reaction-history">
             Reaction History
           </Button>
-          {/* should hardware be test-able mid recipe? maybe there
-				should be one home screen for if there is a recipe going,
-				and one for if there isn't? or tests could be inside settings? */}
+          {/* TODO: disable this button if a recipe is running */}
           <Button as={Link} to="/tests">
             Test Hardware
           </Button>
