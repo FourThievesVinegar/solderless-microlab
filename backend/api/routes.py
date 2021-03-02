@@ -6,6 +6,8 @@ from api import app
 from flask import jsonify
 import recipes
 
+from recipes.files.aspirin import recipe as aspirin
+
 @app.route('/list')
 def list():
     """
@@ -18,6 +20,9 @@ def list():
     recipes.refresh()
     return jsonify(recipes.list)
 
+@app.route('/recipe/<name>')
+def sendRecipe(name):
+    return jsonify(aspirin.plan)
 
 @app.route('/status')
 def status():
