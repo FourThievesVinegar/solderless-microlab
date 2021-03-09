@@ -18,7 +18,6 @@ from os import listdir
 from os.path import isfile, join
 from recipes import state
 
-
 # Not used for now. Recipe list hardcoded below
 def getList():
     """
@@ -171,3 +170,4 @@ def selectOption(option):
         exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
         return eval('recipe.selectOption(option)')
     return False,'No recipe running.'
+

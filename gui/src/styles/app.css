@@ -14,6 +14,7 @@ body {
 	height: 320px;
 	margin: 0 auto;
 	background: white;
+	overflow: scroll;
 }
 
 .page {
@@ -84,3 +85,9 @@ body {
 	font-size: 20px;
 }
 /* TODO: Break this out into separate files */
+/* Pages */
+/* Break this out into separate sections */
+
+.recipe-details {
+	padding: 1rem;
+}
