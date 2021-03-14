@@ -14,7 +14,6 @@ body {
 	height: 320px;
 	margin: 0 auto;
 	background: white;
-	overflow: scroll;
 }
 
 .page {
@@ -90,4 +89,5 @@ body {
 
 .recipe-details {
 	padding: 1rem;
+	overflow-y: auto;
 }
