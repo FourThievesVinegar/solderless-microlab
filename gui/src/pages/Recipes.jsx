@@ -12,8 +12,6 @@ export function Recipes() {
     listRecipes(setRecipies)
   }, [])
 
-  console.log('recipes:', recipies)
-
   return (
     <section className="page recipes-page">
       <h1>Recipe list</h1>

@@ -109,6 +109,16 @@ $ yarn start
 
 The GUI will now be listening on port 3000.
 
+## Hardware Emulation
+
+To run the software without a functioning hardware environment, set the following configs:
+
+In `/solderless-microlab/backend/config.py`:
+
+```
+celeryMode = 'test'
+```
+
 ## API Spec
 
 API spec is very flexible and will change as development goes on.
