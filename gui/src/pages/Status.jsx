@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Container, Grid } from 'semantic-ui-react'
+import { Button, Container, Grid, Statistic } from 'semantic-ui-react'
 
 import { selectOption, stopRecipe } from '../utils'
 
@@ -14,6 +14,10 @@ export function Status(props) {
   }
 
   const handleStopButtonClick = () => {
+    if (status.status === 'complete') {
+      window.history.back()
+      return
+    }
     if (window.confirm('Are you sure you want to stop?')) {
       stopRecipe()
       window.history.back()
@@ -23,6 +27,8 @@ export function Status(props) {
   useEffect(() => {
     setLoading(false)
   }, [status])
+
+  console.log(status)
 
   return (
     <section className="page status-page">
@@ -41,9 +47,24 @@ export function Status(props) {
                     {x}
                   </Button>
                 ))}
-                <Button color="red" onClick={() => handleStopButtonClick()}>
-                  Stop Reaction
-                </Button>
+                {status.status === 'running' && (
+                  <Button color="red" onClick={() => handleStopButtonClick()}>
+                    Stop Reaction
+                  </Button>
+                )}
+                {status.status === 'complete' && (
+                  <Button color="green" onClick={() => handleStopButtonClick()}>
+                    Finish Reaction
+                  </Button>
+                )}
+                {status.status === 'idle' && (
+                  <>
+                    <p>Waiting on backend... </p>
+                    <Button color="red" onClick={() => handleStopButtonClick()}>
+                      Go Back
+                    </Button>
+                  </>
+                )}
               </div>
             </Grid.Column>
           </Grid.Row>
