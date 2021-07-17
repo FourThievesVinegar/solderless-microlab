@@ -8,9 +8,9 @@ export function Home(props) {
 
   return (
     <div className="home-page page">
-      <Grid>
-        <Grid.Row columns={2}>
-          <Grid.Column>
+      <Grid style={{ height: '100%' }}>
+        <Grid.Row columns={2} style={{ height: '100%' }}>
+          <Grid.Column style={{ height: '100%' }}>
             <LogoContainer />
             <p>Four Thieves Vinegar Microlab</p>
           </Grid.Column>

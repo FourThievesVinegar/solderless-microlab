@@ -14,6 +14,7 @@ body {
 	height: 320px;
 	margin: 0 auto;
 	background: white;
+	overflow: hidden;
 }
 
 .page {
