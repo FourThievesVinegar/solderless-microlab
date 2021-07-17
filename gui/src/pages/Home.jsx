@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Grid } from 'semantic-ui-react'
-
-import Logo from '../assets/logo.svg'
+import { LogoContainer } from '../components/LogoContainer'
 
 export function Home(props) {
   const { status } = props
@@ -12,7 +11,7 @@ export function Home(props) {
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column>
-            <img src={Logo} alt="Four Thieves Vinegar Logo" style={{ width: '80%', paddingTop: '2%' }} />
+            <LogoContainer />
             <p>Four Thieves Vinegar Microlab</p>
           </Grid.Column>
           <Grid.Column className="home-page-menu">
