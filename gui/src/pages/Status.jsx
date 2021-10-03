@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Container, Grid, Statistic } from 'semantic-ui-react'
+import { StatusIcon } from '../components/StatusIcon'
 
 import { selectOption, stopRecipe } from '../utils'
 
@@ -36,7 +37,8 @@ export function Status(props) {
         <Grid divided className="status-page-grid">
           <Grid.Row columns={2}>
             <Grid.Column>
-              <Container>
+              <Container textAlign="center">
+                <StatusIcon icon={status.icon} />
                 <p className="status-message">{status.message}</p>
               </Container>
             </Grid.Column>
