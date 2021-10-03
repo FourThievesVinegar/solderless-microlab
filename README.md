@@ -128,3 +128,13 @@ API spec is very flexible and will change as development goes on.
 #### GET /test/relays
 
 Test the relay shield. All four relays are turned on and off.
+
+## Acknowledgements
+
+### Volunteers
+
+Thanks to the whole 4TV crew whose efforts bother tired and tireless have brought the project this far
+
+### Works used
+
+Thanks to The Noun Project for icons: Temperature by Megan Chown, Syringe by shashank singh, looking by Lewis K-T, Jar by Marie Larking, Chemistry by Victoruler

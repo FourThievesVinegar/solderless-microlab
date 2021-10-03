@@ -69,11 +69,13 @@ plan object
 from recipes import celery
 import hardware
 
+
 class Recipe:
     step = 0
     message = ''
     status = 'idle'
     options = []
+    icon = ''
 
     def __init__(self, plan):
         """
@@ -83,7 +85,6 @@ class Recipe:
         """
         self.plan = plan
 
-
     def start(self):
         """
         Start running the recipe. Start from the first step.
@@ -92,7 +93,6 @@ class Recipe:
         """
         self.step = 0
         self.runStep()
-
 
     def stop(self):
         """
@@ -106,7 +106,6 @@ class Recipe:
         self.status = 'idle'
         self.message = ''
         self.options = []
-
 
     def getStatus(self):
         """
@@ -134,13 +133,13 @@ class Recipe:
                 null or a list of strings to display to the user as selectable options.
         """
         ret = {
-            'status':self.status,
-            'step':self.step,
-            'message':self.message,
-            'options':self.options
+            'status': self.status,
+            'step': self.step,
+            'message': self.message,
+            'options': self.options,
+            'icon': self.icon,
         }
         return ret
-
 
     def updateStatus(self):
         """
@@ -157,8 +156,7 @@ class Recipe:
 
         return self.getStatus()
 
-
-    def selectOption(self,optionValue):
+    def selectOption(self, optionValue):
         """
         Provide user selected input for the current recipe step.
 
@@ -184,8 +182,7 @@ class Recipe:
             return False, 'Invalid option ' + optionValue
 
         ret = self.runStep()
-        return ret,self.message
-
+        return ret, self.message
 
     def runStep(self):
         """
@@ -213,6 +210,9 @@ class Recipe:
 
         self.options = options
 
+        if('icon' in step):
+            self.icon = step['icon']
+
         if ('task' in step) or ('baseTask' in step):
             if ('task' in step):
                 task = step['task']
@@ -221,7 +221,7 @@ class Recipe:
                 task = step['baseTask']
                 base = True
 
-            if celery.runTask(task, step['parameters'],base):
+            if celery.runTask(task, step['parameters'], base):
                 self.status = 'running'
             else:
                 self.status = 'error'
@@ -363,7 +363,7 @@ def pump(parameters):
     """
     pump = parameters['pump']
     volume = parameters['volume']
-    hardware.pumpDispense(pump,volume)
+    hardware.pumpDispense(pump, volume)
 
 
 def stir(parameters):

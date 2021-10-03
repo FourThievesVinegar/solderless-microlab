@@ -19,6 +19,8 @@ from os.path import isfile, join
 from recipes import state
 
 # Not used for now. Recipe list hardcoded below
+
+
 def getList():
     """
     Not currently used. The list of recipes is currently hardcoded.
@@ -44,6 +46,7 @@ def getList():
 #list = getList()
 # Hardcoded list of recipes.
 list = ['aspirin']
+
 
 def refresh():
     """
@@ -72,22 +75,23 @@ def start(name):
     # If we are currently running a recipe, check if it is complete.
     if not (state.currentRecipe is None):
         # Dynamically import the recipe based on the name in status.currentRecipe.
-        exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
+        exec('from ' + state.package + '.' +
+             state.currentRecipe + ' import recipe')
         # Need to use eval to be able to make the call to the dynamically imported recipe.
         recipeMessage = eval('recipe.getStatus()')
         if not recipeMessage['status'] == 'complete':
-            return False,'Recipe ' + state.currentRecipe + ' is running. Stop it first.'
+            return False, 'Recipe ' + state.currentRecipe + ' is running. Stop it first.'
 
     # Check that it's a valid recipe.
     if not (name in list):
-        return False,'Recipe unknown.'
+        return False, 'Recipe unknown.'
 
     # Start running the recipe
     state.currentRecipe = name
     exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
     currentStep = eval('recipe.start()')
 
-    return True,''
+    return True, ''
 
 
 def status():
@@ -115,13 +119,15 @@ def status():
                     Recipe is complete.
                 error
                     A system error has occurred.
+        icon
+            The icon to show in the UI. See StatusIcon.jsx for supported icons.
     """
     message = {
-        'status':'idle',
-        'recipe':state.currentRecipe,
-        'step':-1,
-        'message':None,
-        'options':[]
+        'status': 'idle',
+        'recipe': state.currentRecipe,
+        'step': -1,
+        'message': None,
+        'options': [],
     }
 
     if state.currentRecipe == None:
@@ -135,6 +141,7 @@ def status():
     message['step'] = recipeMessage['step']
     message['message'] = recipeMessage['message']
     message['options'] = recipeMessage['options']
+    message['icon'] = recipeMessage['icon']
 
     return message
 
@@ -149,7 +156,8 @@ def stop():
     """
 
     if not state.currentRecipe is None:
-        exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
+        exec('from ' + state.package + '.' +
+             state.currentRecipe + ' import recipe')
         exec('recipe.stop()')
         state.currentRecipe = None
 
@@ -167,7 +175,7 @@ def selectOption(option):
     (False,message) on failure
     """
     if not state.currentRecipe is None:
-        exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
+        exec('from ' + state.package + '.' +
+             state.currentRecipe + ' import recipe')
         return eval('recipe.selectOption(option)')
-    return False,'No recipe running.'
-
+    return False, 'No recipe running.'
