@@ -133,7 +133,7 @@ Test the relay shield. All four relays are turned on and off.
 
 ### Volunteers
 
-Thanks to the whole 4TV crew whose efforts bother tired and tireless have brought the project this far
+Thanks to the whole 4TV crew whose efforts both tired and tireless have brought the project this far!
 
 ### Works used
 
