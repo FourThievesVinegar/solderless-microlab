@@ -1,0 +1,43 @@
+
+.logo-spinner {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    max-width: 100%;
+    left: -5%;
+    z-index: 1;
+    margin-bottom: 10px;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        &:not(:first-child) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: -1;
+        }
+    }
+    .logo-head {
+        position: absolute;
+        left: 22.5%;
+        top: 22%;
+        width: 57%;
+    }
+    .logo-burst {
+        animation: rotation 20s linear infinite;
+    }
+    .logo-border {
+        animation: rotation 3s  ease-in-out alternate-reverse infinite;
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
