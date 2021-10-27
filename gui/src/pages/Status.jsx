@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Container, Grid, Statistic } from 'semantic-ui-react'
+import humanizeDuration from 'humanize-duration'
+import { Button, Container, Grid } from 'semantic-ui-react'
+import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
-
 import { selectOption, stopRecipe } from '../utils'
+import { useInterval } from '../hooks/useInterval'
 
 export function Status(props) {
   const { status } = props
   const [loading, setLoading] = useState(false)
+  const [currentStep, setCurrentStep] = useState(-1)
+  const [stepTime, setStepTime] = useState()
+  const [elapsedTime, setElapsedTime] = useState(0)
+  const history = useHistory()
+
+  useInterval(() => {
+    setElapsedTime(elapsedTime + 1)
+  }, 1000)
 
   const handleOptionButtonClick = option => {
     if (loading) return
@@ -16,7 +26,8 @@ export function Status(props) {
 
   const handleStopButtonClick = () => {
     if (status.status === 'complete') {
-      window.history.back()
+      stopRecipe()
+      history.push('/')
       return
     }
     if (window.confirm('Are you sure you want to stop?')) {
@@ -27,6 +38,15 @@ export function Status(props) {
 
   useEffect(() => {
     setLoading(false)
+    if (status && status.step !== currentStep) {
+      setCurrentStep(status.step)
+      setElapsedTime(0)
+      if (status.time && status.time !== '') {
+        setStepTime(status.time)
+        return
+      }
+      setStepTime(null)
+    }
   }, [status])
 
   console.log(status)
@@ -40,6 +60,7 @@ export function Status(props) {
               <Container textAlign="center">
                 <StatusIcon icon={status.icon} />
                 <p className="status-message">{status.message}</p>
+                {stepTime && <p className="status-message">{`${humanizeDuration((stepTime - elapsedTime) * 1000)}`}</p>}
               </Container>
             </Grid.Column>
             <Grid.Column className="status-page-menu">

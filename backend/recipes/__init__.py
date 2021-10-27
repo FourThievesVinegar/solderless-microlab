@@ -142,6 +142,7 @@ def status():
     message['message'] = recipeMessage['message']
     message['options'] = recipeMessage['options']
     message['icon'] = recipeMessage['icon']
+    message['time'] = recipeMessage['time']
 
     return message
 

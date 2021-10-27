@@ -1,5 +1,5 @@
 import humanizeDuration from 'humanize-duration'
-import { capitalize, get, isArray, isEmpty, isNumber, reduce, toNumber } from 'lodash'
+import { capitalize, get, isArray, isEmpty, reduce } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
@@ -16,7 +16,7 @@ export function RecipeDetails() {
     fetch(apiUrl + 'recipe/' + recipeName)
       .then(response => response.json())
       .then(data => setRecipeDetails(data))
-  }, [])
+  }, [recipeName])
 
   const startRecipe = name => {
     fetch(apiUrl + 'start/' + name)
@@ -61,8 +61,8 @@ function MaterialsNeeded({ materials }) {
   if (isArray(materials) && materials.length > 0) {
     body = (
       <ol>
-        {materials.map(material => (
-          <li>{material.description}</li>
+        {materials.map((material, index) => (
+          <li key={`material-${index}`}>{material.description}</li>
         ))}
       </ol>
     )
@@ -82,8 +82,6 @@ function MaterialsNeeded({ materials }) {
  * total time? which steps are time sensitive and how long between them?
  * */
 function TimeNeeded({ steps }) {
-  const [timePerStep, setTimePerStep] = useState(10)
-
   if (!isArray(steps) || steps.length < 1) {
     return <></>
   }
@@ -122,8 +120,8 @@ function Steps({ steps }) {
     <>
       <h3>Steps:</h3>
       <ol>
-        {steps.map(step => (
-          <li>
+        {steps.map((step, index) => (
+          <li key={`${step.message}-${index}`}>
             {step.message} {step?.parameters?.time ? `(${humanizeDuration(step.parameters.time * 1000)})` : ''}
           </li>
         ))}
