@@ -155,7 +155,6 @@ class Recipe:
         if self.status == 'running':
             if celery.isTaskComplete():
                 currentStep = self.plan['steps'][self.step]
-                print(currentStep)
                 if('done' in currentStep) and (currentStep['done'] == True):
                     self.stop()
                     return self.getStatus()
