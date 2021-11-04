@@ -76,6 +76,7 @@ class Recipe:
     status = 'idle'
     options = []
     icon = ''
+    time = ''
 
     def __init__(self, plan):
         """
@@ -106,6 +107,7 @@ class Recipe:
         self.status = 'idle'
         self.message = ''
         self.options = []
+        self.time = ''
 
     def getStatus(self):
         """
@@ -138,6 +140,7 @@ class Recipe:
             'message': self.message,
             'options': self.options,
             'icon': self.icon,
+            'time': self.time,
         }
         return ret
 
@@ -151,8 +154,14 @@ class Recipe:
         """
         if self.status == 'running':
             if celery.isTaskComplete():
-                self.step = self.plan['steps'][self.step]['next']
-                self.runStep()
+                currentStep = self.plan['steps'][self.step]
+                if('done' in currentStep) and (currentStep['done'] == True):
+                    self.stop()
+                    return self.getStatus()
+                else:
+                    if 'next' in currentStep:
+                        self.step = currentStep['next']
+                        self.runStep()
 
         return self.getStatus()
 
@@ -227,6 +236,11 @@ class Recipe:
                 self.status = 'error'
                 message = 'Internal error. Task already running.'
                 return False
+
+        if('parameters' in step) and ('time' in step['parameters']):
+            self.time = step['parameters']['time']
+        else:
+            self.time = ''
 
         if 'done' in step:
             if step['done'] == True:
