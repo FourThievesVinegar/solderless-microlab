@@ -108,6 +108,8 @@ class Recipe:
         self.message = ''
         self.options = []
         self.time = ''
+        hardware.turnHeaterOff()
+        hardware.turnCoolerOff()
 
     def getStatus(self):
         """
