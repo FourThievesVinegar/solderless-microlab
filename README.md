@@ -35,6 +35,7 @@ $ pip3 install virtualenv
 ```
 
 Set up a Python virtual environment:
+virtualenv -p python3 env
 
 ```text
 $ cd backend
