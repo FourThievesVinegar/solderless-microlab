@@ -39,13 +39,16 @@ def getList():
         if not f.startswith('__init__'):
             if f.endswith('.py'):
                 list.append(f[:-3])
+            # This doesn't actually work yet because .4tv are not importable as modules
+            if f.endswith('.4tv'):
+                list.append(f[:-4])
 
     return list
 
 
-#list = getList()
+list = getList()
 # Hardcoded list of recipes.
-list = ['aspirin']
+# list = ['aspirin']
 
 
 def refresh():
@@ -55,7 +58,7 @@ def refresh():
     :return:
     """
     global list
-    #list = getList()
+    list = getList()
 
 
 def start(name):

@@ -6,7 +6,6 @@ from api import app
 from flask import jsonify
 import recipes
 
-from recipes.files.aspirin import recipe as aspirin
 
 @app.route('/list')
 def list():
@@ -15,14 +14,17 @@ def list():
 
     :return:
     list
-        a list containing the names of the recipes. ex: ['recipe1',recipe2']
+        a list containing the names of the recipes. ex: ['recipe1','recipe2']
     """
     recipes.refresh()
     return jsonify(recipes.list)
 
+
 @app.route('/recipe/<name>')
 def sendRecipe(name):
-    return jsonify(aspirin.plan)
+    recipe = __import__("recipes.files." + name, globals(), locals(), name)
+    return jsonify(recipe.recipe.plan)
+
 
 @app.route('/status')
 def status():
@@ -71,11 +73,11 @@ def start(name):
         message
             Only present if response is "error" and there is a message to present to the user.
     """
-    (state,msg) = recipes.start(name)
+    (state, msg) = recipes.start(name)
     if state:
-        return jsonify({'response':'ok'})
+        return jsonify({'response': 'ok'})
     else:
-        return jsonify({'response':'error','message':msg})
+        return jsonify({'response': 'error', 'message': msg})
 
 
 @app.route('/stop')
@@ -93,7 +95,7 @@ def stop():
             Only present if response is "error" and there is a message to present to the user.
     """
     recipes.stop()
-    return jsonify({'response':'ok'})
+    return jsonify({'response': 'ok'})
 
 
 @app.route('/select/option/<name>')
@@ -114,8 +116,8 @@ def selectOption(name):
         message
             Only present if response is "error" and there is a message to present to the user.
     """
-    (state,msg) = recipes.selectOption(name)
+    (state, msg) = recipes.selectOption(name)
     if state:
-        return jsonify({'response':'ok'})
+        return jsonify({'response': 'ok'})
     else:
-        return jsonify({'response':'error','message':msg})
+        return jsonify({'response': 'error', 'message': msg})
