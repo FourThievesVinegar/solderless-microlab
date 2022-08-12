@@ -1,0 +1,17 @@
+site_name: "FTVC: Microlab"
+
+
+nav:
+    - Home: index.md
+    - Build: assembly.md
+    - Use: operation.md
+    - Maintain: maintenance.md
+    - Safety: quality.md
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - tables
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
