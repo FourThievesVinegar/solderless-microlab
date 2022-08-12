@@ -3,7 +3,7 @@
 
 ## Building a Microlab
  
- ![Built Microlab](/media/microlab.png){: style="height:90%;width:90%"}
+ ![Built Microlab](/docs/media/microlab.png){: style="height:90%;width:90%"}
  
   
 The Microlab consists of three major parts:
@@ -28,7 +28,7 @@ See Appendix.
  
 ### Materials
  
- ![Parts laid out on table](/media/parts_label.png){: style="height:90%;width:90%"}
+ ![Parts laid out on table](/docs/media/parts_label.png){: style="height:90%;width:90%"}
 
 Fig. 1 Parts Photo
 &nbsp;
@@ -51,7 +51,7 @@ While most items on the parts list can be purchased, two items will need to be p
 
 The syringe pump is made up of 8 parts that must be printed. The parts are labelled Linear Actuator with a part number. 
 https://www.youmagine.com/designs/syringe-pump
- ![Syringe pump](/media/syringe_pump2.png){: style="height:30%;width:30%"}
+ ![Syringe pump](/docs/media/syringe_pump2.png){: style="height:30%;width:30%"}
 
 
 
@@ -73,7 +73,7 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
 ## Instructions
  
 ### Controller Boards Assembly
- ![Assembled controller boards](/media/controller_boards.png){: style="height:30%;width:30%"}
+ ![Assembled controller boards](/docs/media/controller_boards.png){: style="height:30%;width:30%"}
 
 
 #### Parts:
@@ -133,8 +133,8 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
 	1. Double check that all of the drivers are firmly seated in the sockets, and that none of the heat sinks shifted during installation.
 	1. Mount the CNC Hat on the Arduino. The 12v power connection on the lower left of the hat should be directly above the Arduino power jack also on the lower left.
  
-  ![Assembled controller boards](/media/rasp_pi2.png){: style="height:30%;width:30%"}
-  ![Assembled controller boards](/media/arduino.png){: style="height:30%;width:30%"}
+  ![Assembled controller boards](/docs/media/rasp_pi2.png){: style="height:30%;width:30%"}
+  ![Assembled controller boards](/docs/media/arduino.png){: style="height:30%;width:30%"}
 
 
  
