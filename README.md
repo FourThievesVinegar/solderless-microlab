@@ -60,7 +60,7 @@ sudo apt update
 sudo apt install redis-server
 ```
 
-To run Resis as a service,
+To run Redis as a service,
 
 ```text
 sudo nano /etc/redis/redis.conf
