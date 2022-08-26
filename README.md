@@ -68,6 +68,12 @@ sudo nano /etc/redis/redis.conf
 
 and change the option for `supervised` from `no` to `systemd`
 
+#### Startup celery worker:
+
+```text
+(env) $ celery -A recipes worker --loglevel=INFO
+```
+
 #### Start the server:
 
 ```text
