@@ -41,6 +41,18 @@ def status():
             Name of the currently running recipe or null if none is running.
         step
             The step number or -1 if no recipe is running
+        time
+            The number of seconds the current step will execute for
+        icon
+            String indicating an icon to display to the user or undefined
+            if the recipe does not specify an icon for the step.
+            One of:
+                reaction_chamber
+                load_syringe
+                inspect
+                dispensing
+                temperature
+                reaction_complete
         status
             The state of the application. One of:
                 idle
