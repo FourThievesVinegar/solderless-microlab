@@ -92,7 +92,7 @@ class Recipe:
     options = []
     icon = ''
     time = ''
-
+    currentRecipe = None
     def __init__(self, plan):
         """
         Constructor. Saves the plan.
@@ -100,6 +100,8 @@ class Recipe:
         The recipe plan. See module documentation for object description.
         """
         self.plan = plan
+        if hasattr(plan, 'title'):
+            self.currentRecipe = plan.title
 
     def start(self):
         """
