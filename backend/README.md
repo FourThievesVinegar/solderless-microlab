@@ -8,7 +8,7 @@ See README.md in the root directory for instructions on running the service.
 
 ## API
 
-The Microlab backend API includes several enpoints described below. For more details, see `solderless-microlab/backend/api/routes.py`
+The Microlab backend API includes several endpoints described below. For more details, see `solderless-microlab/backend/api/routes.py`
 
 ### Status
 
@@ -21,6 +21,7 @@ Example response:
     "message":"Place 2.0 g salicylic acid in chamber",
     "options":["Done"],
     "recipe":"aspirin",
+    "icon":"reaction_chamber",
     "status":"user_input",
     "step":0
 }
@@ -52,8 +53,10 @@ or, if you try to start a recipe when one is running:
 {"message":"Recipe aspirin is running. Stop it first.","response":"error"}
 ```
 
-#### Stop
+### Stop
 
 `/stop` - Stops the current recipe
 
-## Recpies
+## Recipes
+
+The microlab by default loads recipes from files located in `solderless-microlab/backend/recipes/files/`. See `solderless-microlab/backend/recipes/base.py` for information on the format required for recipe files.

@@ -14,6 +14,9 @@ give a good idea of what the plan object looks like. For reference we will also 
 plan object here.
 
 plan object
+    title
+        Name of the recipe that is displayed to the user
+        Needs to be a unique string
     steps
         array of:
             object
@@ -27,6 +30,18 @@ plan object
                 next
                     The nr id of the next step to execute.
                     This is ignored if the step has options.
+                icon
+                    Optional.
+                    String indicating which icon to display on the frontend.
+                    If unspecified defaults to the last displayed icon, or a
+                    spinning logo if an icon was never specified.
+                    One of:
+                        reaction_chamber
+                        load_syringe
+                        inspect
+                        dispensing
+                        temperature
+                        reaction_complete
                 options
                     array of:
                         object
