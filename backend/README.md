@@ -8,7 +8,7 @@ See README.md in the root directory for instructions on running the service.
 
 ## API
 
-The Microlab backend API includes several enpoints described below. For more details, see `solderless-microlab/backend/api/routes.py`
+The Microlab backend API includes several endpoints described below. For more details, see `solderless-microlab/backend/api/routes.py`
 
 ### Status
 
@@ -52,7 +52,7 @@ or, if you try to start a recipe when one is running:
 {"message":"Recipe aspirin is running. Stop it first.","response":"error"}
 ```
 
-#### Stop
+### Stop
 
 `/stop` - Stops the current recipe
 
