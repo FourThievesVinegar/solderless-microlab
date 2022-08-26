@@ -21,6 +21,7 @@ Example response:
     "message":"Place 2.0 g salicylic acid in chamber",
     "options":["Done"],
     "recipe":"aspirin",
+    "icon":"reaction_chamber",
     "status":"user_input",
     "step":0
 }
