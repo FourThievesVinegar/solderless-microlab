@@ -123,8 +123,10 @@ To run the software without a functioning hardware environment, set the followin
 In `/solderless-microlab/backend/config.py`:
 
 ```
-celeryMode = 'test'
+hardwarePackage = 'simulation'
 ```
+
+The hardwareSpeedup option can be modified to make steps that take a long time execute quicker for testing purposes.
 
 ## API Spec
 
