@@ -2,6 +2,7 @@ from recipes import base
 
 recipe = base.Recipe(
     {
+        'title': 'aspirin',
         'steps': [
             {
                 'nr': 0,
@@ -25,7 +26,7 @@ recipe = base.Recipe(
                 'nr': 3,
                 'message': 'Dispensing acetic anhydride...',
                 'next': 4,
-                'baseTask': ' pump',
+                'baseTask': 'pump',
                 'parameters': {'pump': 'A', 'volume': 5},
                 'icon': 'dispensing',
             },
@@ -33,7 +34,7 @@ recipe = base.Recipe(
                 'nr': 4,
                 'message': 'Dispensing H2SO4...',
                 'next': 5,
-                'baseTask': ' pump',
+                'baseTask': 'pump',
                 'parameters': {'pump': 'B', 'volume': 0.1},
                 'icon': 'dispensing',
             },
@@ -41,7 +42,7 @@ recipe = base.Recipe(
                 'nr': 5,
                 'message': 'Stirring...',
                 'next': 6,
-                'baseTask': ' stir',
+                'baseTask': 'stir',
                 'parameters': {'time': 30},
             },
             {
@@ -94,7 +95,7 @@ recipe = base.Recipe(
                 'nr': 12,
                 'message': 'Dispensing deionized water...',
                 'next': 13,
-                'baseTask': ' pump',
+                'baseTask': 'pump',
                 'parameters': {'pump': 'A', 'volume': 50},
                 'icon': 'syringe',
             },
