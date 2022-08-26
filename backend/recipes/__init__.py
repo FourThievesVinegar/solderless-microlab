@@ -18,15 +18,9 @@ from os import listdir
 from os.path import isfile, join
 from recipes import state
 
-# Not used for now. Recipe list hardcoded below
-
 
 def getList():
     """
-    Not currently used. The list of recipes is currently hardcoded.
-    This method works and the code should work with it but due to possible bugs
-    from the dynamic nature of this method it has been decided to hardcode the
-    recipes for now.
     :return:
     A list of modules in the config.recipesPackages.
     It is assumed that these are all recipes.
@@ -53,8 +47,8 @@ list = getList()
 
 def refresh():
     """
-    Not currently used. Refreshes the dynamic list of recipes at runtime.
-    This would allow recipes to be downloaded and imported at runtime.
+    Refreshes the dynamic list of recipes at runtime.
+    This allows recipes to be downloaded and imported at runtime.
     :return:
     """
     global list
