@@ -16,8 +16,7 @@ def listRecipes():
     list
         a list containing the names of the recipes. ex: ['recipe1','recipe2']
     """
-    recipes.refresh()
-    recipeNames = list(map(lambda recipe: recipe['title'], recipes.list))
+    recipeNames = list(map(lambda recipe: recipe['title'], recipes.getRecipeList()))
     return jsonify(recipeNames)
 
 

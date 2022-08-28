@@ -17,7 +17,7 @@ from recipes import state
 from recipes.base import Recipe
 
 
-def getList():
+def getRecipeList():
     """
     :return:
     A list of modules in the config.recipesPackages.
@@ -25,35 +25,19 @@ def getList():
     """
     path = './' + state.package.replace('.', '/')
     files = [f for f in listdir(path) if isfile(join(path, f))]
-    list = []
+    recipeList = []
 
     for f in files:
         if f.endswith('.json'):
             try:
-                list.append(json.load(open(join(path, f))))
+                recipeList.append(json.load(open(join(path, f))))
             except json.JSONDecodeError:
                 print("Error loading recipe file: " + f + ". File is not in proper JSON format")
         # This doesn't actually work yet because .4tv are not importable as modules
         if f.endswith('.4tv'):
-            list.append(f[:-4])
+            recipeList.append(f[:-4])
 
-    return list
-
-
-list = getList()
-# Hardcoded list of recipes.
-# list = ['aspirin']
-
-
-def refresh():
-    """
-    Refreshes the dynamic list of recipes at runtime.
-    This allows recipes to be downloaded and imported at runtime.
-    :return:
-    """
-    global list
-    list = getList()
-
+    return recipeList
 
 def getRecipeByName(name):
     """
@@ -63,9 +47,9 @@ def getRecipeByName(name):
     :return:
     The recipe object or None if no recipe with given name could be found
     """
-    global list
+    recipeList = getRecipeList()
 
-    recipe = next(filter(lambda recipe: recipe['title'] == name, list), None)
+    recipe = next(filter(lambda recipe: recipe['title'] == name, recipeList), None)
 
     return recipe
 
@@ -81,7 +65,6 @@ def start(name):
     (True, '') on success.
     (False, message) on failure.
     """
-    global list
 
     # If we are currently running a recipe, check if it is complete.
     if not (state.currentRecipe is None):
