@@ -87,7 +87,7 @@ def start(name):
     if not (state.currentRecipe is None):
         recipeMessage = state.currentRecipe.getStatus()
         if not recipeMessage['status'] == 'complete':
-            return False, 'Recipe ' + state.currentRecipe + ' is running. Stop it first.'
+            return False, 'Recipe ' + state.currentRecipe.plan['title'] + ' is running. Stop it first.'
 
     # Check that it's a valid recipe.
     recipe = getRecipeByName(name)
