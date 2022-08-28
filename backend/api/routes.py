@@ -8,7 +8,7 @@ import recipes
 
 
 @app.route('/list')
-def list():
+def listRecipes():
     """
     List all available recipes
 
@@ -17,13 +17,14 @@ def list():
         a list containing the names of the recipes. ex: ['recipe1','recipe2']
     """
     recipes.refresh()
-    return jsonify(recipes.list)
+    recipeNames = list(map(lambda recipe: recipe['title'], recipes.list))
+    return jsonify(recipeNames)
 
 
 @app.route('/recipe/<name>')
 def sendRecipe(name):
-    recipe = __import__("recipes.files." + name, globals(), locals(), name)
-    return jsonify(recipe.recipe.plan)
+    recipe = recipes.getRecipeByName(name)
+    return jsonify(recipe)
 
 
 @app.route('/status')
