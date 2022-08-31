@@ -70,7 +70,7 @@ export function Status(props) {
                     {x}
                   </Button>
                 ))}
-                {status.status === 'running' && (
+                {(status.status === 'running' || status.status === 'user_input') && (
                   <Button color="red" onClick={() => handleStopButtonClick()}>
                     Stop Reaction
                   </Button>
