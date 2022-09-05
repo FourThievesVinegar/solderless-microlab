@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/api_dockerfile
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    # depends_on: 
+    #   - redis
+    # environment:
+    #   REDIS_HOST: redis
+    #   REDIS_PORT: 6379    
+    networks:
+      - backend
+
+  gui:
+    build:
+      context: .
+      dockerfile: docker/gui_dockerfile
+    depends_on: 
+      - api
+    ports:
+      - "8080:80"
+    restart: unless-stopped 
+    networks:
+      - backend
+ 
+  # redis:
+  #   image: "redis:alpine"
+  #   restart: unless-stopped
+  #   networks:
+  #     - backend
+
+networks:
+  backend:

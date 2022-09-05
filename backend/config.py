@@ -3,7 +3,7 @@ This is the config file. See the comments for each option.
 """
 
 # The URL used by the celery backend to update the state in the app.
-localUrl = 'http://localhost:5000/'
+localUrl = 'http://localhost:8081/'
 
 # Which hardware implementation to use. Currently only 'real' or 'simulation' are supported.
 #hardwarePackage = 'real'

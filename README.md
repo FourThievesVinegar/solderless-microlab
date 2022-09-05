@@ -4,6 +4,21 @@ An open source jacketed lab reactor made from off-the-shelf components you can b
 
 Read the motivation behind the project here: [docs/motivation.md](docs/motivation.md)
 
+## Docker Development
+For ease of setup/experimentation we added docker containers for both the GUI and the API.
+
+```bash
+git clone https://github.com/FourThievesVinegar/solderless-microlab.git
+cd solderless-microlab
+
+## To run API & GUI
+docker-compose up --build gui
+
+## Alternatively
+## To run just the API
+docker-compose up --build gui
+```
+
 ## Setup
 
 Clone the repo:
