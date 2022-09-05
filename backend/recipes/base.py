@@ -1,13 +1,10 @@
 """
-Common code for recipes. While it is not strictly necessary for a recipe to extend this class,
-it does make things a lot easier as it provides recipe step management. If you really don't
-want to inherit from this class just create a class with the same name and interface in your
-recipe file.
+Common code for recipes, handles running recipe files.
 
-If you do use this class, the recipe steps are defined in a plan object and they can be strung
-together with "goto" statements. Each recipe step also has the option to call celery with a
-method to execute. The method would be defined in the actual recipe file to allow for arbitrary
-hardware functionality.
+The recipe steps are defined in a json file and they can be strung together with "goto" statements.
+Each recipe step can also call a function that changes the desired state of the hardware. These methods are defined
+at the bottom of this file and the parameters they accept can be seen in the "baseTask" definition in the
+documentation of the plan object below.
 
 You'll probably want to take a look at sample recipe in the recipes.files package. This will
 give a good idea of what the plan object looks like. For reference we will also document the
@@ -50,11 +47,6 @@ plan object
                             next
                                 The nr id of the step to execute if the
                                 user picks this option.
-                task
-                    Name of the function to execute as a celery task.
-                    This function should be implemented in the same package
-                    that defines the plan.
-                    TODO: Stop requirements once I figure them out.
                 baseTask
                     Name of the function to execute in the recipes.base module.
                     One of:
@@ -77,7 +69,7 @@ plan object
                     is a dictionary that will be passed as the single
                     parameter to this function.
                 done
-                    Always set to True and signals that the recipe was
+                    Always set to true and signals that the recipe was
                     successfully completed.
 """
 
@@ -241,7 +233,7 @@ class Recipe:
         if('icon' in step):
             self.icon = step['icon']
 
-        if ('task' in step) or ('baseTask' in step):
+        if 'baseTask' in step and step['baseTask'] != 'humanTask':
             if ('task' in step):
                 task = step['task']
                 base = False

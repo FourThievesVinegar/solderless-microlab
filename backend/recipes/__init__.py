@@ -6,20 +6,18 @@ The current running recipe is kept in recipes.state.currentRecipe. The reason th
 module is to avoid circular references as this module needs to import recipes.celery and
 recipes.celery needs to import the currentRecipe.
 
-The idea here is that the currentRecipe represents the module name of the recipe. Each recipe
-implements a standard interface defined in recipes.base. This module then routes the requests
-from the API to appropriate package by simply importing the appropriate package at runtime.
-
-The directory the recipes reside is configured in config.recipesPackage. All modules in that
+The directory the recipes reside is configured in config.recipesPackage. All json files in that
 directory should be considered recipes.
 """
 
+import json
 from os import listdir
 from os.path import isfile, join
 from recipes import state
+from recipes.base import Recipe
 
 
-def getList():
+def getRecipeList():
     """
     :return:
     A list of modules in the config.recipesPackages.
@@ -27,33 +25,33 @@ def getList():
     """
     path = './' + state.package.replace('.', '/')
     files = [f for f in listdir(path) if isfile(join(path, f))]
-    list = []
+    recipeList = []
 
     for f in files:
-        if not f.startswith('__init__'):
-            if f.endswith('.py'):
-                list.append(f[:-3])
-            # This doesn't actually work yet because .4tv are not importable as modules
-            if f.endswith('.4tv'):
-                list.append(f[:-4])
+        if f.endswith('.json'):
+            try:
+                recipeList.append(json.load(open(join(path, f))))
+            except json.JSONDecodeError:
+                print("Error loading recipe file: " + f + ". File is not in proper JSON format")
+        # This doesn't actually work yet because .4tv are not importable as modules
+        if f.endswith('.4tv'):
+            recipeList.append(f[:-4])
 
-    return list
+    return recipeList
 
-
-list = getList()
-# Hardcoded list of recipes.
-# list = ['aspirin']
-
-
-def refresh():
+def getRecipeByName(name):
     """
-    Refreshes the dynamic list of recipes at runtime.
-    This allows recipes to be downloaded and imported at runtime.
+    Gets the full recipe object from it's name.
+    :param name:
+    The name of the recipe. This is it's title in the json file.
     :return:
+    The recipe object or None if no recipe with given name could be found
     """
-    global list
-    list = getList()
+    recipeList = getRecipeList()
 
+    recipe = next(filter(lambda recipe: recipe['title'] == name, recipeList), None)
+
+    return recipe
 
 def start(name):
     """
@@ -62,31 +60,27 @@ def start(name):
     A recipe can only be started if the current state of the machine is idle or complete
     and the recipe exists in the list of recipes.
     :param name:
-    The name of the recipe. This must be part of recipes.list list.
+    The name of the recipe. Must be the title of an element of the recipes.list list.
     :return:
     (True, '') on success.
     (False, message) on failure.
     """
-    global list
 
     # If we are currently running a recipe, check if it is complete.
     if not (state.currentRecipe is None):
-        # Dynamically import the recipe based on the name in status.currentRecipe.
-        exec('from ' + state.package + '.' +
-             state.currentRecipe + ' import recipe')
-        # Need to use eval to be able to make the call to the dynamically imported recipe.
-        recipeMessage = eval('recipe.getStatus()')
+        recipeMessage = state.currentRecipe.getStatus()
         if not recipeMessage['status'] == 'complete':
-            return False, 'Recipe ' + state.currentRecipe + ' is running. Stop it first.'
+            return False, 'Recipe ' + state.currentRecipe.plan['title'] + ' is running. Stop it first.'
 
     # Check that it's a valid recipe.
-    if not (name in list):
+    recipe = getRecipeByName(name)
+    if recipe is None:
         return False, 'Recipe unknown.'
 
     # Start running the recipe
-    state.currentRecipe = name
-    exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
-    currentStep = eval('recipe.start()')
+    state.currentRecipe = Recipe(recipe)
+
+    state.currentRecipe.start()
 
     return True, ''
 
@@ -121,7 +115,7 @@ def status():
     """
     message = {
         'status': 'idle',
-        'recipe': state.currentRecipe,
+        'recipe': None,
         'step': -1,
         'message': None,
         'options': [],
@@ -130,12 +124,10 @@ def status():
     if state.currentRecipe == None:
         return message
 
-    # Dynamically import the recipe based on the name in status.currentRecipe.
-    exec('from ' + state.package + '.' + state.currentRecipe + ' import recipe')
-    # Need to use eval to be able to make the call to the dynamically imported recipe.
-    recipeMessage = eval('recipe.updateStatus()')
+    recipeMessage = state.currentRecipe.updateStatus()
     message['status'] = recipeMessage['status']
     message['step'] = recipeMessage['step']
+    message['recipe'] = state.currentRecipe.plan['title']
     message['message'] = recipeMessage['message']
     message['options'] = recipeMessage['options']
     message['icon'] = recipeMessage['icon']
@@ -154,26 +146,22 @@ def stop():
     """
 
     if not state.currentRecipe is None:
-        exec('from ' + state.package + '.' +
-             state.currentRecipe + ' import recipe')
-        exec('recipe.stop()')
+        state.currentRecipe.stop()
         state.currentRecipe = None
 
 
 def selectOption(option):
     """
-    Pass in the use selected option from a recipe step.
+    Pass in the user selected option from a recipe step.
 
     The current step must have provided a list of options through the /status API
     and the option must be part of the list provided as an option.
     :param option:
-    The selected option. It must be part of the options list as retrived via /status
+    The selected option. It must be part of the options list as retrieved via /status
     :return:
     (True,'') on success
     (False,message) on failure
     """
     if not state.currentRecipe is None:
-        exec('from ' + state.package + '.' +
-             state.currentRecipe + ' import recipe')
-        return eval('recipe.selectOption(option)')
+        return state.currentRecipe.selectOption(option)
     return False, 'No recipe running.'
