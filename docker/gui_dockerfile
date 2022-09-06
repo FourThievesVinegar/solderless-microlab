@@ -8,6 +8,6 @@ RUN yarn
 ADD gui .
 RUN yarn build
 
-FROM nginx:1.12-alpine
+FROM nginx:1.23.1-alpine
 COPY --from=build-deps /gui/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
