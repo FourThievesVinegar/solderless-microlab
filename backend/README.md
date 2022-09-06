@@ -57,6 +57,12 @@ or, if you try to start a recipe when one is running:
 
 `/stop` - Stops the current recipe
 
+### uploadRecipe
+
+`/uploadRecipe` - Upload a JSON file to the microlab.
+
+POST request, file must be valid JSON.
+
 ## Recipes
 
 The microlab by default loads recipes from files located in `solderless-microlab/backend/recipes/files/`. See `solderless-microlab/backend/recipes/base.py` for information on the format required for recipe files.

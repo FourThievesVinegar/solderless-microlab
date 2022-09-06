@@ -3,8 +3,11 @@ Module defining API.
 """
 
 from api import app
-from flask import jsonify
+from flask import jsonify, request
+from werkzeug.utils import secure_filename
+from os.path import join
 import recipes
+import json
 
 
 @app.route('/list')
@@ -133,3 +136,30 @@ def selectOption(name):
         return jsonify({'response': 'ok'})
     else:
         return jsonify({'response': 'error', 'message': msg})
+
+@app.route('/uploadRecipe', methods = ['POST'])
+def uploadRecipe():
+    """
+    Uploads a file to the recipes folder, file must be valid JSON.
+
+    :return:
+    object
+        response
+            One of:
+                ok
+                error
+        message
+            Only present if response is "error" and there is a message to present to the user.
+    """
+    
+    f = request.files['File']
+    if f.mimetype != 'application/json':
+        return jsonify({'response': 'error', 'message': "Recipe is not a json file."}), 400
+    try:
+        json.load(f.stream)
+    except Exception as e:
+        return jsonify({'response': 'error', 'message': "File does not contain valid JSON."}), 400
+    #reading the stream above sets the stream position to EOF, need to go back to start
+    f.stream.seek(0)
+    f.save(join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    return jsonify({'response': 'ok'})

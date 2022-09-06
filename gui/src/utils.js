@@ -29,3 +29,13 @@ export const startRecipe = name => {
     .then(response => response.json())
     .then(data => console.log(data))
 }
+
+export const uploadRecipe = file => {
+  const formData = new FormData();
+  formData.append("File", file);
+  fetch(apiUrl + 'uploadRecipe', {
+    method: 'POST',
+    body: formData,
+  }).then(response => response.json())
+    .then(data => console.log(data))
+}
