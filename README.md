@@ -6,6 +6,7 @@ Read the motivation behind the project here: [docs/motivation.md](docs/motivatio
 
 ## Docker Development
 For ease of setup/experimentation we added docker containers for both the GUI and the API.
+If you don't have docker-compose installed on your system you can install docker desktop following [these docs](https://docs.docker.com/compose/install/)
 
 ```bash
 git clone https://github.com/FourThievesVinegar/solderless-microlab.git
