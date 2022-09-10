@@ -33,7 +33,7 @@ export const startRecipe = name => {
 export const uploadRecipe = file => {
   const formData = new FormData();
   formData.append("File", file);
-  fetch(apiUrl + 'uploadRecipe', {
+  return fetch(apiUrl + 'uploadRecipe', {
     method: 'POST',
     body: formData,
   }).then(response => response.json())
