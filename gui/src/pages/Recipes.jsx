@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 
 import { listRecipes } from '../utils'
+import { RecipeUpload } from '../components/RecipeUpload'
 
 export function Recipes() {
   const [recipies, setRecipies] = useState(false)
@@ -23,6 +24,8 @@ export function Recipes() {
               {recipe.toUpperCase()}
             </Button>
           ))}
+          <h4>Upload a Recipe</h4>
+          <RecipeUpload />
         </div>
       ) : (
         <p>Loading...</p>
