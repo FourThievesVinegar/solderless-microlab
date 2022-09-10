@@ -31,5 +31,5 @@ celeryMode = 'real'     # 'real' and 'test' are supported. In 'test' mode
                         # it doesn't actually send the requests to the celery
                         # server it just runs them in the same thread. This is
                         # only useful for testing
-celeryBackend = 'redis://localhost:6379/0'
-celeryBroker = 'redis://localhost:6379/0'
+celeryBackend = 'redis://redis:6379/0'
+celeryBroker = 'redis://redis:6379/0'

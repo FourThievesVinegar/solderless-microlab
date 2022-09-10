@@ -8,11 +8,12 @@ services:
     ports:
       - "8081:8081"
     restart: unless-stopped
-    # depends_on: 
-    #   - redis
-    # environment:
-    #   REDIS_HOST: redis
-    #   REDIS_PORT: 6379    
+    depends_on: 
+      - redis
+      - worker
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379    
     networks:
       - backend
 
@@ -28,11 +29,29 @@ services:
     networks:
       - backend
  
-  # redis:
-  #   image: "redis:alpine"
-  #   restart: unless-stopped
-  #   networks:
-  #     - backend
+  worker:
+    build:
+      context: .
+      dockerfile: docker/api_dockerfile
+    hostname: worker
+    entrypoint: celery
+    command: -A recipes worker --loglevel=INFO
+    environment:
+      - CACHE_REDIS_HOST="redis"
+    volumes:
+      - ./backend:/app
+    links:
+      - redis
+    depends_on:
+      - redis
+    networks:
+      - backend
+
+  redis:
+    image: "redis:alpine"
+    restart: unless-stopped
+    networks:
+      - backend
 
 networks:
   backend:
