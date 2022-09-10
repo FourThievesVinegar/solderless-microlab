@@ -17,7 +17,7 @@ docker-compose up --build gui
 
 ## Alternatively
 ## To run just the API
-docker-compose up --build gui
+docker-compose up --build api
 ```
 
 ## Setup
