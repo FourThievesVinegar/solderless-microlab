@@ -1,0 +1,8 @@
+FROM python:3.8-slim-buster
+
+WORKDIR /app
+COPY backend/requirements.txt .
+RUN pip3 install -r requirements.txt
+
+ADD backend/. .
+CMD [ "python3", "main.py"]

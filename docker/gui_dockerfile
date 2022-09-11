@@ -1,0 +1,13 @@
+FROM node:18.8.0 as build-deps
+WORKDIR /gui
+
+ENV NODE_OPTIONS=--openssl-legacy-provider
+COPY gui/package.json .
+COPY gui/yarn.lock .
+RUN yarn
+ADD gui .
+RUN yarn build
+
+FROM nginx:1.23.1-alpine
+COPY --from=build-deps /gui/build /usr/share/nginx/html
+CMD ["nginx", "-g", "daemon off;"]

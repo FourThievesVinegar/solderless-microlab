@@ -1,4 +1,4 @@
-export const apiUrl = 'http://' + window.location.hostname + ':5000/';
+export const apiUrl = 'http://' + window.location.hostname + ':8081/';
 
 export const getStatus = (setter) => {
   fetch(apiUrl + "status")
