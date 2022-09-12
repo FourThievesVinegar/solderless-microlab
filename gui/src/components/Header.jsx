@@ -7,6 +7,8 @@ export function Header(props) {
 
   const [showMenu, setShowMenu] = useState(false)
 
+  const hideMenu = () => setShowMenu(false)
+
   return (
     <>
       <section>
@@ -30,14 +32,14 @@ export function Header(props) {
       <aside className={`main-menu ${showMenu ? 'active' : ''}`}>
         <h2>Main menu</h2>
         <div className="button-list">
-          <Button as={Link} to="/settings">
+          <Button as={Link} to="/settings" onClick={hideMenu}>
             Settings
           </Button>
-          <Button as={Link} to="/reaction-history">
+          <Button as={Link} to="/reaction-history" onClick={hideMenu}>
             Reaction History
           </Button>
           {/* TODO: disable this button if a recipe is running */}
-          <Button as={Link} to="/tests">
+          <Button as={Link} to="/tests" onClick={hideMenu}> 
             Test Hardware
           </Button>
         </div>
