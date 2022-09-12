@@ -32,6 +32,9 @@ export function Header(props) {
       <aside className={`main-menu ${showMenu ? 'active' : ''}`}>
         <h2>Main menu</h2>
         <div className="button-list">
+          <Button as={Link} to="/recipes" onClick={hideMenu}>
+            Recipes
+          </Button>
           <Button as={Link} to="/settings" onClick={hideMenu}>
             Settings
           </Button>
