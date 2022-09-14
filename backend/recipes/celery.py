@@ -153,4 +153,13 @@ def isTaskComplete():
 
     return True
 
+def stopTask():
+    """
+    Stop the currently running task.
+    :return:
+        None
+    """
+    if result is not None:
+        result.revoke(terminate=True)
+
 

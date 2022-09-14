@@ -108,7 +108,6 @@ class Recipe:
         """
         Stop running the recipe.
 
-        TODO: figure out how to stop any running celery tasks
         :return:
         None
         """
@@ -119,6 +118,7 @@ class Recipe:
         self.time = ''
         hardware.turnHeaterOff()
         hardware.turnCoolerOff()
+        celery.stopTask()
 
     def getStatus(self):
         """
