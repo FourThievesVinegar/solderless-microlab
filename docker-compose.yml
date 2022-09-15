@@ -37,7 +37,10 @@ services:
     entrypoint: celery
     command: -A recipes worker --loglevel=INFO
     environment:
-      - CACHE_REDIS_HOST="redis"
+      CACHE_REDIS_HOST: "redis"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      API_HOST: api
     volumes:
       - ./backend:/app
     links:
