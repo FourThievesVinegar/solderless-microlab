@@ -5,6 +5,7 @@ An open source jacketed lab reactor made from off-the-shelf components you can b
 Read the motivation behind the project here: [docs/motivation.md](docs/motivation.md)
 
 ## Docker Development
+
 For ease of setup/experimentation we added docker containers for both the GUI and the API.
 If you don't have docker-compose installed on your system you can install docker desktop following [these docs](https://docs.docker.com/compose/install/)
 
@@ -19,6 +20,8 @@ docker-compose up --build gui
 ## To run just the API
 docker-compose up --build api
 ```
+
+If you're running docker with a hardware setup you'll need to edit docker-compose.yml and uncomment the lines specified in the file.
 
 ## Setup
 

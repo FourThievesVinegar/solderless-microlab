@@ -14,6 +14,12 @@ services:
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379    
+# Uncomment the following lines if running against actual hardware
+#      HARDWARE_PACKAGE: real
+#    devices:
+#      - /dev/gpiomem:/dev/gpiomem
+#        /dev/ttyUSB0:/dev/ttyUSB0
+#        /dev/ttyUSB1:/dev/ttyUSB1
     networks:
       - backend
 
@@ -41,6 +47,12 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       API_HOST: api
+# Uncomment the following lines if running against actual hardware
+#      HARDWARE_PACKAGE: real
+#    devices:
+#      - /dev/gpiomem:/dev/gpiomem
+#        /dev/ttyUSB0:/dev/ttyUSB0
+#        /dev/ttyUSB1:/dev/ttyUSB1
     volumes:
       - ./backend:/app
     links:
