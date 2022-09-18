@@ -75,6 +75,8 @@ plan object
 
 from recipes import celery
 import hardware
+import threading
+
 
 
 class Recipe:
@@ -85,6 +87,8 @@ class Recipe:
     icon = ''
     time = ''
     currentRecipe = None
+    mutex = threading.Lock()
+
     def __init__(self, plan):
         """
         Constructor. Saves the plan.
@@ -163,17 +167,17 @@ class Recipe:
         object
             Same as getStatus()
         """
+        self.mutex.acquire()
         if self.status == 'running':
             if celery.isTaskComplete():
                 currentStep = self.plan['steps'][self.step]
                 if('done' in currentStep) and (currentStep['done'] == True):
                     self.stop()
-                    return self.getStatus()
                 else:
                     if 'next' in currentStep:
                         self.step = currentStep['next']
                         self.runStep()
-
+        self.mutex.release()
         return self.getStatus()
 
     def selectOption(self, optionValue):
