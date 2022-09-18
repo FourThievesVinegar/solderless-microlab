@@ -1,0 +1,12 @@
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  docker_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build docker containers
+        run: docker-compose build
