@@ -11,12 +11,7 @@ export function Status(props) {
   const [loading, setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(-1)
   const [stepTime, setStepTime] = useState()
-  const [elapsedTime, setElapsedTime] = useState(0)
   const history = useHistory()
-
-  useInterval(() => {
-    setElapsedTime(elapsedTime + 1)
-  }, 1000)
 
   const handleOptionButtonClick = option => {
     if (loading) return
@@ -40,9 +35,8 @@ export function Status(props) {
     setLoading(false)
     if (status && status.step !== currentStep) {
       setCurrentStep(status.step)
-      setElapsedTime(0)
-      if (status.time && status.time !== '') {
-        setStepTime(status.time)
+      if (status.stepCompletionTime) {
+        setStepTime(new Date(status.stepCompletionTime))
         return
       }
       setStepTime(null)
@@ -60,7 +54,9 @@ export function Status(props) {
               <Container textAlign="center">
                 <StatusIcon icon={status.icon} />
                 <p className="status-message">{status.message}</p>
-                {stepTime && <p className="status-message">{`${humanizeDuration((stepTime - elapsedTime) * 1000)}`}</p>}
+                {stepTime && <p className="status-message">
+                    {`${humanizeDuration(stepTime - new Date(), { round: true })}`}
+                  </p>}
               </Container>
             </Grid.Column>
             <Grid.Column className="status-page-menu">

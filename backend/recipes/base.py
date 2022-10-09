@@ -76,7 +76,7 @@ plan object
 from recipes import celery
 import hardware
 import threading
-
+from datetime import datetime, timedelta, timezone
 
 
 class Recipe:
@@ -85,7 +85,7 @@ class Recipe:
     status = 'idle'
     options = []
     icon = ''
-    time = ''
+    stepCompletionTime = None
     currentRecipe = None
     mutex = threading.Lock()
 
@@ -119,7 +119,7 @@ class Recipe:
         self.status = 'idle'
         self.message = ''
         self.options = []
-        self.time = ''
+        self.stepCompletionTime = None
         hardware.turnHeaterOff()
         hardware.turnCoolerOff()
         celery.stopTask()
@@ -148,6 +148,9 @@ class Recipe:
                 The message that should be displayed to the user for the currently running step
             options
                 null or a list of strings to display to the user as selectable options.
+            stepCompletionTime
+                An ISO date string for when the current step is expected to be completed, or None
+                if unknown. 
         """
         ret = {
             'status': self.status,
@@ -155,7 +158,7 @@ class Recipe:
             'message': self.message,
             'options': self.options,
             'icon': self.icon,
-            'time': self.time,
+            'stepCompletionTime': self.stepCompletionTime,
         }
         return ret
 
@@ -253,9 +256,10 @@ class Recipe:
                 return False
 
         if('parameters' in step) and ('time' in step['parameters']):
-            self.time = step['parameters']['time']
+            duration = timedelta(seconds=step['parameters']['time'])
+            self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
         else:
-            self.time = ''
+            self.stepCompletionTime = None
 
         if 'done' in step:
             if step['done'] == True:
