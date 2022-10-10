@@ -112,6 +112,9 @@ def status():
                     A system error has occurred.
         icon
             The icon to show in the UI. See StatusIcon.jsx for supported icons.
+        stepCompletionTime
+            An ISO date string for when the current step is expected to be completed,
+            or null if unknown. 
     """
     message = {
         'status': 'idle',
@@ -119,6 +122,7 @@ def status():
         'step': -1,
         'message': None,
         'options': [],
+        'stepCompletionTime': None
     }
 
     if state.currentRecipe == None:
@@ -131,7 +135,7 @@ def status():
     message['message'] = recipeMessage['message']
     message['options'] = recipeMessage['options']
     message['icon'] = recipeMessage['icon']
-    message['time'] = recipeMessage['time']
+    message['stepCompletionTime'] = recipeMessage['stepCompletionTime']
 
     return message
 
