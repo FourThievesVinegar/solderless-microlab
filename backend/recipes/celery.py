@@ -9,14 +9,11 @@ It has 2 modes of operation which are configured in config.celeryMode.
 
 The only method that needs to be used by the base recipe is runTask(task,parameters). It is documented below.
 
-The module is quite simplistic and assumes that only one task is running at any given time.
-The link to the task is kept in a global variable called result.
-
 """
 
 import requests
 import config
-from recipes import state
+from recipes import state, tasks
 
 from celery import Celery
 from celery.utils.log import get_task_logger
@@ -40,19 +37,10 @@ elif config.celeryMode == 'test':
     from tests import celeryMock
     app = celeryMock
 
-result = None
-
-
 @app.task
-def runInBackground(package,currentRecipe,task,parameters):
+def runInBackground(task, parameters):
     """
     Celery task for running a recipe task in the background.
-
-    :param package:
-        Base package for the recipe modules.
-
-    :param currentRecipe:
-        Recipe module under which to run the task.
 
     :param task:
         Task to actually run. This is really just a method to run.
@@ -63,8 +51,7 @@ def runInBackground(package,currentRecipe,task,parameters):
     :return:
         Returns any object returned by the recipe task. This is generally None.
     """
-    exec('from ' + package + ' import ' + currentRecipe)
-    return eval(currentRecipe + '.' + task + '(parameters)')
+    return tasks.tasks[task](parameters)
 
 
 @app.task
@@ -79,31 +66,10 @@ def updateStatus(*args):
     """
     requests.get(url=config.localUrl + '/status')
 
-
-def runBaseTask(task,parameters):
-    """
-    Run a base task/function in the background through Celery.
-    These would be define in the recipes.base module
-
-    :param task:
-        Task to run under the currently running recipe.
-
-    :param parameters:
-        Parameters to pass to the task. The actual object definition depends on the task.
-
-    :return:
-        True
-            If the celery task was started successfully.
-        False
-            If there is an already running Celery task.
-    """
-    runTask(task,parameters,True)
-
-
-def runTask(task,parameters,base = False):
+def runTask(task, parameters):
     """
     Run a recipe task/function in the background through Celery.
-    These would be defined the recipe file itself.
+    These are defined in the tasks.py file.
 
     :param task:
         Task to run under the currently running recipe.
@@ -111,55 +77,7 @@ def runTask(task,parameters,base = False):
     :param parameters:
         Parameters to pass to the task. The actual object definition depends on the task.
 
-    :param base:
-        Is this task part of the base module or in the recipe module.
-
     :return:
-        True
-            If the celery task was started successfully.
-        False
-            If there is an already running Celery task.
+        A celery.result.AsyncResult for the task being executed
     """
-    global result
-    if isTaskComplete():
-        if base:
-            package = 'recipes'
-            recipe = 'base'
-        else:
-            package = state.package
-            recipe = state.currentRecipe
-        result = runInBackground.apply_async((package, recipe, task, parameters),link=updateStatus.s())
-        return True
-
-    return False
-
-
-def isTaskComplete():
-    """
-    Determine if the currently running task has completed.
-    :return:
-    True
-        Task is complete.
-    False
-        Task is still running.
-    """
-    if not(result is None):
-        res = app.AsyncResult(result.task_id)
-        if res.ready():
-            res = None
-            return True
-        else:
-            return False
-
-    return True
-
-def stopTask():
-    """
-    Stop the currently running task.
-    :return:
-        None
-    """
-    if result is not None:
-        result.revoke(terminate=True)
-
-
+    return runInBackground.apply_async((task, parameters), link=updateStatus.s())
