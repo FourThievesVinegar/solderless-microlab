@@ -47,27 +47,30 @@ plan object
                             next
                                 The nr id of the step to execute if the
                                 user picks this option.
-                baseTask
-                    Name of the function to execute in the recipes.tasks module.
-                    One of:
-                        heat
-                            parameters: {'temp': 65}
-                        cool
-                            parameters: {'temp': 5}
-                        maintainCool
-                            parameters: {'time': 600, 'temp': 5, 'tolerance': 2}
-                        maintainHeat
-                            parameters: {'time': 600, 'temp': 65, 'tolerance': 2}
-                        maintain
-                            parameters: {'time': 600, 'temp': 65, 'tolerance': 2, 'type': 'heat'}
-                        pump
-                            parameters: {'pump':'A','volume': 50}
-                        stir
-                            parameters: {'time': 60}
-                parameters
-                    The parameters to pass to the task function. This
-                    is a dictionary that will be passed as the single
-                    parameter to this function.
+                tasks
+                    array of:
+                    object
+                        baseTask
+                            Name of the function to execute in the recipes.tasks module.
+                            One of:
+                                heat
+                                    parameters: {'temp': 65}
+                                cool
+                                    parameters: {'temp': 5}
+                                maintainCool
+                                    parameters: {'time': 600, 'temp': 5, 'tolerance': 2}
+                                maintainHeat
+                                    parameters: {'time': 600, 'temp': 65, 'tolerance': 2}
+                                maintain
+                                    parameters: {'time': 600, 'temp': 65, 'tolerance': 2, 'type': 'heat'}
+                                pump
+                                    parameters: {'pump':'A','volume': 50}
+                                stir
+                                    parameters: {'time': 60}
+                        parameters
+                            The parameters to pass to the task function. This
+                            is a dictionary that will be passed as the single
+                            parameter to this function.
                 done
                     Always set to true and signals that the recipe was
                     successfully completed.
@@ -87,7 +90,7 @@ class Recipe:
     icon = ''
     stepCompletionTime = None
     currentRecipe = None
-    currentTask = None
+    currentTasks = []
     mutex = threading.Lock()
 
     def __init__(self, plan):
@@ -123,7 +126,7 @@ class Recipe:
         self.stepCompletionTime = None
         hardware.turnHeaterOff()
         hardware.turnCoolerOff()
-        self.stopTask()
+        self.stopTasks()
 
     def getStatus(self):
         """
@@ -173,7 +176,7 @@ class Recipe:
         """
         self.mutex.acquire()
         if self.status == 'running':
-            if self.isTaskComplete():
+            if self.areTasksComplete():
                 currentStep = self.plan['steps'][self.step]
                 if('done' in currentStep) and (currentStep['done'] == True):
                     self.stop()
@@ -228,6 +231,7 @@ class Recipe:
         print('Running step ' + str(self.step))
         step = self.plan['steps'][self.step]
         self.message = step['message']
+        self.stepCompletionTime = None
         options = []
 
         if 'options' in step:
@@ -241,15 +245,21 @@ class Recipe:
         if('icon' in step):
             self.icon = step['icon']
 
-        if 'baseTask' in step and step['baseTask'] != 'humanTask':
-            self.currentTask = celery.runTask(step['baseTask'], step['parameters'])
-            self.status = 'running'
+        if 'tasks' not in step and 'baseTask' in step and step['baseTask'] != 'humanTask':
+            step['tasks'] = [{'baseTask': step['baseTask'], 'parameters': step['parameters']}]
+
+        if 'tasks' in step:
+            for task in step['tasks']:
+                if 'baseTask' in task and task['baseTask'] != 'humanTask':
+                    self.currentTasks.append(celery.runTask(task['baseTask'], task['parameters']))
             
-        if('parameters' in step) and ('time' in step['parameters']):
-            duration = timedelta(seconds=step['parameters']['time'])
-            self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
-        else:
-            self.stepCompletionTime = None
+            tasksWithDurations = filter(lambda task: ('parameters' in task) and ('time' in task['parameters']), step['tasks'])
+            taskDurations = list(map(lambda task: task['parameters']['time'], tasksWithDurations))
+            if len(taskDurations) > 0:
+                duration = timedelta(seconds=max(taskDurations))
+                self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
+                
+            self.status = 'running'
 
         if 'done' in step:
             if step['done'] == True:
@@ -257,27 +267,24 @@ class Recipe:
 
         return True
 
-    def isTaskComplete(self):
+    def areTasksComplete(self):
         """
-        Check if the currently running task has completed.
+        Check if all currently running tasks have completed.
         :return:
         True
-            Task is complete.
+            All tasks are complete.
         False
-            Task is still running.
+            Some tasks are still running.
         """
-        if self.currentTask is not None:
-            return self.currentTask.ready()
+        return all(task.ready() for task in self.currentTasks)
 
-        return True
-
-    def stopTask(self):
+    def stopTasks(self):
         """
-        Stop the currently running task.
+        Stop the currently running tasks.
         :return:
             None
         """
-        if self.currentTask is not None:
-            self.currentTask.revoke(terminate=True)
-            self.currentTask = None
+        for task in self.currentTasks:
+            task.revoke(terminate=True)
+        self.currentTasks = []
 
