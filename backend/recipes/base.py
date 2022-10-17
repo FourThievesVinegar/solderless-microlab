@@ -82,6 +82,14 @@ import threading
 from datetime import datetime, timedelta, timezone
 
 
+RECIPE_STEPS = 'steps'
+STEP_TASKS = 'tasks'
+TASK_TYPE = 'baseTask'
+TASK_PARAMETERS = 'parameters'
+NEXT_STEP = 'next'
+STEP_USER_OPTIONS = 'options'
+LAST_STEP = 'done'
+
 class Recipe:
     step = 0
     message = ''
@@ -177,12 +185,12 @@ class Recipe:
         self.mutex.acquire()
         if self.status == 'running':
             if self.areTasksComplete():
-                currentStep = self.plan['steps'][self.step]
-                if('done' in currentStep) and (currentStep['done'] == True):
+                currentStep = self.plan[RECIPE_STEPS][self.step]
+                if(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
                     self.stop()
                 else:
-                    if 'next' in currentStep:
-                        self.step = currentStep['next']
+                    if NEXT_STEP in currentStep:
+                        self.step = currentStep[NEXT_STEP]
                         self.runStep()
         self.mutex.release()
         return self.getStatus()
@@ -203,10 +211,10 @@ class Recipe:
                 The message to display to the user in case of failure.
         """
         found = False
-        if 'options' in self.plan['steps'][self.step]:
-            for option in self.plan['steps'][self.step]['options']:
+        if STEP_USER_OPTIONS in self.plan[RECIPE_STEPS][self.step]:
+            for option in self.plan[RECIPE_STEPS][self.step][STEP_USER_OPTIONS]:
                 if option['text'] == optionValue:
-                    self.step = option['next']
+                    self.step = option[NEXT_STEP]
                     found = True
 
         if not found:
@@ -229,13 +237,13 @@ class Recipe:
                 The message to display to the user in case of failure.
         """
         print('Running step {0}'.format(self.step))
-        step = self.plan['steps'][self.step]
+        step = self.plan[RECIPE_STEPS][self.step]
         self.message = step['message']
         self.stepCompletionTime = None
         options = []
 
-        if 'options' in step:
-            for option in step['options']:
+        if STEP_USER_OPTIONS in step:
+            for option in step[STEP_USER_OPTIONS]:
                 options.append(option['text'])
             if len(options) > 0:
                 self.status = 'user_input'
@@ -245,25 +253,25 @@ class Recipe:
         if('icon' in step):
             self.icon = step['icon']
 
-        if 'tasks' not in step and 'baseTask' in step and step['baseTask'] != 'humanTask':
-            step['tasks'] = [{'baseTask': step['baseTask'], 'parameters': step['parameters']}]
+        if STEP_TASKS not in step and TASK_TYPE in step and step[TASK_TYPE] != 'humanTask':
+            step[STEP_TASKS] = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
 
-        if 'tasks' in step:
-            for task in step['tasks']:
-                if 'baseTask' in task and task['baseTask'] != 'humanTask':
-                    self.currentTasks.append(celery.runTask(task['baseTask'], task['parameters']))
+        if STEP_TASKS in step:
+            for task in step[STEP_TASKS]:
+                if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
+                    self.currentTasks.append(celery.runTask(task[TASK_TYPE], task[TASK_PARAMETERS]))
             
-            tasksWithDurations = filter(lambda task: ('parameters' in task) and ('time' in task['parameters']), step['tasks'])
-            taskDurations = list(map(lambda task: task['parameters']['time'], tasksWithDurations))
+            tasksWithDurations = filter(
+                lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), step[STEP_TASKS])
+            taskDurations = list(map(lambda task: task[TASK_PARAMETERS]['time'], tasksWithDurations))
             if len(taskDurations) > 0:
                 duration = timedelta(seconds=max(taskDurations))
                 self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
                 
             self.status = 'running'
 
-        if 'done' in step:
-            if step['done'] == True:
-                self.status = 'complete'
+        if step.get(LAST_STEP, False) == True:
+            self.status = 'complete'
 
         return True
 
