@@ -13,7 +13,7 @@ def heat(parameters):
         None
     """
     targetTemp = parameters['temp']
-    celery.logger.info('heating water to ' + str(targetTemp) + '...')
+    celery.logger.info('heating water to {0}...'.format(targetTemp))
     hardware.turnHeaterOn()
     while hardware.getTemp() < targetTemp:
         hardware.sleep(0.5)
@@ -31,7 +31,7 @@ def cool(parameters):
         None
     """
     targetTemp = parameters['temp']
-    celery.logger.info('cooling water to ' + str(targetTemp) + '...')
+    celery.logger.info('cooling water to {0}...'.format(targetTemp))
     hardware.turnCoolerOn()
     while hardware.getTemp() > targetTemp:
         hardware.sleep(0.5)
@@ -101,7 +101,7 @@ def maintain(parameters):
     while (hardware.secondSinceStart() - start) < duration:
         hardware.sleep(interval)
         currentTemp = hardware.getTemp()
-        celery.logger.info('temperature @ ' + str(currentTemp))
+        celery.logger.info('temperature @ {0}'.format(currentTemp))
         if currentTemp - tolerance > targetTemp:
             if type == 'heat':
                 hardware.turnHeaterOff()

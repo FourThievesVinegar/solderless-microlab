@@ -228,7 +228,7 @@ class Recipe:
             string
                 The message to display to the user in case of failure.
         """
-        print('Running step ' + str(self.step))
+        print('Running step {0}'.format(self.step))
         step = self.plan['steps'][self.step]
         self.message = step['message']
         self.stepCompletionTime = None
