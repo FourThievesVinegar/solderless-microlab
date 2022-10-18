@@ -3,7 +3,7 @@ Common code for recipes, handles running recipe files.
 
 The recipe steps are defined in a json file and they can be strung together with "goto" statements.
 Each recipe step can also call a function that changes the desired state of the hardware. These methods are defined
-at the bottom of this file and the parameters they accept can be seen in the "baseTask" definition in the
+in the tasks.py file and the parameters they accept can be seen in the "baseTask" definition in the
 documentation of the plan object below.
 
 You'll probably want to take a look at sample recipe in the recipes.files package. This will
@@ -47,27 +47,30 @@ plan object
                             next
                                 The nr id of the step to execute if the
                                 user picks this option.
-                baseTask
-                    Name of the function to execute in the recipes.base module.
-                    One of:
-                        heat
-                            parameters: {'temp': 65}
-                        cool
-                            parameters: {'temp': 5}
-                        maintainCool
-                            parameters: {'time': 600, 'temp': 5, 'tolerance': 2}
-                        maintainHeat
-                            parameters: {'time': 600, 'temp': 65, 'tolerance': 2}
-                        maintain
-                            parameters: {'time': 600, 'temp': 65, 'tolerance': 2, 'type': 'heat'}
-                        pump
-                            parameters: {'pump':'A','volume': 50}
-                        stir
-                            parameters: {'time': 60}
-                parameters
-                    The parameters to pass to the task function. This
-                    is a dictionary that will be passed as the single
-                    parameter to this function.
+                tasks
+                    array of:
+                    object
+                        baseTask
+                            Name of the function to execute in the recipes.tasks module.
+                            One of:
+                                heat
+                                    parameters: {'temp': 65}
+                                cool
+                                    parameters: {'temp': 5}
+                                maintainCool
+                                    parameters: {'time': 600, 'temp': 5, 'tolerance': 2}
+                                maintainHeat
+                                    parameters: {'time': 600, 'temp': 65, 'tolerance': 2}
+                                maintain
+                                    parameters: {'time': 600, 'temp': 65, 'tolerance': 2, 'type': 'heat'}
+                                pump
+                                    parameters: {'pump':'A','volume': 50}
+                                stir
+                                    parameters: {'time': 60}
+                        parameters
+                            The parameters to pass to the task function. This
+                            is a dictionary that will be passed as the single
+                            parameter to this function.
                 done
                     Always set to true and signals that the recipe was
                     successfully completed.
@@ -79,6 +82,14 @@ import threading
 from datetime import datetime, timedelta, timezone
 
 
+RECIPE_STEPS = 'steps'
+STEP_TASKS = 'tasks'
+TASK_TYPE = 'baseTask'
+TASK_PARAMETERS = 'parameters'
+NEXT_STEP = 'next'
+STEP_USER_OPTIONS = 'options'
+LAST_STEP = 'done'
+
 class Recipe:
     step = 0
     message = ''
@@ -87,6 +98,7 @@ class Recipe:
     icon = ''
     stepCompletionTime = None
     currentRecipe = None
+    currentTasks = []
     mutex = threading.Lock()
 
     def __init__(self, plan):
@@ -122,7 +134,7 @@ class Recipe:
         self.stepCompletionTime = None
         hardware.turnHeaterOff()
         hardware.turnCoolerOff()
-        celery.stopTask()
+        self.stopTasks()
 
     def getStatus(self):
         """
@@ -172,13 +184,13 @@ class Recipe:
         """
         self.mutex.acquire()
         if self.status == 'running':
-            if celery.isTaskComplete():
-                currentStep = self.plan['steps'][self.step]
-                if('done' in currentStep) and (currentStep['done'] == True):
+            if self.areTasksComplete():
+                currentStep = self.plan[RECIPE_STEPS][self.step]
+                if(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
                     self.stop()
                 else:
-                    if 'next' in currentStep:
-                        self.step = currentStep['next']
+                    if NEXT_STEP in currentStep:
+                        self.step = currentStep[NEXT_STEP]
                         self.runStep()
         self.mutex.release()
         return self.getStatus()
@@ -199,10 +211,10 @@ class Recipe:
                 The message to display to the user in case of failure.
         """
         found = False
-        if 'options' in self.plan['steps'][self.step]:
-            for option in self.plan['steps'][self.step]['options']:
+        if STEP_USER_OPTIONS in self.plan[RECIPE_STEPS][self.step]:
+            for option in self.plan[RECIPE_STEPS][self.step][STEP_USER_OPTIONS]:
                 if option['text'] == optionValue:
-                    self.step = option['next']
+                    self.step = option[NEXT_STEP]
                     found = True
 
         if not found:
@@ -224,13 +236,14 @@ class Recipe:
             string
                 The message to display to the user in case of failure.
         """
-        print('Running step ' + str(self.step))
-        step = self.plan['steps'][self.step]
+        print('Running step {0}'.format(self.step))
+        step = self.plan[RECIPE_STEPS][self.step]
         self.message = step['message']
+        self.stepCompletionTime = None
         options = []
 
-        if 'options' in step:
-            for option in step['options']:
+        if STEP_USER_OPTIONS in step:
+            for option in step[STEP_USER_OPTIONS]:
                 options.append(option['text'])
             if len(options) > 0:
                 self.status = 'user_input'
@@ -240,180 +253,46 @@ class Recipe:
         if('icon' in step):
             self.icon = step['icon']
 
-        if 'baseTask' in step and step['baseTask'] != 'humanTask':
-            if ('task' in step):
-                task = step['task']
-                base = False
-            else:
-                task = step['baseTask']
-                base = True
+        if STEP_TASKS not in step and TASK_TYPE in step and step[TASK_TYPE] != 'humanTask':
+            step[STEP_TASKS] = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
 
-            if celery.runTask(task, step['parameters'], base):
-                self.status = 'running'
-            else:
-                self.status = 'error'
-                message = 'Internal error. Task already running.'
-                return False
+        if STEP_TASKS in step:
+            for task in step[STEP_TASKS]:
+                if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
+                    self.currentTasks.append(celery.runTask(task[TASK_TYPE], task[TASK_PARAMETERS]))
+            
+            tasksWithDurations = filter(
+                lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), step[STEP_TASKS])
+            taskDurations = list(map(lambda task: task[TASK_PARAMETERS]['time'], tasksWithDurations))
+            if len(taskDurations) > 0:
+                duration = timedelta(seconds=max(taskDurations))
+                self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
+                
+            self.status = 'running'
 
-        if('parameters' in step) and ('time' in step['parameters']):
-            duration = timedelta(seconds=step['parameters']['time'])
-            self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
-        else:
-            self.stepCompletionTime = None
-
-        if 'done' in step:
-            if step['done'] == True:
-                self.status = 'complete'
+        if step.get(LAST_STEP, False) == True:
+            self.status = 'complete'
 
         return True
 
+    def areTasksComplete(self):
+        """
+        Check if all currently running tasks have completed.
+        :return:
+        True
+            All tasks are complete.
+        False
+            Some tasks are still running.
+        """
+        return all(task.ready() for task in self.currentTasks)
 
-def heat(parameters):
-    """
-    Turn on the heater and reach a target temperature.
+    def stopTasks(self):
+        """
+        Stop the currently running tasks.
+        :return:
+            None
+        """
+        for task in self.currentTasks:
+            task.revoke(terminate=True)
+        self.currentTasks = []
 
-    :param parameters:
-        dictionary
-            'temp' - the desired temperature
-    :return:
-        None
-    """
-    targetTemp = parameters['temp']
-    celery.logger.info('heating water to ' + str(targetTemp) + '...')
-    hardware.turnHeaterOn()
-    while hardware.getTemp() < targetTemp:
-        hardware.sleep(0.5)
-    hardware.turnHeaterOff()
-
-
-def cool(parameters):
-    """
-    Turn on the cooler and reach a target temperature.
-
-    :param parameters:
-        dictionary
-            'temp' - the desired temperature
-    :return:
-        None
-    """
-    targetTemp = parameters['temp']
-    celery.logger.info('cooling water to ' + str(targetTemp) + '...')
-    hardware.turnCoolerOn()
-    while hardware.getTemp() > targetTemp:
-        hardware.sleep(0.5)
-    hardware.turnCoolerOff()
-
-
-def maintainCool(parameters):
-    """
-    Maintain a certain temperature using the cooler for a specified amount of time.
-
-    :param parameters:
-        dictionary
-            'temp' - the desired temperature
-            'tolerance' - how much above or below the desired temperature to let
-                            the temperature drift before turning on cooler again
-            'time' - the amount of time to maintain the temperature in seconds
-    :return:
-        None
-    """
-    parameters['type'] = 'cool'
-    maintain(parameters)
-
-
-def maintainHeat(parameters):
-    """
-    Maintain a certain temperature using the heater for a specified amount of time.
-
-    :param parameters:
-        dictionary
-            'temp' - the desired temperature
-            'tolerance' - how much above or below the desired temperature to let
-                            the temperature drift before turning on heater again
-            'time' - the amount of time to maintain the temperature in seconds
-    :return:
-        None
-    """
-    parameters['type'] = 'heat'
-    maintain(parameters)
-
-
-def maintain(parameters):
-    """
-    Maintain a certain temperature using either the cooler or heater for a specified amount of time.
-
-    :param parameters:
-        dictionary
-            'temp' - the desired temperature
-            'tolerance' - how much above or below the desired temperature to let
-                            the temperature drift before turning on the heater/cooler again
-            'time' - the amount of time to maintain the temperature in seconds
-            'type' - one of:
-                - heat
-                    Maintain temperature using heater.
-                - cool
-                    Maintain temperature using cooler.
-    :return:
-        None
-    """
-    duration = parameters['time']
-    targetTemp = parameters['temp']
-    tolerance = parameters['tolerance']
-    type = parameters['type']
-
-    interval = 0.5
-    start = hardware.secondSinceStart()
-
-    while (hardware.secondSinceStart() - start) < duration:
-        hardware.sleep(interval)
-        currentTemp = hardware.getTemp()
-        celery.logger.info('temperature @ ' + str(currentTemp))
-        if currentTemp - tolerance > targetTemp:
-            if type == 'heat':
-                hardware.turnHeaterOff()
-            else:
-                hardware.turnCoolerOn()
-        if currentTemp + tolerance < targetTemp:
-            if type == 'heat':
-                hardware.turnHeaterOn()
-            else:
-                hardware.turnCoolerOff()
-
-    hardware.turnHeaterOff()
-    hardware.turnCoolerOff()
-
-
-def pump(parameters):
-    """
-    Dispense a certain amount of liquid from a pump.
-
-    :param parameters:
-        dictionary
-            'pump' - one of: 'A' or 'B'
-            'volume' - volume to dispense in ml
-    :return:
-        None
-    """
-    pump = parameters['pump']
-    volume = parameters['volume']
-    hardware.pumpDispense(pump, volume)
-
-
-def stir(parameters):
-    """
-    Turn on the stirrer for a predefined amount of time.
-
-    :param parameters:
-        dictionary
-            'time' - the amount of time to turn on the stirrer for
-    :return:
-        None
-    """
-    duration = parameters['time']
-
-    interval = 0.5
-    start = hardware.secondSinceStart()
-    hardware.turnStirrerOn()
-    while (hardware.secondSinceStart() - start) < duration:
-        hardware.sleep(interval)
-    hardware.turnStirrerOff()
