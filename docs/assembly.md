@@ -67,8 +67,8 @@ https://www.youmagine.com/designs/syringe-pump
 
 **Quantity: 1**
 
-This 2D printed lid allows the smaller jar to nest inside the larger jar of the reaction chamber
-URL NEEDED
+This 3D printed lid allows the smaller jar to nest inside the larger jar of the reaction chamber, [STL available here](https://github.com/FourThievesVinegar/Parts/blob/master/v4/reactorManifold_v0.7.STL).
+
 
 **Inspect 3D printed part**
 Before assembly, be sure to inspect the parts that have come out of the 3D printer.
@@ -126,8 +126,18 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
       1. Ubuntu is the recommended OS for this use
       1. See Appendix B. Headless Install
 
-1. Arduino Setup 1. Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/](https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/) 1. Note: Video overview of CNC shield assembly and operation
-   [https://youtu.be/zUb8tiFCwmk?t=37](https://youtu.be/zUb8tiFCwmk?t=37) 1. Note: Critical safety information when working with the CNC shields. Failure to follow them can hurt both you and the componeNEVER connect or disconnect any stepper motor to the CNC Shield while the power is on or connected 1. ALWAYS disconnect the power before connecting or disconnecting the stepper motors 1. When installing the motor driver, be sure to correctly orient the driver so the enable pin matches the EN pin on the CNC Shield. The A4988 driver has a small potentiometer on the bottom center of the IC board, and the EN pin is on the top left. 1. ALWAYS connect a stepper motor to the CNC Shield when testing or using it. If a stepper motor is not connected it can cause the driver to overheat and become damaged. 1. When attaching the heatsink to the drivers, it is critical that the heatsink is centered on the chip and does not contact any of the pins. Failure to correctly place the heatsink can cause the driver to short out and fail. 1. (Not shown in video) Mount the heat sinks on the motor control drivers (MC-MDR) with thermal adhesive, making sure that the heat sink does not contact any of the pins. 1. (video part 1: 00:18 WARNING: video incorrectly shows installing all 4 drivers) Mount the motor control drivers (MC-MDR) on the CNC hat (MC-CNC). The four drivers are labeled X, Y, Z, and A. Since this project only requires two stepper motors, we will only use sockets Y and A on the right side of the board. To ensure you have the orientation correct, orient the CNC hat so that the 12v power connection is in the lower left, the reset button is in the upper left. Orient each of the A4988 drivers so that the small potentiometer (looks like a small phillips head screw) is toward the bottom of the board. 1. Double check that all of the drivers are firmly seated in the sockets, and that none of the heat sinks shifted during installation. 1. Mount the CNC Hat on the Arduino. The 12v power connection on the lower left of the hat should be directly above the Arduino power jack also on the lower left.
+1. Arduino Setup 
+	1. Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/](https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/) 
+	1. Note: Video overview of CNC shield assembly and operation [https://youtu.be/zUb8tiFCwmk?t=37](https://youtu.be/zUb8tiFCwmk?t=37) 
+	1. Note: Critical safety information when working with the CNC shields. Failure to follow them can hurt both you and the component. NEVER connect or disconnect any stepper motor to the CNC Shield while the power is on or connected 
+	1. ALWAYS disconnect the power before connecting or disconnecting the stepper motors
+	1. When installing the motor driver, be sure to correctly orient the driver so the enable pin matches the EN pin on the CNC Shield. The A4988 driver has a small potentiometer on the bottom center of the IC board, and the EN pin is on the top left. 
+	1. ALWAYS connect a stepper motor to the CNC Shield when testing or using it. If a stepper motor is not connected it can cause the driver to overheat and become damaged. 
+	1. When attaching the heatsink to the drivers, it is critical that the heatsink is centered on the chip and does not contact any of the pins. Failure to correctly place the heatsink can cause the driver to short out and fail. 
+	1. (Not shown in video) Mount the heat sinks on the motor control drivers (MC-MDR) with thermal adhesive, making sure that the heat sink does not contact any of the pins. 
+	1. (video part 1: 00:18 WARNING: video incorrectly shows installing all 4 drivers) Mount the motor control drivers (MC-MDR) on the CNC hat (MC-CNC). The four drivers are labeled X, Y, Z, and A. Since this project only requires two stepper motors, we will only use sockets Y and A on the right side of the board. To ensure you have the orientation correct, orient the CNC hat so that the 12v power connection is in the lower left, the reset button is in the upper left. Orient each of the A4988 drivers so that the small potentiometer (looks like a small phillips head screw) is toward the bottom of the board. 
+	1. Double check that all of the drivers are firmly seated in the sockets, and that none of the heat sinks shifted during installation. 
+	1. Mount the CNC Hat on the Arduino. The 12v power connection on the lower left of the hat should be directly above the Arduino power jack also on the lower left.
 
 ![Assembled controller boards](/docs/media/rasp_pi2.png){: style="height:30%;width:30%"}
 ![Assembled controller boards](/docs/media/arduino.png){: style="height:30%;width:30%"}
