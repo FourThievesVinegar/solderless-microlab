@@ -29,8 +29,8 @@ initialized = False
 tempSer = None
 grblSer = None
 
-RELAY_ON = False
-RELAY_OFF = True
+RELAY_ON = True
+RELAY_OFF = False
 
 
 def initHardware():
