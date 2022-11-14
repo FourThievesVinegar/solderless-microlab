@@ -52,10 +52,12 @@ def initHardware():
         # Init relays
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
+        GPIO.setup(config.hardwareHeaterPumpPin, GPIO.OUT)
         GPIO.setup(config.hardwareHeaterPin, GPIO.OUT)
         GPIO.setup(config.hardwareCoolearPin, GPIO.OUT)
         GPIO.setup(config.hardwareStirrerPin, GPIO.OUT)
 
+        GPIO.output(config.hardwareHeaterPumpPin, RELAY_OFF)
         GPIO.output(config.hardwareHeaterPin, RELAY_OFF)
         GPIO.output(config.hardwareCoolearPin, RELAY_OFF)
         GPIO.output(config.hardwareStirrerPin, RELAY_OFF)
@@ -107,6 +109,7 @@ def turnHeaterOn():
     """
     initHardware()
     GPIO.output(config.hardwareHeaterPin, RELAY_ON)
+    GPIO.output(config.hardwareHeaterPumpPin, RELAY_ON)
 
 
 def turnHeaterOff():
@@ -118,6 +121,7 @@ def turnHeaterOff():
     """
     initHardware()
     GPIO.output(config.hardwareHeaterPin, RELAY_OFF)
+    GPIO.output(config.hardwareHeaterPumpPin, RELAY_OFF)
 
 
 def turnCoolerOn():
