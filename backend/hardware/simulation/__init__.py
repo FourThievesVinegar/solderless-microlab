@@ -13,7 +13,7 @@ timer = time.time();
 
 
 def log(message):
-    print('harware.simulation - ' + str(message))
+    print('harware.simulation - {0}'.format(message))
 
 
 def secondSinceStart():
@@ -127,7 +127,7 @@ def getTemp():
                 temperature = temperature - 0.1
             elif temperature < 24:
                 temperature = temperature + 0.1
-    print('Temperature read as: ' + str(temperature))
+    print('Temperature read as: {0}'.format(temperature))
     return temperature
 
 
@@ -167,6 +167,6 @@ def pumpDispense(pumpId,volume):
         None
     """
     if pumpId == 'A':
-        log('Dispensing ' + str(volume) + 'ml from pump A')
+        log('Dispensing {0}ml from pump A'.format(volume))
     elif pumpId == 'B':
-        log('Dispensing ' + str(volume) + 'ml from pump B')
+        log('Dispensing {0}ml from pump B'.format(volume))
