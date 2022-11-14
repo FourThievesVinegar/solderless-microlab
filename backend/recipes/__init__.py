@@ -41,9 +41,9 @@ def getRecipeList():
 
 def getRecipeByName(name):
     """
-    Gets the full recipe object from it's name.
+    Gets the full recipe object from its name.
     :param name:
-    The name of the recipe. This is it's title in the json file.
+    The name of the recipe. This is its title in the json file.
     :return:
     The recipe object or None if no recipe with given name could be found
     """
