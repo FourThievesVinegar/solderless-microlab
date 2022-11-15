@@ -243,6 +243,7 @@ class Recipe:
         step = self.plan[RECIPE_STEPS][self.step]
         self.message = step['message']
         self.stepCompletionTime = None
+        self.currentTasks = []
         options = []
 
         if STEP_USER_OPTIONS in step:
