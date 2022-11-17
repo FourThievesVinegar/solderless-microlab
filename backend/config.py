@@ -17,6 +17,7 @@ hardwareSpeedup = environ.get("HARDWARE_SPEEDUP", 10)
 
 # port for temperature sensor... eventually we want to automatically detect this
 hardwareTempPort = environ.get("TEMP_PORT", '/dev/ttyUSB1')
+hardwareHeaterPumpPin = environ.get("HEATER_PUMP_PIN", 16)  
 hardwareHeaterPin = environ.get("HEATER_PIN", 19)  
 hardwareCoolerPin = environ.get("COOLER_PIN", 26)
 hardwareStirrerPin = environ.get("STIRRER_PIN", 20)
