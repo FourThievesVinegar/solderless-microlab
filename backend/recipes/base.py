@@ -186,7 +186,10 @@ class Recipe:
         if self.status == 'running':
             if self.areTasksComplete():
                 currentStep = self.plan[RECIPE_STEPS][self.step]
-                if(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
+                if any(task.failed() for task in self.currentTasks): 
+                    self.status = 'error'
+                    self.message = 'Task execution failed.'
+                elif(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
                     self.stop()
                 else:
                     if NEXT_STEP in currentStep:
@@ -240,6 +243,7 @@ class Recipe:
         step = self.plan[RECIPE_STEPS][self.step]
         self.message = step['message']
         self.stepCompletionTime = None
+        self.currentTasks = []
         options = []
 
         if STEP_USER_OPTIONS in step:
