@@ -1,4 +1,4 @@
-# Start the application on the default port (5000)
+# Start the application on the configured port (default 8081)
 # Look in api.routes for the actual api code
 
 from api import app

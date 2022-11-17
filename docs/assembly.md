@@ -241,7 +241,7 @@ Support Email Address?
 
 - External References
   - Open Source Syringe Pump - The Microlab uses a version of this to make the syringe pumps. A few parts are omitted for simplicity.
-  - Getting Started with Raspberry Pi - A walkthrough for getting your raspberry pie formatted properly.
+  - Getting Started with Raspberry Pi - A walkthrough for getting your raspberry pi formatted properly.
 - Internal References
   - https://github.com/FourThievesVinegar/solderless-microlab
 - Safety Precautions

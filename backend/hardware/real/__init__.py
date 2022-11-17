@@ -53,11 +53,11 @@ def initHardware():
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(config.hardwareHeaterPin, GPIO.OUT)
-        GPIO.setup(config.hardwareCoolearPin, GPIO.OUT)
+        GPIO.setup(config.hardwareCoolerPin, GPIO.OUT)
         GPIO.setup(config.hardwareStirrerPin, GPIO.OUT)
 
         GPIO.output(config.hardwareHeaterPin, RELAY_OFF)
-        GPIO.output(config.hardwareCoolearPin, RELAY_OFF)
+        GPIO.output(config.hardwareCoolerPin, RELAY_OFF)
         GPIO.output(config.hardwareStirrerPin, RELAY_OFF)
 
         # Init serial port for grbl sensor
@@ -128,7 +128,7 @@ def turnCoolerOn():
     None
     """
     initHardware()
-    GPIO.output(config.hardwareCoolearPin, RELAY_ON)
+    GPIO.output(config.hardwareCoolerPin, RELAY_ON)
 
 
 def turnCoolerOff():
@@ -139,7 +139,7 @@ def turnCoolerOff():
     None
     """
     initHardware()
-    GPIO.output(config.hardwareCoolearPin, RELAY_OFF)
+    GPIO.output(config.hardwareCoolerPin, RELAY_OFF)
 
 
 def getTemp():
@@ -191,7 +191,7 @@ def turnStirrerOff():
 
 def pumpDispense(pumpId,volume):
     """
-    Dispense reagent from a siringe
+    Dispense reagent from a syringe
 
     :param pumpId:
         The pump id. One of 'A' or 'B'

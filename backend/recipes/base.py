@@ -221,7 +221,7 @@ class Recipe:
                     found = True
 
         if not found:
-            return False, 'Invalid option ' + optionValue
+            return False, 'Invalid option {0}'.format(optionValue)
 
         ret = self.runStep()
         return ret, self.message

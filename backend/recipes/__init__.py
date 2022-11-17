@@ -23,7 +23,7 @@ def getRecipeList():
     A list of modules in the config.recipesPackages.
     It is assumed that these are all recipes.
     """
-    path = './' + state.package.replace('.', '/')
+    path = './{0}'.format(state.package.replace('.', '/'))
     files = [f for f in listdir(path) if isfile(join(path, f))]
     recipeList = []
 
@@ -32,7 +32,7 @@ def getRecipeList():
             try:
                 recipeList.append(json.load(open(join(path, f))))
             except json.JSONDecodeError:
-                print("Error loading recipe file: " + f + ". File is not in proper JSON format")
+                print("Error loading recipe file: {0}. File is not in proper JSON format".format(f))
         # This doesn't actually work yet because .4tv are not importable as modules
         if f.endswith('.4tv'):
             recipeList.append(f[:-4])
@@ -41,9 +41,9 @@ def getRecipeList():
 
 def getRecipeByName(name):
     """
-    Gets the full recipe object from it's name.
+    Gets the full recipe object from its name.
     :param name:
-    The name of the recipe. This is it's title in the json file.
+    The name of the recipe. This is its title in the json file.
     :return:
     The recipe object or None if no recipe with given name could be found
     """
@@ -70,7 +70,7 @@ def start(name):
     if not (state.currentRecipe is None):
         recipeMessage = state.currentRecipe.getStatus()
         if not recipeMessage['status'] == 'complete':
-            return False, 'Recipe ' + state.currentRecipe.plan['title'] + ' is running. Stop it first.'
+            return False, 'Recipe {0} is running. Stop it first.'.format(state.currentRecipe.plan['title'])
 
     # Check that it's a valid recipe.
     recipe = getRecipeByName(name)
