@@ -1,5 +1,10 @@
 {
     "title": "aspirin",
+    "materials": [
+        {"description": "2.0g salicylic acid"},
+        {"description": "XX mL acetic anhydride"},
+        {"description": "XX mL H2SO4"}
+    ],
     "steps": [
         {
             "nr": 0,

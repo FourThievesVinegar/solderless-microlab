@@ -14,6 +14,12 @@ plan object
     title
         Name of the recipe that is displayed to the user
         Needs to be a unique string
+    materials
+        List of materials needed for the recipe
+        array of:
+            object
+                description
+                    Description of the material
     steps
         array of:
             object
