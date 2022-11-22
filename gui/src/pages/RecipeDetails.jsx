@@ -89,7 +89,12 @@ function TimeNeeded({ steps }) {
   const waitTime = reduce(
     steps,
     (sum, step) => {
-      return sum + get(step, 'parameters.time', 0)
+      return sum + reduce(
+        step.tasks, 
+        (max, task) => 
+          Math.max(get(task, 'parameters.time', 0), max),
+        0,
+        )
     },
     0,
   )
