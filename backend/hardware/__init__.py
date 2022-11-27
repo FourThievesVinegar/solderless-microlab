@@ -133,7 +133,7 @@ def pumpDispense(pumpId,volume):
     Dispense a number of ml from a particular pump.
 
     :param pumpId:
-        The pump id. One of 'A' or 'B'
+        The pump id. One of 'X' or 'Y'
     :param volume:
         The number ml to dispense
     :return:

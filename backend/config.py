@@ -23,11 +23,28 @@ hardwareCoolerPin = environ.get("COOLER_PIN", 26)
 hardwareStirrerPin = environ.get("STIRRER_PIN", 20)
 
 # port for Arduino... again need to auto-detect as the temp sensor may or may not be detected first
-hardwareArduinoPort = environ.get("ARDUINO_PORT", '/dev/ttyUSB0') 
-hardwarePumpAGcode1ml = b'G91X1.1\n'
-hardwarePumpAGcodeRetract = b'G91X-0.25\n'
-hardwarePumpBGcode1ml = b'G91Y1.1\n'
-hardwarePumpBGcodeRetract = b'G91Y-0.25\n'
+hardwareArduinoPort = environ.get("ARDUINO_PORT", '/dev/ttyACM0') 
+
+syringePumpsConfig = {
+  "X": {
+    # Number of mm the stepper motor moves per full revolution, 
+    # this is the pitch of the threaded rod
+    "mmPerRev": environ.get("SYRINGE_PUMP_X_MM_PER_REV", 0.8),
+    # Number of steps per revolution of the stepper motor, reference the documentation for the motor
+    "stepsPerRev": environ.get("SYRINGE_PUMP_X_STEPS_PER_REV", 200),
+    # Number of mm of movement needed to dispense 1 ml of fluid, 
+    # this is the length of the syringe divided by its fluid capacity
+    "mmPerml": environ.get("SYRINGE_PUMP_X_MM_PER_ML", 3.5),
+    # Maximum speed the motor should run in mm/min
+    "maxmmPerMin": environ.get("SYRINGE_PUMP_X_MAX_MM_PER_MIN", 240),
+  },
+  "Y": {
+    "mmPerRev": environ.get("SYRINGE_PUMP_Y_MM_PER_REV", 0.8),
+    "stepsPerRev": environ.get("SYRINGE_PUMP_Y_STEPS_PER_REV", 200),
+    "mmPerml": environ.get("SYRINGE_PUMP_Y_MM_PER_ML", 3.5),
+    "maxmmPerMin": environ.get("SYRINGE_PUMP_Y_MAX_MM_PER_MIN", 240),
+  },
+}
 
 # Where the recipe files are located. You should never need to change this.
 recipesPackage = environ.get("RECIPES_PACKAGE", 'recipes.files')  

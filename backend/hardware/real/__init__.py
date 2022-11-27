@@ -63,9 +63,20 @@ def initHardware():
         GPIO.output(config.hardwareStirrerPin, RELAY_OFF)
 
         # Init serial port for grbl sensor
-        grblSer = serial.Serial(config.hardwareArduinoPort,115200,timeout=1)
-        serReadUntil(grblSer,'Grbl')
+        grblSer = serial.Serial(config.hardwareArduinoPort, 115200, timeout=1)
 
+        # configure the syringe pumps
+        for axis, syringeConfig in config.syringePumpsConfig.items():
+            stepsPerMM = syringeConfig['stepsPerRev']/syringeConfig['mmPerRev']
+            axisToCNCID = {
+                "X": "0",
+                "Y": "1",
+                "Z": "2",
+            }
+            #configure steps/mm
+            grblWrite('$10{0}={1}\n'.format(axisToCNCID[axis], stepsPerMM))
+            #configure max mm/min
+            grblWrite('$11{0}={1}\n'.format(axisToCNCID[axis], syringeConfig['maxmmPerMin']))
         initialized = True
 
 
@@ -98,6 +109,26 @@ def sleep(seconds):
     None
     """
     time.sleep(seconds)
+
+def grblWrite(command):
+    """
+    Writes the given command to grbl. 
+
+    :param command:
+    String of grbl command to execute
+
+    :return:
+    None
+    """
+    global grblSer
+    grblSer.reset_input_buffer()
+    grblSer.write(bytes(command, 'utf-8'))
+    # Grbl will execute commands in serial as soon as the previous is completed.
+    # No need to wait until previous commands are complete. Ok only signifies that it
+    # parsed the command
+    response = grblSer.read_until()
+    if 'error' in str(response):
+        raise Exception("grbl command error: {0}".format(response))
 
 
 def turnHeaterOn():
@@ -193,35 +224,26 @@ def turnStirrerOff():
     GPIO.output(config.hardwareStirrerPin, RELAY_OFF)
 
 
-def pumpDispense(pumpId,volume):
+def pumpDispense(pumpId, volume):
     """
     Dispense reagent from a syringe
 
     :param pumpId:
-        The pump id. One of 'A' or 'B'
+        The pump id. One of 'X' or 'Y'
     :param volume:
-        The number ml to dispense
+        The number of ml to dispense
     :return:
         None
     """
     global grblSer
 
     initHardware()
+    maxmmPerMin = config.syringePumpsConfig[pumpId]['maxmmPerMin']
+    mmPerml = config.syringePumpsConfig[pumpId]['mmPerml']
+    totalmm = volume*mmPerml
+    grblWrite('G91{0}{1}\n'.format(pumpId, totalmm))
 
-    dispense = config.hardwarePumpAGcode1ml
-    retract = config.hardwarePumpAGcodeRetract
-    if pumpId == 'B':
-        dispense = config.hardwarePumpBGcode1ml
-        retract = config.hardwarePumpBGcodeRetract
-
-    for i in range(volume):
-        grblSer.write(dispense)
-        serReadUntil(grblSer,'ok')
-
-    # Grbl will execute commands in serial as soon as the previous is completed.
-    # No need to wait until previous commands are complete. Ok only signifies that it
-    # parsed the command
-    grblSer.write(retract)
-    serReadUntil(grblSer, 'ok')
+    # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
+    time.sleep(abs(totalmm)/maxmmPerMin*60 + 1)
 
 
