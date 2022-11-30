@@ -160,13 +160,13 @@ def pumpDispense(pumpId,volume):
     Displays pump dispensing message.
 
     :param pumpId:
-        The pump id. One of 'A' or 'B'
+        The pump id. One of 'X' or 'Y'
     :param volume:
         The number ml to dispense
     :return:
         None
     """
-    if pumpId == 'A':
-        log('Dispensing {0}ml from pump A'.format(volume))
-    elif pumpId == 'B':
-        log('Dispensing {0}ml from pump B'.format(volume))
+    if pumpId == 'X':
+        log('Dispensing {0}ml from pump X'.format(volume))
+    elif pumpId == 'Y':
+        log('Dispensing {0}ml from pump Y'.format(volume))

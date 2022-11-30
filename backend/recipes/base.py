@@ -70,7 +70,7 @@ plan object
                                 maintain
                                     parameters: {'time': 600, 'temp': 65, 'tolerance': 2, 'type': 'heat'}
                                 pump
-                                    parameters: {'pump':'A','volume': 50}
+                                    parameters: {'pump':'X','volume': 50}
                                 stir
                                     parameters: {'time': 60}
                         parameters

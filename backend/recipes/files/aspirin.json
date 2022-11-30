@@ -14,13 +14,13 @@
         },
         {
             "nr": 1,
-            "message": "Place XX mL acetic anhydride into Pump A",
+            "message": "Place XX mL acetic anhydride into Pump X",
             "options": [{"text": "Done", "next": 2}],
             "icon": "load_syringe"
         },
         {
             "nr": 2,
-            "message": "Place XX mL H2SO4 into Pump B",
+            "message": "Place XX mL H2SO4 into Pump Y",
             "options": [{"text": "Done", "next": 3}],
             "icon": "load_syringe"
         },
@@ -30,7 +30,7 @@
             "next": 4,
             "tasks": [{
                 "baseTask": "pump",
-                "parameters": {"pump": "A", "volume": 5}
+                "parameters": {"pump": "X", "volume": 5}
             }],
             "icon": "dispensing"
         },
@@ -40,7 +40,7 @@
             "next": 5,
             "tasks": [{
                 "baseTask": "pump",
-                "parameters": {"pump": "B", "volume": 0.1}
+                "parameters": {"pump": "Y", "volume": 0.1}
             }],
             "icon": "dispensing"
         },
@@ -105,7 +105,7 @@
         },
         {
             "nr": 11,
-            "message": "Place 50 mL deionized water into Pump A",
+            "message": "Place 50 mL deionized water into Pump X",
             "options": [{"text": "Done", "next": 12}],
             "icon": "load_syringe"
         },
@@ -115,7 +115,7 @@
             "next": 13,
             "tasks": [{
                 "baseTask": "pump",
-                "parameters": {"pump": "A", "volume": 50}
+                "parameters": {"pump": "X", "volume": 50}
             }],
             "icon": "syringe"
         },
