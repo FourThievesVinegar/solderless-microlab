@@ -6,3 +6,4 @@ redis==3.4.1
 requests==2.23.0
 RPi.GPIO==0.7.1
 pyserial==3.5
+w1thermsensor==2.0.0

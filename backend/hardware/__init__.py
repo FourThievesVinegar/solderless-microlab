@@ -5,17 +5,19 @@ hardware.interface and used in this module below.
 """
 
 import config
-from hardware import interface as hw
+import hardware.reagentdispenser as rd
+import hardware.stirring as stirring
+import hardware.temperaturecontroller as tc
 
-# Point the hw package to the implementation as configured in config.hardwarePackage.
-exec('from hardware import ' + config.hardwarePackage + ' as hw')
+tempController = tc.createTemperatureController(config.tempControllerType, config.tempControllerArgs)
+stirrer = stirring.createStirrer(config.stirrerType, config.stirrerArgs)
+reagentDispenser = rd.createReagentDispenser(config.reagentdispenserType, config.reagentDispenserArgs)
+
+timer = time.time();
 
 def log(message):
     """
     Log a debug message.
-
-    Since this is going to run through celery, the hw package is responsible for putting these messages
-    somewhere sensible. Look at the implementation for details.
 
     :param message:
         The actual message
@@ -23,37 +25,48 @@ def log(message):
     :return:
         None
     """
-    hw.log(message)
+    print('hardware - {0}'.format(message))
 
 
 def secondSinceStart():
     """
-    Get the number of seconds that have elapsed since the hardware module was started.
+    The number of seconds since this package was started multiplied by config.hardwareSpeedup.
 
-    The point of this method is to allow for speeding up time without modifying the recipes. This
-    is especially useful for testing. In the final hardware implementation this can simply return
-    the unix epoch.
+    This can effectively simulate time speedups for testing recipies.
 
     :return:
-        Number of seconds since the hardware module was started... or unix epoch.
+    The number of seconds since this package was started multiplied by config.hardwareSpeedup.
     """
-    return hw.secondSinceStart()
+    elapsed = time.time() - timer
+    if hasattr(config,'hardwareSpeedup'):
+        speed = config.hardwareSpeedup
+        if not (speed == None):
+            return elapsed * speed
+
+    return elapsed
 
 
 def sleep(seconds):
     """
-    Sleep for a number of seconds.
+    Sleep for a number of seconds or if config.harwareSpeedup is configured, for a number of
+    seconds/config.hardwareSpeedup
 
     The point of this method is to allow for speeding up time without modifying the recipes. This
-    is especially useful for testing. In the final hardware implementation this can time.sleep
+    is especially useful for testing.
 
     :param seconds:
-    Number of seconds to sleep.
+    Number of seconds to sleep. In real life will actually sleep for seconds/config.hardwareSpeedup.
 
     :return:
-        None
+    None
     """
-    hw.sleep(seconds)
+    if hasattr(config,'hardwareSpeedup'):
+        speed = config.hardwareSpeedup
+        if not (speed == None):
+            time.sleep(seconds/speed)
+            return
+
+    time.sleep(seconds)
 
 
 def turnHeaterOn():
@@ -63,8 +76,8 @@ def turnHeaterOn():
     :return:
         None
     """
-    hw.turnCoolerOff()
-    hw.turnHeaterOn()
+    tempController.turnCoolerOff()
+    tempController.turnHeaterOn()
 
 
 def turnHeaterOff():
@@ -74,7 +87,7 @@ def turnHeaterOff():
     :return:
         None
     """
-    hw.turnHeaterOff()
+    tempController.turnHeaterOff()
 
 
 def turnCoolerOn():
@@ -84,8 +97,8 @@ def turnCoolerOn():
     :return:
         None
     """
-    hw.turnHeaterOff()
-    hw.turnCoolerOn()
+    tempController.turnHeaterOff()
+    tempController.turnCoolerOn()
 
 
 def turnCoolerOff():
@@ -95,7 +108,7 @@ def turnCoolerOff():
     :return:
         None
     """
-    hw.turnCoolerOff()
+    tempController.turnCoolerOff()
 
 
 def turnStirrerOn():
@@ -105,7 +118,7 @@ def turnStirrerOn():
     :return:
         None
     """
-    hw.turnStirrerOn()
+    stirrer.turnStirrerOn()
 
 
 def turnStirrerOff():
@@ -115,7 +128,7 @@ def turnStirrerOff():
     :return:
         None
     """
-    hw.turnStirrerOff()
+    stirrer.turnStirrerOff()
 
 
 def getTemp():
@@ -125,10 +138,10 @@ def getTemp():
     :return:
         The temperature as read from the sensor in Celsius
     """
-    return hw.getTemp()
+    return tempController.getTemp()
 
 
-def pumpDispense(pumpId,volume):
+def pumpDispense(pumpId, volume):
     """
     Dispense a number of ml from a particular pump.
 
@@ -139,4 +152,4 @@ def pumpDispense(pumpId,volume):
     :return:
         None
     """
-    return hw.pumpDispense(pumpId,volume)
+    return reagentDispenser.dispense(pumpId, volume)
