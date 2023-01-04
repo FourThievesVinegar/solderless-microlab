@@ -7,6 +7,9 @@ def grblWrite(grblSer, command):
     """
     Writes the given command to grbl. 
 
+    :param grblSer:
+    Serial device to write the command to
+
     :param command:
     String of grbl command to execute
 
@@ -26,6 +29,38 @@ class SyringePump(ReagentDispenser):
     syringePumpsConfig = None
     grblSer = None
     def __init__(self, args):
+        """
+        Constructor. Initializes the stirrer.
+        :param args:
+          dict
+            arduinoPort
+                string - Serial device for communication with the Arduino 
+            syringePumpsConfig
+                dict - Configuration for the syringe pump motors
+
+                X
+                    dict - configuration of the X axis/motor
+
+                    mmPerRev
+                        Number of mm the stepper motor moves per full revolution, 
+                        this is the pitch of the threaded rod
+                    stepsPerRev
+                        Number of steps per revolution of the stepper motor, 
+                        reference the documentation for the motor
+                    mmPerml
+                        Number of mm of movement needed to dispense 1 ml of fluid, 
+                        this is the length of the syringe divided by its fluid capacity
+                    maxmmPerMin
+                        Maximum speed the motor should run in mm/min
+                Y
+                    dict - configuration of the Y axis/motor, 
+                    same as documented above but for the Y axis  
+
+                    mmPerRev
+                    stepsPerRev
+                    mmPerml
+                    maxmmPerMin
+        """
         self.syringePumpsConfig = args["syringePumpsConfig"]
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
 

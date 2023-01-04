@@ -1,7 +1,6 @@
 """
-The hardware package simply routes hardware calls to the appropriate python package that does the actual work.
-The hardware package is configured in config.hardwarePackage and it must implement the methods as defined in
-hardware.interface and used in this module below.
+This module contains the implementations of the reagent dispenser. See base.py for the abstract class used
+and either the individual files or backend/config.py for configuration information.
 """
 
 from hardware.reagentdispenser.syringepump import SyringePump

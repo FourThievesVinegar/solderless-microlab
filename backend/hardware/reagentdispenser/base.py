@@ -4,7 +4,7 @@ class ReagentDispenser(ABC):
     @abstractmethod
     def dispense(pumpId, volume):
         """
-        Dispense reagent from a syringe.
+        Dispense reagent.
 
         :param pumpId:
             The pump id. One of 'X' or 'Y'

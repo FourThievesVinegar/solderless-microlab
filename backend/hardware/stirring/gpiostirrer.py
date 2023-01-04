@@ -8,6 +8,13 @@ class GPIOStirrer(Stirrer):
     stirrerPin = None
 
     def __init__(self, args):
+        """
+        Constructor. Initializes the stirrer.
+        :param args:
+          dict
+            stirrerPin
+              Which gpio pin to control the stirrer
+        """
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         self.stirrerPin = args["stirrerPin"]

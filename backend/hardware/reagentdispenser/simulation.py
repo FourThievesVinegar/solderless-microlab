@@ -2,7 +2,7 @@ from hardware.reagentdispenser.base import ReagentDispenser
 import time
 
 def log(message):
-    print('syringepump.simulation - {0}'.format(message))
+    print('reagentdispenser.simulation - {0}'.format(message))
 
 class SimulatedReagentDispenser(ReagentDispenser):
 
@@ -21,4 +21,4 @@ class SimulatedReagentDispenser(ReagentDispenser):
             log('Dispensing {0}ml from pump X'.format(volume))
         elif pumpId == 'Y':
             log('Dispensing {0}ml from pump Y'.format(volume))
-        time.sleep(volume)
+        time.sleep(abs(volume))

@@ -1,9 +1,13 @@
 """
-The hardware package simply routes hardware calls to the appropriate python package that does the actual work.
-The hardware package is configured in config.hardwarePackage and it must implement the methods as defined in
-hardware.interface and used in this module below.
+The hardware package acts as the interface for the software to interact with any hardware. Currently split into 3 different
+distinct modules, the temperature controller, stirrer, and reagent dispenser, which contain the functions needed for 
+controller the temperature of the reactor, stirring, and dispensing any reagents into the microlab respectively.
+Alternative implementations just need to implement a new class withthe functions of the base class in the base.py file 
+for the module, as well as adding a call to that for a unique string setting to the create function in the __init__.py
+file.
 """
 
+import time
 import config
 import hardware.reagentdispenser as rd
 import hardware.stirring as stirring
@@ -14,19 +18,6 @@ stirrer = stirring.createStirrer(config.stirrerType, config.stirrerArgs)
 reagentDispenser = rd.createReagentDispenser(config.reagentdispenserType, config.reagentDispenserArgs)
 
 timer = time.time();
-
-def log(message):
-    """
-    Log a debug message.
-
-    :param message:
-        The actual message
-
-    :return:
-        None
-    """
-    print('hardware - {0}'.format(message))
-
 
 def secondSinceStart():
     """

@@ -13,6 +13,21 @@ class BasicTempController(TempController):
     heaterPumpPin = None
     coolerPin = None
     def __init__(self, args):
+        """
+        Constructor. Initializes the stirrer.
+        :param args:
+          dict
+            heaterPin
+              Which gpio pin to control the heating element
+            heaterPumpPin
+              Which gpio pin to control the heater pump
+            coolerPin
+              Which gpio pin to control the cooler pump
+            thermometerType
+              The type of thermometer to use, see thermometer module for more info
+            thermometerArgs
+              Any configuration for the thermometer, see thermometer module for more info
+        """
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         self.heaterPin = args["heaterPin"]

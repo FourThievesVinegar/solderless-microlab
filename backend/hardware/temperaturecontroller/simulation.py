@@ -11,6 +11,7 @@ class SimulatedTempController(TempController):
     temperature = 24
     def __init__(self, args):
         pass
+
     def turnHeaterOn(self):
         """
         Sets the heater flag for the simulation.
@@ -46,7 +47,7 @@ class SimulatedTempController(TempController):
 
     def turnCoolerOff(self):
         """
-        Un-sets the heater flag for the simulation.
+        Un-sets the cooler flag for the simulation.
 
         :return:
         None
@@ -61,7 +62,8 @@ class SimulatedTempController(TempController):
 
         Temperature starts off at 24C and changes every time the function is called as follows:
             heater flag on: +1C
-            heater flag off: -0.1C
+            cooler flag on: -1C
+            cooler and heater flag off: -0.1C
         :return:
         """
         if self.temperature == -1:
