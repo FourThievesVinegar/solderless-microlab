@@ -9,13 +9,16 @@ file.
 
 import time
 import config
+import yaml
 import hardware.reagentdispenser as rd
 import hardware.stirring as stirring
 import hardware.temperaturecontroller as tc
+from hardware import devicelist
 
-tempController = tc.createTemperatureController(config.tempControllerType, config.tempControllerArgs)
-stirrer = stirring.createStirrer(config.stirrerType, config.stirrerArgs)
-reagentDispenser = rd.createReagentDispenser(config.reagentdispenserType, config.reagentDispenserArgs)
+devices = devicelist.setupDevices(yaml.safe_load(open('./hardware/base_hardware.yaml', 'r')))
+tempController = devices['reactor-temperature-controller']
+stirrer = devices['reactor-stirrer']
+reagentDispenser = devices['reactor-reagent-dispenser']
 
 timer = time.time();
 

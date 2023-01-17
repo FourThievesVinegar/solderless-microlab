@@ -7,9 +7,10 @@ import config
 from hardware.temperaturecontroller.basictempcontroller import BasicTempController
 from hardware.temperaturecontroller.simulation import SimulatedTempController
 
-def createTemperatureController(tempControllerType, args):
+def createTemperatureController(tempControllerConfig, devices):
+    tempControllerType = tempControllerConfig['implementation']
     if tempControllerType == "basic":
-        return BasicTempController(args)
+        return BasicTempController(tempControllerConfig, devices)
     elif tempControllerType == "simulation":
-        return SimulatedTempController(args)
-    raise "Unsupported tempControllerType"
+        return SimulatedTempController(tempControllerConfig)
+    raise Exception("Unsupported tempControllerType")

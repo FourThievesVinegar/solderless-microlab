@@ -6,10 +6,10 @@ and either the individual files or backend/config.py for configuration informati
 from hardware.reagentdispenser.syringepump import SyringePump
 from hardware.reagentdispenser.simulation import SimulatedReagentDispenser
 
-def createReagentDispenser(reagentdispenserType, args):
+def createReagentDispenser(reagentdispenserConfig, devices):
+    reagentdispenserType = reagentdispenserConfig['implementation']
     if reagentdispenserType == "syringepump":
-        print(args)
-        return SyringePump(args)
+        return SyringePump(reagentdispenserConfig)
     elif reagentdispenserType == "simulation":
         return SimulatedReagentDispenser()
-    raise "Unsupported reagentdispenserType"
+    raise Exception("Unsupported reagentdispenserType")

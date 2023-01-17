@@ -5,10 +5,11 @@ and either the individual files or backend/config.py for configuration informati
 from hardware.thermometer.w1_therm import W1TempSensor
 from hardware.thermometer.serial import SerialTempSensor
 
-def createThermometer(thermometerType, args=None):
+def createThermometer(thermometerConfig, devices):
+  thermometerType = thermometerConfig['implementation']
   if thermometerType == "w1_therm":
     return W1TempSensor()
   elif thermometerType == "serial":
-    return SerialTempSensor(args) 
+    return SerialTempSensor(thermometerConfig) 
   
-  raise "Unsupported thermometer type"
+  raise Exception("Unsupported thermometer type")

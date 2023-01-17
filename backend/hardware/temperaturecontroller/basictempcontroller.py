@@ -12,7 +12,7 @@ class BasicTempController(TempController):
     heaterPin = None
     heaterPumpPin = None
     coolerPin = None
-    def __init__(self, args):
+    def __init__(self, args, devices):
         """
         Constructor. Initializes the stirrer.
         :param args:
@@ -42,7 +42,7 @@ class BasicTempController(TempController):
         GPIO.output(self.heaterPumpPin, RELAY_OFF)
         GPIO.output(self.coolerPin, RELAY_OFF)
 
-        self.thermometer = therm.createThermometer(args["thermometerType"], args["thermometerArgs"])
+        self.thermometer = devices[args['thermometerID']]
 
     def turnHeaterOn(self):
         """
