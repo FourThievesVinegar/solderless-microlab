@@ -9,7 +9,7 @@ from hardware.stirring.simulation import SimulatedStirrer
 def createStirrer(stirrerConfig, devices):
     stirrerType = stirrerConfig['implementation']
     if stirrerType == "gpio_stirrer":
-        return GPIOStirrer(stirrerConfig)
+        return GPIOStirrer(stirrerConfig, devices)
     elif stirrerType == "simulation":
         return SimulatedStirrer()
     raise Exception("Unsupported stirrerType")

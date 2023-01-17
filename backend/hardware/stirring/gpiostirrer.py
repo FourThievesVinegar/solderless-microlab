@@ -1,26 +1,26 @@
-import RPi.GPIO as GPIO
 from hardware.stirring.base import Stirrer
 
-RELAY_ON = True
-RELAY_OFF = False
+RELAY_ON = 1
+RELAY_OFF = 0
 
 class GPIOStirrer(Stirrer):
     stirrerPin = None
 
-    def __init__(self, args):
+    def __init__(self, args, devices):
         """
         Constructor. Initializes the stirrer.
         :param args:
           dict
             stirrerPin
               Which gpio pin to control the stirrer
+            gpioID
+              The ID of the GPIO device used to control stirring
         """
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
+        self.gpio = devices[args["gpioID"]]
         self.stirrerPin = args["stirrerPin"]
         
-        GPIO.setup(self.stirrerPin, GPIO.OUT)
-        GPIO.output(self.stirrerPin, RELAY_OFF)
+        self.gpio.setup(self.stirrerPin)
+        self.gpio.output(self.stirrerPin, RELAY_OFF)
 
     def turnStirrerOn(self):
         """
@@ -29,7 +29,7 @@ class GPIOStirrer(Stirrer):
         :return:
         None
         """
-        GPIO.output(self.stirrerPin, RELAY_ON)
+        self.gpio.output(self.stirrerPin, RELAY_ON)
 
 
     def turnStirrerOff(self):
@@ -39,4 +39,4 @@ class GPIOStirrer(Stirrer):
         :return:
         None
         """
-        GPIO.output(self.stirrerPin, RELAY_OFF)
+        self.gpio.output(self.stirrerPin, RELAY_OFF)

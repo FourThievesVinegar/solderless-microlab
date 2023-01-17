@@ -1,11 +1,10 @@
 import config
-import RPi.GPIO as GPIO
 import hardware.thermometer as therm
 from hardware.temperaturecontroller.base import TempController
 
 
-RELAY_ON = True
-RELAY_OFF = False
+RELAY_ON = 1
+RELAY_OFF = 0
 
 class BasicTempController(TempController):
     thermometer = None
@@ -23,24 +22,21 @@ class BasicTempController(TempController):
               Which gpio pin to control the heater pump
             coolerPin
               Which gpio pin to control the cooler pump
-            thermometerType
-              The type of thermometer to use, see thermometer module for more info
-            thermometerArgs
-              Any configuration for the thermometer, see thermometer module for more info
+            gpioID
+              The ID of the GPIO device used to control heating and cooling
         """
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
+        self.gpio = devices[args["gpioID"]]
         self.heaterPin = args["heaterPin"]
         self.heaterPumpPin = args["heaterPumpPin"]
         self.coolerPin = args["coolerPin"]
 
-        GPIO.setup(self.heaterPin, GPIO.OUT)
-        GPIO.setup(self.heaterPumpPin, GPIO.OUT)
-        GPIO.setup(self.coolerPin, GPIO.OUT)
+        self.gpio.setup(self.heaterPin)
+        self.gpio.setup(self.heaterPumpPin)
+        self.gpio.setup(self.coolerPin)
 
-        GPIO.output(self.heaterPin, RELAY_OFF)
-        GPIO.output(self.heaterPumpPin, RELAY_OFF)
-        GPIO.output(self.coolerPin, RELAY_OFF)
+        self.gpio.output(self.heaterPin, RELAY_OFF)
+        self.gpio.output(self.heaterPumpPin, RELAY_OFF)
+        self.gpio.output(self.coolerPin, RELAY_OFF)
 
         self.thermometer = devices[args['thermometerID']]
 
@@ -52,8 +48,8 @@ class BasicTempController(TempController):
         None
         """
         print("heater turned on")
-        GPIO.output(self.heaterPin, RELAY_ON)
-        GPIO.output(self.heaterPumpPin, RELAY_ON)
+        self.gpio.output(self.heaterPin, RELAY_ON)
+        self.gpio.output(self.heaterPumpPin, RELAY_ON)
 
 
     def turnHeaterOff(self):
@@ -64,8 +60,8 @@ class BasicTempController(TempController):
         None
         """
         print("heater turned off")
-        GPIO.output(self.heaterPin, RELAY_OFF)
-        GPIO.output(self.heaterPumpPin, RELAY_OFF)
+        self.gpio.output(self.heaterPin, RELAY_OFF)
+        self.gpio.output(self.heaterPumpPin, RELAY_OFF)
 
 
     def turnCoolerOn(self):
@@ -76,7 +72,7 @@ class BasicTempController(TempController):
         None
         """
         print("cooler turned on")
-        GPIO.output(self.coolerPin, RELAY_ON)
+        self.gpio.output(self.coolerPin, RELAY_ON)
 
 
     def turnCoolerOff(self):
@@ -87,7 +83,7 @@ class BasicTempController(TempController):
         None
         """
         print("cooler turned off")
-        GPIO.output(self.coolerPin, RELAY_OFF)
+        self.gpio.output(self.coolerPin, RELAY_OFF)
 
 
     def getTemp(self):

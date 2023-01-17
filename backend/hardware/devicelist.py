@@ -2,6 +2,7 @@ import hardware.stirring as stirrer
 import hardware.reagentdispenser as rd
 import hardware.temperaturecontroller as tc
 import hardware.thermometer as thermometer
+import hardware.gpiochip as gpiochip
 
 
 def setupDevices(hardwareConfig):
@@ -25,6 +26,8 @@ def setupDevices(hardwareConfig):
       devices[deviceID] = rd.createReagentDispenser(device, devices)
     elif deviceType == "thermometer":
       devices[deviceID] = thermometer.createThermometer(device, devices)
+    elif deviceType == "gpiochip":
+      devices[deviceID] = gpiochip.createGPIOChip(device, devices)
     else:
       raise Exception("Unsupported device type '{0}'".format(deviceType))
   return devices
