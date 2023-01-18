@@ -23,6 +23,12 @@ localUrl = 'http://%s:%s' % (apiHost, apiPort)
 # Speeds up every task for testing hardware. Should be set to 1 for actual use
 hardwareSpeedup = environ.get("HARDWARE_SPEEDUP", 1)  
 
+# Which hardware board the software is being run on, for loading known hardware configuration. 
+# supported values:
+# pi, AML-S905X-CC-V1.0A, custom
+# Custom loads nothing. All hardware used must then be specified in base_hardware.yaml 
+hardwareBoard = environ.get("HARDWARE_BOARD", "pi")  
+
 ## CELERY CONFIGURATION ##
 
 # Celery configuration. You should never need to change this.

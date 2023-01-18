@@ -1,0 +1,120 @@
+devices:
+  - id: "gpio-primary"
+    type: "gpiochip"
+    # Which implementation to use for controlling GPIO pins
+    # Supported values: gpiod
+    # gpiod: control using python3-libgpiod
+    implementation: "gpiod"
+    # name of the chip according to gpiod
+    chipName: "gpiochip1"
+    # Dictionary mapping strings to gpiod line numbers
+    # Aliases taken from running gpioinfo on the device
+    # BCM_ Aliases map line numbers from the pi BCM line number to the corresponding line
+    # on the AML-S905X-CC.
+    # See the following link for some more info on what pins map to what lines (the linux # column is the line #)
+    # https://docs.google.com/spreadsheets/d/1U3z0Gb8HUEfCIMkvqzmhMpJfzRqjPXq7mFLC-hvbKlE/edit#gid=0
+    lineAliases:
+      Eth_Link_LED: 14
+      Eth_Activity_LED: 15
+      HDMI_HPD: 16
+      HDMI_SDA: 17
+      HDMI_SCL: 18
+      9J1_Header_Pin2: 20
+      2J3_Header_Pin6: 22
+      2J3_Header_Pin5: 23
+      2J3_Header_Pin4: 24
+      2J3_Header_Pin3: 25
+      eMMC_D0: 26
+      eMMC_D1: 27
+      eMMC_D2: 28
+      eMMC_D3: 29
+      eMMC_D4: 30
+      eMMC_D5: 31
+      eMMC_D6: 32
+      eMMC_D7: 33
+      eMMC_Clk: 34
+      eMMC_CMD: 36
+      ALT_BOOT_MODE: 37
+      MMC_Data_Strobe: 41
+      SDCard_D1: 42
+      SDCard_D0: 43
+      SDCard_CLK: 44
+      SDCard_CMD: 45
+      SDCard_D3: 46
+      SDCard_D2: 47
+      VCCK_Enable: 74
+      7J1_Header_Pin27: 75
+      7J1_Header_Pin28: 76
+      VCCK_Regulator: 77
+      VDDEE_Regulator: 78
+      7J1_Header_Pin22: 79
+      7J1_Header_Pin26: 80
+      7J1_Header_Pin36: 81
+      7J1_Header_Pin38: 82
+      7J1_Header_Pin40: 83
+      7J1_Header_Pin37: 84
+      7J1_Header_Pin33: 85
+      7J1_Header_Pin35: 86
+      7J1_Header_Pin19: 87
+      7J1_Header_Pin21: 88
+      7J1_Header_Pin24: 89
+      7J1_Header_Pin23: 90
+      7J1_Header_Pin8: 91
+      7J1_Header_Pin10: 92
+      7J1_Header_Pin16: 93
+      7J1_Header_Pin18: 94
+      7J1_Header_Pin32: 95
+      7J1_Header_Pin29: 96
+      7J1_Header_Pin31: 97
+      7J1_Header_Pin7: 98
+      BCM_4: 98
+      BCM_5: 96
+      BCM_6: 97
+      BCM_7: 80
+      BCM_8: 89
+      BCM_9: 88
+      BCM_10: 87
+      BCM_11: 90
+      BCM_12: 95
+      BCM_13: 85
+      BCM_14: 91
+      BCM_15: 92
+      BCM_16: 81
+      BCM_19: 86
+      BCM_20: 82
+      BCM_21: 83
+      BCM_23: 93
+      BCM_24: 94
+      BCM_25: 79
+      BCM_26: 84
+
+  - id: "gpio-secondary"
+    type: "gpiochip"
+    # Which implementation to use for controlling GPIO pins
+    # Supported values: gpiod
+    # gpiod: control using python3-libgpiod
+    implementation: "gpiod"
+    # name of the chip according to gpiod
+    chipName: "gpiochip0"
+    # Dictionary mapping strings to gpiod line numbers
+    # Aliases taken from running gpioinfo on the device
+    # BCM_ Aliases map line numbers from the pi BCM line number to the corresponding line
+    # on the AML-S905X-CC.
+    # See the following link for some more info on what pins map to what lines (the linux # column is the line #)
+    # https://docs.google.com/spreadsheets/d/1U3z0Gb8HUEfCIMkvqzmhMpJfzRqjPXq7mFLC-hvbKlE/edit#gid=0
+    lineAliases:
+      UART_TX: 0
+      UART_RX: 1
+      7J1_Header_Pin5: 4
+      7J1_Header_Pin3: 5
+      7J1_Header_Pin12: 6
+      IR_In: 7
+      9J3_Switch_HDMI_CEC/7J1: 8
+      7J1_Header_Pin13: 9
+      7J1_Header_Pin15: 10
+      BCM_2: 5
+      BCM_3: 4
+      BCM_17: 8
+      BCM_27: 9
+      BCM_22: 10
+      BCM_18: 6

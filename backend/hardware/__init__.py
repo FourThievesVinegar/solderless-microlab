@@ -9,13 +9,12 @@ file.
 
 import time
 import config
-import yaml
 import hardware.reagentdispenser as rd
 import hardware.stirring as stirring
 import hardware.temperaturecontroller as tc
 from hardware import devicelist
 
-devices = devicelist.setupDevices(yaml.safe_load(open('./hardware/base_hardware.yaml', 'r')))
+devices = devicelist.setupDevices()
 tempController = devices['reactor-temperature-controller']
 stirrer = devices['reactor-stirrer']
 reagentDispenser = devices['reactor-reagent-dispenser']

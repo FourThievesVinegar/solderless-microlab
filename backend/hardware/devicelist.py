@@ -3,10 +3,27 @@ import hardware.reagentdispenser as rd
 import hardware.temperaturecontroller as tc
 import hardware.thermometer as thermometer
 import hardware.gpiochip as gpiochip
+import config
+import yaml
+from os.path import exists
+
+def loadHardwareConfiguration():
+  if config.hardwareBoard != "custom":
+    path = './hardware/boardhardware/{0}.yaml'.format(config.hardwareBoard)
+    if not exists(path):
+      raise Exception("No board configuration found for '{0}'".format(config.hardwareBoard))
+    boardHardware = yaml.safe_load(open(path, 'r'))
+  else:
+    boardHardware = {"devices": []}
 
 
-def setupDevices(hardwareConfig):
-  print(hardwareConfig)
+  userHardware = yaml.safe_load(open('./hardware/base_hardware.yaml', 'r'))
+
+  return { "devices": boardHardware["devices"] + userHardware["devices"]}
+
+
+def setupDevices():
+  hardwareConfig = loadHardwareConfiguration()
   deviceDefinitions = hardwareConfig['devices']
   validateConfiguration(deviceDefinitions)
   
