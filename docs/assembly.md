@@ -304,7 +304,7 @@ Setup virtual environement and install more dependencies with pip
 
 ```
 $ cd backend
-$ virtualenv -p python3 env
+$ virtualenv -p python3 --system-site-packages env
 $ source env/bin/activate
 (env) $ pip install -r requirements.txt
 ```

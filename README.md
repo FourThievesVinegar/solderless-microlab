@@ -54,11 +54,11 @@ $ pip3 install virtualenv
 ```
 
 Set up a Python virtual environment:
-virtualenv -p python3 env
+virtualenv -p python3 --system-site-packages env
 
 ```text
 $ cd backend
-$ virtualenv -p python3 env
+$ virtualenv -p python3 --system-site-packages env
 $ source env/bin/activate
 (env) $ pip install -r requirements.txt
 ```
@@ -68,7 +68,7 @@ $ source env/bin/activate
 (on the Pi)
 
 ```text
-sudo apt -y install screen git redis-server python-celery-common python3-flask python3-pip python3-rpi.gpio python3-serial
+sudo apt -y install screen git redis-server python-celery-common python3-flask python3-pip python3-serial python3-libgpiod
 
 ```
 

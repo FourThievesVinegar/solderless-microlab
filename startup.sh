@@ -3,7 +3,7 @@
 
 
 cd ./backend && \
-	virtualenv -p python3 env && source env/bin/activate && \
+	virtualenv -p python3 --system-site-packages env && source env/bin/activate && \
 	pip install -r requirements.txt && \
 	export FLASK_APP=main.py && \
 	export FLASK_ENV=development && \
