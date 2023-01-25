@@ -4,5 +4,6 @@ pytest==5.4.1
 celery==5.2.2
 redis==3.4.1
 requests==2.23.0
-RPi.GPIO==0.7.1
 pyserial==3.5
+w1thermsensor==2.0.0
+pyyaml==6.0
