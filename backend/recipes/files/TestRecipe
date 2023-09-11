@@ -1,0 +1,132 @@
+    {
+        "title": "Microlab Test Recipe",
+        "steps": [
+            {
+                "message": "Hello and welcome! This recipe is to test the function of the microlab. Ready to see the incredible test options?",
+                "done": false,
+                "options": [
+                    {
+                        "text": "Yes!",
+                        "next": 1
+                    },
+                    {
+                        "text": "No Thanks",
+                        "next": 10
+                    }
+                ]
+            },
+            {
+                "message": "Select the test to perform",
+                "done": false,
+                "options": [
+                    {
+                        "text": "Pumps",
+                        "next": 2
+                    },
+                    {
+                        "text": "Heat to 30C",
+                        "next": 6
+                    },
+                    {
+                        "text": "Stirring",
+                        "next": 8
+                    }
+                ]
+            },
+            {
+                "message": "Testing Pump X",
+                "parameters": {
+                    "volume": 100,
+                    "pump": "X"
+                },
+                "done": false,
+                "baseTask": "pump",
+                "next": 3
+            },
+            {
+                "message": "Testing Pump Y",
+                "parameters": {
+                    "pump": "Y",
+                    "volume": 100
+                },
+                "done": false,
+                "baseTask": "pump",
+                "next": 4
+            },
+            {
+                "message": "Testing Pump Z",
+                "parameters": {
+                    "pump": "Z",
+                    "volume": 100
+                },
+                "done": false,
+                "baseTask": "pump",
+                "next": 5
+            },
+            {
+                "message": "Would you like another test?",
+                "done": false,
+                "options": [
+                    {
+                        "text": "More!",
+                        "next": 1
+                    },
+                    {
+                        "text": "No way!",
+                        "next": 10
+                    }
+                ]
+            },
+            {
+                "message": "Heating to 35 degrees C.",
+                "parameters": {
+                    "temp": 35
+                },
+                "done": false,
+                "baseTask": "heat",
+                "next": 7,
+                "details": "This temperature is necessary to speed the reaction."
+            },
+            {
+                "message": "Would you like another test?",
+                "done": false,
+                "options": [
+                    {
+                        "text": "I guess.",
+                        "next": 1
+                    },
+                    {
+                        "text": "Nah.",
+                        "next": 10
+                    }
+                ]
+            },
+            {
+                "message": "Activating stirrer for 10 seconds.",
+                "parameters": {
+                    "time": 10
+                },
+                "done": false,
+                "baseTask": "stir",
+                "next": 9
+            },
+            {
+                "message": "Would you like another test?",
+                "done": false,
+                "options": [
+                    {
+                        "text": "Yes please!",
+                        "next": 1
+                    },
+                    {
+                        "text": "No thanks.",
+                        "next": 10
+                    }
+                ]
+            },
+            {
+                "message": "Okay then! That was always allowed.",
+                "done": true
+            }
+        ]
+    }

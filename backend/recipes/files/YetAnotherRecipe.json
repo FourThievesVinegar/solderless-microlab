@@ -1,4 +1,0 @@
-{
-    "title": "YetAnotherRecipe",
-    "steps": [{"message": "Here's the first step. Do it.", "next": 1, "options": [{"text": "Okay", "next": 1}, {"text": "Nah", "next": 2}]}, {"message": "Put the stuff in the thing.", "options": [{"text": "Onward!", "next": 2}], "next": 2}, {"message": "Heat up to temp", "tasks": [{"parameters": {"temp": 50}, "baseTask": "cool"}], "next": 3}, {"message": "Stir Stir!", "tasks": [{"parameters": {"time": 30}, "baseTask": "stir"}], "next": 4}, {"message": "Bask in your own glory", "done": true}]
-}
