@@ -60,6 +60,14 @@ class SyringePump(ReagentDispenser):
                     stepsPerRev
                     mmPerml
                     maxmmPerMin
+                Z
+                    dict - configuration of the Z axis/motor, 
+                    same as documented above but for the Z axis  
+
+                    mmPerRev
+                    stepsPerRev
+                    mmPerml
+                    maxmmPerMin
         """
         self.syringePumpsConfig = args["syringePumpsConfig"]
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
@@ -69,7 +77,7 @@ class SyringePump(ReagentDispenser):
         Dispense reagent from a syringe
 
         :param pumpId:
-            The pump id. One of 'X' or 'Y'
+            The pump id. One of 'X' or 'Y' or 'Z'
         :param volume:
             The number of ml to dispense
         :return:

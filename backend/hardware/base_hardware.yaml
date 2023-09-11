@@ -64,6 +64,12 @@ devices:
         stepsPerRev: 200
         mmPerml: 3.5
         maxmmPerMin: 240
+      Z:
+        # These are all the same as documented above but for the Y axis
+        mmPerRev: 0.8
+        stepsPerRev: 200
+        mmPerml: 3.5
+        maxmmPerMin: 240
     ## simulation MODE ARGS
     # None needed or supported at the moment
 
