@@ -44,6 +44,7 @@ $ cd solderless-microlab
 $ sudo apt update
 $ sudo apt install python3 python3-pip python-virtualenv python3-virtualenv
 ```
+Note: some versions of Linux have dropped support for Python2 and `python-virtualenv`.
 
 (for macOS)
 
