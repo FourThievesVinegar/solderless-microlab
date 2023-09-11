@@ -50,12 +50,24 @@ def status():
             String indicating an icon to display to the user or undefined
             if the recipe does not specify an icon for the step.
             One of:
-                reaction_chamber
-                load_syringe
-                inspect
-                dispensing
-                temperature
                 reaction_complete
+                cooling
+                crystalisation
+                dispensing
+                dry
+                filter
+                heating
+                human_task
+                inspect
+                load_syringe
+                maintain_cool
+                maintain_heat
+                reaction_chamber
+                rinse
+                set_up_cooling
+                set_up_heating
+                stirring
+                temperature
         status
             The state of the application. One of:
                 idle
