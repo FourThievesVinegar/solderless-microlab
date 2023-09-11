@@ -9,7 +9,7 @@ from os.path import exists
 
 def loadHardwareConfiguration():
   if config.hardwareBoard != "custom":
-    path = './hardware/boardhardware/{0}.yaml'.format(config.hardwareBoard)
+    path = './hardware/boardhardwareconfig/{0}.yaml'.format(config.hardwareBoard)
     if not exists(path):
       raise Exception("No board configuration found for '{0}'".format(config.hardwareBoard))
     boardHardware = yaml.safe_load(open(path, 'r'))
