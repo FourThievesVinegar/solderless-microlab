@@ -70,6 +70,18 @@ devices:
         stepsPerRev: 200
         mmPerml: 3.5
         maxmmPerMin: 240
+            # Configuration for the syringe pump motors
+    peristalticPumpsConfig:
+      F: 100
+      X:
+        # arbitrary scaling factor pending calibration
+        mlPerUnit: 1
+      Y:
+        # arbitrary scaling factor pending calibration
+        mlPerUnit: 1
+      Z:
+        # arbitrary scaling factor pending calibration
+        mlPerUnit: 1
     ## simulation MODE ARGS
     # None needed or supported at the moment
 

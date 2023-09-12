@@ -30,7 +30,7 @@ class SyringePump(ReagentDispenser):
     grblSer = None
     def __init__(self, args):
         """
-        Constructor. Initializes the stirrer.
+        Constructor. Initializes the pumps.
         :param args:
           dict
             arduinoPort
