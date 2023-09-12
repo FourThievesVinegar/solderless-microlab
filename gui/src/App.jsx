@@ -26,7 +26,7 @@ export function App() {
 
   return (
     <div className="lcd-wrapper">
-      <Header>Lab status: {status?.status || 'loading...'}</Header>
+      <Header>Lab: {`${status.step ? `${status.step}: ` : ""}${status?.status}` || 'loading...'}</Header>
       <Switch>
         <Route exact path="/">
           <Home status={status} />
