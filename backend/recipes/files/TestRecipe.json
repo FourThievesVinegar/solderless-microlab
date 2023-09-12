@@ -36,7 +36,7 @@
             {
                 "message": "Testing Pump X",
                 "parameters": {
-                    "volume": 100,
+                    "volume": 10,
                     "pump": "X"
                 },
                 "done": false,
@@ -47,7 +47,7 @@
                 "message": "Testing Pump Y",
                 "parameters": {
                     "pump": "Y",
-                    "volume": 100
+                    "volume": 10
                 },
                 "done": false,
                 "baseTask": "pump",
@@ -57,7 +57,7 @@
                 "message": "Testing Pump Z",
                 "parameters": {
                     "pump": "Z",
-                    "volume": 100
+                    "volume": 10
                 },
                 "done": false,
                 "baseTask": "pump",
