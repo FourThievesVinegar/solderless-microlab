@@ -23,4 +23,4 @@ fi
 cd ../gui && serve -s build
 
 # Start a Browser going to localhost:3000
-open http://locahost:3000
+xdg-open http://locahost:3000
