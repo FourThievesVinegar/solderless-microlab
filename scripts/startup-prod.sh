@@ -7,7 +7,7 @@ cd ../backend && \
 	export FLASK_APP=main.py && \
 	export FLASK_ENV=production && \
 	export FLASK_DEBUG=0 && \
-	python main.py &
+	python main.py production &
 
 cd ../backend && \
 	source env/bin/activate && \
