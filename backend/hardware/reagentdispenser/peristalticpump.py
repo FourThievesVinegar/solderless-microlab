@@ -45,10 +45,8 @@ class PeristalticPump(ReagentDispenser):
                 Z
                     mlPerUnit   Arbitrary scaling factor
         """
-        self.syringePumpsConfig = args["peristalticPumpsConfig"]
+        self.peristalticPumpsConfig = args["peristalticPumpsConfig"]
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
-        grblWrite(self.grblSer, 'F150\n')
-
 
     def dispense(self, pumpId, volume):
         """
@@ -61,7 +59,9 @@ class PeristalticPump(ReagentDispenser):
         :return:
             None
         """
-        grblWrite(self.grblSer, 'G1{0}{1}\n'.format(pumpId, volume))
+        grblWrite(self.grblSer, 'F200\n')
+
+        grblWrite(self.grblSer, 'G91 {0}{1}\n'.format(pumpId, volume * self.peristalticPumpsConfig[pumpId][mlPerUnit]))
 
         # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
         time.sleep(volume / 5 + 1)
