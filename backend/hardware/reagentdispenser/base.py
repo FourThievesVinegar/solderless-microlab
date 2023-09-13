@@ -7,7 +7,7 @@ class ReagentDispenser(ABC):
         Dispense reagent.
 
         :param pumpId:
-            The pump id. One of 'X' or 'Y'
+            The pump id. One of 'X' or 'Y' or 'Z'
         :param volume:
             The number ml to dispense
         :return:

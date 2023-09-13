@@ -10,7 +10,7 @@ def createReagentDispenser(reagentdispenserConfig, devices):
     reagentdispenserType = reagentdispenserConfig['implementation']
     if reagentdispenserType == "syringepump":
         return SyringePump(reagentdispenserConfig)
-    if reagentdispenserType == "peristalticpump":
+    elif reagentdispenserType == "peristalticpump":
         return PeristalticPump(reagentdispenserConfig)
     elif reagentdispenserType == "simulation":
         return SimulatedReagentDispenser()

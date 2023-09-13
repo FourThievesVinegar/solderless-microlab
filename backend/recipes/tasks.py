@@ -123,7 +123,7 @@ def pump(parameters):
 
     :param parameters:
         dictionary
-            'pump' - one of: 'X' or 'Y'
+            'pump' - one of: 'X' or 'Y' or 'Z'
             'volume' - volume to dispense in ml
     :return:
         None

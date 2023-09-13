@@ -21,4 +21,6 @@ class SimulatedReagentDispenser(ReagentDispenser):
             log('Dispensing {0}ml from pump X'.format(volume))
         elif pumpId == 'Y':
             log('Dispensing {0}ml from pump Y'.format(volume))
+        elif pumpId == 'Z':
+            log('Dispensing {0}ml from pump Z'.format(volume))
         time.sleep(abs(volume))

@@ -59,7 +59,7 @@ class PeristalticPump(ReagentDispenser):
         :return:
             None
         """
-        grblWrite(self.grblSer, 'F200\n')
+        grblWrite(self.grblSer, 'F{0}\n'.format(self.peristalticPumpsConfig['F']))
 
         grblWrite(self.grblSer, 'G91 {0}{1}\n'.format(pumpId, volume * self.peristalticPumpsConfig[pumpId][mlPerUnit]))
 

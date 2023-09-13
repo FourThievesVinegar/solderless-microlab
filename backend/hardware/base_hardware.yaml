@@ -70,9 +70,10 @@ devices:
         stepsPerRev: 200
         mmPerml: 3.5
         maxmmPerMin: 240
-            # Configuration for the syringe pump motors
+    # Configuration for the peristaltic pump motors
     peristalticPumpsConfig:
-      F: 100
+      #200 is recommended
+      F: 200
       X:
         # arbitrary scaling factor pending calibration
         mlPerUnit: 1
