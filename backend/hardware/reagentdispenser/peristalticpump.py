@@ -59,9 +59,10 @@ class PeristalticPump(ReagentDispenser):
         :return:
             None
         """
-        grblWrite(self.grblSer, 'F{0}\n'.format(self.peristalticPumpsConfig['F']))
-
-        grblWrite(self.grblSer, 'G91 {0}{1}\n'.format(pumpId, volume * self.peristalticPumpsConfig[pumpId]['mlPerUnit']))
+        fValue = self.peristalticPumpsConfig['F']
+        moveValue = volume * self.peristalticPumpsConfig[pumpId]['mlPerUnit']
+        
+        grblWrite(self.grblSer, 'G1 {0}{1} F{2}\n'.format(pumpId, moveValue, fValue))
 
         # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
         time.sleep(volume / 5 + 1)
