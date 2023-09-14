@@ -34,7 +34,7 @@
                 ]
             },
             {
-                "message": "Testing Pump X",
+                "message": "Testing Pump X - Dispensing 10 units",
                 "parameters": {
                     "volume": 10,
                     "pump": "X"
@@ -44,7 +44,7 @@
                 "next": 3
             },
             {
-                "message": "Testing Pump Y",
+                "message": "Testing Pump Y - Dispensing 10 units",
                 "parameters": {
                     "pump": "Y",
                     "volume": 10
@@ -54,7 +54,7 @@
                 "next": 4
             },
             {
-                "message": "Testing Pump Z",
+                "message": "Testing Pump Z - Dispensing 10 units",
                 "parameters": {
                     "pump": "Z",
                     "volume": 10

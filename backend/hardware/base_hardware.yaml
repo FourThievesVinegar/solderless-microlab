@@ -74,14 +74,14 @@ devices:
     peristalticPumpsConfig:
       F: 175
       X:
-        # arbitrary scaling factor pending calibration
-        mlPerUnit: 1
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
       Y:
-        # arbitrary scaling factor pending calibration
-        mlPerUnit: 1
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
       Z:
-        # arbitrary scaling factor pending calibration
-        mlPerUnit: 1
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
     ## simulation MODE ARGS
     # None needed or supported at the moment
 
