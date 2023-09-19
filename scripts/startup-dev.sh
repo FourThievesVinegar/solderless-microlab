@@ -1,5 +1,6 @@
 #!/bin/bash
 #TODO: Update this to use env vars for users locations.
+# Probably this is reduntant and wants to call the other scripts
 
 cd ../backend && \
 	virtualenv -p python3 --system-site-packages env && source env/bin/activate && \
