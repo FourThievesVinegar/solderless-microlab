@@ -37,7 +37,7 @@ devices:
   - id: "reactor-reagent-dispenser"
     type: "reagentDispenser"
     # Which reagent dispenser implementation to use
-    # Supported values: syringepump, simulation
+    # Supported values: syringepump, simulation, peristalticpump
     # syringepump: The open source syringe pump referenced in the assembly documentation
     #              Uses grbl and stepper motors to dispense the reagents into the microlab
     # simulation: Does nothing but sleep to simulate dispensing a reagent
@@ -64,6 +64,24 @@ devices:
         stepsPerRev: 200
         mmPerml: 3.5
         maxmmPerMin: 240
+      Z:
+        # These are all the same as documented above but for the Y axis
+        mmPerRev: 0.8
+        stepsPerRev: 200
+        mmPerml: 3.5
+        maxmmPerMin: 240
+    # Configuration for the peristaltic pump motors
+    peristalticPumpsConfig:
+      F: 175
+      X:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+      Y:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+      Z:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
     ## simulation MODE ARGS
     # None needed or supported at the moment
 

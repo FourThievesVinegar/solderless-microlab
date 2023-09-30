@@ -1,17 +1,25 @@
 #!/bin/bash
-#TODO: Update this to use env vars for users locations.
+# TODO: Update this to use env vars for users locations.
 
+# This file has been left in place but is superseded by startup-dev.sh and startup-prod.sh
+# Use:
+#	./startup.sh dev
+#		Start a development server
 
-cd ./backend && \
-	virtualenv -p python3 --system-site-packages env && source env/bin/activate && \
-	pip install -r requirements.txt && \
-	export FLASK_APP=main.py && \
-	export FLASK_ENV=development && \
-	export FLASK_DEBUG=0 && \
-	python main.py &
+environment=$1;
+if ! [ -z "$environment" ]
+then
+	echo "Starting the Microlab in $environment mode";
+fi
 
-cd ./backend && \
-	source env/bin/activate && \
-	celery -A recipes worker --loglevel=INFO &
+if ! [[ "$environment" =~ ^(dev|prod)$ ]]
+then
+	echo "The options are \"dev\" and \"prod\" so you are getting dev mode, you silly goose!";
+fi
 
-cd ./gui && yarn start
+if [[ "$environment" == "prod" ]] 
+then
+	cd ./scripts/ && ./startup-prod.sh
+else
+	cd ./scripts/ && ./startup-dev.sh
+fi
