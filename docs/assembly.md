@@ -4,28 +4,33 @@
 
 ## Building a Microlab (Instructions currently incomplete)
 
-![Built Microlab](/docs/media/microlab.png){: style="height:90%;width:90%"}
+![Built Microlab](/docs/media/microlab-on-bench.png){: style="height:90%;width:90%"}
 
-The Microlab consists of three major parts:
+The Microlab consists of four major parts:
 
-1. Reaction chamber
-1. Syringe pumps
-1. Control boards
+1. Reactor Unit
+1. Reagent Pump Unit
+1. Lab Control Unit
+1. Temperature Control Unit 
 
-**Reaction Chamber**
-The central part of the Microlab is the reaction chamber. It consists of a custom 3D printed Mason jar lid (called the reactor manifold) that allows a small mason jar to nest into a larger, wide-mouthed mason jar. During operation, the large mason jar will be filled with water. Holes in the mason jar lid will allow a pair of pumps to pump in hot or cold water to control the temperature of the water inside the large, outer mason jar. A stir rod with paddle will mix the chemicals in the smaller jar.
+**Reactor Unit**
+The central part of the Microlab is the reaction chamber. It consists of a custom 3D printed Mason jar lid (called the reactor manifold) that allows a small mason jar to nest into a larger, wide-mouthed mason jar. During operation, the large mason jar is filled with water. Holes in the mason jar lid allow a pair of pumps to pump in hot or cold water to control the temperature of the water inside the large, outer mason jar. A stir rod with paddle mixes the chemicals in the smaller jar.
 
-**Syringe Pumps**
-The Microlab uses two 3D printed syringe pumps to insert additional chemicals into the inner mason jar reactor when certain conditions are met. These syringe pumps have syringes inserted into them, and are attached to stepper motors that are controlled by the control boards to automate the syringe pumps.
+**Reagent Pump Unit**
+The Microlab uses peristaltic pumps (or 3D printed syringe pumps) to insert additional chemicals into the reaction chamber according to the recipe in progress. These pumps have syringes inserted into them. They are driven by stepper motors that are controlled by the Lab Control Unit.
 
-**Control Boards**
-The control boards are the brains of the device. Consisting of an Arduino microcontroller (a programmable circuit board) and a Raspberry Pi (a mini computer).
+**Lab Control Unit**
+The Lab Control Unit is the brain of the device. It consists of an Arduino microcontroller (a programmable circuit board) and a Raspberry Pi (a mini computer), along with a number of other components.
 
-The Arduino controls the syringe pumps, while the Raspberry Pi follows the recipe that it has been ordered to execute, controls the stirrer and temperature control pumps, monitors the temperature of the Lab Reactor, and the reaction time.
+The Arduino controls the syringe pumps, while the Raspberry Pi runs the software to execute the recipe that the user has selected. The Pi also controls the stirrer and temperature control pumps, monitors the temperature inside the Reaction Unit, and keeps track of the recipe steps.
+
+**Temperature Control Unit**
+The Temperature Control Unit powers the heating elements used to maintain temperature in the Reactor Unit. It contains a GFCI outlet, a control relay, and inputs so that the Lab Control Unit can activate it when needed. Because it controls the mains power required to heat the Reactor, it must be carefully constructed.
 
 ### Safety
 
-See Appendix.
+#### Mains Power
+The primary safety concern while assembling, testing, and using the Microlab is the mains power used to run the heaters and maintain Reactor temperature. You are a cute bag of mostly water and are highly susceptible to electrical damage. Always check your connections during assembly and prior to use. We **HIGHLY** recommend building your Microlab using all safety components, including GFCI outlets, properly-rated relays, an inlet power module with a fuse, and proper grounding. During operation, make sure that all electrical components are kept away from liquids.
 
 ### Materials
 
@@ -39,25 +44,25 @@ Fig. 1 Parts Photo
 &nbsp;
 The boards, components and parts needed for this project are located in the Bill of Materials (BOM) file.
 
-Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/tree/master/docs/Microlab Parts List.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/tree/master/docs/Microlab%20Parts%20List.xlsx)
+Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
 
 ### 3D Printed Parts
 
 While most items on the parts list can be purchased, a few items will need to be printed using a 3D printer:
 
-- syringe pumps
+- syringe pumps (unless using peristaltic pumps)
 - reactor manifold
 - motor mount
-- heating vessel lid
+- heating vessel lid (unless using hand-modified jar lid)
 - cooling vessel lid
-- tube fittings (can be purchased, but they are in the parts repo)
-- raspberry pi case (not yet uploaded)
+- tube fittings (can be purchased, but printed versions are in the parts repo)
 
 Parts files are available here: [https://github.com/FourThievesVinegar/Parts/](https://github.com/FourThievesVinegar/Parts/)
 
 **Syringe pumps**
+NOTE: for ease of use and assembly, the syringe pump assembly can be replaced with off-the-shelf peristaltic pumps.
 
-**Quantity: 2**
+**Quantity: 3**
 
 The syringe pump is made up of 8 parts that must be printed. The parts are labelled Linear Actuator with a part number.
 https://www.youmagine.com/designs/syringe-pump
@@ -70,6 +75,13 @@ https://www.youmagine.com/designs/syringe-pump
 This 3D printed lid allows the smaller jar to nest inside the larger jar of the reaction chamber, [STL available here](https://github.com/FourThievesVinegar/Parts/blob/master/v4/reactorManifold_v0.7.STL).
 
 
+**Mixing motor mount**
+NOTE: This part and assembly is still under active development and is subject to re-designs.
+
+**Quantity: 1**
+
+This part attaches to the manifold and holds the mixing motor, which is coupled to the mixing paddle. 
+
 **Inspect 3D printed part**
 Before assembly, be sure to inspect the parts that have come out of the 3D printer.
 
@@ -79,13 +91,12 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
 
 ## Instructions
 
-### Controller Boards Assembly
+### Lab Control Unit Assembly
 
 ![Assembled controller boards](/docs/media/controller_boards.png){: style="height:30%;width:30%"}
 
-#### Parts:
+#### Electronic Parts:
 
-- 3D printed case
 - USB A/B cable for rPi to Arduino
 - Power cables
 - Micro SD card, 32GB
@@ -120,7 +131,7 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
       1. Install drivers (optional)
       1. Install the drivers for the touchscreen, if using.
       1. Follow instructions from the touchscreen manufacturer.
-      1. NOTE: The touch screen is primarily used for mobility and portability. The program can also be run on a regular monitor connected via HDMI, as well as a USB Keyboard and mouse. Users familiar with networking may also choose to run the lab “headless”, and connect across a wireless network without a monitor or USB input devices.
+      1. NOTE: The touch screen is primarily used for mobility and portability. The program can also be run on a regular monitor connected via HDMI, as well as a USB Keyboard and mouse. Users familiar with networking may also choose to run the lab “headless”, and connect across a network without a monitor or USB input devices.
    1. Installing [Microlab Software] without image use.
       1. This is for advanced users who wish to install the software manually, rather than starting from a clean OS install.
       1. Ubuntu is the recommended OS for this use
@@ -132,16 +143,29 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
    1. Note: Video overview of CNC shield assembly and operation [https://youtu.be/zUb8tiFCwmk?t=37](https://youtu.be/zUb8tiFCwmk?t=37)
    1. Note: Critical safety information when working with the CNC shields. Failure to follow them can hurt both you and the component. NEVER connect or disconnect any stepper motor to the CNC Shield while the power is on or connected
    1. ALWAYS disconnect the power before connecting or disconnecting the stepper motors
-   1. When installing the motor driver, be sure to correctly orient the driver so the enable pin matches the EN pin on the CNC Shield. The A4988 driver has a small potentiometer on the bottom center of the IC board, and the EN pin is on the top left.
+   1. When installing the motor driver, be sure to correctly orient the driver so the enable pin matches the EN pin on the CNC Shield. The A4988 driver has a small potentiometer on the bottom center of the IC board, and the EN pin is on the top left. Make sure you have installed the drivers correctly per the manufacturer's instructions.
    1. ALWAYS connect a stepper motor to the CNC Shield when testing or using it. If a stepper motor is not connected it can cause the driver to overheat and become damaged.
    1. When attaching the heatsink to the drivers, it is critical that the heatsink is centered on the chip and does not contact any of the pins. Failure to correctly place the heatsink can cause the driver to short out and fail.
    1. (Not shown in video) Mount the heat sinks on the motor control drivers (MC-MDR) with thermal adhesive, making sure that the heat sink does not contact any of the pins.
-   1. (video part 1: 00:18 WARNING: video incorrectly shows installing all 4 drivers) Mount the motor control drivers (MC-MDR) on the CNC hat (MC-CNC). The four drivers are labeled X, Y, Z, and A. Since this project only requires two stepper motors, we will only use sockets Y and A on the right side of the board. To ensure you have the orientation correct, orient the CNC hat so that the 12v power connection is in the lower left, the reset button is in the upper left. Orient each of the A4988 drivers so that the small potentiometer (looks like a small phillips head screw) is toward the bottom of the board.
+   1. (video part 1: 00:18 WARNING: video incorrectly shows installing all 4 drivers) Mount the motor control drivers (MC-MDR) on the CNC hat (MC-CNC). The four drivers are labeled X, Y, Z, and A. Since this project only requires three stepper motors, we will only use sockets X, Y, and Z. To ensure you have the orientation correct, orient the CNC hat so that the 12v power connection is in the lower left, the reset button is in the upper left. Orient each of the A4988 drivers so that the small potentiometer (looks like a small phillips head screw) is toward the bottom of the board.
    1. Double check that all of the drivers are firmly seated in the sockets, and that none of the heat sinks shifted during installation.
    1. Mount the CNC Hat on the Arduino. The 12v power connection on the lower left of the hat should be directly above the Arduino power jack also on the lower left.
 
 ![Assembled controller boards](/docs/media/rasp_pi2.png){: style="height:30%;width:30%"}
 ![Assembled controller boards](/docs/media/arduino.png){: style="height:30%;width:30%"}
+
+#### Lab Control Unit Housing assembly
+With the release of version 0.5 of the Microlab, we recommend enclosing the Lab Control Units in an enclosure that provides protection to the components and standard interfaces to the other units. This enclosure can be produced using corrugated plastic or another material that you are comfortable cutting and shaping into a box. 
+![Control Unit Exterior](/docs/media/microlab-control-unit.jpg){: style="height:30%;width:30%"}
+
+The Lab Control Unit enclosure is designed to be as modular as possible. In this image, the cables for the Reagent Pump Unit and thermistor are fixed, but cables for the circulation pumps, reaction chamber light, mixing motor, and Temperature Control Unit provide standard interfaces for cables. The knob is an optional PWM motor speed controller that allows manual control over the mixing motor's speed.
+![Control Unit Interfaces](/docs/media/microlab-control-unit-interface.jpg){: style="height:30%;width:30%"}
+
+Inside the enclosure, the 5v and 12v power supplies are connected to the enclosure with velcro straps. They connect to standard barrel plug connectors which connect to lever-style wire connectors that provide 5v and 12v power controlled by relays. NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat) - this requires wiring the GPIO pins on the Pi to the appropriate control pins on the relay board.
+![Control Unit Interior](/docs/media/microlab-control-unit-inside.jpg){: style="height:30%;width:30%"}
+
+**Constructing the enclosure**
+Because folded corrugated plastic tends to return to its original position, it may be necessary to cut off tabs and re-attach them with duct tape, which provides more flexibility. The pictured enclosure is 8" x 6" x 4" and fits all of the Lab Control Unit components comfortably inside. We also recommend a small fan to ensure air flow. Components and velcro straps can be attached to the enclosure using short M3 screws, washers, and nuts.
 
 ### Syringe Pump Assembly
 
@@ -167,7 +191,7 @@ Before you begin assembling components, it is important to verify that your step
 
 With the motor disconnected, you should be able to spin the shaft with your fingers and feel almost no resistance. Take a short length of wire and jumper the top two pins (Pins 1 and 2) of the connector together. If the motor is wired correctly you should now feel some resistance when you spin the shaft (you should be able to feel the “steps” in the stepper motor). Repeat this procedure with the bottom two pins (Pins 3 and 4). If you do not feel any change in resistance, try jumpering other combinations of pins until you identify the two pairs. It is ESSENTIAL that the top two pins form a pair, and the bottom two pins form a pair, but the order of the wires within each pair does not matter. For example, if you find that pins 1 and 3 are a pair, you will need to rewire the connector so that these two are the top pair, and pins 2 and 4 are the bottom pair.
 
-### ASSEMBLY
+#### ASSEMBLY
 
 1. Assemble the Syringe pumps
 
@@ -194,27 +218,25 @@ With the motor disconnected, you should be able to spin the shaft with your fing
    1. (not shown in video) Cut about 1ft of black 18AWG wire (MC-WIRE), and 1ft of red 18AWG wire, and strip ¼ inch of inch of insulation from one end of each wire, and ½ inch from the other end.
    1. (video part 1: 14:09) Insert the ¼ inch end of the black wire into the negative (-) side of the 12v power supply screw terminal in the lower left corner of CNC Hat. If too much bare wire extends outside the terminal, it is possible for the power connection to short out and create a fire hazard. If necessary, trim the wire to minimize the amount exposed. Tighten the screw with a small flat blade screwdriver to secure the wire in place.
    1. (video part 1: 14:21) Insert the ¼ inch end of the red wire into the positive (+) side of the 12v power supply screw terminal. Again, trim the bare wire if necessary, then tighten the screw to secure the wire in place.
+1. Tuning potentiometers: **WARNING!** Failure to correctly tune the potentometers can damage the motor controller and the motors themselves. To tune them, **gently** turn the potentometers clockwise using a small phillips head screw driver, taking care not to turn past any resistance. Turning them clockwise "closes" the voltage down while turning them counter-clockwise "opens" the voltage up. Start with the potentiometers in the "closed" position, and slowly "open" each of them a quarter of a turn at a time until the stepper motors respond correctly - they should turn smoothly. If they do not move, "open" the potentometer a quarter turn and try again. If they move erratically, your voltage is likely too high and you may have damaged the board or the motors. The Microlab comes with a Test Recipe that can be used to test the reagent pump motors.
 
-### Reaction Chamber Assembly
+### Reactor Unit Assembly
 
-**Reaction chamber parts:**
+**Reactor Unit parts:**
 
 - Mixing paddle
 - Mixing motor
-- Reactor manifold - 3D printed mason jar lid (manifold?
-- Wide mouth quart Mason jars 32oz
-- Regular mouth half pint Mason jar 8oz
-- Tubing (5mm ?)
-- Tubing 8mm?
+- Reactor manifold - 3D printed mason jar lid
+- Wide mouth quart Mason jar 32oz
+- Regular mouth half pint Mason jar 6oz
+- Tubing (5mm / 8mm) - use tubing compatible with your circulation pumps
 - Barbed Tee Fittings
-- Pump
-- Syringes
-- 12 volt beverage heater coil
 
 **Assembling the reactor, pumps, and tubing:**
 
 1. Attach mix paddle to reactor lid and motor
    1. (video part 1: 12:40) Insert the mixing paddle (RX-PDL) up through the center hole in the reactor lid (RX-LID) and press it into place in the shaft of the mixing motor (RX-MXM).
+   1. You will likely need a coupler for this. You can use surgical tubing to connect the mixing paddle shaft to the motor coupling. This component is still being refined as the current design is not optimal.
 1. (video part 1: 13:08) screw the small mason jar (RX-COR) into the reactor lid, then slide the core into the large mason jar (RX-OUT) and screw the reactor lid down.
    (video part 1: 15:02) Fit a coil of 5mm tubing (RX-TB5) to the outlet of each pump. The outlet is the smaller diameter fitting that extends tangentially from the side of the pump. 1. NOTE: The exact size and combination of tubing and fittings you need will be determined by the diameter of the inlet and outlet on the water pumps. Since the circulating system operates at very low pressure you can often make couplings and reducing fittings by sliding smaller diameter tubing inside larger. However, this will depend on the diameter and wall thickness of the tubing you are using. If you have difficulty making up any of the connections, water with a few drops of dish soap can be used as a lubricant.
 1. (video part 1: 15:15) Cut approximately 1” of 8mm tubing (RX-TB8) and fit on the inlet of both pumps. The inlet is the larger diameter fitting in line with the major axis of the pump.
@@ -230,6 +252,27 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 1. (video part 1: 19:40) Attach one end of each tube to each syringe and feed the other end through the hole in the reactor lid leading into the core jar. Be sure the tubing does not prevent the mixing paddle from turning.
 1.
 
+#### Reactor Unit Housing Assembly
+- Cut and paint plywood
+- Cut velcro straps
+- Cut, paint, and assemble reactor housing door (use packing tape for the transparent door)
+**TODO: More details and pictures of housing pieces**
+
+### Temperature Control Unit Assembly
+
+**Temperature Control Unit Parts**
+- Circulation Pumps
+- Beverage heater coil (2 recommended for faster heating)
+- 2-Gang electrical box and face plate
+- GFCI Outlet
+- 6oz Canning jar
+- Relay (Must support mains power!)
+- Inlet power module with fuse
+- AC power cord
+
+#### Assembly
+**TODO**
+
 ## Appendix
 
 ### Attachments
@@ -238,18 +281,11 @@ Build Video
 Operations Guide Link
 Support Email Address?
 
-### Reference & Safety
+### References
 
 - External References
-  - [Open Source Syringe Pump](https://www.appropedia.org/Open-source_syringe_pump) - The Microlab uses a version of this to make the syringe pumps. A few parts are omitted for simplicity.
+  - [Open Source Syringe Pump](https://www.appropedia.org/Open-source_syringe_pump) - The Microlab can use a version of this for the syringe pumps. A few parts are omitted for simplicity. Even simpler is to use peristaltic pumps driven by stepper motors, which require almost no assembly.
   - Getting Started with Raspberry Pi - A walkthrough for getting your raspberry pi formatted properly.
-- Internal References
-  - https://github.com/FourThievesVinegar/solderless-microlab
-- Safety Precautions
-  - Raw Materials for 3D printing - what is safe to use for the reactor manifold, that will not interact with the materials in the reaction chamber?
-  - Electrical mains current runs through the heater coil.
-  - GFCI Dongle
-- Other Concerns for assembly, but not operation
 
 ### Definitions
 
@@ -261,6 +297,7 @@ Support Email Address?
 | OS                           | Operating System. This is the central software that runs all other programs. Windows is the most famous example of an Operating System. This project uses Ubuntu, a version of the Linux operating system.                                                                                                                                               |
 
 ### Headless Install
+NOTE: These instructions are likely out of date and should be merged with the development instructions in the main README
 
 - install [raspberry pi imager](https://www.raspberrypi.com/software/)
 
