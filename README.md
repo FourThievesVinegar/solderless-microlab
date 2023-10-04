@@ -2,6 +2,8 @@
 
 An open source jacketed lab reactor made from off-the-shelf components you can buy online.
 
+An introduction to the project is here: [docs/index.md](docs/index.md)
+
 Read the motivation behind the project here: [docs/motivation.md](docs/motivation.md)
 
 Read the hardware assembly instructions here: [docs/assembly.md](docs/assembly.md)

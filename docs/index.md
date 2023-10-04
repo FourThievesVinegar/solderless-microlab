@@ -1,48 +1,15 @@
-# Welcome to Microlab
+# Welcome to The Microlab
 &nbsp;
-
-
-
-
 
 ## Meet the Microlab Suite
+|||
+|-----|-----|
+|![Microlab](media/microlab_logo.png)|**The Microlab** a DIY automated lab that you download, 3D print, and assemble with commonly available hardware. The MicroLab works together with a suite of apps to guide and automate a variety of lifesaving drugs from your home.|
+| ![Vinni](media/vinni_logo.png) | **Vinni** - walks you through to your new medical laboratory. If this is the first time you’re using the MicroLab, we recommend having a chat with Vinni before using the Apocatherium and Chemhacktica. |
+| ![Apothecarium](media/apoth_logo.png) | **Apothecarium** - A book of recipes to make your own drugs. It provides step-by-step walk-throughs for you to use the MicroLab for drug synthesis. |
+| ![Chemhacktica](media/chem_logo.png) | **Chemhacktica** - Developer code that integrates with the suite of tools. Chemhacktica uses machine learning to automagically discover reaction pathways to target compounds. |
 
-![Microlab](media/microlab_logo.png){ align=left style="height:10%;width:10%"} 
-&nbsp;
-
-**The Microlab** - a DIY automated lab that you download, 3D print and assemble with commonly available hardware. The MicroLab works together with a suite of apps to guide and automate a variety of lifesaving drugs from your home.</p>
-&nbsp;
-
-
-![Vinni](media/vinni_logo.png){ align=left style="height:10%;width:10%"} 
-&nbsp;
-
-**Vinni** - walks you through to your new medical laboratory. If this is the first time you’re using the MicroLab, we recommend having a chat with Vinni before using the Apocatherium and Chemhacktica.</p>
- &nbsp;
-
-![Apothecarium](media/apoth_logo.png){ align=left style="height:10%;width:10%"} 
-&nbsp;
-
-
-**Apothecarium** - A book of recipes to make your own drugs. It provides step-by-step walk-throughs for you to use the MicroLab for drug synthesis.</p>
- &nbsp;
-
-&nbsp;![Chemhacktica](media/chem_logo.png){ align=left style="height:10%;width:10%"} 
-&nbsp;
-
-**Chemhacktica** - Developer code that integrates with the suite of tools. Chemhacktica uses machine learning to automagically discover reaction pathways to target compounds.
- &nbsp;</p>
-
- 
- &nbsp;
-&nbsp;
-
-![Microlab](media/microlab_logo.png){ align=left style="height:10%;width:10%"} 
-&nbsp;
-
-## What is Microlab?
-</p>
-&nbsp;
+## What is the Microlab?
 
 The Microlab is a do-it-yourself Controlled Lab Reactor. (CLR)  You don’t need a CLR to make chemical reactions happen, but it makes the process of synthesizing compounds from precursors much easier and more reliable. 
  
@@ -54,8 +21,7 @@ The Microlab is more like a home espresso machine that will let you reliably mak
  
 The Microlab is designed to load a recipe for a chemical reaction, and automate the temperature control, ingredient addition, and stirring that are needed for many simple reactions.  This can be used as an important step in making medicinal compounds in your own home or workshop. 
  
-This document is a set of instructions for building one for yourself or members of your community. 
- 
+This project includes a set of instructions for building one for yourself or members of your community. 
  
  
 ### How does a Controlled Lab Reactor (CLR) work?
@@ -72,18 +38,14 @@ A CLR has 3 main jobs.
 
 1. Allow materials to be added and removed from the reaction vessel
 
-    CLRs need a way to introduce precise quantities of reactants into the reaction vessel without disturbing the reaction conditions. This can be as simple as a graduated cylinder with a stopcock, or in the case of the microlab, a pair of computer controlled syringes. The microlab software dispenses the correct quantities at the correct time, reducing the chance of user error. Commercial CLRs also have a way to drain the reaction vessel without disassembling the reactor, but the microlab lacks this feature.
+    CLRs need a way to introduce precise quantities of reactants into the reaction vessel without disturbing the reaction conditions. This can be as simple as a graduated cylinder with a stopcock, or in the case of the microlab, a set of computer controlled syringes. The microlab software dispenses the correct quantities at the correct time, reducing the chance of user error. Commercial CLRs also have a way to drain the reaction vessel without disassembling the reactor, but the microlab lacks this feature.
  
 ## Microlab Overview
-The Microlab is made up of a reaction chamber, syringe pumps and control boards. Once built the Microlab can be set up with the appropriate chemicals and use a formula to mix the correct dose. 
-
-This project is focused on the building and using of the Microlab. 
-
+The Microlab is made up of a Reactor Unit, Reagent Pump Unit, Temperature Control Unit, and Lab Control Unit. Once built, the Microlab can be set up with the appropriate chemicals and use a recipe file created in the Apothecarium software to automatically run chemical reactions. 
 
 ## Project layout
 
-    mkdocs.yml        # The configuration file.
     docs/
         index.md      # The documentation homepage.
         assembly.md   # How to build the microlab
-        operation.md  # How to use it
+        operation.md  # How to use it (currently a stub)
