@@ -4,7 +4,7 @@
 
 ## Building a Microlab (Instructions currently incomplete)
 
-![Built Microlab](/docs/media/microlab-on-bench.png){: style="height:90%;width:90%"}
+![Built Microlab](/docs/media/microlab-on-bench.png)
 
 The Microlab consists of four major parts:
 
@@ -30,11 +30,14 @@ The Temperature Control Unit powers the heating elements used to maintain temper
 ### Safety
 
 #### Mains Power
-The primary safety concern while assembling, testing, and using the Microlab is the mains power used to run the heaters and maintain Reactor temperature. You are a cute bag of mostly water and are highly susceptible to electrical damage. Always check your connections during assembly and prior to use. We **HIGHLY** recommend building your Microlab using all safety components, including GFCI outlets, properly-rated relays, an inlet power module with a fuse, and proper grounding. During operation, make sure that all electrical components are kept away from liquids.
+The primary safety concern while assembling, testing, and using the Microlab is the mains power used to run the heaters and maintain Reactor temperature. You are a cute bag of mostly water and are weak to electrical damage. Always check your connections during assembly and prior to use. We **HIGHLY** recommend building your Microlab using all safety components, including GFCI outlets, properly-rated relays, an inlet power module with a fuse, and proper grounding. During operation, make sure that all electrical components are kept away from liquids.
+
+#### Chemistry
+Chemicals can be dangerous. Make sure you research any reagents, solvents, and other chemicals you work with to ensure you're handling them properly. Always wear appropriate protective equipment and make sure your work area is properly ventilated.
 
 ### Materials
 
-![Parts laid out on table](/docs/media/parts_label.png){: style="height:90%;width:90%"}
+![Parts laid out on table](/docs/media/parts_label.png)
 
 Fig. 1 Parts Photo
 &nbsp;
@@ -66,7 +69,7 @@ NOTE: for ease of use and assembly, the syringe pump assembly can be replaced wi
 
 The syringe pump is made up of 8 parts that must be printed. The parts are labelled Linear Actuator with a part number.
 https://www.youmagine.com/designs/syringe-pump
-![Syringe pump](/docs/media/syringe_pump2.png){: style="height:30%;width:30%"}
+![Syringe pump](/docs/media/syringe_pump2.png)
 
 **Reactor manifold**
 
@@ -93,7 +96,7 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
 
 ### Lab Control Unit Assembly
 
-![Assembled controller boards](/docs/media/controller_boards.png){: style="height:30%;width:30%"}
+![Assembled controller boards](/docs/media/controller_boards.png)
 
 #### Electronic Parts:
 
@@ -151,18 +154,18 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
    1. Double check that all of the drivers are firmly seated in the sockets, and that none of the heat sinks shifted during installation.
    1. Mount the CNC Hat on the Arduino. The 12v power connection on the lower left of the hat should be directly above the Arduino power jack also on the lower left.
 
-![Assembled controller boards](/docs/media/rasp_pi2.png){: style="height:30%;width:30%"}
-![Assembled controller boards](/docs/media/arduino.png){: style="height:30%;width:30%"}
+![Assembled controller boards](/docs/media/rasp_pi2.png)
+![Assembled controller boards](/docs/media/arduino.png)
 
 #### Lab Control Unit Housing assembly
 With the release of version 0.5 of the Microlab, we recommend enclosing the Lab Control Units in an enclosure that provides protection to the components and standard interfaces to the other units. This enclosure can be produced using corrugated plastic or another material that you are comfortable cutting and shaping into a box. 
-![Control Unit Exterior](/docs/media/microlab-control-unit.jpg){: style="height:30%;width:30%"}
+![Control Unit Exterior](/docs/media/microlab-control-unit.jpg)
 
 The Lab Control Unit enclosure is designed to be as modular as possible. In this image, the cables for the Reagent Pump Unit and thermistor are fixed, but cables for the circulation pumps, reaction chamber light, mixing motor, and Temperature Control Unit provide standard interfaces for cables. The knob is an optional PWM motor speed controller that allows manual control over the mixing motor's speed.
-![Control Unit Interfaces](/docs/media/microlab-control-unit-interface.jpg){: style="height:30%;width:30%"}
+![Control Unit Interfaces](/docs/media/microlab-control-unit-interface.jpg)
 
 Inside the enclosure, the 5v and 12v power supplies are connected to the enclosure with velcro straps. They connect to standard barrel plug connectors which connect to lever-style wire connectors that provide 5v and 12v power controlled by relays. NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat) - this requires wiring the GPIO pins on the Pi to the appropriate control pins on the relay board.
-![Control Unit Interior](/docs/media/microlab-control-unit-inside.jpg){: style="height:30%;width:30%"}
+![Control Unit Interior](/docs/media/microlab-control-unit-inside.jpg)
 
 **Constructing the enclosure**
 Because folded corrugated plastic tends to return to its original position, it may be necessary to cut off tabs and re-attach them with duct tape, which provides more flexibility. The pictured enclosure is 8" x 6" x 4" and fits all of the Lab Control Unit components comfortably inside. We also recommend a small fan to ensure air flow. Components and velcro straps can be attached to the enclosure using short M3 screws, washers, and nuts.
@@ -222,6 +225,8 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 
 ### Reactor Unit Assembly
 
+![Assembled Reactor Unit](/docs/media/microlab-reactor-unit-pump-unit-assembled.jpg)
+
 **Reactor Unit parts:**
 
 - Mixing paddle
@@ -253,12 +258,16 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 1.
 
 #### Reactor Unit Housing Assembly
+
 - Cut and paint plywood
 - Cut velcro straps
 - Cut, paint, and assemble reactor housing door (use packing tape for the transparent door)
+
 **TODO: More details and pictures of housing pieces**
 
 ### Temperature Control Unit Assembly
+
+![Temperature Control Unit](/docs/media/microlab-temperature-control-unit.jpg)
 
 **Temperature Control Unit Parts**
 - Circulation Pumps
