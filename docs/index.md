@@ -4,26 +4,23 @@
 ## Meet the Microlab Suite
 |||
 |-----|-----|
-|![Microlab](media/microlab_logo.png)|**The Microlab** a DIY automated lab that you download, 3D print, and assemble with commonly available hardware. The MicroLab works together with a suite of apps to guide and automate a variety of lifesaving drugs from your home.|
-| ![Vinni](media/vinni_logo.png) | **Vinni** - walks you through to your new medical laboratory. If this is the first time you’re using the MicroLab, we recommend having a chat with Vinni before using the Apocatherium and Chemhacktica. |
-| ![Apothecarium](media/apoth_logo.png) | **Apothecarium** - A book of recipes to make your own drugs. It provides step-by-step walk-throughs for you to use the MicroLab for drug synthesis. |
-| ![Chemhacktica](media/chem_logo.png) | **Chemhacktica** - Developer code that integrates with the suite of tools. Chemhacktica uses machine learning to automagically discover reaction pathways to target compounds. |
+|![Microlab](media/microlab_logo.png)|**The Microlab** - A DIY automated lab that you download, 3D print, and assemble with commonly available hardware. The MicroLab works together with a suite of apps to guide and automate a variety of lifesaving drugs from your home.|
+| ![Vinni](media/vinni_logo.png) | **Vinni** - Your guide to your new medical laboratory. Vinni keeps track of your projects including "recipes" from the Apocatherium and compounds of interest from Chemhacktica. Stay tuned for updates on Vinni's ability to help you sift through all the latest scientific literature. |
+| ![Apothecarium](media/apoth_logo.png) | **Apothecarium** - A simple interface to create "recipes" - sets of instructions the Microlab uses to run chemical reactions. |
+| ![Chemhacktica](media/chem_logo.png) | **Chemhacktica** - A tool that uses machine learning to automagically discover reaction pathways to target compounds. |
 
 ## What is the Microlab?
 
 The Microlab is a do-it-yourself Controlled Lab Reactor. (CLR)  You don’t need a CLR to make chemical reactions happen, but it makes the process of synthesizing compounds from precursors much easier and more reliable. 
  
-A CLR is to organic chemistry what an espresso machine is to coffee. It is possible to make coffee over an open fire with nothing more than beans, water, and a tin can. But, you will get a better, and more consistent cup of coffee from an automatic machine that dispenses the right amount of water at the right temperature in such a way that ensures the water is in contact with the grounds for the right amount of time.
+A CLR is to organic chemistry what an espresso machine is to coffee. It is possible to make coffee over an open fire with nothing more than beans, water, and a tin can. But you will get a better, more consistent cup of coffee from an automatic machine that dispenses the right amount of water at the right temperature in such a way that ensures the water is in contact with the grounds for the right amount of time.
 
 Commercial CLRs are the equivalent of high end, fully automatic espresso machines. As long as the appropriate reservoirs are filled with beans, water, milk, and flavoring, anyone can craft a perfect mocha topped with steamed milk at the touch of a button.
  
 The Microlab is more like a home espresso machine that will let you reliably make a good cappuccino but won’t do every single step for you. For both the espresso machine and the CLR you need to understand basic lab procedures, measurement techniques, and safety.
  
-The Microlab is designed to load a recipe for a chemical reaction, and automate the temperature control, ingredient addition, and stirring that are needed for many simple reactions.  This can be used as an important step in making medicinal compounds in your own home or workshop. 
- 
-This project includes a set of instructions for building one for yourself or members of your community. 
- 
- 
+The Microlab is designed to load a recipe for a chemical reaction, then automate the temperature control, reagent addition, and stirring that are needed. It is designed for small-molecule organic chemistry to make certain medicinal compounds in your own home or workshop. 
+  
 ### How does a Controlled Lab Reactor (CLR) work?
 
 A CLR has 3 main jobs.
@@ -43,9 +40,10 @@ A CLR has 3 main jobs.
 ## Microlab Overview
 The Microlab is made up of a Reactor Unit, Reagent Pump Unit, Temperature Control Unit, and Lab Control Unit. Once built, the Microlab can be set up with the appropriate chemicals and use a recipe file created in the Apothecarium software to automatically run chemical reactions. 
 
-## Project layout
+## Further Documentation
 
     docs/
-        index.md      # The documentation homepage.
+        index.md      # The documentation homepage  (you are here)
         assembly.md   # How to build the microlab
         operation.md  # How to use it (currently a stub)
+        
