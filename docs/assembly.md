@@ -2,9 +2,9 @@
 
 &nbsp;
 
-## Building a Microlab (Instructions currently incomplete)
+## Building a Microlab
 
-![Built Microlab](/docs/media/microlab-on-bench.png)
+![Built Microlab](/docs/media/microlab-on-bench.jpg)
 
 The Microlab consists of four major parts:
 
@@ -63,12 +63,14 @@ While most items on the parts list can be purchased, a few items will need to be
 Parts files are available here: [https://github.com/FourThievesVinegar/Parts/](https://github.com/FourThievesVinegar/Parts/)
 
 **Syringe pumps**
+
 NOTE: for ease of use and assembly, the syringe pump assembly can be replaced with off-the-shelf peristaltic pumps.
 
 **Quantity: 3**
 
 The syringe pump is made up of 8 parts that must be printed. The parts are labelled Linear Actuator with a part number.
 https://www.youmagine.com/designs/syringe-pump
+
 ![Syringe pump](/docs/media/syringe_pump2.png)
 
 **Reactor manifold**
@@ -158,16 +160,21 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
 ![Assembled controller boards](/docs/media/arduino.png)
 
 #### Lab Control Unit Housing assembly
+
 With the release of version 0.5 of the Microlab, we recommend enclosing the Lab Control Units in an enclosure that provides protection to the components and standard interfaces to the other units. This enclosure can be produced using corrugated plastic or another material that you are comfortable cutting and shaping into a box. 
+
 ![Control Unit Exterior](/docs/media/microlab-control-unit.jpg)
 
 The Lab Control Unit enclosure is designed to be as modular as possible. In this image, the cables for the Reagent Pump Unit and thermistor are fixed, but cables for the circulation pumps, reaction chamber light, mixing motor, and Temperature Control Unit provide standard interfaces for cables. The knob is an optional PWM motor speed controller that allows manual control over the mixing motor's speed.
+
 ![Control Unit Interfaces](/docs/media/microlab-control-unit-interface.jpg)
 
-Inside the enclosure, the 5v and 12v power supplies are connected to the enclosure with velcro straps. They connect to standard barrel plug connectors which connect to lever-style wire connectors that provide 5v and 12v power controlled by relays. NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat) - this requires wiring the GPIO pins on the Pi to the appropriate control pins on the relay board.
+Inside the enclosure, the 5v and 12v power supplies are connected to the enclosure with velcro straps. They connect to standard barrel plug connectors which connect to lever-style wire connectors that provide 5v and 12v power controlled by relays. NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat) - this requires wiring the GPIO pins on the Pi to the appropriate control pins on the relay board. It is possible to wire everything together using less-expensive soldering techniques or wire nuts, but the lever connectors are very easy to assemble and reconfigure as needed.
+
 ![Control Unit Interior](/docs/media/microlab-control-unit-inside.jpg)
 
 **Constructing the enclosure**
+
 Because folded corrugated plastic tends to return to its original position, it may be necessary to cut off tabs and re-attach them with duct tape, which provides more flexibility. The pictured enclosure is 8" x 6" x 4" and fits all of the Lab Control Unit components comfortably inside. We also recommend a small fan to ensure air flow. Components and velcro straps can be attached to the enclosure using short M3 screws, washers, and nuts.
 
 ### Syringe Pump Assembly
@@ -183,14 +190,11 @@ Because folded corrugated plastic tends to return to its original position, it m
   - BIQU A4988 Compatible StepStick Stepper Motor Diver Module with Heat Sink for 3D Printer Controller Ramps 1.4(Pack of 5pcs)
   - Twotrees Stepper Motor Nema 17 Motor 42BYGH 1.8 Degree Body 38MM 4-Lead Wirel .5A 42N.cm (60oz.in) with 1 m Cable for DIY CNC 3D Printer (Pack of 3)
 - Tubing 1/2”?
-  - Tubing to syringe pumps into ration chamber
-  - Tubing to and from the jacketed portion of the reactor
-- Stir motors
-- Circulation pump to push fluid
+  - Tubing to syringe pumps into ration chamber (peristaltic pumps will come with their own tubing)
 
 #### Verify Stepper Motor Wires
 
-Before you begin assembling components, it is important to verify that your stepper motors are wired correctly. Each motor will have four different color wires. To verify that the motor is wired in a way that is compatible with the CNC Hat, you need to identify the pairs of wires that feed the two coils inside the motor.
+Before you begin assembling components, it is important to verify that your stepper motors are wired correctly. Each motor will have four different color wires. To verify that the motor is wired in a way that is compatible with the CNC Hat, you need to identify the pairs of wires that feed the two coils inside the motor. **It is likely that the cables that came with the stepper motors will *just work* but verification is still worthwhile**
 
 With the motor disconnected, you should be able to spin the shaft with your fingers and feel almost no resistance. Take a short length of wire and jumper the top two pins (Pins 1 and 2) of the connector together. If the motor is wired correctly you should now feel some resistance when you spin the shaft (you should be able to feel the “steps” in the stepper motor). Repeat this procedure with the bottom two pins (Pins 3 and 4). If you do not feel any change in resistance, try jumpering other combinations of pins until you identify the two pairs. It is ESSENTIAL that the top two pins form a pair, and the bottom two pins form a pair, but the order of the wires within each pair does not matter. For example, if you find that pins 1 and 3 are a pair, you will need to rewire the connector so that these two are the top pair, and pins 2 and 4 are the bottom pair.
 
@@ -226,6 +230,7 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 ### Reactor Unit Assembly
 
 ![Assembled Reactor Unit](/docs/media/microlab-reactor-unit-pump-unit-assembled.jpg)
+![Assembled Reactor Unit rear](/docs/media/microlab-reactor-unit-pump-unit-assembled-rear.jpg)
 
 **Reactor Unit parts:**
 
@@ -236,6 +241,7 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 - Regular mouth half pint Mason jar 6oz
 - Tubing (5mm / 8mm) - use tubing compatible with your circulation pumps
 - Barbed Tee Fittings
+- Housing walls, corner reinforcements, and straps
 
 **Assembling the reactor, pumps, and tubing:**
 
@@ -255,12 +261,13 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 1. (video part 1: 18:43) Feed the 6” piece of tubing extending from the outlet tee into one of the holes in the reactor lid. Again, be sure that the tubing is going into the larger outer mason jar and not into the reactor core.
 1. (video part 1: 19:35) Cut two lengths of 4mm tubing approximately 12” long. These pieces will connect the syringe pumps to the reactor, so you may need to adjust the length depending on how you have the syringe pumps arranged. The tubing should be as short as practical.
 1. (video part 1: 19:40) Attach one end of each tube to each syringe and feed the other end through the hole in the reactor lid leading into the core jar. Be sure the tubing does not prevent the mixing paddle from turning.
-1.
 
 #### Reactor Unit Housing Assembly
 
 - Cut and paint plywood
 - Cut velcro straps
+   - 4 long straps for the back corners (they join 3 faces of the housing)
+   - 4 short straps for the front corners (they join 2 faces of the housing)
 - Cut, paint, and assemble reactor housing door (use packing tape for the transparent door)
 
 **TODO: More details and pictures of housing pieces**
@@ -271,6 +278,7 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 
 **Temperature Control Unit Parts**
 - Circulation Pumps
+- Tubing to and from the jacketed portion of the reactor
 - Beverage heater coil (2 recommended for faster heating)
 - 2-Gang electrical box and face plate
 - GFCI Outlet
@@ -304,119 +312,3 @@ Support Email Address?
 | Arduino                      | A development board (programmable circuit board) that is used for many purposes, like accepting inputs from buttons, collecting data from sensors, and controlling motors.                                                                                                                                                                               |
 | Controlled Lab Reactor (CLR) | Controlled Lab Reactor or CLR is any reaction system where there is an element of automated control. Generally it refers to a jacketed glass vessel where a circulating chiller unit pumps a thermal control fluid through the jacket to accurately control the temperature of the vessel contents. https://en.wikipedia.org/wiki/Controlled_lab_reactor |
 | OS                           | Operating System. This is the central software that runs all other programs. Windows is the most famous example of an Operating System. This project uses Ubuntu, a version of the Linux operating system.                                                                                                                                               |
-
-### Headless Install
-NOTE: These instructions are likely out of date and should be merged with the development instructions in the main README
-
-- install [raspberry pi imager](https://www.raspberrypi.com/software/)
-
-- install [putty](https://www.putty.org/)
-
-- install [win32diskimager](https://sourceforge.net/projects/win32diskimager/) and backup the your current pi SD card
-
-[001] Get Windows connection sharing working if needed (turn sharing on for WiFi, and select Ethernet adapter connected to the Raspberry Pi as shared) This can be finicky in Windows 10. If you have trouble, try this: turn off sharing for wifi, bridge the Ethernet and wifi (ctrl click WiFi and Ethernet connections, then right click and choose 'Bridge') Wait for the bridge to get established, then disable it, and delete it. Try sharing the WiFi again.
-
-[010]Burn new Raspberry Pi image with default Raspian OS image. [020]The SD card should have two drive letters, one for the boot sector, and one for the main image. [030]Under settings (gear icon) enable ssh, set hostname:microlab, user:ftvc, password:4thieves
-[040]Click "Write" to burn the image
-
-[050]Using putty, log in to microlab for the first time, accept the warning about the unknown key.
-
-- If you can't log in to the Pi, you probably forgot to enable SSH. Put the SD card back in the reader on your PC and add an empty file named 'SSH' (with no file extension) to the boot sector. In windows, the easiest way is to right click 'add new text file', then delete the .txt extension once the file is created.
-
-Roughly following the steps from [https://github.com/FourThievesVinegar/solderless-microlab](https://github.com/FourThievesVinegar/solderless-microlab)
-
-Clone the repo
-
-```
-$ git clone https://github.com/FourThievesVinegar/solderless-microlab.git
-$ cd solderless-microlab
-```
-
-[060]Install python dependencies
-
-```
-$ sudo apt update
-```
-
-NOTE: get some notices about upgradeable packages, is this necessary?
-
-```
-$ sudo apt install python3 python3-pip python3-virtualenv
-```
-
-NOTE: python-virtualenv is not needed. libfuse2 is no longer required and should be removed
-
-Setup virtual environement and install more dependencies with pip
-
-```
-$ cd backend
-$ virtualenv -p python3 --system-site-packages env
-$ source env/bin/activate
-(env) $ pip install -r requirements.txt
-```
-
-QUESTION: the section "Redis (on the Pi)" doesn't seem to be needed? The test GUI will load without this, but I can't tell if this is necessary for the real thing.
-QUESTION: should this be done within the virtualenv, does it matter?
-
-```
-(env)$ sudo apt update
-(env)$ sudo apt install redis-server
-```
-
-[070]Edit redis.conf, change 'supervised no' to 'supervised systemd' > ctrl+x > y (to save) > enter (to overwrite file)
-
-```
-(env)$ sudo nano /etc/redis/redis.conf
-```
-
-Don't start the server yet, install yarn first.
-
-```
-(env)$ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-```
-
-[080]WARNING: apt-key is deprecated. Does this line need to be changed?
-
-```
-(env)$ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-(env)$ sudo apt update
-(env)$ sudo apt install yarn
-
-(env)$ sudo nano /solderless-microlab/backend/config.py
-change celeryMode = 'real' to celeryMode = 'test'
-
-(env)$ cd gui
-(env)$ yarn install
-[090]I got some errors, probably due to unstable network connection, took several tries to fetch everything
-```
-
-Start the main script, and have it run in the background
-
-```
-(env)$ cd ../backend
-(env)$ python main.py &
-
-<enter> to get to command line
-```
-
-Confirm main.py is still running by checking the list of running scripts
-
-```
-(env)$ pgrep -af python
-```
-
-NOTE: if you need to stop the script at any point, $ kill -9 <process#>
-
-start the GUI
-
-```
-(env)$ cd ../gui
-(env)$ yarn start
-```
-
-[100]Wait for the server to load, can take several minutes on the Pi 2
-[110]Get some warnings about browser lists being outdated
-[120]Eventually the server starts with some warnings about missing dependencies
-
-leave the putty session running
-[130]In the browser on your pc navigate to microlab:3000 and you should see the microlab interface.

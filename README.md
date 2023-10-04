@@ -4,6 +4,16 @@ An open source jacketed lab reactor made from off-the-shelf components you can b
 
 Read the motivation behind the project here: [docs/motivation.md](docs/motivation.md)
 
+Read the hardware assembly instructions here: [docs/assembly.md](docs/assembly.md)
+
+## Production vs Development
+
+The instructions below are for a fresh install of the microlab software on your development machine. If you intend to construct a full Microlab, we recommend using our pre-made disk images. There are two: 
+- A "production" image that runs all software on startup and includes the drivers for a 3.5 inch mini-display. 
+- A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard.
+
+If you wish to develop on a regular computer with emulated hardware, follow the instructions below.
+
 ## Docker Development
 
 For ease of setup/experimentation we added docker containers for both the GUI and the API.
@@ -148,22 +158,6 @@ hardwarePackage = 'simulation'
 
 The hardwareSpeedup option can be modified to make steps that take a long time execute quicker for testing purposes.
 
-## API Spec
+## Enabling SSH
 
-API spec is very flexible and will change as development goes on.
-
-### Hardware Tests
-
-#### GET /test/relays
-
-Test the relay shield. All four relays are turned on and off.
-
-## Acknowledgements
-
-### Volunteers
-
-Thanks to the whole 4TV crew whose efforts both tired and tireless have brought the project this far!
-
-### Works used
-
-Thanks to The Noun Project for icons: Temperature by Megan Chown, Syringe by shashank singh, looking by Lewis K-T, Jar by Marie Larking, Chemistry by Victoruler
+For ease of remote development, you may want to enable SSH on the Pi. Instructions for doing so can be found here: https://itsfoss.com/ssh-into-raspberry/
