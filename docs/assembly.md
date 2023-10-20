@@ -265,12 +265,21 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 #### Reactor Unit Housing Assembly
 
 - Cut and paint plywood
+   - Depending on your corner reinforcements, you may want a different method than we used here. We intend these units to pack mostly flat for storage and shipping.
+   - For this, we drilled 1/2" holes large enough for the 
+   - The top face should have a hole cut just large enough to fit the top of the large mason jar through. A 3d-printed collar that securely holds the jar in place can be found in the Parts repository [https://github.com/FourThievesVinegar/Parts/tree/master/v5](https://github.com/FourThievesVinegar/Parts/tree/master/v5)
 - Cut velcro straps
-   - 4 long straps for the back corners (they join 3 faces of the housing)
-   - 4 short straps for the front corners (they join 2 faces of the housing)
+   - 4 long straps (~16") for the back corners (they join 3 faces of the housing)
+   - 4 short straps (~6") for the front corners (they join 2 faces of the housing)
 - Cut, paint, and assemble reactor housing door (use packing tape for the transparent door)
+   - Use the long velcro straps to weave 
+   - This unit uses sticky velcro patches to hold the door to the rest of the assembly
 
-**TODO: More details and pictures of housing pieces**
+![Reactor housing assembly 2](/docs/media/reactor-housing-assembly-2.jpg)
+
+![Reactor housing assembly 3](/docs/media/reactor-housing-assembly-3.jpg)
+
+![Reactor housing assembly 4](/docs/media/reactor-housing-assembly-4.jpg)
 
 ### Temperature Control Unit Assembly
 
@@ -282,13 +291,25 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 - Beverage heater coil (2 recommended for faster heating)
 - 2-Gang electrical box and face plate
 - GFCI Outlet
-- 6oz Canning jar
+- 6oz Canning jar (NOTE: Using a larger jar with the pumps submerged inside may be preferable for priming, but submerging the pumps has impacts on their heat tolerances)
 - Relay (Must support mains power!)
 - Inlet power module with fuse
+- Quick disconnect electrical connectors
 - AC power cord
 
 #### Assembly
-**TODO**
+- Connect the inlet power module to the GFCI outlet with the relay between them (it doesn't matter whether the relay is on the positive or negative side)
+   - NOTE: Carefully consult the wiring instructions for the Inlet and be familiar with basic safety and wiring with mains power. We cannot stress enough that this is the most dangerous part of the Microlab itself. We highly recommend that you cover all exposed terminals with electrical tape and wrap it thorouthly.
+   - Use the quick disconnect connectors.
+- Connect the GFCI ground to the Inlet's ground connection.
+- Put it all in the 2-gang electrical housing.
+   - Screw the GFCI outlet securely into the housing
+   - Cut a hole in a decora blank to fit the power inlet and drill smaller holes to allow your three wire connector's leads inside the box.
+   - Attach the power inlet to the blank securely by drilling through the blank/decora plate. Use small M3 screws.
+- Connect the relay to the positive, negative, and signal wires on your three-wire connector. Wrap a zip tie or copius electrical tape around the leads to prevent them from getting yanked and disconnecting.
+- Screw the 2-gang plate onto the 2-gang housing
+
+**TODO: Photos**
 
 ## Appendix
 
