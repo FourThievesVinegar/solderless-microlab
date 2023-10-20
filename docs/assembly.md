@@ -161,7 +161,13 @@ Before assembly, be sure to inspect the parts that have come out of the 3D print
 
 #### Lab Control Unit Housing assembly
 
-With the release of version 0.5 of the Microlab, we recommend enclosing the Lab Control Units in an enclosure that provides protection to the components and standard interfaces to the other units. This enclosure can be produced using corrugated plastic or another material that you are comfortable cutting and shaping into a box. 
+With the release of version 0.5 of the Microlab, we recommend enclosing the Lab Control Units in an enclosure that provides protection to the components and standard interfaces to the other units. This enclosure can be produced using corrugated plastic or another material that you are comfortable cutting and shaping into a box. Because folded corrugated plastic tends to return to its original position, it may be necessary to cut off tabs and re-attach them with duct tape, which provides more flexibility. The pictured enclosure is 8" x 6" x 4" and fits all of the Lab Control Unit components comfortably inside. We also recommend a small fan to ensure air flow. Components and velcro straps can be attached to the enclosure using short M3 screws, washers, and nuts.
+
+**Cutting the housing**
+
+- Cut a hole for the display (take care measuring so that the hole fits the screen as closely as possible). 
+- Cut holes for the cables, the barrel plug connectors (if using them), and the button for the light (if using it)
+- We also recommend cutting holes for a fan to prevent overheating
 
 ![Control Unit Exterior](/docs/media/microlab-control-unit.jpg)
 
@@ -169,13 +175,43 @@ The Lab Control Unit enclosure is designed to be as modular as possible. In this
 
 ![Control Unit Interfaces](/docs/media/microlab-control-unit-interface.jpg)
 
-Inside the enclosure, the 5v and 12v power supplies are connected to the enclosure with velcro straps. They connect to standard barrel plug connectors which connect to lever-style wire connectors that provide 5v and 12v power controlled by relays. NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat) - this requires wiring the GPIO pins on the Pi to the appropriate control pins on the relay board. It is possible to wire everything together using less-expensive soldering techniques or wire nuts, but the lever connectors are very easy to assemble and reconfigure as needed.
+**Mounting the components**
+
+- Inside the enclosure, connect the 5v and 12v power supplies to the enclosure with velcro straps. 
+- Attach the straps to the case using small M3 screws. 
+   - You can use similar screws to connect the larger lever connectors, the arduino, and the relay break-out board (if you are using it instead of the Pi hat). 
+   - You can use similar straps to hold the display and the Pi in place.
+   - Basically, everything is going to be strapped in and bolted down
+   - You can also attach small velcro straps to bundle wires and reduce the rats nest factor
+
+The interface to the other components are standard female barrel plug connectors.
+- Insert the leads for these through the holes you cut previously 
+   - Cut away any excess housing material on the threads
+   - Secure to the enclosure with the connectors' threaded nuts
+- Use lever connectors as needed to connect the leads from the barrel plug connectors to the 12v power, as well as to the appropriate relays.
+   - If you're not sure which relays are which, consult the documentation for your relay hat or board.
+   - Consult the pin diagram for your Pi for which GPIO pins to connect to the relay board if you are using a separate relay breakout board like the one pictured here.
+   - See `backend/hardware/base_hardware.yaml` for which GPIO pins activate which systems
+- If you have a reactor light and a button to use it with, wire the button according to its instructions and connect it to the appropriate barrel plug connector.
+
+There are several other connections to make inside the housing:
+- Connect the 12v input on the Arduino's motor control board to the 12v power supply
+- Connect the temperature probe and motor control shield to the USB ports on the Pi. You may also want to add a short male-to-female USB cable to more easily connect to peripherals like a keyboard.
+- The relay board and fan both require 5v power. Set up a 1-to-3 lever connector to use as a splitter and connect them to it
+   - As input, you can use the +5v and GND from the motor control shield
+- Connect the stepper motor control cables to the motor control board
+   - Wrap the 3 stepper motor control cables in the split loom cable wrap
+      - We highly recommend you label both ends of the cables with tape!
+   - Feed the 4-wide end of the cables (not the 6-wide - those plug into the motors!) and the cable wrap into the housing
+   - Connect each of the X, Y, and Z cables to the appropriate spot on the motor control board
+   - Secure the cables inside the cable wrap (tight zip ties are good for this) and secure the cable wrap to the enclosure using copius electrical tape
+      - The goal is to prevent cables from being yanked loose or damaging components when tugged from the outside
+
+Once everything is connected, the inside of your box should look something like this:
 
 ![Control Unit Interior](/docs/media/microlab-control-unit-inside.jpg)
 
-**Constructing the enclosure**
-
-Because folded corrugated plastic tends to return to its original position, it may be necessary to cut off tabs and re-attach them with duct tape, which provides more flexibility. The pictured enclosure is 8" x 6" x 4" and fits all of the Lab Control Unit components comfortably inside. We also recommend a small fan to ensure air flow. Components and velcro straps can be attached to the enclosure using short M3 screws, washers, and nuts.
+NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat). It is possible to wire everything together using less-expensive soldering techniques or wire nuts, but the lever connectors are very easy to assemble and reconfigure as needed.
 
 ### Syringe Pump Assembly
 
@@ -264,6 +300,18 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 
 #### Reactor Unit Housing Assembly
 
+**Reactor Unit Housing parts:**
+
+- 5 pieces thin plywood, cut to 8" x 8"
+- Corner reinforcements 
+   - We used upcycled protective corners from a shipping package 
+   - Any three-corner joining hardware will work, but these are convenient with the velcro straps and allow rapid assembly and breakdown
+- Light strip
+- Adhesive-backed velcro patches
+- Two-sided velcro to cut straps from
+
+**Reactor Unit Housing assembly:**
+
 - Cut and paint plywood
    - Depending on your corner reinforcements, you may want a different method than we used here. We intend these units to pack mostly flat for storage and shipping.
    - For this, we drilled 1/2" holes large enough for the 
@@ -274,6 +322,8 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 - Cut, paint, and assemble reactor housing door (use packing tape for the transparent door)
    - Use the long velcro straps to weave 
    - This unit uses sticky velcro patches to hold the door to the rest of the assembly
+- Attach light strips to the inside of the top face of the housing
+   - We used 12v LED strips stuck to a scrap of corrugated plastic, which attaches to the housing with adhesive velcro patches
 
 ![Reactor housing assembly 2](/docs/media/reactor-housing-assembly-2.jpg)
 
