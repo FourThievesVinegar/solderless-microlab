@@ -1,6 +1,7 @@
 from hardware.thermometer.base import TempSensor
 from w1thermsensor import W1ThermSensor, Sensor
 import serial
+import re
 
 class SerialTempSensor(TempSensor):
     tempSer = None
@@ -22,16 +23,24 @@ class SerialTempSensor(TempSensor):
         """
         line = "12345678901"
         lastLine = ""
-        while (len(line) > 10):
+        while (len(line) > 10 or len(line) < 2):
             lastLine = line
-            line = self.tempSer.readline()
+            try:
+                line = self.tempSer.readline()
+            except Exception as e:
+                print('Error reading from thermometer')
+                print(e)
             print('ser read ' + str(len(line)) + ' ' + str(line) )
 
-        lastLine = str(lastLine)
+        lastLine = str(line)
+   
         start = lastLine.find('t1=') + len('t1=')
-        end = lastLine.find(' ',start)
-        print('found ' + str(start) + ' ' + str(end) + ' ' + lastLine)
+        end = lastLine.find('\\',start)
+        if end == -1:   # Different thermometers may parse differently. These conditionals may need to expand.
+            end = lastLine.find(' ',start)
+            
+        print('found ' + str(start) + ' ' + str(end) + ' ' + lastLine + ' ' + lastLine[start:end])
         temperature = float(lastLine[start:end])
-
         print('Read temperature ' + str(temperature)) # + ' ' + str(lastLine))
-        return temperature
+
+        return float(temperature)
