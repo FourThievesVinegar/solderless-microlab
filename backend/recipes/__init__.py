@@ -15,7 +15,7 @@ from os import listdir
 from os.path import isfile, join
 from recipes import state
 from recipes.base import Recipe
-
+import hardware
 
 def getRecipeList():
     """
@@ -136,6 +136,7 @@ def status():
     message['options'] = recipeMessage['options']
     message['icon'] = recipeMessage['icon']
     message['stepCompletionTime'] = recipeMessage['stepCompletionTime']
+    message['temp'] = hardware.getTemp()
 
     return message
 

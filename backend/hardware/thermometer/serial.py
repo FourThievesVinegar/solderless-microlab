@@ -30,7 +30,9 @@ class SerialTempSensor(TempSensor):
             except Exception as e:
                 print('Error reading from thermometer')
                 print(e)
-            print('ser read ' + str(len(line)) + ' ' + str(line) )
+                continue
+            finally:
+                print('ser read ' + str(len(line)) + ' ' + str(line) )
 
         lastLine = str(line)
    
@@ -40,7 +42,10 @@ class SerialTempSensor(TempSensor):
             end = lastLine.find(' ',start)
             
         print('found ' + str(start) + ' ' + str(end) + ' ' + lastLine + ' ' + lastLine[start:end])
-        temperature = float(lastLine[start:end])
+        if(start > -1 and end > -1):
+            temperature = float(lastLine[start:end])
+        else:
+            temperature = "Error"
         print('Read temperature ' + str(temperature)) # + ' ' + str(lastLine))
 
-        return float(temperature)
+        return temperature
