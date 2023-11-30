@@ -4,7 +4,7 @@
 
 ## Building a Microlab
 
-![Built Microlab](/docs/media/microlab-on-bench.jpg)
+![Built Microlab](/docs/media/microlab-on-bench-labeled.jpg)
 
 The Microlab consists of four major parts:
 
