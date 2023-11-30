@@ -325,11 +325,11 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 - Attach light strips to the inside of the top face of the housing
    - We used 12v LED strips stuck to a scrap of corrugated plastic, which attaches to the housing with adhesive velcro patches
 
-![Reactor housing assembly 2](/docs/media/reactor-housing-assembly-2.jpg)
+![Reactor housing assembly 2](/docs/media/reactor-housing-assembly-2.png)
 
-![Reactor housing assembly 3](/docs/media/reactor-housing-assembly-3.jpg)
+![Reactor housing assembly 3](/docs/media/reactor-housing-assembly-3.png)
 
-![Reactor housing assembly 4](/docs/media/reactor-housing-assembly-4.jpg)
+![Reactor housing assembly 4](/docs/media/reactor-housing-assembly-4.png)
 
 ### Temperature Control Unit Assembly
 
