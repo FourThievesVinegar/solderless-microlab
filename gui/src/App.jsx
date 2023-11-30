@@ -28,7 +28,7 @@ export function App() {
     <div className="lcd-wrapper">
       <Header>
         {status ?
-          `${status?.step ? `${status?.step}: ` : ""}${status?.status}` || 'loading...' :
+          `${status?.step ? `${status?.step}: ` : ""}${status?.status} ${status?.temp ? `${status?.temp}C` : ""}` :
           "Waiting for control service"
         }
       </Header>
