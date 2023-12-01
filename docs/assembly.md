@@ -209,7 +209,7 @@ There are several other connections to make inside the housing:
 
 Once everything is connected, the inside of your box should look something like this:
 
-![Control Unit Interior](/docs/media/microlab-control-unit-inside.jpg)
+![Control Unit Interior](/docs/media/microlab-control-unit-inside-labeled.jpg)
 
 NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat). It is possible to wire everything together using less-expensive soldering techniques or wire nuts, but the lever connectors are very easy to assemble and reconfigure as needed.
 
