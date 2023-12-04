@@ -21,7 +21,7 @@
 
    1. Putting OS and Microlab software on SD card\*\*
    1. Install Raspberry Pi Imager onto a computer.
-   1. Download our disk image torrend from [our website](https://fourthievesvinegar.org/microlab/).
+   1. Download our disk image torrent from [our website](https://fourthievesvinegar.org/microlab/).
         1. Please continue to seed the torrent!
        1. This image is a version of the OS with the Microlab software already installed.
    1. Connect the MicroSD card to your computer. You may need an SD card to USB converter. [part #]
@@ -86,6 +86,7 @@ The Lab Control Unit enclosure is designed to be as modular as possible. In this
    - You can use similar straps to hold the display and the Pi in place.
    - Basically, everything is going to be strapped in and the straps are bolted down
    - You can also attach small velcro straps to bundle wires and reduce the "rats nest" factor
+ - If your mini-display came with a stylus, you may want to use a small elastic cord and/or velcro to attach it to the case.
 
 #### Installing the external plugs
 The interface to the other components are standard female barrel plug connectors.
