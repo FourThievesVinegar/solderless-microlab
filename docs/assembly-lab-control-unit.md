@@ -69,10 +69,11 @@ With the release of version 0.5 of the Microlab, we recommend enclosing the Lab 
 - Cut a hole for the display (take care measuring so that the hole fits the screen as closely as possible). 
 - Cut holes for the cables, the barrel plug connectors (if using them), and the button for the light (if using it)
 - We also recommend cutting holes for a fan to prevent overheating
+- TODO: Add in-progress pics of case production
 
 The Lab Control Unit enclosure is designed to be as modular as possible. In this image, the cables for the Reagent Pump Unit and thermistor are fixed, but cables for the circulation pumps, reaction chamber light, mixing motor, and Temperature Control Unit provide standard interfaces for cables. The knob is an optional PWM motor speed controller that allows manual control over the mixing motor's speed.
 
-**Note: The image below shows two plugs for the circulation pumps. The latest design uses only one pump.
+**Note: The image below shows two plugs for the circulation pumps. The latest design uses only one pump.**
 
 ![Control Unit Interfaces](/docs/media/microlab-control-unit-interface.jpg)
 
