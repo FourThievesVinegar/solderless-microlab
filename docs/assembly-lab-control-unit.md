@@ -5,11 +5,11 @@
 ## Electronic Parts:
 
 - USB A/B cable for rPi to Arduino
-- Power cables
+- Power cables (extension cord and 5v / 12v power supplies)
 - Micro SD card, 32GB
 - Raspberry Pi
   - Raspberry Pi 3 Model B Board
-  - Raspberry Pi Expansion Board 4 Channel Relay Board
+  - Raspberry Pi Expansion Board 4 Channel Relay Board (a separate relay board can also be used)
   - Raspberry Pi 3 b+ Display 3.5 inch TFT LCD Screen Kit, 3.5" 480x320 Resolution
 - Arduino
   - Arduino UNO SMD Rev3
@@ -17,9 +17,11 @@
   - CNC shield - A4988 V3 Engraver Drive Shield 3D Printer CNC Drive Expansion Board for Ardulno 3D Printer CNC (2 pcs)
   - Stepper motor drivers (quantity 4)
 
-1. Raspberry Pi Formatting/Setup
 
-   1. Putting OS and Microlab software on SD card\*\*
+
+## Raspberry Pi Formatting/Setup
+
+1. Putting OS and Microlab software on an SD card
    1. Install Raspberry Pi Imager onto a computer.
    1. Download our disk image torrent from [our website](https://fourthievesvinegar.org/microlab/).
         1. Please continue to seed the torrent!
@@ -33,18 +35,18 @@
    1. Allow the Raspberry Pi Imager program to write to the SD card.
    1. The imager program will also run a verification check to make sure the OS was installed correctly. This will take several minutes.
 
-   1. Installing SD card
-      1. Once complete, remove the SD card from your computer, and insert into your Raspberry Pi.
-      1. Power on the Pi, and allow it to boot.
-          1. The production image will already have drivers for the LCD screen installed. The development image will not.
-      1. NOTE: The touch screen is primarily used for mobility and portability. The program can also be run on a regular monitor connected via HDMI, as well as a USB Keyboard and mouse. Users familiar with networking may also choose to run the lab “headless”, and connect across a network without a monitor or USB input devices.
-   1. Installing [Microlab Software] without image use.
-      1. This is for advanced users who wish to install the software manually, rather than starting from a clean OS install.
-      1. Ubuntu is the recommended OS for this use
-      1. See Appendix B. Headless Install
+1. Installing SD card
+   1. Once complete, remove the SD card from your computer, and insert into your Raspberry Pi.
+   1. Power on the Pi, and allow it to boot.
+         1. The production image will already have drivers for the LCD screen installed. The development image will not.
+   1. NOTE: The touch screen is primarily used for mobility and portability. The program can also be run on a regular monitor connected via HDMI, as well as a USB Keyboard and mouse. Users familiar with networking may also choose to run the lab “headless”, and connect across a network without a monitor or USB input devices.
+1. Installing [Microlab Software] without image use.
+   1. This is for advanced users who wish to install the software manually, rather than starting from a clean OS install.
+   1. Ubuntu is the recommended OS for this use
+   1. See Appendix B. Headless Install
 
-1. Arduino Setup
-   1. Before assembling follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash grbl to the arduino
+## Arduino Setup
+1. Before assembling follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash grbl to the arduino
    1. Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/](https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/)
    1. Note: Video overview of CNC shield assembly and operation [https://youtu.be/zUb8tiFCwmk?t=37](https://youtu.be/zUb8tiFCwmk?t=37)
    1. Note: Critical safety information when working with the CNC shields. Failure to follow them can hurt both you and the component. NEVER connect or disconnect any stepper motor to the CNC Shield while the power is on or connected
@@ -54,7 +56,8 @@
    1. When attaching the heatsink to the drivers, it is critical that the heatsink is centered on the chip and does not contact any of the pins. Failure to correctly place the heatsink can cause the driver to short out and fail.
    1. Mount the heat sinks on the motor control drivers (MC-MDR) with thermal adhesive, making sure that the heat sink does not contact any of the pins.
    1. (video part 1: 00:18 WARNING: video incorrectly shows installing all 4 drivers) Mount the motor control drivers (MC-MDR) on the CNC hat (MC-CNC). The four drivers are labeled X, Y, Z, and A. Since this project only requires three stepper motors, we will only use sockets X, Y, and Z. To ensure you have the orientation correct, orient the CNC hat so that the 12v power connection is in the lower left, the reset button is in the upper left. Orient each of the A4988 drivers so that the small potentiometer (looks like a small phillips head screw) is toward the bottom of the board.
-   1. Double check that all of the drivers are firmly seated in the sockets, and that none of the heat sinks shifted during installation.
+      1. Double check that you have installed the drivers according to the manufacturer's instructions.
+      1. Double check that all of the drivers are firmly seated in the sockets, and that none of the heat sinks shifted during installation.
    1. Mount the CNC Hat on the Arduino. The 12v power connection on the lower left of the hat should be directly above the Arduino power jack also on the lower left.
 
 ![Assembled controller boards](/docs/media/rasp_pi2.png)
@@ -62,11 +65,12 @@
 
 ## Lab Control Unit Housing assembly
 
-With the release of version 0.5 of the Microlab, we recommend enclosing the Lab Control Units in an enclosure that provides protection to the components and standard interfaces to the other units. This enclosure can be produced using corrugated plastic or another rigid, durable, waterproof material that you are comfortable cutting and shaping into a box. Because folded corrugated plastic tends to return to its original position, it may be necessary to cut off tabs and re-attach them with duct tape, which provides more flexibility. The pictured enclosure is 8" x 6" x 4" and fits all of the Lab Control Unit components comfortably inside. We also recommend a small 5v fan to ensure air flow. Components and velcro straps can be attached to the enclosure using short M3 screws, washers, and nuts.
+With the release of version 0.5 of the Microlab, we recommend enclosing the Lab Control Unit in a housing that provides protection to the components inside and standard interfaces to the other Microlab components. This enclosure can be produced using corrugated plastic or another rigid, durable, waterproof material that you are comfortable cutting and shaping into a box. Because folded corrugated plastic tends to return to its original position, it may be necessary to cut off tabs and re-attach them with duct tape, which provides more flexibility. The pictured enclosure is 8" x 6" x 4" and fits all of the Lab Control Unit components comfortably inside. We also recommend a small 5v fan to ensure air flow. Components and velcro straps can be attached to the enclosure using short M3 screws, washers, and nuts.
 
 ### Cutting the housing
 
 - Cut a hole for the display (take care measuring so that the hole fits the screen as closely as possible). 
+   - We recommend placing additional material above and below the display on the inside of the case to secure it in place.
 - Cut holes for the cables, the barrel plug connectors (if using them), and the button for the light (if using it)
 - We also recommend cutting holes for a fan to prevent overheating
 - TODO: Add in-progress pics of case production
