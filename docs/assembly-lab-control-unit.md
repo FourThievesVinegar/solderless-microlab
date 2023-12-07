@@ -8,7 +8,7 @@
 - Power cables (extension cord and 5v / 12v power supplies)
 - Micro SD card, 32GB
 - Raspberry Pi
-  - Raspberry Pi 3 Model B Board
+  - Raspberry Pi 3 Model B Board (We have also successfully done preliminary testing on a Libre Computer Le Potato)
   - Raspberry Pi Expansion Board 4 Channel Relay Board (a separate relay board can also be used)
   - Raspberry Pi 3 b+ Display 3.5 inch TFT LCD Screen Kit, 3.5" 480x320 Resolution
 - Arduino
