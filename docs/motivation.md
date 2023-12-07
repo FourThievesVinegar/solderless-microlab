@@ -47,4 +47,4 @@ The user selects "recipes" - reactions to run - from an integrated touch screen 
 
 ## Being the Cyberpunk Dystopia We Want to See in the World
 
-In our current situation, closed-source, opaque, unaccountable systems govern us from afar. We live our lives at the mercy of the state, the dollar, and the algorithm. These forces smile benevolently on some while they ignore or discipline others. With this project, we hope to nudge the world toward a future where each of us can help and heal one another and ourselves directly, without the need to supplicate to modern day gods and masters.
+In our current situation, closed-source, opaque, unaccountable systems govern us from afar. We live our lives at the mercy of the state, the dollar, and the algorithm. These forces smile benevolently on some while they ignore or discipline others. With this project, we hope to nudge the world toward a future where each of us can help and heal one another and ourselves directly, without the need to grovel before modern day gods and masters.
