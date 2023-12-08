@@ -26,13 +26,13 @@ class SerialTempSensor(TempSensor):
         while (line.find('\n') == -1 or line.find('=') == -1):
             lastLine = line
             try:
-                line = str(self.tempSer.readline())
+                line = self.tempSer.readline().decode()
             except Exception as e:
                 print('Error reading from thermometer')
                 print(e)
                 continue
             finally:
-                print('ser read ' + str(len(line)) + ' ' + str(line) )
+                print('ser read ' + str(len(line)) + ' ' + line )
                 time.sleep(0.1)
 
         lastLine = str(line)
@@ -41,7 +41,7 @@ class SerialTempSensor(TempSensor):
         # Unclear why sometimes the thermometer returns 't1=' and other times just 't='
         start = lastLine.find('=') + len('=')
 
-        end = lastLine.find('\\',start)
+        end = lastLine.find('\\n',start)
         if end == -1:   # Different thermometers may parse differently. These conditionals may need to expand.
             end = lastLine.find(' ',start)
             
