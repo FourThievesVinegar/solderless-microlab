@@ -23,7 +23,7 @@ class SerialTempSensor(TempSensor):
         """
         line = "12345678901"
         lastLine = ""
-        while (len(line) > 10 or len(line) < 2):
+        while (len(line) > 10 or len(line) < 2 or line.find('t') == -1 or line.find('=') == -1):
             lastLine = line
             try:
                 line = self.tempSer.readline()
