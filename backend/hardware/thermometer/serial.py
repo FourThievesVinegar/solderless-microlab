@@ -18,12 +18,17 @@ class SerialTempSensor(TempSensor):
     def getTemp(self):
         """
         Get the temperature of the sensor in celsius.
+        Recommended sensor: DS18B20
+
+        A successful read looks something like this: b"t1=+29.06\n"
+        The loop below looks for the '=' '\n' '.' to detect success
+
         :return:
             Temperature in Celsius
         """
         line = "12345678901"
         lastLine = ""
-        while (line.find('\n') == -1 or line.find('=') == -1):
+        while (line.find('\n') == -1 or line.find('=') == -1 or line.find('.') == -1):
             lastLine = line
             try:
                 line = self.tempSer.readline().decode()
