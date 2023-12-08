@@ -44,6 +44,8 @@ class SerialTempSensor(TempSensor):
         end = lastLine.find('\\n',start)
         if end == -1:   # Different thermometers may parse differently. These conditionals may need to expand.
             end = lastLine.find(' ',start)
+        if end == -1:   # Maybe just go to the end?
+            end = len(lastLine) - 1
             
         print('found ' + str(start) + ' ' + str(end) + ' ' + lastLine + ' ' + lastLine[start:end])
         if(start > -1 and end > -1):
