@@ -78,9 +78,9 @@
                 ]
             },
             {
-                "message": "Heating to 35 degrees C.",
+                "message": "Heating to 30 degrees C.",
                 "parameters": {
-                    "temp": 35
+                    "temp": 30
                 },
                 "done": false,
                 "baseTask": "heat",
