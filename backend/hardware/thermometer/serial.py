@@ -26,7 +26,7 @@ class SerialTempSensor(TempSensor):
         while (len(line) > 10 or len(line) < 2 or line.find('t') == -1 or line.find('=') == -1):
             lastLine = line
             try:
-                line = self.tempSer.readline()
+                line = str(self.tempSer.readline())
             except Exception as e:
                 print('Error reading from thermometer')
                 print(e)
