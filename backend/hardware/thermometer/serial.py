@@ -1,7 +1,7 @@
 from hardware.thermometer.base import TempSensor
 from w1thermsensor import W1ThermSensor, Sensor
 import serial
-import re
+import time
 
 class SerialTempSensor(TempSensor):
     tempSer = None
@@ -23,7 +23,7 @@ class SerialTempSensor(TempSensor):
         """
         line = "12345678901"
         lastLine = ""
-        while (len(line) > 10 or len(line) < 2 or line.find('t') == -1 or line.find('=') == -1):
+        while (len(line) > 10 or len(line) < 2 or line.find('\\') == -1 or line.find('=') == -1):
             lastLine = line
             try:
                 line = str(self.tempSer.readline())
@@ -33,6 +33,7 @@ class SerialTempSensor(TempSensor):
                 continue
             finally:
                 print('ser read ' + str(len(line)) + ' ' + str(line) )
+                time.sleep(0.1)
 
         lastLine = str(line)
    
