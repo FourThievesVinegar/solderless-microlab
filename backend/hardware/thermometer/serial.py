@@ -36,7 +36,12 @@ class SerialTempSensor(TempSensor):
 
         lastLine = str(line)
    
-        start = lastLine.find('t1=') + len('t1=')
+        start = lastLine.find('t1=')    # Look for 't1=' in the input line
+        if start == -1:                 # Unclear why sometimes the thermometer returns 't1=' and other times just 't='
+            start = lastLine.find('t=') + len('t=')
+        else:                           # This should be the default case
+            start = lastLine.find('t1=') + len('t1=')
+
         end = lastLine.find('\\',start)
         if end == -1:   # Different thermometers may parse differently. These conditionals may need to expand.
             end = lastLine.find(' ',start)
