@@ -1,6 +1,12 @@
 # Microlab Assembly
 
-&nbsp;
+Welcome! This document will walk you through the steps to construct a Microlab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything. 
+
+Some notes:
+- As of December 2023, we are testing and finalizing the Temperature Control Unit's heat exchanger design. Once this is complete, we will update the parts list with final details and add more documentary photos and techniques for making it (bending copper tubing can be tricky!). 
+- The instructions mention both 3D-printed syringe pumps and off-the-shelf peristaltics. We recommend using peristaltic pumps as they're simpler and after purchasing all the rods and stepper motors, they're comparable in cost to the syringe pumps.
+- Creating the case for the Lab Control Unit is not as thoroughly documented as one might like. More on this to come soon.
+- If you're replicating and you see opportunities to improve the design, the docs, or the code, please feel free to put up a PR or to contact us through the volunteer email posted on the website.
 
 ## Building a Microlab
 
@@ -43,7 +49,7 @@ Fig. 1 Parts Photo showing printed syringe parts
 
 ### Parts List
 
-The boards, components and parts needed for this project are located in the Bill of Materials (BOM) file.
+The boards, components, and parts needed for this project are located in the Bill of Materials (BOM) file.
 
 Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
 
