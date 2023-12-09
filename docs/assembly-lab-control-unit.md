@@ -11,6 +11,7 @@
   - Raspberry Pi 3 Model B Board (We have also successfully done preliminary testing on a Libre Computer Le Potato)
   - Raspberry Pi Expansion Board 4 Channel Relay Board (a separate relay board can also be used)
   - Raspberry Pi 3 b+ Display 3.5 inch TFT LCD Screen Kit, 3.5" 480x320 Resolution
+  - Please note: we are aware that RPi hired a UK Spy Cop and were tone-deaf jerks about it on social media. For this and several other reasons, including increasing prices, we are investigating alternatives. We use "Raspberry Pi" as a short-hand for "small single-board computer" and encourage experimentation with Libre Computer and other replacements.
 - Arduino
   - Arduino UNO SMD Rev3
   - CNC Shield - Expansion Board V3.0 +UNO R3 Board + A4988 Stepper Motor Driver with Heatsink (K75-CNC-UK)
