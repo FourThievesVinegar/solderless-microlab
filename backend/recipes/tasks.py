@@ -1,5 +1,5 @@
 from recipes import celery
-import hardware
+from hardware import microlab
 
 
 def heat(parameters):
@@ -14,10 +14,10 @@ def heat(parameters):
     """
     targetTemp = parameters['temp']
     celery.logger.info('heating water to {0}...'.format(targetTemp))
-    hardware.turnHeaterOn()
-    while hardware.getTemp() < targetTemp:
-        hardware.sleep(0.5)
-    hardware.turnHeaterOff()
+    microlab.turnHeaterOn()
+    while microlab.getTemp() < targetTemp:
+        microlab.sleep(0.5)
+    microlab.turnHeaterOff()
 
 
 def cool(parameters):
@@ -32,10 +32,10 @@ def cool(parameters):
     """
     targetTemp = parameters['temp']
     celery.logger.info('cooling water to {0}...'.format(targetTemp))
-    hardware.turnCoolerOn()
-    while hardware.getTemp() > targetTemp:
-        hardware.sleep(0.5)
-    hardware.turnCoolerOff()
+    microlab.turnCoolerOn()
+    while microlab.getTemp() > targetTemp:
+        microlab.sleep(0.5)
+    microlab.turnCoolerOff()
 
 
 def maintainCool(parameters):
@@ -96,25 +96,25 @@ def maintain(parameters):
     type = parameters['type']
 
     interval = 0.5
-    start = hardware.secondSinceStart()
+    start = microlab.secondSinceStart()
 
-    while (hardware.secondSinceStart() - start) < duration:
-        hardware.sleep(interval)
-        currentTemp = hardware.getTemp()
+    while (microlab.secondSinceStart() - start) < duration:
+        microlab.sleep(interval)
+        currentTemp = microlab.getTemp()
         celery.logger.info('temperature @ {0}'.format(currentTemp))
         if currentTemp - tolerance > targetTemp:
             if type == 'heat':
-                hardware.turnHeaterOff()
+                microlab.turnHeaterOff()
             else:
-                hardware.turnCoolerOn()
+                microlab.turnCoolerOn()
         if currentTemp + tolerance < targetTemp:
             if type == 'heat':
-                hardware.turnHeaterOn()
+                microlab.turnHeaterOn()
             else:
-                hardware.turnCoolerOff()
+                microlab.turnCoolerOff()
 
-    hardware.turnHeaterOff()
-    hardware.turnCoolerOff()
+    microlab.turnHeaterOff()
+    microlab.turnCoolerOff()
 
 
 def pump(parameters):
@@ -130,7 +130,7 @@ def pump(parameters):
     """
     pump = parameters['pump']
     volume = parameters['volume']
-    hardware.pumpDispense(pump, volume)
+    microlab.pumpDispense(pump, volume)
 
 
 def stir(parameters):
@@ -146,11 +146,11 @@ def stir(parameters):
     duration = parameters['time']
 
     interval = 0.5
-    start = hardware.secondSinceStart()
-    hardware.turnStirrerOn()
-    while (hardware.secondSinceStart() - start) < duration:
-        hardware.sleep(interval)
-    hardware.turnStirrerOff()
+    start = microlab.secondSinceStart()
+    microlab.turnStirrerOn()
+    while (microlab.secondSinceStart() - start) < duration:
+        microlab.sleep(interval)
+    microlab.turnStirrerOff()
 
 
 
