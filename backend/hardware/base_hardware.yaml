@@ -8,10 +8,10 @@ devices:
     #           to /boot/config.txt and reboot to use this on a pi, see https://github.com/libre-computer-project/libretech-wiring-tool
     #           for enabling the w1-gpio overlay on the AML-S905X-CC
     # serial: reads the sensor data from a serial device
-    implementation: "w1_therm"
+    implementation: "serial"
     ## serial MODE CONFIG
     # Which device to read data from.
-    #serialDevice: '/dev/ttyUSB1'
+    serialDevice: '/dev/ttyUSB0'
 
   - id: "reactor-temperature-controller"
     type: "tempController"
@@ -41,7 +41,7 @@ devices:
     # syringepump: The open source syringe pump referenced in the assembly documentation
     #              Uses grbl and stepper motors to dispense the reagents into the microlab
     # simulation: Does nothing but sleep to simulate dispensing a reagent
-    implementation: "syringepump"
+    implementation: "peristalticpump"
     ## syringepump MODE CONFIG
     # Serial device for communication with the Arduino
     arduinoPort: "/dev/ttyACM0"
