@@ -25,8 +25,9 @@
 1. Putting OS and Microlab software on an SD card
    1. Install Raspberry Pi Imager onto a computer.
    1. Download our disk image torrent from [our website](https://fourthievesvinegar.org/microlab/).
-        1. Please continue to seed the torrent!
-       1. This image is a version of the OS with the Microlab software already installed.
+      1. Please continue to seed the torrent!
+      1. This image is a version of the OS with the Microlab software already installed.
+      1. NOTE: The production has drivers for the 3.5" display using goodtft drivers. If you have a different display, you will need to use the development image, then download and install the drivers (using an external monitor).
    1. Connect the MicroSD card to your computer. You may need an SD card to USB converter. [part #]
    1. Launch the Raspberry Pi Imager.
    1. Select “Choose OS”, and scroll down to “Use Custom”.
