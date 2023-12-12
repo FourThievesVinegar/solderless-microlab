@@ -44,7 +44,8 @@ class SerialTempSensor(TempSensor):
    
         # Look for 't1=' or 't=' in the input line
         # Unclear why sometimes the thermometer returns 't1=' and other times just 't='
-        start = lastLine.find('=') + len('=')
+        # Use rfind because we want the last '=' and sometimes input includes extras
+        start = lastLine.rfind('=') + len('=')
 
         end = lastLine.find('\\n',start)
         if end == -1:   # Different thermometers may parse differently. These conditionals may need to expand.
@@ -54,7 +55,13 @@ class SerialTempSensor(TempSensor):
             
         # print('found ' + str(start) + ' ' + str(end) + ' ' + lastLine + ' ' + lastLine[start:end])  # FOR DEBUGGING. Uncommenting adds a lot of log spam!
         if(start > -1 and end > -1):
-            temperature = float(lastLine[start:end])
+            try:
+                temperature = float(lastLine[start:end])
+            except:
+                print('Error converting temperature reading')
+                print(lastLine[start:end])
+                print(e)
+                temperature = "Error"
         else:
             temperature = "Error"
         # print('Read temperature ' + str(temperature)) # + ' ' + str(lastLine))  # FOR DEBUGGING. Uncommenting adds a lot of log spam!
