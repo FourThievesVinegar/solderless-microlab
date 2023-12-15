@@ -89,7 +89,7 @@ The Lab Control Unit enclosure is designed to be as modular as possible. In this
 - Inside the enclosure, connect the extension cord, 5v, and 12v power supplies ("wall warts") to the enclosure with velcro straps. 
 - Attach the straps to the case using small M3 screws. 
    - You can use similar screws to connect the larger lever connectors, the arduino, and the relay break-out board (if you are using it instead of the Pi hat). 
-   - You can use similar straps to hold the display and the Pi in place.
+   - You can use similar straps to hold the display and the Pi in place. [We are looking for](https://github.com/FourThievesVinegar/solderless-microlab/issues/129) 3d-printable options for chassis and enclosures that can be mounted to the case more securely.
    - Basically, everything is going to be strapped in and the straps are bolted down
    - You can also attach small velcro straps to bundle wires and reduce the "rats nest" factor
  - If your mini-display came with a stylus, you may want to use a small elastic cord and/or velcro to attach it to the case.
@@ -112,6 +112,11 @@ There are several connections to make inside the housing. Make sure the main pow
    - If you're not sure which relays are which, consult the documentation for your relay hat or board.
    - Consult the pin diagram for your Pi for which GPIO pins to connect to the relay board if you are using a separate relay breakout board like the one pictured here.
    - See `backend/hardware/base_hardware.yaml` for which GPIO pins activate which systems
+   - You will need 12v power port for each of:
+      - The reactor light (optional)
+      - The heating circulation pump
+      - The cooling circulation pump
+      - The reactor stirrer
 - If you have a reactor light and a button to use it with, wire the button according to its instructions and connect it to the appropriate barrel plug connector.
 - Connect the 12v barrel plug input on the Arduino's motor control board to the 12v power supply
 

@@ -67,6 +67,9 @@ The Temperature Control Unit has two major parts: The Power Box and the Heat Exc
         - You can use a medium-to-large dowel or other sturdy tube as a jig for bending
         - You can also use a long spring around the tube to support it or fill it with salt or sand to support from the inside.
 - Attach silicone tubing to the circulation pump and to the intake and exhaust of the coiled copper tubing. Run the open ends into the outter jar of the Reactor Unit. Make sure they will reach below the water level there.
+- To use both heating and cooling without changing the hardware configuration between recipe steps, you will need to produce an additional heat exchanger unit for cooling.
+    - The cooling unit will not require an additional power box - it is just an ice bath.
+    - It will require an additional jar lid, jar, copper coil, pump, and insulating jacket. 
 
 ## Notes
 

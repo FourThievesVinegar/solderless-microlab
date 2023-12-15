@@ -62,5 +62,6 @@
 1. Screw the small mason jar (RX-COR) into the reactor lid, then slide the core into the large mason jar (RX-OUT) and screw the reactor lid down.
 1. Insert the small mason jar into the hole in the top face of the Reactor Unit housing, then insert it into the large mason jar and screw in the large mason jar
     1. **NOTE:** This may be a tight fit. If your printer over-extrudes even a little, you may need to sand down the manifold so that it fits. Wigging the reactor along the loosest axis with gentle pressure (pushing to insert, pulling to remove) can help.
+    1. **NOTE:** Remember that PLA absorbs moisture and may swell slightly due to exposure to the temperature control systems.
 1. Once the jars are secured to the manifold, use the 3D printed flange to hold it in place. in the housing.
 
