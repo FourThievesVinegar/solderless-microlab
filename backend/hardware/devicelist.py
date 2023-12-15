@@ -60,6 +60,6 @@ def validateConfiguration(deviceConfigs):
     if deviceDict.get(device['id'], None) == None:
       deviceDict[device['id']] = device
     else:
-      raise Exception("Duplicate device id {1}".format(device['id']))
+      raise Exception("Duplicate device id {0}".format(device['id']))
   
   return False

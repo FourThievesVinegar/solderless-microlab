@@ -1,8 +1,9 @@
 from hardware.thermometer.base import TempSensor
-from w1thermsensor import W1ThermSensor, Sensor
+from w1thermsensor import W1ThermSensor, Sensor, SensorNotReadyError
 
 class W1TempSensor(TempSensor):
     sensor = None
+    lastTemp = 0
     def __init__(self):
         """
         Constructor. Initializes the sensor.
@@ -15,4 +16,8 @@ class W1TempSensor(TempSensor):
         :return:
             Temperature in Celsius
         """
-        return self.sensor.get_temperature()
+        try:
+            self.lastTemp = self.sensor.get_temperature()
+        except SensorNotReadyError:
+            pass
+        return self.lastTemp

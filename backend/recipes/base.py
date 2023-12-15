@@ -83,7 +83,7 @@ plan object
 """
 
 from recipes import celery
-import hardware
+from hardware import microlab
 import threading
 from datetime import datetime, timedelta, timezone
 
@@ -138,9 +138,8 @@ class Recipe:
         self.message = ''
         self.options = []
         self.stepCompletionTime = None
-        hardware.turnHeaterOff()
-        hardware.turnCoolerOff()
         self.stopTasks()
+        microlab.turnOffEverything()
 
     def getStatus(self):
         """
