@@ -88,7 +88,7 @@ def start(name):
     return True, ''
 
 
-def status():
+def status(_):
     """
     Get the status of the machine.
     :return:
@@ -148,7 +148,7 @@ def status():
     return message
 
 
-def stop():
+def stop(_):
     """
     Stop the currently running recipe.
 

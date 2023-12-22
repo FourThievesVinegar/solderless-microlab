@@ -181,4 +181,4 @@ class MicroLab:
         return self.reagentDispenser.dispense(pumpId, volume)
 
 
-microlab = MicroLab()
+microlab = None
