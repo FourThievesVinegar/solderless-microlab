@@ -26,12 +26,7 @@ export function App() {
 
   return (
     <div className="lcd-wrapper">
-      <Header>
-        {status ?
-          `${status?.step ? `${status?.step}: ` : ""}${status?.status} ${status?.temp ? `${status?.temp}C` : ""}` :
-          "Waiting for control service"
-        }
-      </Header>
+      <Header>{status ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${status?.temp ? `${status?.temp.toFixed(2)}C` : ''}` : 'Waiting for control service'}</Header>
       <Switch>
         <Route exact path="/">
           <Home status={status} />
