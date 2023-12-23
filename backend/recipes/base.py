@@ -82,7 +82,7 @@ plan object
                     successfully completed.
 """
 
-from recipes import celery
+from recipes import tasks
 from hardware import microlab
 import threading
 from datetime import datetime, timedelta, timezone
@@ -184,8 +184,7 @@ class Recipe:
 
     def updateStatus(self):
         """
-        Updates the current status and then returns it. This effectively polls the celery task
-        to see if it has completed.
+        Updates the current status and then returns it.
         :return:
         object
             Same as getStatus()
@@ -268,7 +267,7 @@ class Recipe:
         if STEP_TASKS in step:
             for task in step[STEP_TASKS]:
                 if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
-                    self.currentTasks.append(celery.runTask(microlab, task[TASK_TYPE], task[TASK_PARAMETERS]))
+                    self.currentTasks.append(tasks.runTask(microlab, task[TASK_TYPE], task[TASK_PARAMETERS]))
             
             tasksWithDurations = filter(
                 lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), step[STEP_TASKS])

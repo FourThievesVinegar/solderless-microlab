@@ -64,7 +64,6 @@ class MicrolabInterface:
       """
       Stop the currently running recipe.
 
-      TODO: Implement mechanism for stopping associated celery tasks
       :return:
       None ... at least for now.
       """

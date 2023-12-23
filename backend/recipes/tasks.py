@@ -1,6 +1,3 @@
-from recipes import celery
-from hardware import microlab
-
 
 def heat(microlab, parameters):
     """
@@ -172,3 +169,26 @@ tasks = {
   'pump': pump,
   'stir': stir,
 }
+
+def runTask(microlab, task, parameters):
+    """
+    Create an iterator for running a task.
+
+    :param microlab:
+        The microlab hardware interface
+
+    :param task:
+        Task to run under the currently running recipe.
+
+    :param parameters:
+        Parameters to pass to the task. The actual object definition depends on the task.
+
+    :return:
+        An iterator that executes one tick of a task per call of next()
+    """
+    return {
+        "fn": tasks[task](microlab, parameters),
+        "parameters": parameters,
+        "done": False,
+        "nextTime": datetime.now()
+    }
