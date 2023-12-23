@@ -2,7 +2,7 @@
 Module defining API.
 """
 
-from api import app
+from api.app import app
 from flask import jsonify, request
 from werkzeug.utils import secure_filename
 from os.path import join

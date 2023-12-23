@@ -1,14 +1,15 @@
 """
 Module init.
-Initializing the app and adding a CORS header to all the API calls.
+Contains function for starting up the flask process
 """
 
-from flask import Flask
-from flask_cors import CORS
-import config
+def runFlask(in_queue, out_queue):
+    import sys
+    import api.routes
+    import config
+    from api.app import app
+    from microlab.interface import MicrolabInterface
+    reload = False if len(sys.argv) > 1 and sys.argv[1] == 'production' else True
 
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = config.recipesPackage.replace('.', '/')
-CORS(app)
-
-from api import routes
+    api.routes.microlabInterface = MicrolabInterface(in_queue, out_queue)
+    app.run(host='0.0.0.0', port=config.apiPort)
