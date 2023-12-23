@@ -2,10 +2,7 @@
 This package is responsible for managing the recipe files and routing the recipe steps
 to the appropriate recipe.
 
-The current running recipe is kept in recipes.state.currentRecipe. The reason this is in its own
-module is to avoid circular references as this module needs to import recipes.celery and
-recipes.celery needs to import the currentRecipe.
-
+The current running recipe is kept in recipes.state.currentRecipe.
 The directory the recipes reside is configured in config.recipesPackage. All json files in that
 directory should be considered recipes.
 """
@@ -170,8 +167,8 @@ def selectOption(option):
     :param option:
     The selected option. It must be part of the options list as retrieved via /status
     :return:
-    (True,'') on success
-    (False,message) on failure
+    (True, '') on success
+    (False, message) on failure
     """
     if not state.currentRecipe is None:
         return state.currentRecipe.selectOption(option)

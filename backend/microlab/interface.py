@@ -1,10 +1,19 @@
 
 
 class MicrolabInterface:
+  """
+  Interface for the flask process to communicate with the microlab process.
+
+  At the moment the functionality mostly mirrors the functions in 
+  /recipe/__init__.py, though this will change.
+
+  For extending this with additional functionality, see /microlab/__init__.py 
+  for info on implementing commands.
+  """
 
   def __init__(self, in_queue, out_queue):
-    self.q1 = out_queue
-    self.q2 = in_queue
+    self.toMicrolab = out_queue
+    self.fromMicrolab = in_queue
 
   def start(self, name):
       """
@@ -19,9 +28,9 @@ class MicrolabInterface:
       (False, message) on failure.
       """
       # Validate that the microlab hardware controller has initialized
-      self.q1.put({"command": "start", "args": name})
+      self.toMicrolab.put({"command": "start", "args": name})
 
-      return self.q2.get()
+      return self.fromMicrolab.get()
 
   def status(self):
       """
@@ -54,9 +63,9 @@ class MicrolabInterface:
               An ISO date string for when the current step is expected to be completed,
               or null if unknown. 
       """
-      self.q1.put({"command": "status", "args": None})
+      self.toMicrolab.put({"command": "status", "args": None})
       print("sent")
-      res = self.q2.get()
+      res = self.fromMicrolab.get()
       print("waiting")
       return res
 
@@ -67,7 +76,7 @@ class MicrolabInterface:
       :return:
       None ... at least for now.
       """
-      self.q1.put({"command": "stop", "args": None})
+      self.toMicrolab.put({"command": "stop", "args": None})
 
   def selectOption(self, option):
       """
@@ -81,6 +90,6 @@ class MicrolabInterface:
       (True,'') on success
       (False,message) on failure
       """
-      self.q1.put({"command": "selectOption", "args": option})
-      res = self.q2.get()
+      self.toMicrolab.put({"command": "selectOption", "args": option})
+      res = self.fromMicrolab.get()
       return res

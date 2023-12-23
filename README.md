@@ -76,34 +76,13 @@ $ source env/bin/activate
 (env) $ pip install -r requirements.txt
 ```
 
-##### Redis
+##### Install needed packages
 
 (on the Pi)
 
 ```text
-sudo apt -y install screen git redis-server python-celery-common python3-flask python3-pip python3-serial python3-libgpiod
+sudo apt -y install screen git python3-flask python3-pip python3-serial python3-libgpiod
 
-```
-
-(for Debian / Ubuntu)
-
-```text
-sudo apt update
-sudo apt install redis-server
-```
-
-To run Redis as a service,
-
-```text
-sudo nano /etc/redis/redis.conf
-```
-
-and change the option for `supervised` from `no` to `systemd`
-
-#### Startup celery worker:
-
-```text
-(env) $ celery -A recipes worker --loglevel=INFO
 ```
 
 #### Start the server:

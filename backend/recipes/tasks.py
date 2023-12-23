@@ -1,3 +1,13 @@
+"""
+List of tasks available for recipes to execute. All tasks must take
+an instance of MicroLabHardware as their first argument, and a dictionary
+with whatever needed arguments as their second. 
+
+All tasks must return an iterator that executes one iteration of the task
+per call of next(), returning None when execution has finished, or
+a number in seconds (decimals are allowed) for when to next execute the task.
+"""
+
 from datetime import datetime
 
 def heat(microlab, parameters):
