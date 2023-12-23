@@ -3,7 +3,7 @@
 import sys
 import os 
 import config
-from microlab import MicrolabInterface
+from microlab.interface import MicrolabInterface
 from multiprocessing import Process, Queue
 import time
 import threading
