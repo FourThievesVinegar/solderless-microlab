@@ -15,7 +15,7 @@ from os import listdir
 from os.path import isfile, join
 from recipes import state
 from recipes.base import Recipe
-from hardware import microlab, MicroLabState
+from hardware import microlabHardware, MicroLabHardwareState
 
 def getRecipeList():
     """
@@ -66,8 +66,8 @@ def start(name):
     (False, message) on failure.
     """
     # Validate that the microlab hardware controller has initialized
-    if microlab.state is not MicroLabState.INITIALIZED:
-        return False, 'Microlab failed to start. Check Hardware configuration and setup'.format(microlab.error)
+    if microlabHardware.state is not MicroLabHardwareState.INITIALIZED:
+        return False, 'Microlab failed to start. Check Hardware configuration and setup'.format(microlabHardware.error)
 
     # If we are currently running a recipe, check if it is complete.
     if not (state.currentRecipe is None):
@@ -127,7 +127,7 @@ def status(_):
         'options': [],
         'stepCompletionTime': None
     }
-    if microlab.state is MicroLabState.FAILED_TO_START:
+    if microlabHardware.state is MicroLabHardwareState.FAILED_TO_START:
         message['status'] = 'error'
         message['message'] = 'Microlab failed to start. Check hardware and configuration'
         return message
@@ -143,7 +143,7 @@ def status(_):
     message['options'] = recipeMessage['options']
     message['icon'] = recipeMessage['icon']
     message['stepCompletionTime'] = recipeMessage['stepCompletionTime']
-    message['temp'] = microlab.getTemp()
+    message['temp'] = microlabHardware.getTemp()
 
     return message
 

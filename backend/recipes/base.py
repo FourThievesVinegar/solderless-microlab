@@ -83,7 +83,7 @@ plan object
 """
 
 from recipes import tasks
-from hardware import microlab
+from hardware import microlabHardware
 import threading
 from datetime import datetime, timedelta, timezone
 import traceback
@@ -142,7 +142,7 @@ class Recipe:
         self.options = []
         self.stepCompletionTime = None
         self.stopTasks()
-        microlab.turnOffEverything()
+        microlabHardware.turnOffEverything()
 
     def getStatus(self):
         """
@@ -267,7 +267,7 @@ class Recipe:
         if STEP_TASKS in step:
             for task in step[STEP_TASKS]:
                 if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
-                    self.currentTasks.append(tasks.runTask(microlab, task[TASK_TYPE], task[TASK_PARAMETERS]))
+                    self.currentTasks.append(tasks.runTask(microlabHardware, task[TASK_TYPE], task[TASK_PARAMETERS]))
             
             tasksWithDurations = filter(
                 lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), step[STEP_TASKS])

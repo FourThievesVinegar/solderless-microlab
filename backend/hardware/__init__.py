@@ -16,15 +16,15 @@ import hardware.temperaturecontroller as tc
 from hardware import devicelist
 from enum import Enum
 
-class MicroLabState(Enum):
+class MicroLabHardwareState(Enum):
     STARTING = "STARTING"
     INITIALIZED = "INITIALIZED"
     FAILED_TO_START = "FAILED_TO_START"
 
-class MicroLab:
+class MicroLabHardware:
     startTime = None
     devices = {}
-    state = MicroLabState.STARTING
+    state = MicroLabHardwareState.STARTING
     error = None
     
     def __init__(self):
@@ -46,10 +46,10 @@ class MicroLab:
             self.tempController = self.devices['reactor-temperature-controller']
             self.stirrer = self.devices['reactor-stirrer']
             self.reagentDispenser = self.devices['reactor-reagent-dispenser']
-            self.state = MicroLabState.INITIALIZED
+            self.state = MicroLabHardwareState.INITIALIZED
         except Exception as e:
             traceback.print_exc()
-            self.state = MicroLabState.FAILED_TO_START
+            self.state = MicroLabHardwareState.FAILED_TO_START
             self.error = e
 
     def turnOffEverything(self):
@@ -181,4 +181,4 @@ class MicroLab:
         return self.reagentDispenser.dispense(pumpId, volume)
 
 
-microlab = None
+microlabHardware = None

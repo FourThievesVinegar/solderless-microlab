@@ -20,10 +20,10 @@ def runFlask(in_queue, out_queue):
 
 def startMicrolabProcess(in_queue, out_queue):
     import hardware
-    hardware.microlab = hardware.MicroLab()
+    hardware.microlabHardware = hardware.MicroLabHardware()
+    microlabHardware = hardware.microlabHardware
     import recipes
     import signal
-
     halt = threading.Event()
 
     def runMicrolab():
@@ -32,7 +32,7 @@ def startMicrolabProcess(in_queue, out_queue):
             if recipes.state.currentRecipe:
                 recipes.state.currentRecipe.tickTasks()
             if halt.is_set():
-                hardware.microlab.turnOffEverything()
+                microlabHardware.turnOffEverything()
                 break
 
     microlab = threading.Thread(target=runMicrolab)
@@ -56,7 +56,7 @@ def startMicrolabProcess(in_queue, out_queue):
       "stop": recipes.stop,
       "selectOption": recipes.selectOption,
     }
-    
+
     while True:
         time.sleep(0.01)
         if not in_queue.empty():
