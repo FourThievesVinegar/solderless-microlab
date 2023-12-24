@@ -64,9 +64,7 @@ class MicrolabInterface:
               or null if unknown. 
       """
       self.toMicrolab.put({"command": "status", "args": None})
-      print("sent")
       res = self.fromMicrolab.get()
-      print("waiting")
       return res
 
   def stop(self):
