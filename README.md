@@ -2,16 +2,18 @@
 
 An open source jacketed lab reactor made from off-the-shelf components you can buy online.
 
+![Built Microlab](/docs/media/microlab-on-bench-labeled.jpg)
+
 An introduction to the project is here: [docs/index.md](docs/index.md)
 
 Read the motivation behind the project here: [docs/motivation.md](docs/motivation.md)
 
-Read the hardware assembly instructions here: [docs/assembly.md](docs/assembly.md)
+The full replication and assembly instructions here: [docs/assembly.md](docs/assembly.md)
 
 ## Production vs Development
 
-The instructions below are for a fresh install of the microlab software on your development machine. If you intend to construct a full Microlab, we recommend using our pre-made disk images. There are two: 
-- A "production" image that runs all software on startup and includes the drivers for a 3.5 inch mini-display. 
+The instructions below are for a fresh install of the Microlab software (backend and GUI) on your development machine. If you intend to construct a full Microlab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two: 
+- A "production" image that runs all software on startup and includes the drivers for a goodtft-compatible 3.5 inch mini-display. 
 - A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard.
 
 If you wish to develop on a regular computer with emulated hardware, follow the instructions below.

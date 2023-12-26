@@ -1,5 +1,6 @@
 # Welcome to The Microlab
-&nbsp;
+
+![Built Microlab](/docs/media/microlab-on-bench-labeled.jpg)
 
 ## Meet the Microlab Suite
 |||
