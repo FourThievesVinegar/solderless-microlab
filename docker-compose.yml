@@ -8,8 +8,6 @@ services:
     ports:
       - "8081:8081"
     restart: unless-stopped
-    depends_on:
-      - worker
     # Uncomment the following lines if running against actual hardware
     #      HARDWARE_PACKAGE: real
     #    devices:
