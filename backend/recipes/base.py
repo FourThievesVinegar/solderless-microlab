@@ -84,7 +84,6 @@ plan object
 
 from recipes import tasks
 from hardware import microlabHardware
-import threading
 from datetime import datetime, timedelta, timezone
 import traceback
 
@@ -106,7 +105,6 @@ class Recipe:
     stepCompletionTime = None
     currentRecipe = None
     currentTasks = []
-    mutex = threading.Lock()
 
     def __init__(self, plan):
         """
@@ -182,14 +180,14 @@ class Recipe:
         }
         return ret
 
-    def updateStatus(self):
+    def checkStepCompletion(self):
         """
-        Updates the current status and then returns it.
+        Checks if the current step has finished executing, 
+        and go to the next if so. If final step is completed, stops
+        running the recipes.
         :return:
-        object
-            Same as getStatus()
+        None
         """
-        self.mutex.acquire()
         if self.status == 'running':
             if self.areTasksComplete():
                 currentStep = self.plan[RECIPE_STEPS][self.step]
@@ -199,8 +197,6 @@ class Recipe:
                     if NEXT_STEP in currentStep:
                         self.step = currentStep[NEXT_STEP]
                         self.runStep()
-        self.mutex.release()
-        return self.getStatus()
 
     def selectOption(self, optionValue):
         """

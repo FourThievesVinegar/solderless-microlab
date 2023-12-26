@@ -132,7 +132,7 @@ def status(_):
     if state.currentRecipe == None:
         return message
 
-    recipeMessage = state.currentRecipe.updateStatus()
+    recipeMessage = state.currentRecipe.getStatus()
     message['status'] = recipeMessage['status']
     message['step'] = recipeMessage['step']
     message['recipe'] = state.currentRecipe.plan['title']

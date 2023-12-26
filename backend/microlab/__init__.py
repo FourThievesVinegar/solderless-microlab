@@ -58,7 +58,7 @@ def startMicrolabProcess(in_queue, out_queue):
                 (False, message) on failure.
             reference "selectOption" in /recipes/__init__.py for more info
     """
-    
+
     import sys
     import time
     import threading
@@ -67,13 +67,19 @@ def startMicrolabProcess(in_queue, out_queue):
     microlabHardware = hardware.microlabHardware
     import recipes
     import signal
+
     halt = threading.Event()
+    mutex = threading.Lock()
 
     def runMicrolab():
         while True:
             time.sleep(0.01)
             if recipes.state.currentRecipe:
+                mutex.acquire()
                 recipes.state.currentRecipe.tickTasks()
+                recipes.state.currentRecipe.checkStepCompletion()
+                mutex.release()
+            
             if halt.is_set():
                 microlabHardware.turnOffEverything()
                 break
@@ -105,5 +111,14 @@ def startMicrolabProcess(in_queue, out_queue):
         if not in_queue.empty():
             data = in_queue.get() # Receive data
             print("received {0}. Queue sizes: {1}, {2}".format(data, in_queue.qsize(), out_queue.qsize()) )
-            result = commandDict[data["command"]](data["args"])
-            out_queue.put(result) # Send data
+            # status just fetches data and so doesn't need a lock, everything
+            # else is a mutation and needs a lock to prevent conflicts with
+            # the other thread
+            if data["command"] == "status":
+                result = commandDict[data["command"]](data["args"])
+            else:
+                mutex.acquire()
+                result = commandDict[data["command"]](data["args"])
+                mutex.release()
+            if result is not None:
+                out_queue.put(result) # Send data back
