@@ -74,11 +74,11 @@ def startMicrolabProcess(in_queue, out_queue):
     def runMicrolab():
         while True:
             time.sleep(0.01)
+            mutex.acquire()
             if recipes.state.currentRecipe:
-                mutex.acquire()
                 recipes.state.currentRecipe.tickTasks()
                 recipes.state.currentRecipe.checkStepCompletion()
-                mutex.release()
+            mutex.release()
             
             if halt.is_set():
                 microlabHardware.turnOffEverything()
