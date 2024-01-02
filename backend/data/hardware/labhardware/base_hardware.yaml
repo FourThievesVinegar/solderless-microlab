@@ -11,7 +11,7 @@ devices:
     implementation: "serial"
     ## serial MODE CONFIG
     # Which device to read data from.
-    serialDevice: '/dev/ttyUSB0'
+    serialDevice: "/dev/ttyUSB0"
 
   - id: "reactor-temperature-controller"
     type: "tempController"
