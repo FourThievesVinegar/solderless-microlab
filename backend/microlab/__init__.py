@@ -110,7 +110,6 @@ def startMicrolabProcess(in_queue, out_queue):
         time.sleep(0.01)
         if not in_queue.empty():
             data = in_queue.get() # Receive data
-            print("received {0}. Queue sizes: {1}, {2}".format(data, in_queue.qsize(), out_queue.qsize()) )
             # status just fetches data and so doesn't need a lock, everything
             # else is a mutation and needs a lock to prevent conflicts with
             # the other thread
