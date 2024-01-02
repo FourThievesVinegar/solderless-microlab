@@ -140,6 +140,7 @@ There are several connections to make inside the housing. Make sure the main pow
     - Connect the pins that control the stirrer motors and heating circulation to the appropriate inputs on the relay board.
     - Connect the pin that controls the Temperature Control Unit's relay to the third wire on the 3 wire connector.
 - If using a "Pi Hat" relay board, you will only need to run a wire to the pin that switches the Temperature Control Unit's relay, connecting it to the third wire in the 3 wire connector.
+- Female breadboard jumper wires can be used to connect to exposed pins on the Pi and Arduino while male-ended jumper wires can be insered into the lever connectors and the screw terminals.
 
 #### Stepper motor cables
 
