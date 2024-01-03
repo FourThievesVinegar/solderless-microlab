@@ -1,13 +1,7 @@
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT, LINE_REQ_DIR_IN
 import gpiod
 
-
 class GPIODChip(GPIOChip):
-    output_offsets = []
-    output_values = []
-    output_lines = []
-    chip = None
-    lineAliases = {}
     def __init__(self, args):
         """
         Constructor. Initializes the GPIO chip.
@@ -19,6 +13,11 @@ class GPIODChip(GPIOChip):
               dictionary mapping strings to line numbers
               for adding human readable names to GPIO lines
         """
+        self.output_offsets = []
+        self.output_values = []
+        self.output_lines = []
+        self.chip = None
+        self.lineAliases = {}
         self.chip = gpiod.Chip(args['chipName'])
         if 'lineAliases' in args:
           for alias, line in args['lineAliases'].items():
