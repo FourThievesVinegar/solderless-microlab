@@ -2,13 +2,14 @@
 Module defining API.
 """
 
-from api import app
+from api.app import app
 from flask import jsonify, request
 from werkzeug.utils import secure_filename
 from os.path import join
 import recipes
 import json
 
+microlabInterface = None
 
 @app.route('/list')
 def listRecipes():
@@ -81,7 +82,7 @@ def status():
                 error
                     A system error has occurred.
     """
-    return jsonify(recipes.status())
+    return jsonify(microlabInterface.status())
 
 
 @app.route('/start/<name>')
@@ -100,7 +101,7 @@ def start(name):
         message
             Only present if response is "error" and there is a message to present to the user.
     """
-    (state, msg) = recipes.start(name)
+    (state, msg) = microlabInterface.start(name)
     if state:
         return jsonify({'response': 'ok'})
     else:
@@ -121,7 +122,7 @@ def stop():
         message
             Only present if response is "error" and there is a message to present to the user.
     """
-    recipes.stop()
+    microlabInterface.stop()
     return jsonify({'response': 'ok'})
 
 
@@ -143,7 +144,7 @@ def selectOption(name):
         message
             Only present if response is "error" and there is a message to present to the user.
     """
-    (state, msg) = recipes.selectOption(name)
+    (state, msg) = microlabInterface.selectOption(name)
     if state:
         return jsonify({'response': 'ok'})
     else:

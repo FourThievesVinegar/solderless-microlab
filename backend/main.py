@@ -1,11 +1,28 @@
-# Start the application on the configured port (default 8081)
-# Look in api.routes for the actual api code
-import sys
-from os import environ
-from api import app
-import config
+"""
+Starts the two microlab processes, one for the hardware, and the other the
+flask backend API.
+Starts the flask application on the configured port (default 8081)
+Look in api.routes for the actual api code
+"""
 
-reload = False if len(sys.argv) > 1 and sys.argv[1] == 'production' else True
+from multiprocessing import Process, Queue
+from microlab import startMicrolabProcess
+from api import runFlask
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=config.apiPort, use_reloader=reload)
+
+if __name__ == "__main__":
+    q1 = Queue()
+    q2 = Queue()
+
+    microlabProcess = Process(target=startMicrolabProcess, args=(q1, q2), name="microlab")
+    microlabProcess.start()
+    flaskProcess = Process(target=runFlask, args=(q2, q1), name="flask")
+    flaskProcess.start()
+
+    microlabProcess.join()
+    flaskProcess.join()
+    q1.close()
+    q2.close()
+    q1.join_thread()
+    q2.join_thread()
+    

@@ -10,8 +10,4 @@ cd ../backend && \
 	export FLASK_DEBUG=0 && \
 	python main.py development &
 
-cd ../backend && \
-	source env/bin/activate && \
-	celery -A recipes worker --loglevel=INFO &
-
 cd ../gui && yarn start
