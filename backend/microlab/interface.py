@@ -91,3 +91,26 @@ class MicrolabInterface:
       self.toMicrolab.put({"command": "selectOption", "args": option})
       res = self.fromMicrolab.get()
       return res
+
+  def reloadConfig(self):
+      """
+      Tell the microlab process to reload configuration from disk.
+      Should be called anytime the user modifies config through the API.
+      :return:
+      None
+      """
+      self.toMicrolab.put({"command": "reloadConfig", "args": None})
+
+  def reloadHardware(self):
+      """
+      Tell the microlab process to reload hardware configuration from disk.
+      Should be called anytime the user modifies hardware config through the API.
+      :return:
+      (True, '') on success
+      (False, message) on failure
+      """
+      self.toMicrolab.put({"command": "reloadHardware", "args": None})
+      res = self.fromMicrolab.get()
+      return res
+
+

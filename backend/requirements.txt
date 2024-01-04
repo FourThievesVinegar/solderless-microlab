@@ -5,3 +5,4 @@ requests==2.31.0
 pyserial==3.5
 w1thermsensor==2.0.0
 pyyaml==6.0
+configobj==5.0.8

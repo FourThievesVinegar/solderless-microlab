@@ -3,11 +3,13 @@ Module defining API.
 """
 
 from api.app import app
-from flask import jsonify, request
+from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from os.path import join
+import os
 import recipes
 import json
+from config import microlabConfig as config
 
 microlabInterface = None
 
@@ -174,5 +176,164 @@ def uploadRecipe():
         return jsonify({'response': 'error', 'message': "File does not contain valid JSON."}), 400
     #reading the stream above sets the stream position to EOF, need to go back to start
     f.stream.seek(0)
-    f.save(join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+    f.save(join(config.recipesDirectory, secure_filename(f.filename)))
     return jsonify({'response': 'ok'})
+
+@app.route('/controllerHardware')
+def getControllerHardware():
+    """
+    Gets the current controller hardware setting
+
+    :return:
+    object
+        controllerHardware
+            A string with the current controller hardware setting
+    """
+    return (jsonify({'controllerHardware': config.controllerHardware}), 200)
+
+@app.route('/controllerHardware/list')
+def listControllerHardware():
+    """
+    Gets a list of valid controller hardware settings
+
+    :return:
+    list
+        a list containing the names of valid controller hardware settings.
+        ex: ['pi','AML-S905X-CC-V1.0A']
+    """
+    files = [recipe for recipe in os.listdir(config.controllerHardwareDirectory)]
+    configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith(".yaml"), files)))
+    return jsonify(configs)
+
+@app.route('/controllerHardware/<name>')
+def selectControllerHardware(name):
+    """
+    Sets a new controller hardware setting, and reloads the hardware
+    controller to use this
+
+    :return:
+    object
+        response
+            One of:
+                ok
+                error
+        message
+            Only present if response is "error" and there is a message to present to the user.
+    """
+    config.controllerHardware = name
+    microlabInterface.reloadConfig()
+    (success, msg) = microlabInterface.reloadHardware()
+    if success:
+        return (jsonify({'response': 'ok'}), 200)
+    else:
+        return jsonify({'response': 'error', 'message': msg}), 400
+
+@app.route('/uploadControllerConfig', methods = ['POST'])
+def uploadControllerConfig():
+    """
+    Uploads a controller hardware configuration file
+
+    :return:
+    object
+        response
+            One of:
+                ok
+                error
+        message
+            Only present if response is "error" and there is a message to present to the user.
+    """
+    
+    f = request.files['File']
+    f.save(join(config.controllerHardwareDirectory, secure_filename(f.filename)))
+    return jsonify({'response': 'ok'})
+
+@app.route('/downloadControllerConfig/<name>')
+def downloadControllerConfig(name):
+    """
+    Downloads a controller hardware configuration file
+
+    :return:
+    The controller configuration file
+    """
+    fileName = "{0}.yaml".format(secure_filename(name))
+    return send_file(join(config.controllerHardwareDirectory, fileName), name, as_attachment=True)
+
+
+@app.route('/labHardware')
+def getLabHardware():
+    """
+    Gets the current lab hardware setting
+
+    :return:
+    object
+        labHardware
+            A string with the current lab hardware setting
+    """
+    return (jsonify({'labHardware': config.labHardware}), 200)
+
+@app.route('/labHardware/list')
+def listLabHardware():
+    """
+    Gets a list of valid lab hardware settings
+
+    :return:
+    list
+        a list containing the names of valid lab hardware settings.
+        ex: ['base_hardware']
+    """
+    files = [recipe for recipe in os.listdir(config.labHardwareDirectory)]
+    configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith(".yaml"), files)))
+    return jsonify(configs)
+
+@app.route('/labHardware/<name>')
+def selectLabHardware(name):
+    """
+    Sets a new lab hardware setting, and reloads the hardware
+    controller to use this
+
+    :return:
+    object
+        response
+            One of:
+                ok
+                error
+        message
+            Only present if response is "error" and there is a message to present to the user.
+    """
+    config.labHardware = name
+    microlabInterface.reloadConfig()
+    (success, msg) = microlabInterface.reloadHardware()
+    if success:
+        return (jsonify({'response': 'ok'}), 200)
+    else:
+        return jsonify({'response': 'error', 'message': msg}), 400
+
+@app.route('/uploadLabConfig', methods = ['POST'])
+def uploadLabConfig():
+    """
+    Uploads a lab hardware configuration file
+
+    :return:
+    object
+        response
+            One of:
+                ok
+                error
+        message
+            Only present if response is "error" and there is a message to present to the user.
+    """
+    
+    f = request.files['File']
+    f.save(join(config.labHardwareDirectory, secure_filename(f.filename)))
+    return jsonify({'response': 'ok'})
+
+@app.route('/downloadLabConfig/<name>')
+def downloadLabConfig(name):
+    """
+    Downloads a lab hardware configuration file
+
+    :return:
+    The lab configuration file
+    """
+    fileName = "{0}.yaml".format(secure_filename(name))
+    return send_file(join(config.labHardwareDirectory, fileName), name, as_attachment=True)

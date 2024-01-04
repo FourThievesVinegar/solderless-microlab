@@ -8,9 +8,12 @@ Look in api.routes for the actual api code
 from multiprocessing import Process, Queue
 from microlab import startMicrolabProcess
 from api import runFlask
+import config
 
 
 if __name__ == "__main__":
+    config.initialSetup()
+
     q1 = Queue()
     q2 = Queue()
 

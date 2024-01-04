@@ -67,6 +67,7 @@ def startMicrolabProcess(in_queue, out_queue):
     microlabHardware = hardware.microlabHardware
     import recipes
     import signal
+    from config import microlabConfig as config
 
     halt = threading.Event()
     mutex = threading.Lock()
@@ -104,6 +105,8 @@ def startMicrolabProcess(in_queue, out_queue):
       "status": recipes.status,
       "stop": recipes.stop,
       "selectOption": recipes.selectOption,
+      "reloadConfig": lambda x: config.reloadConfig(),
+      "reloadHardware": lambda x: microlabHardware.loadHardware(),
     }
 
     while True:
