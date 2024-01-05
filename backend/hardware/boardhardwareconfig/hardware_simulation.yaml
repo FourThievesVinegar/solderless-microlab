@@ -1,0 +1,102 @@
+# In this file implementation is set as simulation
+devices:
+  - id: "reactor-thermometer"
+    type: "thermometer"
+    # Type of thermometer to use for measuring the temp of the reactor
+    # Supported values: w1_therm, serial, simulation
+    # w1_therm: Supports the DS18S20, DS1822, DS18B20, DS28EA00 and DS1825/MAX31850K
+    #           sensors using the 1 wire protocol. You'll need to add "dtoverlay=w1-gpio"
+    #           to /boot/config.txt and reboot to use this on a pi, see https://github.com/libre-computer-project/libretech-wiring-tool
+    #           for enabling the w1-gpio overlay on the AML-S905X-CC
+    # serial: reads the sensor data from a serial device
+    implementation: "simulation"
+    ## serial MODE CONFIG
+    # Which device to read data from.
+    serialDevice: '/dev/ttyUSB0'
+
+  - id: "reactor-temperature-controller"
+    type: "tempController"
+    # Which temperature controller implementation to use
+    # Supported values: basic, simulation
+    # basic: Basic hardware setup using two sets of pumps and a heating element
+    #        some currently incomplete instructions for this are in docs/assembly
+    # simulation: Simulates temperature changes due to heater and cooler activation
+    #             No other configuration required or possible at the moment
+    implementation: "simulation"
+    # device ID of the thermometer to use for detecting reactor temperature
+    thermometerID: "reactor-thermometer"
+    gpioID: "gpio-primary"
+    # GPIO pin for activating the heating element
+    heaterPin: BCM_26
+    # GPIO pin for activating the heater pump(s)
+    heaterPumpPin: BCM_20
+    # GPIO pin for activating the cooler pump(s)
+    coolerPin: BCM_21
+    # list of device IDs that must be setup before this device
+    dependencies: ["reactor-thermometer"]
+
+  - id: "reactor-reagent-dispenser"
+    type: "reagentDispenser"
+    # Which reagent dispenser implementation to use
+    # Supported values: syringepump, simulation, peristalticpump
+    # syringepump: The open source syringe pump referenced in the assembly documentation
+    #              Uses grbl and stepper motors to dispense the reagents into the microlab
+    # simulation: Does nothing but sleep to simulate dispensing a reagent
+    implementation: "simulation"
+    ## syringepump MODE CONFIG
+    # Serial device for communication with the Arduino
+    arduinoPort: "/dev/ttyACM0"
+    # Configuration for the syringe pump motors
+    syringePumpsConfig:
+      X:
+        # Number of mm the stepper motor moves per full revolution,
+        # this is the pitch of the threaded rod
+        mmPerRev: 0.8
+        # Number of steps per revolution of the stepper motor, reference the documentation for the motor
+        stepsPerRev: 200
+        # Number of mm of movement needed to dispense 1 ml of fluid,
+        # this is the length of the syringe divided by its fluid capacity
+        mmPerml: 3.5
+        # Maximum speed the motor should run in mm/min
+        maxmmPerMin: 240
+      Y:
+        # These are all the same as documented above but for the Y axis
+        mmPerRev: 0.8
+        stepsPerRev: 200
+        mmPerml: 3.5
+        maxmmPerMin: 240
+      Z:
+        # These are all the same as documented above but for the Y axis
+        mmPerRev: 0.8
+        stepsPerRev: 200
+        mmPerml: 3.5
+        maxmmPerMin: 240
+    # Configuration for the peristaltic pump motors
+    peristalticPumpsConfig:
+      F: 175
+      X:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+      Y:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+      Z:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+    ## simulation MODE ARGS
+    # None needed or supported at the moment
+
+  - id: "reactor-stirrer"
+    type: "stirrer"
+    # Which stirrer implementation to use
+    # Supported values: gpio_stirrer, simulation
+    # gpio_stirrer: activates the stirrer by switching a gpio pin
+    # simulation: Does nothing
+    implementation: "simulation"
+    gpioID: "gpio-primary"
+    ## gpio_stirrer MODE CONFIG
+    # GPIO pin for activating the stirrer
+    stirrerPin: BCM_16
+
+    ## simulation MODE CONFIG
+    # None needed or supported at the moment

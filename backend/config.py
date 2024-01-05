@@ -25,7 +25,7 @@ hardwareSpeedup = environ.get("HARDWARE_SPEEDUP", 1)
 
 # Which hardware board the software is being run on, for loading known hardware configuration. 
 # supported values:
-# pi, AML-S905X-CC-V1.0A, custom
+# pi, AML-S905X-CC-V1.0A, hardware_simulation, custom
 # Custom loads nothing. All hardware used must then be specified in base_hardware.yaml 
 hardwareBoard = environ.get("HARDWARE_BOARD", "pi")  
 
