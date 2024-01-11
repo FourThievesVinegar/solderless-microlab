@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   api:
@@ -8,18 +8,12 @@ services:
     ports:
       - "8081:8081"
     restart: unless-stopped
-    depends_on: 
-      - redis
-      - worker
-    environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379    
-# Uncomment the following lines if running against actual hardware
-#      HARDWARE_PACKAGE: real
-#    devices:
-#      - /dev/gpiomem:/dev/gpiomem
-#        /dev/ttyUSB0:/dev/ttyUSB0
-#        /dev/ttyUSB1:/dev/ttyUSB1
+    # Uncomment the following lines if running against actual hardware
+    #      HARDWARE_PACKAGE: real
+    #    devices:
+    #      - /dev/gpiomem:/dev/gpiomem
+    #        /dev/ttyUSB0:/dev/ttyUSB0
+    #        /dev/ttyUSB1:/dev/ttyUSB1
     networks:
       - backend
 
@@ -27,43 +21,10 @@ services:
     build:
       context: .
       dockerfile: docker/gui_dockerfile
-    depends_on: 
+    depends_on:
       - api
     ports:
       - "8080:80"
-    restart: unless-stopped 
-    networks:
-      - backend
- 
-  worker:
-    build:
-      context: .
-      dockerfile: docker/api_dockerfile
-    hostname: worker
-    entrypoint: celery
-    command: -A recipes worker --loglevel=INFO
-    environment:
-      CACHE_REDIS_HOST: "redis"
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      API_HOST: api
-# Uncomment the following lines if running against actual hardware
-#      HARDWARE_PACKAGE: real
-#    devices:
-#      - /dev/gpiomem:/dev/gpiomem
-#        /dev/ttyUSB0:/dev/ttyUSB0
-#        /dev/ttyUSB1:/dev/ttyUSB1
-    volumes:
-      - ./backend:/app
-    links:
-      - redis
-    depends_on:
-      - redis
-    networks:
-      - backend
-
-  redis:
-    image: "redis:alpine"
     restart: unless-stopped
     networks:
       - backend

@@ -10,10 +10,6 @@ cd ../backend && \
 	export FLASK_DEBUG=0 && \
 	python main.py production &
 
-cd ../backend && \
-	source env/bin/activate && \
-	celery -A recipes worker --loglevel=INFO &
-
 # If there is no build directory, then build the GUI. 
 if [ ! -d "../gui/build" ]
 then

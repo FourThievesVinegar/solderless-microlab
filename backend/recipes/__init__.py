@@ -2,10 +2,7 @@
 This package is responsible for managing the recipe files and routing the recipe steps
 to the appropriate recipe.
 
-The current running recipe is kept in recipes.state.currentRecipe. The reason this is in its own
-module is to avoid circular references as this module needs to import recipes.celery and
-recipes.celery needs to import the currentRecipe.
-
+The current running recipe is kept in recipes.state.currentRecipe.
 The directory the recipes reside is configured in config.recipesPackage. All json files in that
 directory should be considered recipes.
 """
@@ -15,7 +12,7 @@ from os import listdir
 from os.path import isfile, join
 from recipes import state
 from recipes.base import Recipe
-from hardware import microlab, MicroLabState
+from hardware import microlabHardware, MicroLabHardwareState
 
 def getRecipeList():
     """
@@ -66,8 +63,8 @@ def start(name):
     (False, message) on failure.
     """
     # Validate that the microlab hardware controller has initialized
-    if microlab.state is not MicroLabState.INITIALIZED:
-        return False, 'Microlab failed to start. Check Hardware configuration and setup'.format(microlab.error)
+    if microlabHardware.state is not MicroLabHardwareState.INITIALIZED:
+        return False, 'Microlab failed to start. Check Hardware configuration and setup'.format(microlabHardware.error)
 
     # If we are currently running a recipe, check if it is complete.
     if not (state.currentRecipe is None):
@@ -88,7 +85,7 @@ def start(name):
     return True, ''
 
 
-def status():
+def status(_):
     """
     Get the status of the machine.
     :return:
@@ -127,7 +124,7 @@ def status():
         'options': [],
         'stepCompletionTime': None
     }
-    if microlab.state is MicroLabState.FAILED_TO_START:
+    if microlabHardware.state is MicroLabHardwareState.FAILED_TO_START:
         message['status'] = 'error'
         message['message'] = 'Microlab failed to start. Check hardware and configuration'
         return message
@@ -135,7 +132,7 @@ def status():
     if state.currentRecipe == None:
         return message
 
-    recipeMessage = state.currentRecipe.updateStatus()
+    recipeMessage = state.currentRecipe.getStatus()
     message['status'] = recipeMessage['status']
     message['step'] = recipeMessage['step']
     message['recipe'] = state.currentRecipe.plan['title']
@@ -143,16 +140,15 @@ def status():
     message['options'] = recipeMessage['options']
     message['icon'] = recipeMessage['icon']
     message['stepCompletionTime'] = recipeMessage['stepCompletionTime']
-    message['temp'] = microlab.getTemp()
+    message['temp'] = microlabHardware.getTemp()
 
     return message
 
 
-def stop():
+def stop(_):
     """
     Stop the currently running recipe.
 
-    TODO: Implement mechanism for stopping associated celery tasks
     :return:
     None ... at least for now.
     """
@@ -171,8 +167,8 @@ def selectOption(option):
     :param option:
     The selected option. It must be part of the options list as retrieved via /status
     :return:
-    (True,'') on success
-    (False,message) on failure
+    (True, '') on success
+    (False, message) on failure
     """
     if not state.currentRecipe is None:
         return state.currentRecipe.selectOption(option)

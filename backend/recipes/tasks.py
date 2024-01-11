@@ -1,8 +1,16 @@
-from recipes import celery
-from hardware import microlab
+"""
+List of tasks available for recipes to execute. All tasks must take
+an instance of MicroLabHardware as their first argument, and a dictionary
+with whatever needed arguments as their second. 
 
+All tasks must return an iterator that executes one iteration of the task
+per call of next(), returning None when execution has finished, or
+a number in seconds (decimals are allowed) for when to next execute the task.
+"""
 
-def heat(parameters):
+from datetime import datetime
+
+def heat(microlab, parameters):
     """
     Turn on the heater and reach a target temperature.
 
@@ -13,14 +21,16 @@ def heat(parameters):
         None
     """
     targetTemp = parameters['temp']
-    celery.logger.info('heating water to {0}...'.format(targetTemp))
+    print('heating water to {0}...'.format(targetTemp))
     microlab.turnHeaterOn()
-    while microlab.getTemp() < targetTemp:
-        microlab.sleep(0.5)
-    microlab.turnHeaterOff()
+    while True:
+        if microlab.getTemp() >= targetTemp:
+            microlab.turnHeaterOff()
+            yield None
+        yield 1
 
 
-def cool(parameters):
+def cool(microlab, parameters):
     """
     Turn on the cooler and reach a target temperature.
 
@@ -31,14 +41,16 @@ def cool(parameters):
         None
     """
     targetTemp = parameters['temp']
-    celery.logger.info('cooling water to {0}...'.format(targetTemp))
+    print('cooling water to {0}...'.format(targetTemp))
     microlab.turnCoolerOn()
-    while microlab.getTemp() > targetTemp:
-        microlab.sleep(0.5)
-    microlab.turnCoolerOff()
+    while True:
+        if microlab.getTemp() <= targetTemp:
+            microlab.turnCoolerOff()
+            yield None
+        yield 1
 
 
-def maintainCool(parameters):
+def maintainCool(microlab, parameters):
     """
     Maintain a certain temperature using the cooler for a specified amount of time.
 
@@ -52,10 +64,10 @@ def maintainCool(parameters):
         None
     """
     parameters['type'] = 'cool'
-    maintain(parameters)
+    return maintain(microlab, parameters)
 
 
-def maintainHeat(parameters):
+def maintainHeat(microlab, parameters):
     """
     Maintain a certain temperature using the heater for a specified amount of time.
 
@@ -69,10 +81,10 @@ def maintainHeat(parameters):
         None
     """
     parameters['type'] = 'heat'
-    maintain(parameters)
+    return maintain(microlab, parameters)
 
 
-def maintain(parameters):
+def maintain(microlab, parameters):
     """
     Maintain a certain temperature using either the cooler or heater for a specified amount of time.
 
@@ -98,10 +110,14 @@ def maintain(parameters):
     interval = 0.5
     start = microlab.secondSinceStart()
 
-    while (microlab.secondSinceStart() - start) < duration:
-        microlab.sleep(interval)
+
+    while True:
         currentTemp = microlab.getTemp()
-        celery.logger.info('temperature @ {0}'.format(currentTemp))
+        print('temperature @ {0}'.format(currentTemp))
+        if (microlab.secondSinceStart() - start) >= duration:
+            microlab.turnHeaterOff()
+            microlab.turnCoolerOff()
+            yield None
         if currentTemp - tolerance > targetTemp:
             if type == 'heat':
                 microlab.turnHeaterOff()
@@ -113,11 +129,10 @@ def maintain(parameters):
             else:
                 microlab.turnCoolerOff()
 
-    microlab.turnHeaterOff()
-    microlab.turnCoolerOff()
+        yield interval
 
 
-def pump(parameters):
+def pump(microlab, parameters):
     """
     Dispense a certain amount of liquid from a pump.
 
@@ -131,9 +146,10 @@ def pump(parameters):
     pump = parameters['pump']
     volume = parameters['volume']
     microlab.pumpDispense(pump, volume)
+    yield None
 
 
-def stir(parameters):
+def stir(microlab, parameters):
     """
     Turn on the stirrer for a predefined amount of time.
 
@@ -144,13 +160,14 @@ def stir(parameters):
         None
     """
     duration = parameters['time']
-
-    interval = 0.5
     start = microlab.secondSinceStart()
     microlab.turnStirrerOn()
-    while (microlab.secondSinceStart() - start) < duration:
-        microlab.sleep(interval)
-    microlab.turnStirrerOff()
+    while True:
+        if (microlab.secondSinceStart() - start) >= duration:
+            microlab.turnStirrerOff()
+            yield None
+        yield 1
+
 
 
 
@@ -163,3 +180,26 @@ tasks = {
   'pump': pump,
   'stir': stir,
 }
+
+def runTask(microlab, task, parameters):
+    """
+    Create an iterator for running a task.
+
+    :param microlab:
+        The microlab hardware interface
+
+    :param task:
+        Task to run under the currently running recipe.
+
+    :param parameters:
+        Parameters to pass to the task. The actual object definition depends on the task.
+
+    :return:
+        An iterator that executes one tick of a task per call of next()
+    """
+    return {
+        "fn": tasks[task](microlab, parameters),
+        "parameters": parameters,
+        "done": False,
+        "nextTime": datetime.now()
+    }

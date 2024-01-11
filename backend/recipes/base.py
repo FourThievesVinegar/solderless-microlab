@@ -82,10 +82,10 @@ plan object
                     successfully completed.
 """
 
-from recipes import celery
-from hardware import microlab
-import threading
+from recipes import tasks
+from hardware import microlabHardware
 from datetime import datetime, timedelta, timezone
+import traceback
 
 
 RECIPE_STEPS = 'steps'
@@ -105,7 +105,6 @@ class Recipe:
     stepCompletionTime = None
     currentRecipe = None
     currentTasks = []
-    mutex = threading.Lock()
 
     def __init__(self, plan):
         """
@@ -116,6 +115,7 @@ class Recipe:
         self.plan = plan
         if hasattr(plan, 'title'):
             self.currentRecipe = plan.title
+        
 
     def start(self):
         """
@@ -134,12 +134,13 @@ class Recipe:
         None
         """
         self.step = -1
-        self.status = 'idle'
-        self.message = ''
+        if self.status != "error":
+            self.status = 'idle'
+            self.message = ''
         self.options = []
         self.stepCompletionTime = None
         self.stopTasks()
-        microlab.turnOffEverything()
+        microlabHardware.turnOffEverything()
 
     def getStatus(self):
         """
@@ -179,29 +180,23 @@ class Recipe:
         }
         return ret
 
-    def updateStatus(self):
+    def checkStepCompletion(self):
         """
-        Updates the current status and then returns it. This effectively polls the celery task
-        to see if it has completed.
+        Checks if the current step has finished executing, 
+        and go to the next if so. If final step is completed, stops
+        running the recipes.
         :return:
-        object
-            Same as getStatus()
+        None
         """
-        self.mutex.acquire()
         if self.status == 'running':
             if self.areTasksComplete():
                 currentStep = self.plan[RECIPE_STEPS][self.step]
-                if any(task.failed() for task in self.currentTasks): 
-                    self.status = 'error'
-                    self.message = 'Task execution failed.'
-                elif(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
+                if(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
                     self.stop()
                 else:
                     if NEXT_STEP in currentStep:
                         self.step = currentStep[NEXT_STEP]
                         self.runStep()
-        self.mutex.release()
-        return self.getStatus()
 
     def selectOption(self, optionValue):
         """
@@ -268,7 +263,7 @@ class Recipe:
         if STEP_TASKS in step:
             for task in step[STEP_TASKS]:
                 if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
-                    self.currentTasks.append(celery.runTask(task[TASK_TYPE], task[TASK_PARAMETERS]))
+                    self.currentTasks.append(tasks.runTask(microlabHardware, task[TASK_TYPE], task[TASK_PARAMETERS]))
             
             tasksWithDurations = filter(
                 lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), step[STEP_TASKS])
@@ -293,7 +288,7 @@ class Recipe:
         False
             Some tasks are still running.
         """
-        return all(task.ready() for task in self.currentTasks)
+        return all(task["done"] for task in self.currentTasks)
 
     def stopTasks(self):
         """
@@ -301,7 +296,33 @@ class Recipe:
         :return:
             None
         """
-        for task in self.currentTasks:
-            task.revoke(terminate=True)
+        # for task in self.currentTasks:
+        #     task.cancel()
         self.currentTasks = []
+
+    def tickTasks(self):
+        """
+        Executes one iteration of the current tasks that are scheduled to run.
+        :return:
+            None
+        """
+        for task in self.currentTasks:
+            if not task["done"] and datetime.now() > task["nextTime"]:
+                print("task is ready for next iteration")
+                try:
+                    res = next(task["fn"])
+                    if res == None:
+                        print("task is done")
+                        task["done"] = True
+                    else:
+                        duration = timedelta(seconds=res)
+                        print("task is scheduled for {0}".format(datetime.now() + duration))
+                        task["nextTime"] = datetime.now() + duration
+                except Exception as e:
+                    traceback.print_exc()
+                    task["exception"] = e
+                    self.status = 'error'
+                    self.message = 'Task execution failed.'
+                    self.stop()
+
 
