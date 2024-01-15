@@ -24,11 +24,18 @@ class BasicTempController(TempController):
               Which gpio pin to control the cooler pump
             gpioID
               The ID of the GPIO device used to control heating and cooling
+            maxTemp
+              Maximum temperature the hardware will support
+            minTemp
+              Minimum temperature the hardware will support
         """
+        super().__init__(args, devices)
         self.gpio = devices[args["gpioID"]]
         self.heaterPin = args["heaterPin"]
         self.heaterPumpPin = args["heaterPumpPin"]
         self.coolerPin = args["coolerPin"]
+        self.maxTemp = args["maxTemp"]
+        self.minTemp = args["minTemp"]
 
         self.gpio.setup(self.heaterPin)
         self.gpio.setup(self.heaterPumpPin)
@@ -93,3 +100,10 @@ class BasicTempController(TempController):
         The temperature of the temperature sensor.
         """
         return self.thermometer.getTemp()
+        
+    def getMaxTemperature(self):
+        return self.maxTemp
+
+    def getMinTemperature(self):
+        return self.minTemp
+

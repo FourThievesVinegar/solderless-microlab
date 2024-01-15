@@ -86,6 +86,15 @@ from recipes import tasks
 from hardware import microlabHardware
 from datetime import datetime, timedelta, timezone
 import traceback
+from enum import Enum
+
+class RecipeState(str, Enum):
+    IDLE = "idle"
+    ERROR = "error"
+    RECIPE_UNSUPPORTED = "recipe_unsupported"
+    RUNNING = 'running'
+    USER_INPUT = 'user_input'
+    COMPLETE = 'complete'
 
 
 RECIPE_STEPS = 'steps'
@@ -99,7 +108,7 @@ LAST_STEP = 'done'
 class Recipe:
     step = 0
     message = ''
-    status = 'idle'
+    status = RecipeState.IDLE
     options = []
     icon = ''
     stepCompletionTime = None
@@ -115,7 +124,6 @@ class Recipe:
         self.plan = plan
         if hasattr(plan, 'title'):
             self.currentRecipe = plan.title
-        
 
     def start(self):
         """
@@ -123,8 +131,27 @@ class Recipe:
         :return:
         None
         """
-        self.step = 0
-        self.runStep()
+        supported, msg = self.isRecipeSupported(self.plan)
+        if supported:
+            self.step = 0
+            self.runStep()
+        else:
+            self.status = RecipeState.RECIPE_UNSUPPORTED
+            self.message = msg
+
+    def isRecipeSupported(self, recipe):
+        max = microlabHardware.getMaxTemperature()
+        minTemp = microlabHardware.getMinTemperature()
+        for step in recipe[RECIPE_STEPS]:
+            if STEP_TASKS in step:
+                for task in step[STEP_TASKS]:
+                    if "temp" in task[TASK_PARAMETERS]:
+                        temp = task[TASK_PARAMETERS]["temp"]
+                        if temp > max:
+                            return False, "Recipe requires temperature of {0}C, which is higher than your current hardware supports ({1}C).".format(temp, max)
+                        if temp < minTemp:
+                            return False, "Recipe requires temperature of {0}C, which is lower than your current hardware supports ({1}C).".format(temp, minTemp)
+        return True, ''
 
     def stop(self):
         """
@@ -134,8 +161,8 @@ class Recipe:
         None
         """
         self.step = -1
-        if self.status != "error":
-            self.status = 'idle'
+        if self.status != RecipeState.ERROR:
+            self.status = RecipeState.IDLE
             self.message = ''
         self.options = []
         self.stepCompletionTime = None
@@ -188,7 +215,7 @@ class Recipe:
         :return:
         None
         """
-        if self.status == 'running':
+        if self.status == RecipeState.RUNNING:
             if self.areTasksComplete():
                 currentStep = self.plan[RECIPE_STEPS][self.step]
                 if(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
@@ -250,7 +277,7 @@ class Recipe:
             for option in step[STEP_USER_OPTIONS]:
                 options.append(option['text'])
             if len(options) > 0:
-                self.status = 'user_input'
+                self.status = RecipeState.USER_INPUT
 
         self.options = options
 
@@ -272,10 +299,10 @@ class Recipe:
                 duration = timedelta(seconds=max(taskDurations))
                 self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
                 
-            self.status = 'running'
+            self.status = RecipeState.RUNNING
 
         if step.get(LAST_STEP, False) == True:
-            self.status = 'complete'
+            self.status = RecipeState.COMPLETE
 
         return True
 
@@ -321,7 +348,7 @@ class Recipe:
                 except Exception as e:
                     traceback.print_exc()
                     task["exception"] = e
-                    self.status = 'error'
+                    self.status = RecipeState.ERROR
                     self.message = 'Task execution failed.'
                     self.stop()
 

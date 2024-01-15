@@ -10,7 +10,9 @@ class SimulatedTempController(TempController):
     cooling = False
     temperature = 24
     def __init__(self, args):
-        pass
+        super().__init__(args, devices=None)
+        self.maxTemp = args["maxTemp"]
+        self.minTemp = args["minTemp"]
 
     def turnHeaterOn(self):
         """
@@ -80,3 +82,9 @@ class SimulatedTempController(TempController):
                     self.temperature = self.temperature + 0.1
         print('Temperature read as: {0}'.format(self.temperature))
         return self.temperature
+
+    def getMaxTemperature(self):
+        return self.maxTemp
+
+    def getMinTemperature(self):
+        return self.minTemp

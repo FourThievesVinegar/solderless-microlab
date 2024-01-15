@@ -105,6 +105,20 @@ class MicroLabHardware:
 
         time.sleep(seconds)
 
+    def getMaxTemperature(self):
+        """
+        :return:
+        The max allowed temperature of the microlab in celsius as a number
+        """
+        return self.tempController.getMaxTemperature()
+
+    def getMinTemperature(self):
+        """
+        :return:
+        The minimum allowed temperature of the microlab in celsius as a number
+        """
+        return self.tempController.getMinTemperature()
+
     def turnHeaterOn(self):
         """
         Start heating the jacket.
