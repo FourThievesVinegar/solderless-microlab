@@ -71,6 +71,17 @@ class SyringePump(ReagentDispenser):
         """
         self.syringePumpsConfig = args["syringePumpsConfig"]
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
+        for axis, syringeConfig in self.syringePumpsConfig.items():
+            stepsPerMM = syringeConfig['stepsPerRev']/syringeConfig['mmPerRev']
+            axisToCNCID = {
+                "X": "0",
+                "Y": "1",
+                "Z": "2",
+            }
+            #configure steps/mm
+            grblWrite(self.grblSer, '$10{0}={1}\n'.format(axisToCNCID[axis], stepsPerMM))
+            #configure max mm/min
+            grblWrite(self.grblSer, '$11{0}={1}\n'.format(axisToCNCID[axis], syringeConfig['maxmmPerMin']))
 
     def dispense(self, pumpId, volume):
         """
