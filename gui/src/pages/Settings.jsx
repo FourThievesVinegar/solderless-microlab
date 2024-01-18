@@ -12,7 +12,7 @@ export function Settings() {
   const [counter, updateCounter] = useReducer(x => x + 1, 0)
 
   return (
-    <div className="settings-page">
+    <div className="page settings-page">
       <div className="settings-block">
         <ControllerHardwareConfig refetch={counter} />
         <ControllerConfigUpload onUpload={updateCounter} />
