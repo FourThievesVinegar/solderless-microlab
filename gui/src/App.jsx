@@ -9,13 +9,19 @@ import { ReactionHistory } from './pages/ReactionHistory'
 import { Tests } from './Tests'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
+import { useAudio } from './hooks/useAudio'
 
 import { getStatus } from './utils'
 
 import './styles/app.css'
 
+const rootURL = process.env.PUBLIC_URL
+
 export function App() {
   const [status, setStatus] = useState()
+  const [errorPlaying, playErrorSound] = useAudio(`${rootURL}/error.wav`)
+  const [completePlaying, playCompleteSound] = useAudio(`${rootURL}/complete.wav`)
+  const [promptPlaying, playPromptAudio] = useAudio(`${rootURL}/prompt.wav`)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,6 +29,21 @@ export function App() {
     }, 1000)
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (status?.status === 'error') {
+      playErrorSound(true)
+    } else if (status?.status === 'user_input') {
+      playPromptAudio(true)
+      const interval = setInterval(() => {
+        playPromptAudio(true)
+      }, 30 * 1000)
+
+      return () => clearInterval(interval)
+    } else if (status?.status === 'complete') {
+      playCompleteSound(true)
+    }
+  }, [status?.status, status?.step])
 
   return (
     <div className="lcd-wrapper">
