@@ -106,21 +106,21 @@ STEP_USER_OPTIONS = 'options'
 LAST_STEP = 'done'
 
 class Recipe:
-    step = 0
-    message = ''
-    status = RecipeState.IDLE
-    options = []
-    icon = ''
-    stepCompletionTime = None
-    currentRecipe = None
-    currentTasks = []
-
+    
     def __init__(self, plan):
         """
         Constructor. Saves the plan.
         :param plan:
         The recipe plan. See module documentation for object description.
         """
+        self.step = 0
+        self.message = ''
+        self.status = RecipeState.IDLE
+        self.options = []
+        self.icon = ''
+        self.stepCompletionTime = None
+        self.currentRecipe = None
+        self.currentTasks = []
         self.plan = plan
         if hasattr(plan, 'title'):
             self.currentRecipe = plan.title

@@ -59,7 +59,7 @@ export const ControllerHardwareConfig = props => {
         loading={loading}
         text={selection}
         value={selection}
-        options={hardwareOptions?.map(a => ({ key: a, text: a, value: a }))}
+        options={hardwareOptions?.sort().map(a => ({ key: a, text: a, value: a }))}
         onChange={selectionChanged}
       />
       {startingValue !== selection ? (

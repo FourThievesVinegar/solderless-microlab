@@ -125,19 +125,17 @@ def initialSetup():
     shutil.copy2(src, dest)
 
   # copy builtin lab configurations to data directory,
-  # but don't overwrite if already present
+  # overwriting old configurations if they exist
   defaultLabConfigsDir = "./data/hardware/labhardware/"
   for labhardware in os.listdir(defaultLabConfigsDir):
     src = "{0}/{1}".format(defaultLabConfigsDir, labhardware)
     dest = "{0}/{1}".format(labHardwareDirectory, labhardware)
-    if not os.path.isfile(dest):
-      shutil.copy2(src, dest)
+    shutil.copy2(src, dest)
 
-  # copy builtin recipes to data directory, but don't overwrite if already
-  # present
+  # copy builtin recipes to data directory, 
+  # overwriting old recipes if they exist
   defaultRecipesDir = "./data/recipes/"
   for recipe in os.listdir(defaultRecipesDir):
     src = "{0}/{1}".format(defaultRecipesDir, recipe)
     dest = "{0}/{1}".format(recipesDirectory, recipe)
-    if not os.path.isfile(dest):
-      shutil.copy2(src, dest)
+    shutil.copy2(src, dest)

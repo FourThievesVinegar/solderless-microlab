@@ -2,7 +2,6 @@ from hardware.thermometer.base import TempSensor
 import time
 
 class SerialTempSensorSimulation(TempSensor):
-    tempSer = None
     def __init__(self, args):
         """
         Constructor. Initializes the sensor.
