@@ -39,7 +39,8 @@ class MicroLabHardware:
         Loads and initializes the hardware devices
 
         :return:
-        None
+            (True, '') on success.
+            (False, message) on failure.
         """
         try:
             self.devices = devicelist.setupDevices()
@@ -47,10 +48,12 @@ class MicroLabHardware:
             self.stirrer = self.devices['reactor-stirrer']
             self.reagentDispenser = self.devices['reactor-reagent-dispenser']
             self.state = MicroLabHardwareState.INITIALIZED
+            return True, ''
         except Exception as e:
             traceback.print_exc()
             self.state = MicroLabHardwareState.FAILED_TO_START
             self.error = e
+            return False, str(e)
 
     def turnOffEverything(self):
         """

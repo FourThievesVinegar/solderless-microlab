@@ -6,7 +6,7 @@ Contains function for starting up the flask process
 def runFlask(in_queue, out_queue):
     import sys
     import api.routes
-    import config
+    from config import microlabConfig as config
     from api.app import app
     from microlab.interface import MicrolabInterface
     reload = False if len(sys.argv) > 1 and sys.argv[1] == 'production' else True

@@ -7,7 +7,6 @@ from flask_cors import CORS
 import config
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = config.recipesPackage.replace('.', '/')
 CORS(app)
 
 from api import routes

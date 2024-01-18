@@ -13,6 +13,7 @@ from os.path import isfile, join
 from recipes import state
 from recipes.base import Recipe
 from hardware import microlabHardware, MicroLabHardwareState
+from config import microlabConfig as config 
 
 def getRecipeList():
     """
@@ -20,7 +21,7 @@ def getRecipeList():
     A list of modules in the config.recipesPackages.
     It is assumed that these are all recipes.
     """
-    path = './{0}'.format(state.package.replace('.', '/'))
+    path = config.recipesDirectory
     files = [f for f in listdir(path) if isfile(join(path, f))]
     recipeList = []
 
