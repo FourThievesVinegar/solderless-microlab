@@ -87,7 +87,7 @@ def status():
     return jsonify(microlabInterface.status())
 
 
-@app.route('/start/<name>')
+@app.route('/start/<name>', methods=['POST'])
 def start(name):
     """
     Start running a recipe.
@@ -116,7 +116,7 @@ def start(name):
         return jsonify({'response': 'error', 'message': msg}), 500
 
 
-@app.route('/stop')
+@app.route('/stop', methods=['POST'])
 def stop():
     """
     Stop the currently running recipe.
@@ -134,7 +134,7 @@ def stop():
     return jsonify({'response': 'ok'})
 
 
-@app.route('/select/option/<name>')
+@app.route('/select/option/<name>', methods=['POST'])
 def selectOption(name):
     """
     Provide user selected input.
@@ -211,7 +211,7 @@ def listControllerHardware():
     configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith(".yaml"), files)))
     return jsonify(configs)
 
-@app.route('/controllerHardware/<name>')
+@app.route('/controllerHardware/<name>', methods=['POST'])
 def selectControllerHardware(name):
     """
     Sets a new controller hardware setting, and reloads the hardware
@@ -291,7 +291,7 @@ def listLabHardware():
     configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith(".yaml"), files)))
     return jsonify(configs)
 
-@app.route('/labHardware/<name>')
+@app.route('/labHardware/<name>', methods=['POST'])
 def selectLabHardware(name):
     """
     Sets a new lab hardware setting, and reloads the hardware

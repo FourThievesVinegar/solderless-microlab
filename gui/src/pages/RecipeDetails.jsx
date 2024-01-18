@@ -19,7 +19,9 @@ export function RecipeDetails() {
   }, [recipeName])
 
   const startRecipe = name => {
-    fetch(apiUrl + 'start/' + name)
+    fetch(apiUrl + 'start/' + name, {
+      method: 'POST',
+    })
       .then(response => response.json())
       .then(data => history.push('/status'))
   }
