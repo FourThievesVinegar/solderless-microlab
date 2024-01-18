@@ -103,11 +103,17 @@ def start(name):
         message
             Only present if response is "error" and there is a message to present to the user.
     """
+    recipe = recipes.getRecipeByName(name)
+    if recipe == None:
+        return jsonify({'response': 'error', 
+                        'message': 'Recipe with this name could not be found'}
+                        ), 404
+                        
     (state, msg) = microlabInterface.start(name)
     if state:
         return jsonify({'response': 'ok'})
     else:
-        return jsonify({'response': 'error', 'message': msg})
+        return jsonify({'response': 'error', 'message': msg}), 500
 
 
 @app.route('/stop')
@@ -150,7 +156,7 @@ def selectOption(name):
     if state:
         return jsonify({'response': 'ok'})
     else:
-        return jsonify({'response': 'error', 'message': msg})
+        return jsonify({'response': 'error', 'message': msg}), 400
 
 @app.route('/uploadRecipe', methods = ['POST'])
 def uploadRecipe():
