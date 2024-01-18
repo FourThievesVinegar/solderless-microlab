@@ -4,7 +4,6 @@ import serial
 import time
 
 class SerialTempSensor(TempSensor):
-    tempSer = None
     def __init__(self, args):
         """
         Constructor. Initializes the sensor.

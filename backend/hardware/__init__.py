@@ -22,15 +22,15 @@ class MicroLabHardwareState(Enum):
     FAILED_TO_START = "FAILED_TO_START"
 
 class MicroLabHardware:
-    startTime = None
-    devices = {}
-    state = MicroLabHardwareState.STARTING
-    error = None
-    
     def __init__(self):
         """
         Constructor. Initializes the hardware.
         """
+        self.startTime = None
+        self.devices = {}
+        self.state = MicroLabHardwareState.STARTING
+        self.error = None
+    
         self.startTime = time.time()
         self.loadHardware()
 

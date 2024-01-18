@@ -4,7 +4,6 @@ RELAY_ON = 1
 RELAY_OFF = 0
 
 class GPIOStirrer(Stirrer):
-    stirrerPin = None
 
     def __init__(self, args, devices):
         """

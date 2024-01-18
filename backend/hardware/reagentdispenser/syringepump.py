@@ -26,8 +26,6 @@ def grblWrite(grblSer, command):
         raise Exception("grbl command error: {0}".format(response))
 
 class SyringePump(ReagentDispenser):
-    syringePumpsConfig = None
-    grblSer = None
     def __init__(self, args):
         """
         Constructor. Initializes the pumps.

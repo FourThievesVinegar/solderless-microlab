@@ -7,10 +7,6 @@ RELAY_ON = 1
 RELAY_OFF = 0
 
 class BasicTempController(TempController):
-    thermometer = None
-    heaterPin = None
-    heaterPumpPin = None
-    coolerPin = None
     def __init__(self, args, devices):
         """
         Constructor. Initializes the stirrer.

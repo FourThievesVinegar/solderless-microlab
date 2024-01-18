@@ -3,14 +3,12 @@ from w1thermsensor import W1ThermSensor, Sensor, SensorNotReadyError
 from datetime import datetime, timedelta
 
 class W1TempSensor(TempSensor):
-    sensor = None
-    lastTemp = 0
-    nextTempReadingTime = None
-
+    
     def __init__(self):
         """
         Constructor. Initializes the sensor.
         """
+        self.lastTemp = 0
         self.sensor = W1ThermSensor()
         self.nextTempReadingTime = datetime.now()
 
