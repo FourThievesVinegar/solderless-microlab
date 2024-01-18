@@ -6,11 +6,10 @@ def log(message):
 
 
 class SimulatedTempController(TempController):
-    heating = False
-    cooling = False
-    temperature = 24
     def __init__(self, args):
-        pass
+        self.heating = False
+        self.cooling = False
+        self.temperature = 24
 
     def turnHeaterOn(self):
         """
