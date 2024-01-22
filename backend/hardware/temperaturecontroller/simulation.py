@@ -7,6 +7,9 @@ def log(message):
 
 class SimulatedTempController(TempController):
     def __init__(self, args):
+        super().__init__(args, devices=None)
+        self.maxTemp = args["maxTemp"]
+        self.minTemp = args["minTemp"]
         self.heating = False
         self.cooling = False
         self.temperature = 24
@@ -79,3 +82,9 @@ class SimulatedTempController(TempController):
                     self.temperature = self.temperature + 0.1
         print('Temperature read as: {0}'.format(self.temperature))
         return self.temperature
+
+    def getMaxTemperature(self):
+        return self.maxTemp
+
+    def getMinTemperature(self):
+        return self.minTemp
