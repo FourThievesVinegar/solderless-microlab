@@ -31,7 +31,7 @@ devices:
     # Water of course also boils at 100C, and will slowly boil off somewhat below that
     # so consider something like Propylene Glycol instead of water as a heat exchanger fluid.
     # Also keep in mind the recommended thermometer (DS18S20) only supports -55 to 125C.
-    maxTemp: 60
+    maxTemp: 50
     minTemp: -20
     gpioID: "gpio-primary"
     # GPIO pin for activating the heating element
