@@ -23,19 +23,25 @@ export const listRecipes = callback => {
 }
 
 export const selectOption = option => {
-  fetch(apiUrl + 'select/option/' + option)
+  fetch(apiUrl + 'select/option/' + option, {
+    method: 'POST',
+  })
     .then(response => response.json())
     .then(data => console.log(data))
 }
 
 export const stopRecipe = () => {
-  fetch(apiUrl + 'stop')
+  fetch(apiUrl + 'stop', {
+    method: 'POST',
+  })
     .then(response => response.json())
     .then(data => console.log(data))
 }
 
 export const startRecipe = name => {
-  fetch(apiUrl + 'start/' + name)
+  fetch(apiUrl + 'start/' + name, {
+    method: 'POST',
+  })
     .then(response => response.json())
     .then(data => console.log(data))
 }
@@ -60,7 +66,9 @@ export const listControllerHardware = () => {
 }
 
 export const setControllerHardware = name => {
-  return fetch(apiUrl + 'controllerHardware/' + name).then(response => response.json())
+  return fetch(apiUrl + 'controllerHardware/' + name, {
+    method: 'POST',
+  }).then(response => response.json())
 }
 
 export const downloadControllerConfig = name => {
@@ -88,7 +96,9 @@ export const listLabHardware = () => {
 }
 
 export const setLabHardware = name => {
-  return fetch(apiUrl + 'labHardware/' + name).then(response => response.json())
+  return fetch(apiUrl + 'labHardware/' + name, {
+    method: 'POST',
+  }).then(response => response.json())
 }
 
 export const uploadLabConfig = file => {

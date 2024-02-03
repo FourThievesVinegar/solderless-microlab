@@ -131,15 +131,7 @@ The GUI will now be listening on port 3000.
 
 ## Hardware Emulation
 
-To run the software without a functioning hardware environment, set the following configs:
-
-In `/solderless-microlab/backend/config.py`:
-
-```
-hardwarePackage = 'simulation'
-```
-
-The hardwareSpeedup option can be modified to make steps that take a long time execute quicker for testing purposes.
+To run the software without a functioning hardware environment, go to the settings menu and change the "Microlab Controller" setting to "simulation-pi" and "Lab Hardware Config" to "ftv_simulation_microlabv0.5.0"
 
 ## Enabling SSH
 
