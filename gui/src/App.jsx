@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { Header } from './components/Header'
@@ -9,13 +9,21 @@ import { ReactionHistory } from './pages/ReactionHistory'
 import { Tests } from './Tests'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
+import { useAudio } from './hooks/useAudio'
 
 import { getStatus } from './utils'
 
 import './styles/app.css'
+import SettingsContext from './contexts/Settings'
+
+const rootURL = process.env.PUBLIC_URL
 
 export function App() {
   const [status, setStatus] = useState()
+  const { settings } = useContext(SettingsContext)
+  const [errorPlaying, playErrorSound] = useAudio(`${rootURL}/error.wav`)
+  const [completePlaying, playCompleteSound] = useAudio(`${rootURL}/complete.wav`)
+  const [promptPlaying, playPromptAudio] = useAudio(`${rootURL}/prompt.wav`)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,6 +31,23 @@ export function App() {
     }, 1000)
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    if (status?.status === 'error' && !settings.muteErrorSound) {
+      playErrorSound(true)
+    } else if (status?.status === 'user_input' && !settings.muteUserInputSound) {
+      playPromptAudio(true)
+      const interval = setInterval(() => {
+        if (!settings.muteUserInputSound) {
+          playPromptAudio(true)
+        }
+      }, 30 * 1000)
+
+      return () => clearInterval(interval)
+    } else if (status?.status === 'complete' && !settings.muteCompletionSound) {
+      playCompleteSound(true)
+    }
+  }, [status?.status, status?.step])
 
   return (
     <div className="lcd-wrapper">

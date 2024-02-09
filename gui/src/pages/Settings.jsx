@@ -4,6 +4,7 @@ import { ControllerHardwareConfig } from '../components/ControllerHardwareConfig
 import { LabHardwareConfig } from '../components/LabHardwareConfig'
 import { LabConfigUpload } from '../components/LabConfigUpload'
 import { ControllerConfigUpload } from '../components/ControllerConfigUpload'
+import { SoundSettings } from '../components/SoundSettings'
 
 import './Settings.scss'
 
@@ -20,6 +21,9 @@ export function Settings() {
       <div className="settings-block">
         <LabHardwareConfig refetch={counter} />
         <LabConfigUpload onUpload={updateCounter} />
+      </div>
+      <div className="settings-block">
+        <SoundSettings />
       </div>
     </div>
   )
