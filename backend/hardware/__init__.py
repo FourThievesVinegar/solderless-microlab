@@ -22,7 +22,7 @@ class MicroLabHardwareState(Enum):
     FAILED_TO_START = "FAILED_TO_START"
 
 class MicroLabHardware:
-    def __init__(self):
+    def __init__(self, deviceDefinition):
         """
         Constructor. Initializes the hardware.
         """
@@ -32,9 +32,9 @@ class MicroLabHardware:
         self.error = None
     
         self.startTime = time.time()
-        self.loadHardware()
+        self.loadHardware(deviceDefinition)
 
-    def loadHardware(self):
+    def loadHardware(self, deviceDefinition):
         """
         Loads and initializes the hardware devices
 
@@ -43,7 +43,7 @@ class MicroLabHardware:
             (False, message) on failure.
         """
         try:
-            self.devices = devicelist.setupDevices()
+            self.devices = devicelist.setupDevices(deviceDefinition)
             self.tempController = self.devices['reactor-temperature-controller']
             self.stirrer = self.devices['reactor-stirrer']
             self.reagentDispenser = self.devices['reactor-reagent-dispenser']
