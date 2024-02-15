@@ -11,6 +11,8 @@ class SerialTempSensorSimulation(TempSensor):
               A string with the device read from
         """
         self.tempSer = 0
+        if 'temp' in args:
+          self.temp = args['temp']
 
     def getTemp(self):
         """
@@ -23,6 +25,8 @@ class SerialTempSensorSimulation(TempSensor):
         :return:
             Temperature in Celsius
         """
+        if self.temp:
+          return self.temp
         line = "12345678901"
         lastLine = "+29.06"
         temperature = float(lastLine[start:end])

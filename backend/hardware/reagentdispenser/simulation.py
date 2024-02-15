@@ -11,7 +11,7 @@ class SimulatedReagentDispenser(ReagentDispenser):
         Displays pump dispensing message.
 
         :param pumpId:
-            The pump id. One of 'X' or 'Y'
+            The pump id. One of 'X' or 'Y' or 'Z'
         :param volume:
             The number ml to dispense
         :return:
@@ -23,4 +23,6 @@ class SimulatedReagentDispenser(ReagentDispenser):
             log('Dispensing {0}ml from pump Y'.format(volume))
         elif pumpId == 'Z':
             log('Dispensing {0}ml from pump Z'.format(volume))
+        else:
+            raise ValueError("Pump '{0}' does not exist.".format(pumpId))
         time.sleep(abs(volume))

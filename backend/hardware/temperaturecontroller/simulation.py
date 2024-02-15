@@ -13,6 +13,8 @@ class SimulatedTempController(TempController):
         self.heating = False
         self.cooling = False
         self.temperature = 24
+        if 'temp' in args:
+            self.temperature = args['temp'] 
 
     def turnHeaterOn(self):
         """
