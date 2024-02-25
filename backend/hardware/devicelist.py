@@ -23,9 +23,7 @@ def loadHardwareConfiguration():
   return { "devices": controllerHardware["devices"] + userHardware["devices"]}
 
 
-def setupDevices():
-  hardwareConfig = loadHardwareConfiguration()
-  deviceDefinitions = hardwareConfig['devices']
+def setupDevices(deviceDefinitions):
   validateConfiguration(deviceDefinitions)
   
   devices = {

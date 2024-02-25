@@ -17,6 +17,9 @@ class GPIODChipSimulation():
         self.output_lines = []
         self.chip = None
         self.lineAliases = {}
+        if 'lineAliases' in args:
+          for alias, line in args['lineAliases'].items():
+            self.lineAliases[alias] = line
         print(self.lineAliases)
 
 

@@ -1,6 +1,6 @@
 Flask==2.3.2
 flask-cors==3.0.9
-pytest==5.4.1
+pytest==8.0.0
 requests==2.31.0
 pyserial==3.5
 w1thermsensor==2.0.0

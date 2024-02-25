@@ -63,7 +63,9 @@ def startMicrolabProcess(in_queue, out_queue):
     import time
     import threading
     import hardware
-    hardware.microlabHardware = hardware.MicroLabHardware()
+    hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
+    deviceDefinitions = hardwareConfig['devices']
+    hardware.microlabHardware = hardware.MicroLabHardware(deviceDefinitions)
     microlabHardware = hardware.microlabHardware
     import recipes
     import signal
@@ -100,13 +102,18 @@ def startMicrolabProcess(in_queue, out_queue):
     signal.signal(signal.SIGINT, handleSignal)
     signal.signal(signal.SIGTERM, handleSignal)
 
+    def reloadHardware():
+        hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
+        deviceDefinitions = hardwareConfig['devices']
+        return microlabHardware.loadHardware(deviceDefinitions)
+
     commandDict = {
       "start": recipes.start,
       "status": recipes.status,
       "stop": recipes.stop,
       "selectOption": recipes.selectOption,
       "reloadConfig": lambda x: config.reloadConfig(),
-      "reloadHardware": lambda x: microlabHardware.loadHardware(),
+      "reloadHardware": lambda x: reloadHardware(),
     }
 
     while True:
