@@ -123,8 +123,8 @@ class Recipe:
         self.currentRecipe = None
         self.currentTasks = []
         self.plan = plan
-        if hasattr(plan, 'title'):
-            self.currentRecipe = plan.title
+        if 'title' in plan:
+            self.currentRecipe = plan['title']
 
     def start(self):
         """
@@ -134,9 +134,11 @@ class Recipe:
         """
         supported, msg = self.isRecipeSupported(self.plan)
         if supported:
+            logging.info('Starting recipe {0}'.format(self.currentRecipe))
             self.step = 0
             self.runStep()
         else:
+            logging.info('Recipe {0} unsupported: {1}'.format(self.currentRecipe, msg))
             self.status = RecipeState.RECIPE_UNSUPPORTED
             self.message = msg
 
@@ -161,6 +163,7 @@ class Recipe:
         :return:
         None
         """
+        logging.info('Stopping recipe {0}'.format(self.currentRecipe))
         self.step = -1
         if self.status != RecipeState.ERROR:
             self.status = RecipeState.IDLE

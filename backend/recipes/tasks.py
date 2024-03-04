@@ -111,10 +111,11 @@ def maintain(microlab, parameters):
     interval = 0.5
     start = microlab.secondSinceStart()
 
+    logging.info('Maintaining {0}C for {1} seconds with {2}C tolerance'.format(targetTemp, duration, tolerance))
 
     while True:
         currentTemp = microlab.getTemp()
-        logging.info('temperature @ {0}'.format(currentTemp))
+        logging.debug('temperature @ {0}'.format(currentTemp))
         if (microlab.secondSinceStart() - start) >= duration:
             microlab.turnHeaterOff()
             microlab.turnCoolerOff()
@@ -146,6 +147,7 @@ def pump(microlab, parameters):
     """
     pump = parameters['pump']
     volume = parameters['volume']
+    logging.info('Dispensing {0}ml from pump {1}'.format(volume, pump))
     microlab.pumpDispense(pump, volume)
     yield None
 
@@ -161,6 +163,7 @@ def stir(microlab, parameters):
         None
     """
     duration = parameters['time']
+    logging.info('Stirring for {0} seconds'.format(duration))
     start = microlab.secondSinceStart()
     microlab.turnStirrerOn()
     while True:
