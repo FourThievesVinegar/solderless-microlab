@@ -42,8 +42,11 @@ export function Header(props) {
             Reaction History
           </Button>
           {/* TODO: disable this button if a recipe is running */}
-          <Button as={Link} to="/tests" onClick={hideMenu}> 
+          <Button as={Link} to="/tests" onClick={hideMenu}>
             Test Hardware
+          </Button>
+          <Button as={Link} to="/logs" onClick={hideMenu}>
+            View Logs
           </Button>
         </div>
       </aside>
