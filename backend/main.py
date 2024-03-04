@@ -9,10 +9,36 @@ from multiprocessing import Process, Queue
 from microlab import startMicrolabProcess
 from api import runFlask
 import config
+import multiprocessing_logging
 
+import logging
+import logging.handlers as handlers
+from util.logFormatter import MultiLineFormatter
+import sys
+
+
+def setupLogging():
+    logHandlers = []
+    formatter = MultiLineFormatter(
+        fmt='%(asctime)s [%(levelname)s]: %(message)s'
+    )
+
+    fileLogger = handlers.RotatingFileHandler("{0}/microlab.log".format(config.microlabConfig.logDirectory), 
+                                                maxBytes=config.microlabConfig.logFileMaxBytes, 
+                                                backupCount=config.microlabConfig.logFileBackupCount)
+    fileLogger.setFormatter(formatter)
+    logHandlers.append(fileLogger)
+    if config.microlabConfig.logToStderr:
+        stderrLogger = logging.StreamHandler(sys.stderr)
+        stderrLogger.setFormatter(formatter)
+        logHandlers.append(stderrLogger)
+
+    logging.basicConfig(handlers=logHandlers, level=config.microlabConfig.logLevel)
+    multiprocessing_logging.install_mp_handler()
 
 if __name__ == "__main__":
     config.initialSetup()
+    setupLogging()
 
     q1 = Queue()
     q2 = Queue()
