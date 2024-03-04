@@ -15,7 +15,7 @@ import hardware.stirring as stirring
 import hardware.temperaturecontroller as tc
 from hardware import devicelist
 from enum import Enum
-
+import logging
 class MicroLabHardwareState(Enum):
     STARTING = "STARTING"
     INITIALIZED = "INITIALIZED"
@@ -50,7 +50,7 @@ class MicroLabHardware:
             self.state = MicroLabHardwareState.INITIALIZED
             return True, ''
         except Exception as e:
-            traceback.print_exc()
+            logging.exception(str(e))
             self.state = MicroLabHardwareState.FAILED_TO_START
             self.error = e
             return False, str(e)

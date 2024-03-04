@@ -9,6 +9,7 @@ a number in seconds (decimals are allowed) for when to next execute the task.
 """
 
 from datetime import datetime
+import logging
 
 def heat(microlab, parameters):
     """
@@ -21,7 +22,7 @@ def heat(microlab, parameters):
         None
     """
     targetTemp = parameters['temp']
-    print('heating water to {0}...'.format(targetTemp))
+    logging.info('heating water to {0}...'.format(targetTemp))
     microlab.turnHeaterOn()
     while True:
         if microlab.getTemp() >= targetTemp:
@@ -41,7 +42,7 @@ def cool(microlab, parameters):
         None
     """
     targetTemp = parameters['temp']
-    print('cooling water to {0}...'.format(targetTemp))
+    logging.info('cooling water to {0}...'.format(targetTemp))
     microlab.turnCoolerOn()
     while True:
         if microlab.getTemp() <= targetTemp:
@@ -113,7 +114,7 @@ def maintain(microlab, parameters):
 
     while True:
         currentTemp = microlab.getTemp()
-        print('temperature @ {0}'.format(currentTemp))
+        logging.info('temperature @ {0}'.format(currentTemp))
         if (microlab.secondSinceStart() - start) >= duration:
             microlab.turnHeaterOff()
             microlab.turnCoolerOff()

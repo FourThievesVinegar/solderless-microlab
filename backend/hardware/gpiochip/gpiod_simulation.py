@@ -1,4 +1,5 @@
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT, LINE_REQ_DIR_IN
+import logging
 
 class GPIODChipSimulation():
     def __init__(self, args):
@@ -20,7 +21,7 @@ class GPIODChipSimulation():
         if 'lineAliases' in args:
           for alias, line in args['lineAliases'].items():
             self.lineAliases[alias] = line
-        print(self.lineAliases)
+        logging.debug(self.lineAliases)
 
 
     def __output(self):

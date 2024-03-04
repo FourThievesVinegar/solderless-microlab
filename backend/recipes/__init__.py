@@ -14,6 +14,7 @@ from recipes import state
 from recipes.base import Recipe
 from hardware import microlabHardware, MicroLabHardwareState
 from config import microlabConfig as config 
+import logging
 
 def getRecipeList():
     """
@@ -30,7 +31,7 @@ def getRecipeList():
             try:
                 recipeList.append(json.load(open(join(path, f))))
             except json.JSONDecodeError:
-                print("Error loading recipe file: {0}. File is not in proper JSON format".format(f))
+                logging.error("Error loading recipe file: {0}. File is not in proper JSON format".format(f))
         # This doesn't actually work yet because .4tv are not importable as modules
         if f.endswith('.4tv'):
             recipeList.append(f[:-4])

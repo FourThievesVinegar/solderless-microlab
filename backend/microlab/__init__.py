@@ -58,11 +58,14 @@ def startMicrolabProcess(in_queue, out_queue):
                 (False, message) on failure.
             reference "selectOption" in /recipes/__init__.py for more info
     """
-
+    import logging
     import sys
     import time
     import threading
     import hardware
+    logging.info("")
+    logging.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
+    logging.info("Loading microlab hardware configuration.")
     hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
     deviceDefinitions = hardwareConfig['devices']
     hardware.microlabHardware = hardware.MicroLabHardware(deviceDefinitions)
@@ -92,17 +95,18 @@ def startMicrolabProcess(in_queue, out_queue):
 
 
     def handleSignal(_a, _b):
-        print("")
-        print("Shutting down microlab.")
+        logging.info("")
+        logging.info("Shutting down microlab.")
         halt.set()
         microlab.join()
-        print("Shutdown completed.")
+        logging.info("Shutdown completed.")
         sys.exit()
 
     signal.signal(signal.SIGINT, handleSignal)
     signal.signal(signal.SIGTERM, handleSignal)
 
     def reloadHardware():
+        logging.info("Reloading microlab device configuration")
         hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
         deviceDefinitions = hardwareConfig['devices']
         return microlabHardware.loadHardware(deviceDefinitions)
