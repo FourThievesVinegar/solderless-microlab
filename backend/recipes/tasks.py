@@ -9,6 +9,7 @@ a number in seconds (decimals are allowed) for when to next execute the task.
 """
 
 from datetime import datetime
+import logging
 
 def heat(microlab, parameters):
     """
@@ -21,7 +22,7 @@ def heat(microlab, parameters):
         None
     """
     targetTemp = parameters['temp']
-    print('heating water to {0}...'.format(targetTemp))
+    logging.info('heating water to {0}...'.format(targetTemp))
     microlab.turnHeaterOn()
     while True:
         if microlab.getTemp() >= targetTemp:
@@ -41,7 +42,7 @@ def cool(microlab, parameters):
         None
     """
     targetTemp = parameters['temp']
-    print('cooling water to {0}...'.format(targetTemp))
+    logging.info('cooling water to {0}...'.format(targetTemp))
     microlab.turnCoolerOn()
     while True:
         if microlab.getTemp() <= targetTemp:
@@ -110,10 +111,11 @@ def maintain(microlab, parameters):
     interval = 0.5
     start = microlab.secondSinceStart()
 
+    logging.info('Maintaining {0}C for {1} seconds with {2}C tolerance'.format(targetTemp, duration, tolerance))
 
     while True:
         currentTemp = microlab.getTemp()
-        print('temperature @ {0}'.format(currentTemp))
+        logging.debug('temperature @ {0}'.format(currentTemp))
         if (microlab.secondSinceStart() - start) >= duration:
             microlab.turnHeaterOff()
             microlab.turnCoolerOff()
@@ -145,6 +147,7 @@ def pump(microlab, parameters):
     """
     pump = parameters['pump']
     volume = parameters['volume']
+    logging.info('Dispensing {0}ml from pump {1}'.format(volume, pump))
     microlab.pumpDispense(pump, volume)
     yield None
 
@@ -160,6 +163,7 @@ def stir(microlab, parameters):
         None
     """
     duration = parameters['time']
+    logging.info('Stirring for {0} seconds'.format(duration))
     start = microlab.secondSinceStart()
     microlab.turnStirrerOn()
     while True:

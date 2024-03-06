@@ -1,8 +1,9 @@
 import time
 from hardware.temperaturecontroller.base import TempController
+import logging
 
 def log(message):
-    print('tempcontroller.simulation - ' + str(message))
+    logging.info('tempcontroller.simulation - ' + str(message))
 
 
 class SimulatedTempController(TempController):
@@ -82,7 +83,7 @@ class SimulatedTempController(TempController):
                     self.temperature = self.temperature - 0.1
                 elif self.temperature < 24:
                     self.temperature = self.temperature + 0.1
-        print('Temperature read as: {0}'.format(self.temperature))
+        logging.info('Temperature read as: {0}'.format(self.temperature))
         return self.temperature
 
     def getMaxTemperature(self):

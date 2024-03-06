@@ -10,6 +10,8 @@ import os
 import recipes
 import json
 from config import microlabConfig as config
+import glob 
+from pathlib import Path
 
 microlabInterface = None
 
@@ -343,3 +345,24 @@ def downloadLabConfig(name):
     """
     fileName = "{0}.yaml".format(secure_filename(name))
     return send_file(join(config.labHardwareDirectory, fileName), name, as_attachment=True)
+
+@app.route('/log')
+def fetchLogs():
+    """
+    Fetches and concatenates the two most recent microlab log files
+
+    :return:
+    object
+        logs
+            The complete log files as a string
+    """
+    logFolder = config.logDirectory + "/"
+    logFiles = [file for file in glob.glob(os.path.join(logFolder, 'microlab.log*'))]
+    print(logFiles)
+    logFiles.sort(key=os.path.getmtime)
+    data = ""
+    if logFiles[-2]:
+        data = Path(logFiles[-2]).read_text()
+    mostRecent = logFiles[-1]
+    data = data + Path(mostRecent).read_text()
+    return (jsonify({'logs': data}), 200)

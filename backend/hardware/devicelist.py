@@ -6,6 +6,7 @@ import hardware.gpiochip as gpiochip
 from config import microlabConfig as config
 import yaml
 from os.path import exists
+import logging
 
 def loadHardwareConfiguration():
   if config.controllerHardware != "custom":
@@ -31,7 +32,8 @@ def setupDevices(deviceDefinitions):
   }
 
   for device in deviceDefinitions:
-    print(device)
+    logging.info('Loading device "{0}".'.format(device['id']))
+    logging.debug('{0} configuration: {1}'.format(device['id'], device))
     deviceType = device["type"]
     deviceID = device['id']
     if deviceType == "tempController":
@@ -46,6 +48,7 @@ def setupDevices(deviceDefinitions):
       devices[deviceID] = gpiochip.createGPIOChip(device, devices)
     else:
       raise Exception("Unsupported device type '{0}'".format(deviceType))
+    logging.info('"{0}" loaded successfully.'.format(device['id']))
   return devices
 
 

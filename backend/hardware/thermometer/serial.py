@@ -2,6 +2,7 @@ from hardware.thermometer.base import TempSensor
 from w1thermsensor import W1ThermSensor, Sensor
 import serial
 import time
+import logging
 
 class SerialTempSensor(TempSensor):
     def __init__(self, args):
@@ -32,11 +33,11 @@ class SerialTempSensor(TempSensor):
             try:
                 line = self.tempSer.readline().decode()
             except Exception as e:
-                print('Error reading from thermometer')
-                print(e)
+                logging.error('Error reading from thermometer')
+                logging.exception(str(e))
                 continue
             finally:
-                # print('ser read ' + str(len(line)) + ' ' + line ) # FOR DEBUGGING. Uncommenting adds a lot of log spam!
+                logging.debug('ser read ' + str(len(line)) + ' ' + line )
                 time.sleep(0.1)
 
         lastLine = str(line)
@@ -52,17 +53,17 @@ class SerialTempSensor(TempSensor):
         if end == -1:   # Maybe just go to the end?
             end = len(lastLine) - 1
             
-        # print('found ' + str(start) + ' ' + str(end) + ' ' + lastLine + ' ' + lastLine[start:end])  # FOR DEBUGGING. Uncommenting adds a lot of log spam!
+        logging.debug('found ' + str(start) + ' ' + str(end) + ' ' + lastLine + ' ' + lastLine[start:end]) 
         if(start > -1 and end > -1):
             try:
                 temperature = float(lastLine[start:end])
-            except:
-                print('Error converting temperature reading')
-                print(lastLine[start:end])
-                print(e)
+            except Exception as e:
+                logging.error('Error converting temperature reading')
+                logging.error(lastLine[start:end])
+                logging.exception(str(e))
                 temperature = "Error"
         else:
             temperature = "Error"
-        # print('Read temperature ' + str(temperature)) # + ' ' + str(lastLine))  # FOR DEBUGGING. Uncommenting adds a lot of log spam!
+        logging.debug('Read temperature ' + str(temperature)) # + ' ' + str(lastLine))
 
         return temperature

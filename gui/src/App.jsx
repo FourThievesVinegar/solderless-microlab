@@ -9,6 +9,7 @@ import { ReactionHistory } from './pages/ReactionHistory'
 import { Tests } from './Tests'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
+import { Logs } from './pages/Logs'
 import { useAudio } from './hooks/useAudio'
 
 import { getStatus } from './utils'
@@ -51,7 +52,13 @@ export function App() {
 
   return (
     <div className="lcd-wrapper">
-      <Header>{status ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${status?.temp ? `${status?.temp.toFixed(2)}C` : ''}` : 'Waiting for control service'}</Header>
+      <Header>
+        {status
+          ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
+              status?.temp ? `${status?.temp.toFixed(2)}C` : ''
+            }`
+          : 'Waiting for control service'}
+      </Header>
       <Switch>
         <Route exact path="/">
           <Home status={status} />
@@ -79,6 +86,10 @@ export function App() {
 
         <Route path="/status">
           <Status status={status} />
+        </Route>
+
+        <Route path="/logs">
+          <Logs />
         </Route>
       </Switch>
     </div>

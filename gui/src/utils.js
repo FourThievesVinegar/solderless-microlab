@@ -116,3 +116,9 @@ export const downloadLabConfig = name => {
   const url = apiUrl + 'downloadLabConfig/' + name
   downloadFileFromURL(name, url)
 }
+
+export const getLogs = callback => {
+  return fetch(apiUrl + 'log')
+    .then(response => response.json())
+    .then(data => callback(data))
+}

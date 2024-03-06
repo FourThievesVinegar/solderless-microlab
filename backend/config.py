@@ -44,7 +44,7 @@ class MicrolabConfig:
                 section_string = '.'.join(section_list)
                 if error == False:
                     error = 'Missing value or section.'
-                print("Configuration error at {0}: '{1}', falling back to default value '{2}'."
+                logging.warning("Configuration error at {0}: '{1}', falling back to default value '{2}'."
                     .format(section_string, error, default))
 
     
@@ -64,6 +64,27 @@ class MicrolabConfig:
     @property
     def controllerHardwareDirectory(self):
         return '{0}/controllerhardware/'.format(self.hardwareDirectory)
+
+    @property
+    def logDirectory(self):
+        return self.config["GENERAL"]["logDirectory"]
+        
+    @property
+    def logFileMaxBytes(self):
+        return self.config["GENERAL"]["logFileMaxBytes"]
+
+    @property
+    def logFileBackupCount(self):
+        return self.config["GENERAL"]["logFileBackupCount"]
+
+    @property
+    def logToStderr(self):
+        return self.config["GENERAL"]["logToStderr"]
+
+    @property
+    def logLevel(self):
+        return self.config["GENERAL"]["logLevel"]
+
 
     ## FLASK CONFIGURATION ##
     @property
@@ -115,6 +136,9 @@ def initialSetup():
   makedirs(path.dirname(hardwareDirectory), exist_ok=True)
   makedirs(path.dirname(controllerHardwareDirectory), exist_ok=True)
   makedirs(path.dirname(labHardwareDirectory), exist_ok=True)
+  
+  # ensure log directory exists
+  makedirs(path.dirname(microlabConfig.logDirectory + "/"), exist_ok=True)
 
   # copy builtin controller configurations to data directory, 
   # overwriting old configurations if they exist
