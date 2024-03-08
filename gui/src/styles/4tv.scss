@@ -49,17 +49,19 @@
         }
     }
 
+    .ui.menu {
+        background-color: #000;
+        color: #fff;
+        border: 1px solid rgb(255 255 255 / 15%);
+        box-shadow: 0 1px 2px 0 rgba(234, 238, 241, 0.15);
+        border-radius: 0 0 8px 8px;
+    }
+
     label {
         color: white !important;
     }
-}
 
-.dark-mode .ui.menu {
-    background-color: #000;
-    color: #fff;
-    border: 1px solid rgb(255 255 255 / 15%);
-    box-shadow: 0 1px 2px 0 rgba(234, 238, 241, 0.15);
-    border-radius: 0 0 8px 8px;
+    scrollbar-color: var(--minty-teal) var(--exciting-dark-blue);
 }
 
 h1,

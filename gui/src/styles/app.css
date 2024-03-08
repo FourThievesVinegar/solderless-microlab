@@ -83,6 +83,7 @@ body {
 /* Pages */
 .home-page {
   text-align: center;
+  overflow: hidden;
 }
 
 .status-page .status-message {

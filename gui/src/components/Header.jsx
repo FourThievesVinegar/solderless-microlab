@@ -22,7 +22,7 @@ export function Header(props) {
               history.goBack()
             }}
             disabled={window.location.pathname === '/'}>
-            <Icon name={`chevron left${settings.darkMode ? ' inverted' : ''}`} />
+            <Icon name={`chevron left`} inverted={settings.darkMode} />
           </Menu.Item>
 
           <Menu.Item header>{props.children}</Menu.Item>
