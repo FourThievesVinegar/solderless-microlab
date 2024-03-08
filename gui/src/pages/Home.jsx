@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { Button, Grid } from 'semantic-ui-react'
 import { LogoContainer } from '../components/LogoContainer'
 
+import "./Home.scss"
+
 export function Home(props) {
   const { status } = props
 

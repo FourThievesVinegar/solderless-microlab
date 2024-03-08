@@ -4,7 +4,8 @@ import { Button, Container, Grid } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
 import { selectOption, stopRecipe } from '../utils'
-import { useInterval } from '../hooks/useInterval'
+
+import "./Status.scss"
 
 export function Status(props) {
   const { status } = props
@@ -42,8 +43,6 @@ export function Status(props) {
       setStepTime(null)
     }
   }, [status])
-
-  console.log(status)
 
   return (
     <section className="page status-page">

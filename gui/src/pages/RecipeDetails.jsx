@@ -3,8 +3,9 @@ import { capitalize, get, isArray, isEmpty, reduce } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import '../styles/app.css'
 import { apiUrl } from '../utils'
+
+import './RecipeDetails.scss'
 
 export function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState({})
