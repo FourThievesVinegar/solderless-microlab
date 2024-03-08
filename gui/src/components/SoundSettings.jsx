@@ -8,7 +8,7 @@ export const SoundSettings = props => {
 
   return (
     <Form>
-      <Label>Sound Settings</Label>
+      <h2>Sound Settings</h2>
       <div>
         <Checkbox
           className="sound-setting-checkbox"

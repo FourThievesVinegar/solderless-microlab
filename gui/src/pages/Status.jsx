@@ -55,14 +55,14 @@ export function Status(props) {
                 <StatusIcon icon={status.icon} />
                 <p className="status-message">{status.message}</p>
                 {stepTime && <p className="status-message">
-                    {`${humanizeDuration(stepTime - new Date(), { round: true })}`}
-                  </p>}
+                  {`${humanizeDuration(stepTime - new Date(), { round: true })}`}
+                </p>}
               </Container>
             </Grid.Column>
             <Grid.Column className="status-page-menu">
               <div className="button-list">
                 {status.options.map(x => (
-                  <Button color="green" key={x} onClick={() => handleOptionButtonClick(x)} loading={loading}>
+                  <Button color="purple" key={x} onClick={() => handleOptionButtonClick(x)} loading={loading}>
                     {x}
                   </Button>
                 ))}
@@ -70,19 +70,19 @@ export function Status(props) {
                   status.status === 'user_input' ||
                   status.status === 'error' ||
                   status.status === 'recipe_unsupported') && (
-                  <Button color="red" onClick={() => handleStopButtonClick()}>
-                    Stop Reaction
-                  </Button>
-                )}
+                    <Button color="yellow" onClick={() => handleStopButtonClick()}>
+                      Stop Reaction
+                    </Button>
+                  )}
                 {status.status === 'complete' && (
-                  <Button color="green" onClick={() => handleStopButtonClick()}>
+                  <Button color="purple" onClick={() => handleStopButtonClick()}>
                     Finish Reaction
                   </Button>
                 )}
                 {status.status === 'idle' && (
                   <>
                     <p>Waiting on backend... </p>
-                    <Button color="red" onClick={() => handleStopButtonClick()}>
+                    <Button color="yellow" onClick={() => handleStopButtonClick()}>
                       Go Back
                     </Button>
                   </>

@@ -29,7 +29,7 @@ export function RecipeDetails() {
   const StartRecipeButton = () => {
     return (
       <Button
-        color="green"
+        color="purple"
         onClick={() => {
           startRecipe(recipeName)
           history.push('/status')
@@ -92,11 +92,11 @@ function TimeNeeded({ steps }) {
     steps,
     (sum, step) => {
       return sum + reduce(
-        step.tasks, 
-        (max, task) => 
+        step.tasks,
+        (max, task) =>
           Math.max(get(task, 'parameters.time', 0), max),
         0,
-        )
+      )
     },
     0,
   )

@@ -1,0 +1,146 @@
+@font-face {
+    font-family: "Beekeepers";
+    src: url("https://plague-doctors.netlify.app/fonts/TT2020Base-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Beekeepers Italic";
+    src: url("https://plague-doctors.netlify.app/fonts/TT2020Base-Italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Capture It";
+    src: url("https://plague-doctors.netlify.app/fonts/Capture_it.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Capture It Inverted";
+    src: url("https://plague-doctors.netlify.app/fonts/Capture_it_2.woff") format("woff");
+}
+
+:root {
+    color-scheme: dark;
+
+    --dark-gray: #221f20;
+    --medium-gray: #bfbfbf;
+    --white: #fff;
+
+    --cyberpunk-bubblegum: #cf4673;
+    --bland-mustard: #d9c84b;
+    --minty-teal: #6ac4b0;
+    --peoples-purple: #491d88;
+    --relaxing-nectarine: #e07c31;
+    --exciting-dark-blue: #143b86;
+
+    font-family: Ubuntu, sans-serif;
+}
+
+.dark-mode {
+
+    &.lcd-wrapper,
+    .main-menu,
+    .page,
+    .ui.menu .item {
+        background-color: #000;
+        color: #fff;
+
+        &:before {
+            background-color: rgb(255 255 255 / 10%)
+        }
+    }
+
+    label {
+        color: white !important;
+    }
+}
+
+.dark-mode .ui.menu {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid rgb(255 255 255 / 15%);
+    box-shadow: 0 1px 2px 0 rgba(234, 238, 241, 0.15);
+    border-radius: 0 0 8px 8px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Beekeepers;
+}
+
+.heading-italic {
+    font-family: Beekeepers Italic;
+}
+
+.title-font {
+    font-family: Capture It;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+
+.title-font-inverted {
+    font-family: Capture It Inverted;
+    letter-spacing: 1px;
+    font-weight: normal;
+}
+
+a {
+    color: #6ac4b0;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #6ac4b0;
+    text-decoration: none;
+}
+
+textarea,
+select,
+input {
+    padding: 8px;
+    margin: 4px 8px;
+}
+
+input[type="file"],
+button {
+    border: none;
+    padding: 8px;
+    border-radius: 16px;
+    margin: 4px 8px;
+}
+
+/*
+ * Semantic UI Overrides
+ */
+
+.ui.button.purple {
+    background-color: var(--peoples-purple);
+}
+
+.ui.button.blue {
+    background-color: var(--exciting-dark-blue);
+}
+
+.ui.button.orange {
+    background-color: var(--relaxing-nectarine);
+}
+
+.ui.button.red {
+    background-color: var(--cyberpunk-bubblegum);
+}
+
+.ui.button.yellow {
+    background-color: var(--bland-mustard);
+    color: black;
+}
+
+.ui.button.teal {
+    background-color: var(--minty-teal);
+}
+
+.ui.button:not(.icon)>.icon:not(.button):not(.dropdown) {
+    margin: 0
+}

@@ -7,6 +7,7 @@ const defaultSettings = {
   muteErrorSound: false,
   muteUserInputSound: false,
   muteCompletionSound: false,
+  darkMode: true,
 }
 
 export const SettingsProvider = ({ children, settings }) => {

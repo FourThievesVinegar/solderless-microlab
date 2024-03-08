@@ -20,6 +20,7 @@ body {
 .page {
   padding: 0.5rem 1rem;
   height: 260px;
+  overflow-y: auto;
 }
 
 /* Override "special snowflakes" to vertically center the home page button(s) */
@@ -95,11 +96,6 @@ body {
 /* Break this out into separate sections */
 
 .recipe-details {
-  padding: 1rem;
-  overflow-y: auto;
-}
-
-.recipes-page {
   padding: 1rem;
   overflow-y: auto;
 }

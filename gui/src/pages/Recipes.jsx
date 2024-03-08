@@ -20,11 +20,11 @@ export function Recipes() {
         <div className="button-list">
           {recipies.map(recipe => (
             // click on recipe to view details
-            <Button key={recipe} onClick={() => history.push(`/recipes/${recipe}`)}>
+            <Button key={recipe} color="blue" onClick={() => history.push(`/recipes/${recipe}`)}>
               {recipe.toUpperCase()}
             </Button>
           ))}
-          <h4>Upload a Recipe</h4>
+          <h2>Upload a Recipe</h2>
           <RecipeUpload />
         </div>
       ) : (

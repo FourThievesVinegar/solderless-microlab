@@ -21,7 +21,7 @@ export function Home(props) {
                 //if not, offer option to start reaction
                 <div>
                   <p>{status.recipe} reaction in progress.</p>
-                  <Button color="green" as={Link} to="/status">
+                  <Button color="purple" as={Link} to="/status">
                     Resume {status.recipe.toUpperCase()} Reaction
                     {/* maybe this would be a good place to preview next step? */}
                   </Button>
@@ -30,7 +30,7 @@ export function Home(props) {
                   </Button>
                 </div>
               ) : (
-                <Button color="green" as={Link} to="/recipes">
+                <Button color="purple" as={Link} to="/recipes">
                   View Recipes
                 </Button>
               )}

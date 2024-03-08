@@ -8,23 +8,23 @@ export const RecipeUpload = () => {
   const [file, setFile] = useState();
 
   const fileChange = (event) => {
-    setFile( event.target.files[0] );
+    setFile(event.target.files[0]);
   };
 
   const handleFileUpload = () => {
     setMessage("Uploading recipe...")
     uploadRecipe(file).then(() => {
       setMessage("Recipe upload successful.")
-    }).catch (() => {
+    }).catch(() => {
       setMessage("Recipe upload failed.")
     })
   };
 
   return (
-    <Form onSubmit={handleFileUpload} encType = "multipart/form-data">
+    <Form onSubmit={handleFileUpload} encType="multipart/form-data">
       {message}
       <Input type="file" id="File" onChange={fileChange} />
-      <Button type="submit">Upload</Button>
+      <Button color="purple" type="submit">Upload</Button>
     </Form>
   );
 }
