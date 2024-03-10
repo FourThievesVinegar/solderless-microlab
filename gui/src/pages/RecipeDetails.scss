@@ -1,0 +1,8 @@
+.recipe-details {
+    padding: 1rem;
+    overflow-y: auto;
+
+    & li {
+        margin-bottom: 4px;
+    }
+}

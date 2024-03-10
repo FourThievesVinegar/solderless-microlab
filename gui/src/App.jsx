@@ -6,16 +6,17 @@ import { Home } from './pages/Home'
 import { Recipes } from './pages/Recipes'
 import { RecipeDetails } from './pages/RecipeDetails'
 import { ReactionHistory } from './pages/ReactionHistory'
-import { Tests } from './Tests'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
 import { Logs } from './pages/Logs'
 import { useAudio } from './hooks/useAudio'
 
+import SettingsContext from './contexts/Settings'
+
 import { getStatus } from './utils'
 
 import './styles/app.css'
-import SettingsContext from './contexts/Settings'
+import './styles/4tv.scss'
 
 const rootURL = process.env.PUBLIC_URL
 
@@ -51,13 +52,14 @@ export function App() {
   }, [status?.status, status?.step])
 
   return (
-    <div className="lcd-wrapper">
+    <div className={`lcd-wrapper${settings.darkMode ? ' dark-mode' : ''}`}>
       <Header>
-        {status
-          ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
-              status?.temp ? `${status?.temp.toFixed(2)}C` : ''
+        {
+          status
+            ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${status?.temp ? `${status?.temp.toFixed(2)}C` : ''
             }`
-          : 'Waiting for control service'}
+            : 'Waiting for control service'
+        }
       </Header>
       <Switch>
         <Route exact path="/">
@@ -76,10 +78,6 @@ export function App() {
           <ReactionHistory />
         </Route>
 
-        <Route path="/tests">
-          <Tests />
-        </Route>
-
         <Route path="/settings">
           <Settings />
         </Route>
@@ -92,6 +90,6 @@ export function App() {
           <Logs />
         </Route>
       </Switch>
-    </div>
+    </div >
   )
 }

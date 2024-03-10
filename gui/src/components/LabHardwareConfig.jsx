@@ -48,7 +48,7 @@ export const LabHardwareConfig = props => {
 
   return (
     <Form>
-      <Label>Lab Hardware Config</Label>
+      <h2>Lab Hardware Config</h2>
       <Dropdown
         selection
         loading={loading}

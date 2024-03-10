@@ -53,7 +53,7 @@ export const ControllerHardwareConfig = props => {
 
   return (
     <Form>
-      <Label>Microlab Controller</Label>
+      <h2>Microlab Controller</h2>
       <Dropdown
         selection
         loading={loading}

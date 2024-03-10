@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Icon, Button, Menu } from 'semantic-ui-react'
 
+import SettingsContext from '../contexts/Settings'
+
 export function Header(props) {
   const history = useHistory()
+  const { settings } = useContext(SettingsContext)
 
   const [showMenu, setShowMenu] = useState(false)
 
@@ -19,7 +22,7 @@ export function Header(props) {
               history.goBack()
             }}
             disabled={window.location.pathname === '/'}>
-            <Icon name="chevron left" />
+            <Icon name={`chevron left`} inverted={settings.darkMode} />
           </Menu.Item>
 
           <Menu.Item header>{props.children}</Menu.Item>
@@ -32,20 +35,16 @@ export function Header(props) {
       <aside className={`main-menu ${showMenu ? 'active' : ''}`}>
         <h2>Main menu</h2>
         <div className="button-list">
-          <Button as={Link} to="/recipes" onClick={hideMenu}>
+          <Button as={Link} color="blue" to="/recipes" onClick={hideMenu}>
             Recipes
           </Button>
-          <Button as={Link} to="/settings" onClick={hideMenu}>
+          <Button as={Link} color="blue" to="/settings" onClick={hideMenu}>
             Settings
           </Button>
-          <Button as={Link} to="/reaction-history" onClick={hideMenu}>
+          <Button as={Link} color="blue" to="/reaction-history" onClick={hideMenu}>
             Reaction History
           </Button>
-          {/* TODO: disable this button if a recipe is running */}
-          <Button as={Link} to="/tests" onClick={hideMenu}>
-            Test Hardware
-          </Button>
-          <Button as={Link} to="/logs" onClick={hideMenu}>
+          <Button as={Link} color="blue" to="/logs" onClick={hideMenu}>
             View Logs
           </Button>
         </div>

@@ -3,8 +3,9 @@ import { capitalize, get, isArray, isEmpty, reduce } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import '../styles/app.css'
 import { apiUrl } from '../utils'
+
+import './RecipeDetails.scss'
 
 export function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState({})
@@ -29,7 +30,7 @@ export function RecipeDetails() {
   const StartRecipeButton = () => {
     return (
       <Button
-        color="green"
+        color="purple"
         onClick={() => {
           startRecipe(recipeName)
           history.push('/status')
@@ -92,11 +93,11 @@ function TimeNeeded({ steps }) {
     steps,
     (sum, step) => {
       return sum + reduce(
-        step.tasks, 
-        (max, task) => 
+        step.tasks,
+        (max, task) =>
           Math.max(get(task, 'parameters.time', 0), max),
         0,
-        )
+      )
     },
     0,
   )
