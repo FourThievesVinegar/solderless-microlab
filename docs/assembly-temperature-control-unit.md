@@ -29,7 +29,7 @@ The Temperature Control Unit has two major parts: The Power Box and the Heat Exc
 
 ### Power Box
 
-*PLEASE NOTE*: We found (and **highly** recommend) using an [off-the-shelf](https://www.amazon.com/Iot-Relay-Enclosed-High-Power-Raspberry/dp/B00WV7GMA2/) solution for this. Docs and parts list will be updated in the next release to reflect this.
+*PLEASE NOTE*: We found (and **highly** recommend using) an [off-the-shelf](https://www.amazon.com/Iot-Relay-Enclosed-High-Power-Raspberry/dp/B00WV7GMA2/) solution for this. Docs and parts list will be updated in the next release to reflect this.
 
 ![Temperature Control Unit power box](/docs/media/microlab-power-box.jpg)
 
