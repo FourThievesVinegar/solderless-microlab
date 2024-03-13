@@ -4,13 +4,17 @@ import { Button } from 'semantic-ui-react'
 
 import { listRecipes } from '../utils'
 import { RecipeUpload } from '../components/RecipeUpload'
+import { SOUNDS, useAudio } from '../hooks/useAudio'
 
 export function Recipes() {
   const [recipies, setRecipies] = useState(false)
   const history = useHistory()
 
+  const [introPlaying, playIntroSound] = useAudio(SOUNDS.INTRO)
+
   useEffect(() => {
     listRecipes(setRecipies)
+    playIntroSound(true)
   }, [])
 
   return (

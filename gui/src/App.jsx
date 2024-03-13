@@ -9,7 +9,7 @@ import { ReactionHistory } from './pages/ReactionHistory'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
 import { Logs } from './pages/Logs'
-import { useAudio } from './hooks/useAudio'
+import { SOUNDS, useAudio } from './hooks/useAudio'
 
 import SettingsContext from './contexts/Settings'
 
@@ -18,14 +18,12 @@ import { getStatus } from './utils'
 import './styles/app.css'
 import './styles/4tv.scss'
 
-const rootURL = process.env.PUBLIC_URL
-
 export function App() {
   const [status, setStatus] = useState()
   const { settings } = useContext(SettingsContext)
-  const [errorPlaying, playErrorSound] = useAudio(`${rootURL}/error.wav`)
-  const [completePlaying, playCompleteSound] = useAudio(`${rootURL}/complete.wav`)
-  const [promptPlaying, playPromptAudio] = useAudio(`${rootURL}/prompt.wav`)
+  const [errorPlaying, playErrorSound] = useAudio(SOUNDS.ERROR)
+  const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)
+  const [promptPlaying, playPromptAudio] = useAudio(SOUNDS.PROMPT)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,6 +60,10 @@ export function App() {
         }
       </Header>
       <Switch>
+        <Route exact path="/">
+          <Home status={status} />
+        </Route>
+
         <Route exact path="/">
           <Home status={status} />
         </Route>

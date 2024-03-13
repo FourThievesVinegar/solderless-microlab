@@ -1,28 +1,43 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Icon, Button, Menu } from 'semantic-ui-react'
 
 import SettingsContext from '../contexts/Settings'
+
+import "./Header.scss"
 
 export function Header(props) {
   const history = useHistory()
   const { settings } = useContext(SettingsContext)
 
   const [showMenu, setShowMenu] = useState(false)
-
   const hideMenu = () => setShowMenu(false)
+
+  const [showBackButton, setShowBackButton] = useState(false)
+
+  useEffect(() => {
+    if (window.location.pathname === '/') {
+      setShowBackButton(false)
+    } else {
+      setShowBackButton(true)
+    }
+  }, [showMenu, window.location.pathname])
 
   return (
     <>
       <section>
         <Menu>
           <Menu.Item
+            className={`back-button${showBackButton ? "" : " hidden"}`}
             icon
             onClick={() => {
-              history.goBack()
-            }}
-            disabled={window.location.pathname === '/'}>
-            <Icon name={`chevron left`} inverted={settings.darkMode} />
+              if (showMenu) {
+                hideMenu()
+              } else if (showBackButton) {
+                history.goBack()
+              }
+            }}>
+            {showBackButton && <Icon name={`chevron left`} inverted={settings.darkMode} />}
           </Menu.Item>
 
           <Menu.Item header>{props.children}</Menu.Item>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useLocalStorage } from '@uidotdev/usehooks'
+import { AUDIO_THEMES } from "../hooks/useAudio"
 
 const SettingsContext = React.createContext()
 
@@ -8,10 +9,11 @@ const defaultSettings = {
   muteUserInputSound: false,
   muteCompletionSound: false,
   darkMode: true,
+  audioTheme: AUDIO_THEMES.RAGE,
 }
 
 export const SettingsProvider = ({ children, settings }) => {
-  const [currentSettings, setCurrentSettings] = useLocalStorage('settings', settings || defaultSettings)
+  const [currentSettings, setCurrentSettings] = useLocalStorage('settings', { defaultSettings, ...settings })
 
   const updateSettings = values => {
     setCurrentSettings({ ...currentSettings, ...values })
