@@ -8,6 +8,7 @@ const defaultSettings = {
   muteErrorSound: false,
   muteUserInputSound: false,
   muteCompletionSound: false,
+  muteIntroSound: false,
   darkMode: true,
   audioTheme: AUDIO_THEMES.RAGE,
 }

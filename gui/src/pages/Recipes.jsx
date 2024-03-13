@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 
-import { listRecipes } from '../utils'
 import { RecipeUpload } from '../components/RecipeUpload'
+import SettingsContext from '../contexts/Settings'
 import { SOUNDS, useAudio } from '../hooks/useAudio'
+import { listRecipes } from '../utils'
 
 export function Recipes() {
   const [recipies, setRecipies] = useState(false)
   const history = useHistory()
+  const { settings } = useContext(SettingsContext)
 
   const [introPlaying, playIntroSound] = useAudio(SOUNDS.INTRO)
 
   useEffect(() => {
     listRecipes(setRecipies)
-    playIntroSound(true)
+    if (!settings.muteErrorSound) {
+      playIntroSound(true)
+    }
   }, [])
 
   return (

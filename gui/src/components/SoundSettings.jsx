@@ -16,7 +16,7 @@ export const SoundSettings = props => {
   return (
     <Form>
       <h2>Sound Settings</h2>
-      <div>
+      <div className="settings-block">
         <label>Soundscape: </label>
         <Dropdown
           placeholder='Select your audio theme'
@@ -24,9 +24,9 @@ export const SoundSettings = props => {
           value={settings.audioTheme}
           onChange={(event, data) => { updateSettings({ audioTheme: data.value }) }}
         />
-
       </div>
-      <div>
+      <div className="settings-block">
+        <span>Play Sounds:</span>
         <Checkbox
           className="sound-setting-checkbox"
           label="On Error"
@@ -49,6 +49,14 @@ export const SoundSettings = props => {
           checked={!settings.muteCompletionSound}
           onChange={() => {
             updateSettings({ muteCompletionSound: !settings.muteCompletionSound })
+          }}
+        />
+        <Checkbox
+          className="sound-setting-checkbox"
+          label="On Recipe List Load (intro)"
+          checked={!settings.muteIntroSound}
+          onChange={() => {
+            updateSettings({ muteIntroSound: !settings.muteIntroSound })
           }}
         />
       </div>
