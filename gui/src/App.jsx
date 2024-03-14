@@ -9,10 +9,8 @@ import { ReactionHistory } from './pages/ReactionHistory'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
 import { Logs } from './pages/Logs'
-import { SOUNDS, useAudio } from './hooks/useAudio'
-
 import SettingsContext from './contexts/Settings'
-
+import { SOUNDS, useAudio } from './hooks/useAudio'
 import { getStatus } from './utils'
 
 import './styles/app.css'

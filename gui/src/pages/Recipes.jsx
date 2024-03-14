@@ -16,7 +16,7 @@ export function Recipes() {
 
   useEffect(() => {
     listRecipes(setRecipies)
-    if (!settings.muteErrorSound) {
+    if (!settings.muteIntroSound) {
       playIntroSound(true)
     }
   }, [])
