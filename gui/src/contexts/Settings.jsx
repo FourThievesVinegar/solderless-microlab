@@ -18,7 +18,7 @@ export const SettingsProvider = ({ children, settings }) => {
   const [currentSettings, setCurrentSettings] = useLocalStorage('settings', { ...defaultSettings, ...settings })
 
   const updateSettings = values => {
-    setCurrentSettings({ ...currentSettings, ...values })
+    setCurrentSettings(currentSettings => ({ ...defaultSettings, ...currentSettings, ...values }))
   }
   useEffect(() => {
     // playing audio before the user interacts with the page throws an error,
@@ -26,6 +26,10 @@ export const SettingsProvider = ({ children, settings }) => {
     window.addEventListener('click', () => {
       setAudioPlaybackAllowed(true)
     })
+    // After the first page load the settings key in localstorage is always defined so
+    // any new default settings never get set from the useLocalStorage initial value,
+    // an empty update lets that happen
+    updateSettings({})
   }, [])
 
   return (
