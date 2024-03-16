@@ -15,7 +15,7 @@ const defaultSettings = {
 
 export const SettingsProvider = ({ children, settings }) => {
   const [audioPlaybackAllowed, setAudioPlaybackAllowed] = useState(false)
-  const [currentSettings, setCurrentSettings] = useLocalStorage('settings', { defaultSettings, ...settings })
+  const [currentSettings, setCurrentSettings] = useLocalStorage('settings', { ...defaultSettings, ...settings })
 
   const updateSettings = values => {
     setCurrentSettings({ ...currentSettings, ...values })
