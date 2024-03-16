@@ -29,7 +29,9 @@ export const useAudio = (type) => {
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
-    playing ? audio.play() : audio.pause()
+    if (settings.audioPlaybackAllowed) {
+      playing ? audio.play() : audio.pause()
+    }
   }, [playing])
 
   useEffect(() => {
