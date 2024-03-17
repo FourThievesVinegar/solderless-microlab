@@ -1,5 +1,5 @@
 import React, { useReducer, useContext } from 'react'
-import { ButtonGroup, Button, Icon, Select } from 'semantic-ui-react';
+import { ButtonGroup, Button, Icon } from 'semantic-ui-react';
 
 import { ControllerHardwareConfig } from '../components/ControllerHardwareConfig'
 import { LabHardwareConfig } from '../components/LabHardwareConfig'

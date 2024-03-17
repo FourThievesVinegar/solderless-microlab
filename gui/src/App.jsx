@@ -62,10 +62,6 @@ export function App() {
           <Home status={status} />
         </Route>
 
-        <Route exact path="/">
-          <Home status={status} />
-        </Route>
-
         <Route exact path="/recipes">
           <Recipes />
         </Route>

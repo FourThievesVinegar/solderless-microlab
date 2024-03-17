@@ -24,7 +24,6 @@ export const useAudio = (type) => {
   const { settings } = useContext(SettingsContext)
   const theme = settings.audioTheme || AUDIO_THEMES.RAGE
   const fileUrl = `${rootURL}/audio/${theme}/${type}.${THEME_FORMATS[theme]}`
-  console.log(fileUrl, settings)
   const [audio, setAudio] = useState(() => new Audio(fileUrl), [])
   const [playing, setPlaying] = useState(false)
 
