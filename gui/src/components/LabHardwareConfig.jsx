@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { setLabHardware, listLabHardware, getLabHardware, downloadLabConfig } from '../utils'
-import { Button, Input, Form, Dropdown, Label } from 'semantic-ui-react'
+import { Button, Form, Dropdown } from 'semantic-ui-react'
 
 export const LabHardwareConfig = props => {
   const { refetch } = props
@@ -31,7 +31,7 @@ export const LabHardwareConfig = props => {
     setMessage('Setting new configuration...')
     setLabHardware(selection)
       .then(data => {
-        if (data.response == 'ok') {
+        if (data.response === 'ok') {
           setMessage('Hardware configuration changed successfully.')
           setTimeout(() => {
             setMessage('')

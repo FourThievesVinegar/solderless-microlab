@@ -5,7 +5,7 @@ import {
   getControllerHardware,
   downloadControllerConfig,
 } from '../utils'
-import { Button, Input, Form, Dropdown, Label } from 'semantic-ui-react'
+import { Button, Form, Dropdown } from 'semantic-ui-react'
 
 export const ControllerHardwareConfig = props => {
   const { refetch } = props
@@ -36,7 +36,7 @@ export const ControllerHardwareConfig = props => {
     setMessage('Setting new configuration...')
     setControllerHardware(selection)
       .then(data => {
-        if (data.response == 'ok') {
+        if (data.response === 'ok') {
           setMessage('Controller configuration changed successfully.')
           setTimeout(() => {
             setMessage('')
