@@ -1,6 +1,6 @@
 export const apiUrl = 'http://' + window.location.hostname + ':8081/'
 
-export const downloadFileFromURL = (fileName, url) => {
+export const downloadFileFromURL = (fileName: string, url: string) => {
   const link = document.createElement('a')
   link.download = fileName
   link.href = url
@@ -22,7 +22,7 @@ export const listRecipes = callback => {
     .then(data => callback(data))
 }
 
-export const selectOption = option => {
+export const selectOption = (option: string) => {
   fetch(apiUrl + 'select/option/' + option, {
     method: 'POST',
   })
@@ -38,7 +38,7 @@ export const stopRecipe = () => {
     .then(data => console.log(data))
 }
 
-export const startRecipe = name => {
+export const startRecipe = (name: string) => {
   fetch(apiUrl + 'start/' + name, {
     method: 'POST',
   })
@@ -65,13 +65,13 @@ export const listControllerHardware = () => {
   return fetch(apiUrl + 'controllerHardware/list').then(response => response.json())
 }
 
-export const setControllerHardware = name => {
+export const setControllerHardware = (name: string) => {
   return fetch(apiUrl + 'controllerHardware/' + name, {
     method: 'POST',
   }).then(response => response.json())
 }
 
-export const downloadControllerConfig = name => {
+export const downloadControllerConfig = (name: string) => {
   const url = apiUrl + 'downloadControllerConfig/' + name
   downloadFileFromURL(name, url)
 }
@@ -95,7 +95,7 @@ export const listLabHardware = () => {
   return fetch(apiUrl + 'labHardware/list').then(response => response.json())
 }
 
-export const setLabHardware = name => {
+export const setLabHardware = (name: string) => {
   return fetch(apiUrl + 'labHardware/' + name, {
     method: 'POST',
   }).then(response => response.json())
@@ -112,7 +112,7 @@ export const uploadLabConfig = file => {
     .then(data => console.log(data))
 }
 
-export const downloadLabConfig = name => {
+export const downloadLabConfig = (name: string) => {
   const url = apiUrl + 'downloadLabConfig/' + name
   downloadFileFromURL(name, url)
 }
