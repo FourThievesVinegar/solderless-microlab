@@ -8,9 +8,9 @@ import { apiUrl } from '../utils'
 import './RecipeDetails.scss'
 
 export function RecipeDetails() {
-  const [recipeDetails, setRecipeDetails] = useState({})
+  const [recipeDetails, setRecipeDetails] = useState<any>({})
   const history = useHistory()
-  const { recipeName } = useParams()
+  const { recipeName } = useParams<any>()
 
   // fetch recipe details, such as steps, ingredients, time
   useEffect(() => {
@@ -19,7 +19,7 @@ export function RecipeDetails() {
       .then(data => setRecipeDetails(data))
   }, [recipeName])
 
-  const startRecipe = name => {
+  const startRecipe = (name: string) => {
     fetch(apiUrl + 'start/' + name, {
       method: 'POST',
     })
@@ -59,7 +59,7 @@ export function RecipeDetails() {
   )
 }
 
-function MaterialsNeeded({ materials }) {
+function MaterialsNeeded({ materials }: { materials: any[] }) {
   let body
   if (isArray(materials) && materials.length > 0) {
     body = (
@@ -84,25 +84,20 @@ function MaterialsNeeded({ materials }) {
 /**
  * total time? which steps are time sensitive and how long between them?
  * */
-function TimeNeeded({ steps }) {
+function TimeNeeded({ steps }: { steps: any[] }) {
   if (!isArray(steps) || steps.length < 1) {
     return <></>
   }
 
   const waitTime = reduce(
     steps,
-    (sum, step) => {
-      return sum + reduce(
-        step.tasks,
-        (max, task) =>
-          Math.max(get(task, 'parameters.time', 0), max),
-        0,
-      )
+    (sum: number, step: { tasks: any }) => {
+      return sum + reduce(step.tasks, (max: number, task: any) => Math.max(get(task, 'parameters.time', 0), max), 0)
     },
     0,
   )
 
-  function TimeNeededSection({ label, seconds }) {
+  function TimeNeededSection({ label, seconds }: { label: string; seconds: number }) {
     return (
       <p>
         <b>{`${label}: `}</b>
@@ -119,7 +114,7 @@ function TimeNeeded({ steps }) {
   )
 }
 
-function Steps({ steps }) {
+function Steps({ steps }: { steps: any[] }) {
   if (!isArray(steps) || steps.length < 1) {
     return <span>No steps</span>
   }

@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.7",
-    "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/humanize-duration": "3.25.1",
+    "@types/jest": "^29.5.11",
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.10.7",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
+    "@types/react-router-dom": "^5.3.3",
     "@uidotdev/usehooks": "^2.4.1",
     "humanize-duration": "^3.25.1",
     "lodash": "^4.17.21",
@@ -19,7 +22,7 @@
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "semantic-ui-react": "^2.1.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "scripts": {
     "start": "react-scripts start",

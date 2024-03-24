@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import { Dropdown } from 'semantic-ui-react'
+import { Dropdown, DropdownProps } from 'semantic-ui-react'
 
 import { getLogs } from '../utils'
 
-import "./Logs.scss"
+import './Logs.scss'
 
 export function Logs() {
-  const [logs, setLogs] = useState(false)
+  const [logs, setLogs] = useState<false | { logs: string }>(false)
   const logLevels = ['INFO', 'WARNING', 'ERROR', 'CRITICAL', 'DEBUG']
   const [selection, setSelection] = useState(logLevels)
 
-  const selectionChanged = (event, data) => {
+  const selectionChanged = (_event: any, data: any) => {
     setSelection(data.value)
   }
   useEffect(() => {
     getLogs(setLogs)
   }, [])
 
-  const filterLogs = logString => {
+  const filterLogs = (logString: string) => {
     return (
       logString
         // Get individual lines
         .split('\n')
         // Merge multi-line log messages into one string
-        .reduce((acc, next) => {
+        .reduce<string[]>((acc, next) => {
           // Strings that start YYYY-MM-DD are new log lines
           if (next.match(/^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])/)) {
             acc.push(next)
@@ -51,7 +51,6 @@ export function Logs() {
       <Dropdown
         selection
         multiple={true}
-        text={selection}
         value={selection}
         options={logLevels.map(a => ({ key: a, text: a, value: a }))}
         onChange={selectionChanged}

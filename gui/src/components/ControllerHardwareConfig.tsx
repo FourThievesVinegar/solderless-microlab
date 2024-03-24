@@ -7,10 +7,10 @@ import {
 } from '../utils'
 import { Button, Form, Dropdown } from 'semantic-ui-react'
 
-export const ControllerHardwareConfig = props => {
+export const ControllerHardwareConfig = (props: { refetch: any }) => {
   const { refetch } = props
-  const [hardwareOptions, setHardwareOptions] = useState()
-  const [selection, setSelection] = useState()
+  const [hardwareOptions, setHardwareOptions] = useState<undefined | any[]>()
+  const [selection, setSelection] = useState<any>()
   const [loading, setLoading] = useState(true)
   const [startingValue, setStartingValue] = useState()
 
@@ -28,11 +28,11 @@ export const ControllerHardwareConfig = props => {
     reloadData()
   }, [refetch])
 
-  const selectionChanged = (event, data) => {
+  const selectionChanged = (event: any, data: any) => {
     setSelection(data.value)
   }
 
-  const handleFormSubmit = (event, data) => {
+  const handleFormSubmit = (event: any, data: any) => {
     setMessage('Setting new configuration...')
     setControllerHardware(selection)
       .then(data => {

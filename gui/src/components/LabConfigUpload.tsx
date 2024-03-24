@@ -2,26 +2,30 @@ import React, { useState } from 'react'
 import { uploadLabConfig } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
 
-export const LabConfigUpload = props => {
+export const LabConfigUpload = (props: { onUpload: () => void }) => {
   const { onUpload } = props
   const [message, setMessage] = useState('')
 
-  const [file, setFile] = useState()
+  const [file, setFile] = useState<File>()
 
-  const fileChange = event => {
-    setFile(event.target.files[0])
+  const fileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0])
+    }
   }
 
   const handleFileUpload = () => {
-    setMessage('Uploading config...')
-    uploadLabConfig(file)
-      .then(() => {
-        setMessage('Config upload successful.')
-        onUpload()
-      })
-      .catch(() => {
-        setMessage('Config upload failed.')
-      })
+    if (file) {
+      setMessage('Uploading config...')
+      uploadLabConfig(file)
+        .then(() => {
+          setMessage('Config upload successful.')
+          onUpload()
+        })
+        .catch(() => {
+          setMessage('Config upload failed.')
+        })
+    }
   }
 
   return (

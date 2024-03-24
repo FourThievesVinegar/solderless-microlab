@@ -8,7 +8,7 @@ import { SOUNDS, useAudio } from '../hooks/useAudio'
 import { listRecipes } from '../utils'
 
 export function Recipes() {
-  const [recipies, setRecipies] = useState(false)
+  const [recipies, setRecipies] = useState<false | any[]>(false)
   const history = useHistory()
   const { settings } = useContext(SettingsContext)
 

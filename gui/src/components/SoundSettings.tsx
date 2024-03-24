@@ -1,16 +1,18 @@
 import React, { useContext } from 'react'
 import { Form, Checkbox, Dropdown } from 'semantic-ui-react'
 import SettingsContext from '../contexts/Settings'
-import { AUDIO_THEMES } from "../hooks/useAudio"
+import { AUDIO_THEMES } from '../hooks/useAudio'
 import './SoundSettings.scss'
 
-export const SoundSettings = props => {
+export const SoundSettings = (props: any) => {
   const { settings, updateSettings } = useContext(SettingsContext)
 
   const audioThemeOptions = Object.keys(AUDIO_THEMES)?.map(theme => ({
     key: theme,
+    //@ts-ignore
     value: AUDIO_THEMES[theme],
-    text: AUDIO_THEMES[theme]
+    //@ts-ignore
+    text: AUDIO_THEMES[theme],
   }))
 
   return (
@@ -19,10 +21,12 @@ export const SoundSettings = props => {
       <div className="settings-block">
         <label>Soundscape: </label>
         <Dropdown
-          placeholder='Select your audio theme'
+          placeholder="Select your audio theme"
           options={audioThemeOptions}
           value={settings.audioTheme}
-          onChange={(event, data) => { updateSettings({ audioTheme: data.value }) }}
+          onChange={(event: any, data: any) => {
+            updateSettings({ audioTheme: data.value })
+          }}
         />
       </div>
       <div className="settings-block">

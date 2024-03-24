@@ -17,7 +17,7 @@ import './styles/app.css'
 import './styles/4tv.scss'
 
 export function App() {
-  const [status, setStatus] = useState()
+  const [status, setStatus] = useState<any>()
   const { settings } = useContext(SettingsContext)
   const [errorPlaying, playErrorSound] = useAudio(SOUNDS.ERROR)
   const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)

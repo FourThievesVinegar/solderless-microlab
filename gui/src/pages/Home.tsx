@@ -5,7 +5,7 @@ import { LogoContainer } from '../components/LogoContainer'
 
 import './Home.scss'
 
-export function Home(props) {
+export function Home(props: { status: any }) {
   const { status } = props
 
   return (

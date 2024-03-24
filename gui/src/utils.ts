@@ -10,13 +10,13 @@ export const downloadFileFromURL = (fileName: string, url: string) => {
   link.remove()
 }
 
-export const getStatus = setter => {
+export const getStatus = (callback: (data: any) => void) => {
   fetch(apiUrl + 'status')
     .then(response => response.json())
-    .then(data => setter(data))
+    .then(data => callback(data))
 }
 
-export const listRecipes = callback => {
+export const listRecipes = (callback: (data: any) => void) => {
   fetch(apiUrl + 'list') //this route returns an array with all the names ex: ['recipe1',recipe2']
     .then(response => response.json())
     .then(data => callback(data))
@@ -46,7 +46,7 @@ export const startRecipe = (name: string) => {
     .then(data => console.log(data))
 }
 
-export const uploadRecipe = file => {
+export const uploadRecipe = (file: string | Blob | File) => {
   const formData = new FormData()
   formData.append('File', file)
   return fetch(apiUrl + 'uploadRecipe', {
@@ -76,7 +76,7 @@ export const downloadControllerConfig = (name: string) => {
   downloadFileFromURL(name, url)
 }
 
-export const uploadControllerConfig = file => {
+export const uploadControllerConfig = (file: string | Blob | File) => {
   const formData = new FormData()
   formData.append('File', file)
   return fetch(apiUrl + 'uploadControllerConfig', {
@@ -101,7 +101,7 @@ export const setLabHardware = (name: string) => {
   }).then(response => response.json())
 }
 
-export const uploadLabConfig = file => {
+export const uploadLabConfig = (file: string | Blob | File) => {
   const formData = new FormData()
   formData.append('File', file)
   return fetch(apiUrl + 'uploadLabConfig', {
@@ -117,7 +117,7 @@ export const downloadLabConfig = (name: string) => {
   downloadFileFromURL(name, url)
 }
 
-export const getLogs = callback => {
+export const getLogs = (callback: (data: any) => void) => {
   return fetch(apiUrl + 'log')
     .then(response => response.json())
     .then(data => callback(data))
