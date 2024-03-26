@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { setLabHardware, listLabHardware, getLabHardware, downloadLabConfig } from '../utils'
 import { Button, Form, Dropdown } from 'semantic-ui-react'
 
-export const LabHardwareConfig = props => {
+export const LabHardwareConfig = (props: { refetch: any }) => {
   const { refetch } = props
-  const [hardwareOptions, setHardwareOptions] = useState()
-  const [selection, setSelection] = useState()
+  const [hardwareOptions, setHardwareOptions] = useState<undefined | any[]>()
+  const [selection, setSelection] = useState<any>()
   const [loading, setLoading] = useState(true)
   const [startingValue, setStartingValue] = useState()
 
@@ -23,11 +23,11 @@ export const LabHardwareConfig = props => {
     reloadData()
   }, [refetch])
 
-  const selectionChanged = (event, data) => {
+  const selectionChanged = (event: any, data: any) => {
     setSelection(data.value)
   }
 
-  const handleFormSubmit = (event, data) => {
+  const handleFormSubmit = (event: any, data: any) => {
     setMessage('Setting new configuration...')
     setLabHardware(selection)
       .then(data => {

@@ -1,26 +1,24 @@
 import React, { useState } from 'react'
-import { uploadLabConfig } from '../utils'
+import { uploadRecipe } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
 
-export const LabConfigUpload = props => {
-  const { onUpload } = props
+export const RecipeUpload = () => {
   const [message, setMessage] = useState('')
 
-  const [file, setFile] = useState()
+  const [file, setFile] = useState<any>()
 
-  const fileChange = event => {
+  const fileChange = (event: any) => {
     setFile(event.target.files[0])
   }
 
   const handleFileUpload = () => {
-    setMessage('Uploading config...')
-    uploadLabConfig(file)
+    setMessage('Uploading recipe...')
+    uploadRecipe(file)
       .then(() => {
-        setMessage('Config upload successful.')
-        onUpload()
+        setMessage('Recipe upload successful.')
       })
       .catch(() => {
-        setMessage('Config upload failed.')
+        setMessage('Recipe upload failed.')
       })
   }
 
@@ -28,7 +26,9 @@ export const LabConfigUpload = props => {
     <Form onSubmit={handleFileUpload} encType="multipart/form-data">
       {message}
       <Input type="file" id="File" onChange={fileChange} />
-      <Button type="submit">Upload new lab config</Button>
+      <Button color="purple" type="submit">
+        Upload
+      </Button>
     </Form>
   )
 }

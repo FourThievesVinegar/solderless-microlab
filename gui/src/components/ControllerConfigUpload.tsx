@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { uploadControllerConfig } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
 
-export const ControllerConfigUpload = props => {
+export const ControllerConfigUpload = (props: { onUpload: any }) => {
   const { onUpload } = props
   const [message, setMessage] = useState('')
 
-  const [file, setFile] = useState()
+  const [file, setFile] = useState<any>()
 
-  const fileChange = event => {
+  const fileChange = (event: any) => {
     setFile(event.target.files[0])
   }
 

@@ -5,16 +5,18 @@ import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
 import { selectOption, stopRecipe } from '../utils'
 
-import "./Status.scss"
+import './Status.scss'
 
-export function Status(props) {
+export function Status(props: {
+  status: { status: string; step: number; stepCompletionTime: Date; icon: string; message: string; options: string[] }
+}) {
   const { status } = props
   const [loading, setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(-1)
-  const [stepTime, setStepTime] = useState()
+  const [stepTime, setStepTime] = useState<Date>()
   const history = useHistory()
 
-  const handleOptionButtonClick = option => {
+  const handleOptionButtonClick = (option: string) => {
     if (loading) return
     setLoading(true)
     selectOption(option)
@@ -40,7 +42,7 @@ export function Status(props) {
         setStepTime(new Date(status.stepCompletionTime))
         return
       }
-      setStepTime(null)
+      setStepTime(undefined)
     }
   }, [status])
 
@@ -53,9 +55,10 @@ export function Status(props) {
               <Container textAlign="center">
                 <StatusIcon icon={status.icon} />
                 <p className="status-message">{status.message}</p>
-                {stepTime && <p className="status-message">
-                  {`${humanizeDuration(stepTime - new Date(), { round: true })}`}
-                </p>}
+                {stepTime && (
+                  //@ts-ignore
+                  <p className="status-message">{`${humanizeDuration(stepTime - new Date(), { round: true })}`}</p>
+                )}
               </Container>
             </Grid.Column>
             <Grid.Column className="status-page-menu">
@@ -69,10 +72,10 @@ export function Status(props) {
                   status.status === 'user_input' ||
                   status.status === 'error' ||
                   status.status === 'recipe_unsupported') && (
-                    <Button color="yellow" onClick={() => handleStopButtonClick()}>
-                      Stop Reaction
-                    </Button>
-                  )}
+                  <Button color="yellow" onClick={() => handleStopButtonClick()}>
+                    Stop Reaction
+                  </Button>
+                )}
                 {status.status === 'complete' && (
                   <Button color="purple" onClick={() => handleStopButtonClick()}>
                     Finish Reaction
