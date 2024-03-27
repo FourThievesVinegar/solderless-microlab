@@ -8,7 +8,7 @@ import { SOUNDS, useAudio } from '../hooks/useAudio'
 import { listRecipes } from '../utils'
 
 export function Recipes() {
-  const [recipies, setRecipies] = useState(false)
+  const [recipies, setRecipies] = useState<false | any[]>(false)
   const history = useHistory()
   const { settings } = useContext(SettingsContext)
 
@@ -26,9 +26,9 @@ export function Recipes() {
       <h1>Recipe list</h1>
       {recipies ? (
         <div className="button-list">
-          {recipies.map(recipe => (
+          {recipies.map((recipe, i) => (
             // click on recipe to view details
-            <Button key={recipe} color="blue" onClick={() => history.push(`/recipes/${recipe}`)}>
+            <Button key={i} color="blue" onClick={() => history.push(`/recipes/${recipe}`)}>
               {recipe.toUpperCase()}
             </Button>
           ))}

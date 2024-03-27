@@ -1,5 +1,5 @@
 import React, { useReducer, useContext } from 'react'
-import { ButtonGroup, Button, Icon } from 'semantic-ui-react';
+import { ButtonGroup, Button, Icon } from 'semantic-ui-react'
 
 import { ControllerHardwareConfig } from '../components/ControllerHardwareConfig'
 import { LabHardwareConfig } from '../components/LabHardwareConfig'
@@ -15,7 +15,7 @@ export function Settings() {
   // dummy counter to have components refetch data
   const [counter, updateCounter] = useReducer(x => x + 1, 0)
 
-  const { settings, updateSettings } = useContext(SettingsContext)
+  const { updateSettings } = useContext(SettingsContext)
 
   return (
     <div className="page settings-page">

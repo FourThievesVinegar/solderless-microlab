@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import {
-  setControllerHardware,
-  listControllerHardware,
-  getControllerHardware,
-  downloadControllerConfig,
-} from '../utils'
-import { Button, Input, Form, Dropdown, Label } from 'semantic-ui-react'
+import { setLabHardware, listLabHardware, getLabHardware, downloadLabConfig } from '../utils'
+import { Button, Form, Dropdown } from 'semantic-ui-react'
 
-export const ControllerHardwareConfig = props => {
+export const LabHardwareConfig = (props: { refetch: any }) => {
   const { refetch } = props
-  const [hardwareOptions, setHardwareOptions] = useState()
-  const [selection, setSelection] = useState()
+  const [hardwareOptions, setHardwareOptions] = useState<undefined | any[]>()
+  const [selection, setSelection] = useState<any>()
   const [loading, setLoading] = useState(true)
   const [startingValue, setStartingValue] = useState()
 
   const [message, setMessage] = useState('')
 
   const reloadData = async () => {
-    const currentValue = (await getControllerHardware()).controllerHardware
+    const currentValue = (await getLabHardware()).labHardware
     setSelection(currentValue)
     setStartingValue(currentValue)
-    setHardwareOptions(await listControllerHardware())
+    setHardwareOptions(await listLabHardware())
     setLoading(false)
   }
 
@@ -28,32 +23,32 @@ export const ControllerHardwareConfig = props => {
     reloadData()
   }, [refetch])
 
-  const selectionChanged = (event, data) => {
+  const selectionChanged = (event: any, data: any) => {
     setSelection(data.value)
   }
 
-  const handleFormSubmit = (event, data) => {
+  const handleFormSubmit = (event: any, data: any) => {
     setMessage('Setting new configuration...')
-    setControllerHardware(selection)
+    setLabHardware(selection)
       .then(data => {
-        if (data.response == 'ok') {
-          setMessage('Controller configuration changed successfully.')
+        if (data.response === 'ok') {
+          setMessage('Hardware configuration changed successfully.')
           setTimeout(() => {
             setMessage('')
           }, 1000 * 10)
         } else {
-          setMessage(`Configuring controller failed: "${data.message}"`)
+          setMessage(`Configuring hardware failed: "${data.message}"`)
         }
         reloadData()
       })
       .catch(() => {
-        setMessage('Configuring controller failed.')
+        setMessage('Configuring hardware failed.')
       })
   }
 
   return (
     <Form>
-      <h2>Microlab Controller</h2>
+      <h2>Lab Hardware Config</h2>
       <Dropdown
         selection
         loading={loading}
@@ -75,7 +70,7 @@ export const ControllerHardwareConfig = props => {
         </Button>
       )}
       {startingValue === selection && (
-        <Button className="cancel-button" onClick={() => downloadControllerConfig(selection)}>
+        <Button className="cancel-button" onClick={() => downloadLabConfig(selection)}>
           Download
         </Button>
       )}

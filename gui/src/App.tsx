@@ -17,7 +17,7 @@ import './styles/app.css'
 import './styles/4tv.scss'
 
 export function App() {
-  const [status, setStatus] = useState()
+  const [status, setStatus] = useState<any>()
   const { settings } = useContext(SettingsContext)
   const [errorPlaying, playErrorSound] = useAudio(SOUNDS.ERROR)
   const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)
@@ -50,12 +50,11 @@ export function App() {
   return (
     <div className={`lcd-wrapper${settings.darkMode ? ' dark-mode' : ''}`}>
       <Header>
-        {
-          status
-            ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${status?.temp ? `${status?.temp.toFixed(2)}C` : ''
+        {status
+          ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
+              status?.temp ? `${status?.temp.toFixed(2)}C` : ''
             }`
-            : 'Waiting for control service'
-        }
+          : 'Waiting for control service'}
       </Header>
       <Switch>
         <Route exact path="/">
@@ -86,6 +85,6 @@ export function App() {
           <Logs />
         </Route>
       </Switch>
-    </div >
+    </div>
   )
 }

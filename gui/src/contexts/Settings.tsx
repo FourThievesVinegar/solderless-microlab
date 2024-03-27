@@ -2,7 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { useLocalStorage } from '@uidotdev/usehooks'
 import { AUDIO_THEMES } from '../hooks/useAudio'
 
-const SettingsContext = React.createContext()
+export type Settings = {
+  muteErrorSound: boolean
+  muteUserInputSound: boolean
+  muteCompletionSound: boolean
+  muteIntroSound: boolean
+  darkMode: boolean
+  audioTheme: string
+}
+
+export type SettingsContext = {
+  settings: Settings & { audioPlaybackAllowed: boolean }
+  updateSettings: (values: Partial<Settings>) => void
+}
 
 const defaultSettings = {
   muteErrorSound: false,
@@ -13,12 +25,17 @@ const defaultSettings = {
   audioTheme: AUDIO_THEMES.RAGE,
 }
 
-export const SettingsProvider = ({ children, settings }) => {
+const SettingsContext = React.createContext<SettingsContext>({
+  settings: { ...defaultSettings, audioPlaybackAllowed: false },
+  updateSettings: () => {},
+})
+
+export const SettingsProvider = ({ children, settings }: { children: any; settings?: Partial<Settings> }) => {
   const [audioPlaybackAllowed, setAudioPlaybackAllowed] = useState(false)
   const [currentSettings, setCurrentSettings] = useLocalStorage('settings', { ...defaultSettings, ...settings })
 
-  const updateSettings = values => {
-    setCurrentSettings(currentSettings => ({ ...defaultSettings, ...currentSettings, ...values }))
+  const updateSettings = (values: Partial<Settings>) => {
+    setCurrentSettings((currentSettings: Settings) => ({ ...defaultSettings, ...currentSettings, ...values }))
   }
   useEffect(() => {
     // playing audio before the user interacts with the page throws an error,

@@ -4,9 +4,19 @@ import { Icon, Button, Menu } from 'semantic-ui-react'
 
 import SettingsContext from '../contexts/Settings'
 
-import "./Header.scss"
+import './Header.scss'
 
-export function Header(props) {
+export function Header(props: {
+  children:
+    | string
+    | number
+    | boolean
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | Iterable<React.ReactNode>
+    | React.ReactPortal
+    | null
+    | undefined
+}) {
   const history = useHistory()
   const { settings } = useContext(SettingsContext)
 
@@ -28,7 +38,7 @@ export function Header(props) {
       <section>
         <Menu>
           <Menu.Item
-            className={`back-button${showBackButton ? "" : " hidden"}`}
+            className={`back-button${showBackButton ? '' : ' hidden'}`}
             icon
             onClick={() => {
               if (showMenu) {

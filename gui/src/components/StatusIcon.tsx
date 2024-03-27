@@ -11,7 +11,7 @@ import dry from '../assets/step-icons/dry.svg'
 import filter from '../assets/step-icons/filter.svg'
 import heating from '../assets/step-icons/heating.svg'
 import humanTask from '../assets/step-icons/human-task.png'
-import loadSyringe from '../assets/step-icons/load-syringe.svg'   // There are two variants of this with hands in the icon
+import loadSyringe from '../assets/step-icons/load-syringe.svg' // There are two variants of this with hands in the icon
 import looking from '../assets/step-icons/looking-CC-muhammad-be.svg'
 import maintainCool from '../assets/step-icons/maintain-cool.svg'
 import maintainHeat from '../assets/step-icons/maintain-heat.svg'
@@ -22,7 +22,7 @@ import setUpHeating from '../assets/step-icons/set-up-heating.svg'
 import stirring from '../assets/step-icons/stirring.svg'
 import syringeDispensing from '../assets/step-icons/syringe-dispense.svg'
 
-export const StatusIcon = ({ icon }) => {
+export const StatusIcon = ({ icon }: { icon: string }) => {
   let iconImage
 
   switch (icon) {
@@ -62,7 +62,7 @@ export const StatusIcon = ({ icon }) => {
     case 'maintain_heat':
       iconImage = maintainHeat
       break
-    case 'reaction_chamber':  // Possibly deprecated?
+    case 'reaction_chamber': // Possibly deprecated?
       iconImage = putIngredientInReactionChamber
       break
     case 'rinse':
