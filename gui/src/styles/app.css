@@ -85,6 +85,7 @@ body {
 
 .ui.button {
   margin-right: 0px !important;
+  padding: 8px 8px 12px 8px;
 }
 
 .cancel-button {
