@@ -47,6 +47,14 @@
         &:before {
             background-color: rgb(255 255 255 / 10%)
         }
+
+        scrollbar-color: var(--minty-teal) var(--exciting-dark-blue);
+        &::-webkit-scrollbar-thumb { /* Foreground */
+            background: var(--minty-teal);
+        }
+        &::-webkit-scrollbar-track { /* Background */
+            background: var(--exciting-dark-blue);
+        }
     }
 
     .ui.menu {
@@ -62,6 +70,12 @@
     }
 
     scrollbar-color: var(--minty-teal) var(--exciting-dark-blue);
+    &::-webkit-scrollbar-thumb { /* Foreground */
+        background: var(--minty-teal);
+    }
+    &::-webkit-scrollbar-track { /* Background */
+        background: var(--exciting-dark-blue);
+    }
 }
 
 h1,
