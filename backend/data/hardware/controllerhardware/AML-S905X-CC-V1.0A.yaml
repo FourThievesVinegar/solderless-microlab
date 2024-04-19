@@ -1,5 +1,5 @@
 devices:
-  - id: "gpio-primary"
+  - id: "gpiochip1"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
     # Supported values: gpiod
@@ -87,8 +87,7 @@ devices:
       BCM_24: 94
       BCM_25: 79
       BCM_26: 84
-
-  - id: "gpio-secondary"
+  - id: "gpiochip0"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
     # Supported values: gpiod
@@ -118,3 +117,15 @@ devices:
       BCM_27: 9
       BCM_22: 10
       BCM_18: 6
+  - id: "gpio-primary"
+    type: "gpiochip"
+    # Which implementation to use for controlling GPIO pins
+    # Supported values: gpiod
+    # gpiod: control using python3-libgpiod
+    implementation: "gpiod_chipset"
+    # device id of the default chip, this is where line requests not matching
+    # any alias will be sent to
+    defaultChipID: "gpiochip1"
+    # Additional gpiochip device ids to use the aliases of.
+    additionalChips: ["gpiochip0"]
+    dependencies: ["gpiochip1", "gpiochip0"]

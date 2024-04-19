@@ -11,4 +11,7 @@ def createGPIOChip(gpioConfig, devices):
     if gpioType == "simulation":
         from hardware.gpiochip.gpiod_simulation import GPIODChipSimulation
         return GPIODChipSimulation(gpioConfig)
+    if gpioType == "gpiod_chipset":
+        from hardware.gpiochip.gpiod_chipset import GPIODChipset
+        return GPIODChipset(gpioConfig, devices)
     raise Exception("Unsupported gpiochiptype")
