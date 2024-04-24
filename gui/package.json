@@ -12,7 +12,6 @@
     "@types/node": "^20.10.7",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
-    "@types/react-router-dom": "^5.3.3",
     "@uidotdev/usehooks": "^2.4.1",
     "humanize-duration": "^3.25.1",
     "lodash": "^4.17.21",
@@ -46,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "sass": "^1.51.0"
   }
 }
