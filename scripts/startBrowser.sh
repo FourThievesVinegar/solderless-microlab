@@ -1,3 +1,5 @@
+
+#!/bin/bash
 # Start a Browser going to localhost:3000
 # xdg-open http://localhost:3000
 
