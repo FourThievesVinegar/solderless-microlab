@@ -61,6 +61,7 @@ class PeristalticPump(ReagentDispenser):
         fValue = self.peristalticPumpsConfig['F']
         moveValue = volume * self.peristalticPumpsConfig[pumpId]['mlPerUnit']
 
+        grblWrite(self.grblSer, 'G91')  # Without this, steppers will only advance once.
         grblWrite(self.grblSer, 'G1 {0}{1} F{2}\n'.format(pumpId, moveValue, fValue))
 
         # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
