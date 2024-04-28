@@ -1,26 +1,12 @@
 devices:
   - id: "reactor-thermometer"
     type: "thermometer"
-    # Type of thermometer to use for measuring the temp of the reactor
-    # Supported values: w1_therm, serial
-    # w1_therm: Supports the DS18S20, DS1822, DS18B20, DS28EA00 and DS1825/MAX31850K
-    #           sensors using the 1 wire protocol. You'll need to add "dtoverlay=w1-gpio"
-    #           to /boot/config.txt and reboot to use this on a pi, see https://github.com/libre-computer-project/libretech-wiring-tool
-    #           for enabling the w1-gpio overlay on the AML-S905X-CC
-    # serial: reads the sensor data from a serial device
     implementation: "serial"
-    ## serial MODE CONFIG
     # Which device to read data from.
     serialDevice: "/dev/ttyUSB0"
 
   - id: "reactor-temperature-controller"
     type: "tempController"
-    # Which temperature controller implementation to use
-    # Supported values: basic, simulation
-    # basic: Basic hardware setup using two sets of pumps and a heating element
-    #        some currently incomplete instructions for this are in docs/assembly
-    # simulation: Simulates temperature changes due to heater and cooler activation
-    #             No other configuration required or possible at the moment
     implementation: "basic"
     # device ID of the thermometer to use for detecting reactor temperature
     thermometerID: "reactor-thermometer"
@@ -45,13 +31,7 @@ devices:
 
   - id: "reactor-reagent-dispenser"
     type: "reagentDispenser"
-    # Which reagent dispenser implementation to use
-    # Supported values: syringepump, simulation, peristalticpump
-    # syringepump: The open source syringe pump referenced in the assembly documentation
-    #              Uses grbl and stepper motors to dispense the reagents into the microlab
-    # simulation: Does nothing but sleep to simulate dispensing a reagent
     implementation: "peristalticpump"
-    ## syringepump MODE CONFIG
     # Serial device for communication with the Arduino
     arduinoPort: "/dev/ttyACM0"
     # Configuration for the syringe pump motors
@@ -91,20 +71,10 @@ devices:
       Z:
         # scaling factor based on initial calibration
         mlPerUnit: 0.5555555
-    ## simulation MODE ARGS
-    # None needed or supported at the moment
 
   - id: "reactor-stirrer"
     type: "stirrer"
-    # Which stirrer implementation to use
-    # Supported values: gpio_stirrer, simulation
-    # gpio_stirrer: activates the stirrer by switching a gpio pin
-    # simulation: Does nothing
     implementation: "gpio_stirrer"
     gpioID: "gpio-primary"
-    ## gpio_stirrer MODE CONFIG
     # GPIO pin for activating the stirrer
     stirrerPin: BCM_16
-
-    ## simulation MODE CONFIG
-    # None needed or supported at the moment
