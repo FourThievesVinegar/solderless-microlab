@@ -1,0 +1,225 @@
+devices:
+  ## TYPE: GPIOCHIP
+  ## Supported implementations:
+  ## gpiod, gpiod_chipset, simulation
+  - id: "gpiochip-gpiod-example"
+    type: "gpiochip"
+    # This implementation controls the gpio pins using libgpiod.
+    implementation: "gpiod"
+    # name of the chip according to gpiod
+    chipName: "gpiochip1"
+    # Dictionary mapping strings to gpiod line numbers
+    # Aliases taken from running gpioinfo on the device, or can be found in
+    # the documentation for the board itself.
+    # This example is taken from the potato (AML-S905X-CC), and you can reference
+    # the documentation at the following link for some more info on what pins
+    # map to what lines (the linux # column is the line #), and how that compares here.
+    # https://docs.google.com/spreadsheets/d/1U3z0Gb8HUEfCIMkvqzmhMpJfzRqjPXq7mFLC-hvbKlE/edit#gid=0
+    # For using another board either install libgpiod and run gpioinfo on your
+    # device, or find the equivalent documentation for your board online.
+    # You may end up with multiple chips, and thus need multiple devices.
+    # See the AML-S905X-CC file for an example with two gpiochips
+    lineAliases:
+      Eth_Link_LED: 14
+      Eth_Activity_LED: 15
+      HDMI_HPD: 16
+      HDMI_SDA: 17
+      HDMI_SCL: 18
+      9J1_Header_Pin2: 20
+      2J3_Header_Pin6: 22
+      2J3_Header_Pin5: 23
+      2J3_Header_Pin4: 24
+      2J3_Header_Pin3: 25
+      eMMC_D0: 26
+      eMMC_D1: 27
+      eMMC_D2: 28
+      eMMC_D3: 29
+      eMMC_D4: 30
+      eMMC_D5: 31
+      eMMC_D6: 32
+      eMMC_D7: 33
+      eMMC_Clk: 34
+      eMMC_CMD: 36
+      ALT_BOOT_MODE: 37
+      MMC_Data_Strobe: 41
+      SDCard_D1: 42
+      SDCard_D0: 43
+      SDCard_CLK: 44
+      SDCard_CMD: 45
+      SDCard_D3: 46
+      SDCard_D2: 47
+      VCCK_Enable: 74
+      7J1_Header_Pin27: 75
+      7J1_Header_Pin28: 76
+      VCCK_Regulator: 77
+      VDDEE_Regulator: 78
+      7J1_Header_Pin22: 79
+      7J1_Header_Pin26: 80
+      7J1_Header_Pin36: 81
+      7J1_Header_Pin38: 82
+      7J1_Header_Pin40: 83
+      7J1_Header_Pin37: 84
+      7J1_Header_Pin33: 85
+      7J1_Header_Pin35: 86
+      7J1_Header_Pin19: 87
+      7J1_Header_Pin21: 88
+      7J1_Header_Pin24: 89
+      7J1_Header_Pin23: 90
+      7J1_Header_Pin8: 91
+      7J1_Header_Pin10: 92
+      7J1_Header_Pin16: 93
+      7J1_Header_Pin18: 94
+      7J1_Header_Pin32: 95
+      7J1_Header_Pin29: 96
+      7J1_Header_Pin31: 97
+      7J1_Header_Pin7: 98
+      BCM_4: 98
+      BCM_5: 96
+      BCM_6: 97
+      BCM_7: 80
+      BCM_8: 89
+      BCM_9: 88
+      BCM_10: 87
+      BCM_11: 90
+      BCM_12: 95
+      BCM_13: 85
+      BCM_14: 91
+      BCM_15: 92
+      BCM_16: 81
+      BCM_19: 86
+      BCM_20: 82
+      BCM_21: 83
+      BCM_23: 93
+      BCM_24: 94
+      BCM_25: 79
+      BCM_26: 84
+
+  - id: "gpiochip-gpiod_chipset-example"
+    type: "gpiochip"
+    # This implementation combines many other gpiochip devices that use gpiod
+    # into just one. lineAliases are used to determine which device to send
+    # a request to. If using line numbers directly, they get sent to defaultChipID
+    implementation: "gpiod_chipset"
+    # device id of the default chip, this is where line requests not matching
+    # any alias will be sent to
+    defaultChipID: "gpiochip1"
+    # Additional gpiochip device ids to use the aliases of.
+    additionalChips: ["gpiochip0"]
+    dependencies: ["gpiochip1", "gpiochip0"]
+
+  - id: "gpiochip-simulation-example"
+    type: "gpiochip"
+    # This does nothing but provides dummy code to emulate the gpiod interface.
+    implementation: "simulation"
+    # name of the chip according to gpiod, can be anything for simulation
+    chipName: "gpiochip0"
+    # Dictionary mapping strings to gpiod line numbers
+    lineAliases:
+      ID_SDA: 0
+      ID_SCL: 1
+      SDA1: 2
+      SCL1: 3
+      GPIO_GCLK: 4
+      GPIO5: 5
+      GPIO6: 6
+      SPI_CE1_N: 7
+      SPI_CE0_N: 8
+      SPI_MISO: 9
+      SPI_MOSI: 10
+      SPI_SCLK: 11
+      GPIO12: 12
+      GPIO13: 13
+      TXD1: 14
+      RXD1: 15
+      GPIO16: 16
+      GPIO17: 17
+      GPIO18: 18
+      GPIO19: 19
+      GPIO20: 20
+      GPIO21: 21
+      GPIO22: 22
+      GPIO23: 23
+      GPIO24: 24
+      GPIO25: 25
+      GPIO26: 26
+      GPIO27: 27
+      HDMI_HPD_N: 28
+      STATUS_LED_G: 29
+      CTS0: 30
+      RTS0: 31
+      TXD0: 32
+      RXD0: 33
+      SD1_CLK: 34
+      SD1_CMD: 35
+      SD1_DATA0: 36
+      SD1_DATA1: 37
+      SD1_DATA2: 38
+      SD1_DATA3: 39
+      PWM0_OUT: 40
+      PWM1_OUT: 41
+      ETH_CLK: 42
+      WIFI_CLK: 43
+      SDA0: 44
+      SCL0: 45
+      SMPS_SCL: 46
+      SMPS_SDA: 47
+      SD_CLK_R: 48
+      SD_CMD_R: 49
+      SD_DATA0_R: 50
+      SD_DATA1_R: 51
+      SD_DATA2_R: 52
+      SD_DATA3_R: 53
+      BCM_0: 0
+      BCM_1: 1
+      BCM_2: 2
+      BCM_3: 3
+      BCM_4: 4
+      BCM_5: 5
+      BCM_6: 6
+      BCM_7: 7
+      BCM_8: 8
+      BCM_9: 9
+      BCM_10: 10
+      BCM_11: 11
+      BCM_12: 12
+      BCM_13: 13
+      BCM_14: 14
+      BCM_15: 15
+      BCM_16: 16
+      BCM_17: 17
+      BCM_18: 18
+      BCM_19: 19
+      BCM_20: 20
+      BCM_21: 21
+      BCM_22: 22
+      BCM_23: 23
+      BCM_24: 24
+      BCM_25: 25
+      BCM_26: 26
+      BCM_27: 27
+      BCM_28: 28
+      BCM_29: 29
+      BCM_30: 30
+      BCM_31: 31
+      BCM_32: 32
+      BCM_33: 33
+      BCM_34: 34
+      BCM_35: 35
+      BCM_36: 36
+      BCM_37: 37
+      BCM_38: 38
+      BCM_39: 39
+      BCM_40: 40
+      BCM_41: 41
+      BCM_42: 42
+      BCM_43: 43
+      BCM_44: 44
+      BCM_45: 45
+      BCM_46: 46
+      BCM_47: 47
+      BCM_48: 48
+      BCM_49: 49
+      BCM_50: 50
+      BCM_51: 51
+      BCM_52: 52
+      BCM_53: 53
