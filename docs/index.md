@@ -47,4 +47,5 @@ The Microlab is made up of a Reactor Unit, Reagent Pump Unit, Temperature Contro
         index.md      # The documentation homepage  (you are here)
         assembly.md   # How to build the microlab
         operation.md  # How to use it (currently a stub)
+        MOTIVATION.md # Why we're doing it
         
