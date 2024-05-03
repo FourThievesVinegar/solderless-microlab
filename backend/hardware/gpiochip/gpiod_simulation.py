@@ -53,7 +53,7 @@ class GPIODChipSimulation():
         :param pin:
             The pin to setup. Either a defined alias or the line number for the pin
         :param pinType:
-            One of "output" or "input". Currently only "output is supported"
+            One of "output" or "input". Currently only "output" is supported
         :param outputValue:
             Either 0 or 1, the value to output on the pin
         :return:
