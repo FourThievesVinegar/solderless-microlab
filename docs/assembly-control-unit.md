@@ -2,20 +2,29 @@
 
 ![Control Unit Exterior](/docs/media/microlab-control-unit.jpg)
 
-## Electronic Parts:
+**Some notes:**
 
-Wires and Cables
+- The Microlab is designed to be assembled without the need for soldering or other specialized tooling. If you are equipped to solder, you can construct one at a lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints (or screw cap connectors).
+- Additionally, you can save space in the case by splicing wires and modifying components like USB cables to remove extraneous material.
+
+TODO: Pic comparing stock and modified micro USB
+
+## Electronic Parts
+
+### Wires and Cables and Connectors (Oh my!)
 
 - USB A/B cable for rPi to Arduino
-- 1x female barrel plug connector (5.5mm x 2.1mm)
-- 1x male barrel plug connector (5.5mm x 2.1mm)
-- 1x KV-426 lever connector (i.e.: a 1-to-3 splitter for both + and - leads)
+- USB A cable (cut off with + and - wires exposed and stripped)
+- Micro USB cable to power the rPi (check your SBC to see which cable is appropriate)
+- Female barrel plug connector (5.5mm x 2.1mm)
+- Male barrel plug connector (5.5mm x 2.1mm)
+- KV-426 lever connector (i.e.: a 1-to-3 splitter for both + and - leads)
 - 2x 2-wide lever nuts (or another way to join 4 small wires)
 - 2x 3-wide lever nuts (or another way to join 6 small wires)
-- 1x 12-pin panel-mounted female Phoenix-style connector
-  - 3x the half of the stepper motor
-- 1x 8-pin panel-mounted female Phoenix-style connector
-- 1x 2-pin panel-mounted female Phoenix-style connector
+- 12-pin panel-mounted female Phoenix-style connector
+  - 3x the half of the stepper motor cables that connect to the motor control board
+- 8-pin panel-mounted female Phoenix-style connector
+- 2-pin panel-mounted female Phoenix-style connector
   - 2x Quick disconnect connectors (if your 2-pin connector requires them)
 - Cable materials (to connect to the Pumps Unit)
   - 2x 12-pin male Phoenix-style connector
@@ -24,7 +33,7 @@ Wires and Cables
 - Assorted wire for inside the case (more 4-wire cable can be handy, especially the ribbon-style that can be easily split into individual wires)
 - 5x male-to-female breadboard headers (at least). You want short headers so that they fit comfortably on the GPIO pins under the touchscreen.
 
-Raspberry Pi
+### Raspberry Pi
 
 - Raspberry Pi 3 Model B Board (We have also successfully done preliminary testing on a Libre Computer Le Potato, although the touch-screen can be finicky)
 - Raspberry Pi 3 b+ compatible display 3.5 inch TFT LCD Screen Kit, 3.5" 480x320 Resolution and XPT2046 touch controller
@@ -35,11 +44,14 @@ Raspberry Pi
 - CNC Shield - Expansion Board V3.0 +UNO R3 Board 
 - 4x A4988 Stepper Motor Driver with Heatsink (K75-CNC-UK)
 - Stepper motor drivers (quantity 4)
-- Misc
+
+### Misc
+
 - 3x Individual relays that can switch 12v and be activated by as low as 3.3v. Typically these are small and blue and come on their own little circuit board. A single 4-relay board will also work.
-- 1x Buck Converter module (to step down 12v to 5v). Must have at least two 5v outputs.
-- 1x Button-style switch for the reactor light.
+- Buck Converter module (to step down 12v to 5v). Must have at least two 5v outputs.
+- Button-style switch for the reactor light.
 - Double-sided velcro straps for wire management and for holding components in place (optional, but highly recommended)
+- Assorted M3 screws (TODO: Which lengths and how many?)
 
 ## Printed Parts
 
@@ -102,7 +114,7 @@ You can do this step before assembling the Reactor if you have:
 - stepper motors or stepper-driven peristaltic pumps, and
 - the stepper motor cables.
 
-You can also perform this step after assembling the other units, but you DEFINITELY want to tune the potentiometers. If you don't, the stepper motors will likely behave very strangely and could be damaged by excess voltage. You can use the Test Recipe on the Microlab to do this, which has an option to manually run each of the reagent pumps, as well as activing the stirrer and heating tools. You can also do this after assembling the other units, but be sure to do it before you close the lid on the Control Unit.
+You can also perform this step after assembling the other units. You **DEFINITELY** want to tune the potentiometers. If you don't, the stepper motors will likely behave very strangely and could be damaged by excess voltage. You can use the Test Recipe on the Microlab to do this, which has an option to manually run each of the reagent pumps, as well as activing the stirrer and heating tools. You can also do this after assembling the other units, but be sure to do it before you close the lid on the Control Unit.
 
 #### Motor board potentiometer tuning
 
@@ -125,46 +137,147 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 
 With the release of v0.6 of the microlab, all cases and housings are now 3D printed. The Control Unit box and lid are designed to support all components and ports that comprise the unit. Because the control unit has by far the most sub-components of any of the Microlab modules, we have broken down the instructrions by sub-assembly.
 
-### Mounting the components to the case
+### Attaching straps (optional)
 
-**Components:**
-
-TODO: List of components
-
-### Installing the external plugs
-
-- Power inlet
-- Phoenix connectors
-  - 12-pin, 8-pin (only the parts that mount to the case.)
-  - and 2-pin
-- Button
-- USB ports
+The Control Unit box has holes in the bottom to accomodate short M3 screws to hold velcro straps in place. These straps can hold the Buck Converter and relays in place. They are optional, but highly recommended if you will be shipping your Microlab or otherwise expect it to get jostled. Be sure to cut the straps long enough to wrap around your components. Experiment with placing the Buck Converter and relays on the left side of the case to make sure they will fit under the Pi.
 
 ### Assembling the 8-pin relay sub-assembly
 
+This is where much of the wiring inside the Control Unit happens. If you get through this step, you'll be well on your way to assembling the Control Unit.
+
+TODO: Pic of components
+TODO: Pic of assembled assembly
+
+**Components:**
+
+- 8-pin female Phoenix connector (the part with screw terminals that the other part with the screw terminals fit into)
+- 3x individual relays (or 4x relay board)
+- 2x 2-wide lever nuts (or another way to join 4 small wires)
+- 2x 3-wide lever nuts (or another way to join 6 small wires)
+- Assorted wires
+  - 3x red wires and 3x black wires (for 5v relay power - only one of each is needed for a 4x relay board)
+  - 3x short wires (for connecting the relays to the 8-pin Phoenix connector - preferably color-coded)
+  - 2x 4-wire cables (for connecting the relays to the +12v power and the 8-pin Phoenix connector to the -12v power)
+- 3x male-to-female leads (for signaling from Pi to relays)
+- USB cable (cut off with the "A" side intact and the + / - wires exposed and stripped)
+
+**Assembly:**
+
+TODO: Detail assembly
+
 ### Assembling the 12-pin stepper sub-assembly
 
-### Attaching straps (optional)
+TODO: Pic of assembly
 
-### Mounting the 8-pin and 12-pin sub-assemblies
+**Components:**
 
-- Connect the button
+- 1x 12-pin panel-mounted female Phoenix-style connector
+- 3x the half of the stepper motor cables that connect to the motor control board
+
+**Assembly:**
+
+- Use a small screwdriver to open the screw terminals on the 12-pin Phoenix receptacle.
+- Cut, strip, and insert the wires into the 12 screw terminals, tightening them down one-by-one
+- NOTE: There are 8 total places where we will be screwing wires into Phoenix connector screw terminals, each of which is an opportunity to make a mistake by changing the order of the wires. The key is to ensure that the wiring is consistent across all connections (i.e.: the leftmost wire stays the leftmost in all the junctions and cables and all other wires are also in the same order.)
+
+### Mounting the components to the case
+
+Mount the panel-mounted components to the case. 
+
+TODO: Pic of components
+TODO: Pic of case with components mounted
+
+**Components:**
+
+- 1x female barrel plug connector (5.5mm x 2.1mm)
+- Phoenix connectors
+  - 12-pin assembly and 8-pin assembly
+  - and 2-pin connector
+- Button
+- USB ports
+
+**Assembly:**
+
+- Feed the 12-in and 8-pin sockets through the appropriate holes on the front of the case, then clip them into the Phoenix connector mounting pieces.
+- Use M3 screws to mount the Phoenix connectors to the case in the matching two holes in the front and the smaller rectangular hole in the back.
+  - For now, pull as much of the assemblies as possible out of the box so that you can easily position the other components.
+- Insert the button in the circular hole on the left side and attach with the matching nut.
+- Insert the female barrel plug connector in the circular hole on the back side and attach with the matching nut.
+- USB ports mount to the front of the case and should come with their own screws.
+- If the circular holes are too small or the pre-printed holes don't fit your USB ports, you can use a drill to widen or add new holes.
 
 ### Wiring the 12V and USB power
 
+This is where we connect most of the rest of the parts.
+
+**Components:**
+
+- 1x Male barrel plug connector (5.5mm x 2.1mm)
+- 1x KV-426 lever connector (i.e.: a 1-to-3 splitter for both + and - leads)
+- 1x Buck Converter module
+
+**Assembly:**
+
+- Insert the wires for the female barrel plug connector into the 1x side of the lever connector.
+- Insert the wires for the male barrel plug connector into the 3x side of the lever connector.
+  - Note: You should be able to insert up to 2 wires into each socket on the lever connector. Twisting wires together may make this easier.
+  - Note: **Make sure the wires are sufficiently stripped!** If the lever connector closes on the wire's insulation, it will not work!
+- Plug the male barrel plug connector into the Buck Converter module.
+- Plug the USB cable for the Pi and the USB cable for the relays into the USB ports on the Buck Converter.
+- Position the Buck Converter as far to the left side of the case as possible. If using straps, find an appropriate position to attach the strap the case by punching a hole in a piece of two-sided velcro and inserting a short M3 screw, then screwing it into a hole on the case bottom.
+- Insert the + and - wires from the 8-pin relay sub-assembly into the 3x side of the lever connector
+- Following the manufacturer's instructions, insert the + and - leads for the button light into the 3x side of the lever connector - this way the button light will turn on whenever the Control Unit is powered.
+
 ### Connecting the GPIO Pins
+
+The GPIO pins are how the Pi switches the relays.
+
+TODO: Pic of connected GPIO pins
+
+**Components:**
+
+- 5x male-to-female breadboard headers
+  - 3 of these will be from the 8-pin relay sub-assembly
+- 2x quick-disconnect connectors (or other appropriate connector for your 2-pin Phoenix connector)
+
+**Assembly:**
+
+- Use pliers or wire strippers to crimp the quick disconnect connectors onto the new male headers. Gently tug to make sure they are secure. If they come out, re-insert and continue crimping.
+- Connect the quick disconnect connectors to the 2-pin Phoenix port, making sure that the contacts are securely in place.
+- Mate the female headers with the GPIO pins on the Pi. Check the `ftv_microlabv0.5.0.yaml` file for mappings. They should be:
+  - Stirrer: 16
+  - Heater: 26
+  - Heater pump: 20
+  - Cooler pump: 21
 
 ### Final mounting and assembly
 
-Before you finish close the case, you probably want to test that everything is wired correctly. We **highly** recommend testing all the functionality of the Microlab using the Test Recipe. Of course, if something doesn't work right or stops working in the future, you can always open it back up again.
+Before you close the case, you probably want to test that everything is wired correctly. We **highly** recommend testing all the functionality of the Microlab using the Test Recipe. Of course, if something doesn't work right or stops working in the future, you can always open it back up again.
+
+NOTE: As you put things into the case, you may notice that the long wires that made things easy to work with during assembly are now getting in the way of things. Feel free to cut internal wires shorter - with non-solder connectors, this shouldn't be too hard.
 
 ### Ribbon Cables
 
+To connect the Control Unit to the Pumps Unit, we will use a pair of ribbon cables: 8-wire and 12-wire. Savvy readers will notice that this corresponds with the Phoenix connectors.
+
+When this step is complete, you will have two cables that plug into the ports on the Control Unit and the Pumps Unit. It should not matter which end of the cable is in which unit. Make sure that the wire order is consistent at both ends of the cables.
+
+**Components:**
+
+- ~10 feet of 4-wire cabling cut into 5 2-foot lengths
+- 2x 8-pin male Phoenix connectors
+- 2x 12-pin male Phoenix connectors
+
+**Assembly:**
+
+- Cut and strip the cables so that the wire ends can be inserted into the phoenix connectors.
+- Insert the wires into the Phoenix connectors and tighten the screw terminals closed, one-by-one.
+- NOTE: This is another place where wires can get crossed. To ensure proper connectivity between the Control Unit and the Pumps Unit, make sure that the wires are consistently placed. One way to do this is to plug the Phoenix connectors together and make sure that each wire retains its position from left to right when viewed from the front. You will also need to make sure that the wiring in the Pump Unit is consistent with this.
+
+## Testing the unit
 
 Once everything is connected, the inside of your box should look something like this:
 
 TODO: GOOD INTERIOR PIC OF CONTROL UNIT
 
 NOTE: In this image, the relay board is separated from the Pi (rather than using a relay hat). 
-
-It is possible to wire everything together using less-expensive soldering techniques or wire nuts, but the lever connectors are very easy to assemble and reconfigure as needed.
