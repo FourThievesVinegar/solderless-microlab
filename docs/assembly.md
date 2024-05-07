@@ -81,7 +81,7 @@ Before assembly, be sure to check the parts that have come out of the 3D printer
 
 Assembling the Control Unit involves assembling and wiring several electronic components of the Microlab.
 
-For full instructions, see [Microlab Control Unit Assembly](/docs/assembly-control-unit.md).
+For full instructions, including the cables for connecting to the Pumps Unit, see [Microlab Control Unit Assembly](/docs/assembly-control-unit.md).
 
 ### Pumps Unit assembly
 
