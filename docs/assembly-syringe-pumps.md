@@ -1,4 +1,4 @@
-# Microlab Linear Syringe Pump Assembly
+# MicroLab Linear Syringe Pump Assembly
 
 **Note:** this component can be replaced with off-the-shelf peristaltic pumps, which require less assembly.
 

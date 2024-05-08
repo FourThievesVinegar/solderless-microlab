@@ -1,4 +1,4 @@
-# Solderless Microlab Gui
+# Solderless MicroLab Gui
 
 This sub-project is a yarn project that uses the following for development:
 

@@ -26,9 +26,9 @@ The reaction happens in the inner chamber. Hot or cold liquid is pumped
 through the outer jacket to control the temperature. Reagents are dispensed
 through ports on top and there is a stirring rod in the center.
 
-## Microlab
+## MicroLab
 
-Our solution, the Microlab, uses two concentric mason jars that
+Our solution, the MicroLab, uses two concentric mason jars that
 screw into a 3D printed manifold with ports for reagents, a temperature probe, a
 stirring rod, and thermal regulator fluid input / output.
 
@@ -41,7 +41,7 @@ The reagents are held in syringes and loaded into pumps powered by stepper motor
 The thermal regulator fluid is delivered by pumps controlled by a relay. We heat the liquid with tea
 warmer coils or cool it with an ice water bucket.
 
-The hardware is driven by a Raspberry Pi, which controls relays and stepper motors used to activate the Microlab's various features. The parts can be assembled without soldering.
+The hardware is driven by a Raspberry Pi, which controls relays and stepper motors used to activate the MicroLab's various features. The parts can be assembled without soldering.
 
 The user selects "recipes" - reactions to run - from an integrated touch screen menu. The recipe guides them, step-by-step, through the reaction, controls the temperature, and automatically dispenses the correct amount of reagents at the right times.
 

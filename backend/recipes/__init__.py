@@ -66,7 +66,7 @@ def start(name):
     """
     # Validate that the microlab hardware controller has initialized
     if microlabHardware.state is not MicroLabHardwareState.INITIALIZED:
-        return False, 'Microlab failed to start. Check Hardware configuration and setup'.format(microlabHardware.error)
+        return False, 'MicroLab failed to start. Check Hardware configuration and setup'.format(microlabHardware.error)
 
     # If we are currently running a recipe, check if it is complete.
     if not (state.currentRecipe is None):
@@ -128,7 +128,7 @@ def status(_):
     }
     if microlabHardware.state is MicroLabHardwareState.FAILED_TO_START:
         message['status'] = 'error'
-        message['message'] = 'Microlab failed to start. Check hardware and configuration'
+        message['message'] = 'MicroLab failed to start. Check hardware and configuration'
         return message
 
     if state.currentRecipe == None:

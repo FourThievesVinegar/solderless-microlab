@@ -5,7 +5,7 @@
 ### Added
 
 - Hardware settings are configurable from the UI in a basic fashion (#141).
-- Microlab 0.5 simulation configuration (#140).
+- MicroLab 0.5 simulation configuration (#140).
 - Configurable hardware limits for supported temperatures. Recipes that require values outside of the configured range will no longer run. (#146).
 - Sounds that play on recipe completion, errors, and user input steps (#149).
 - Page for viewing logs on the frontend (#158).

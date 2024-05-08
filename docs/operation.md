@@ -1,8 +1,8 @@
-# Operating the Microlab
+# Operating the MicroLab
 
 ## Setting it up
 
-This section describes how to assemble a complete but disassembled Microlab. If you need to build one from scratch, see: [assembly.md](assembly.md) and the docs for the various major components
+This section describes how to assemble a complete but disassembled MicroLab. If you need to build one from scratch, see: [assembly.md](assembly.md) and the docs for the various major components
  
 **TODO: instructions for this and other sections:**
 - Assembly of modules and Reactor Unit housing.

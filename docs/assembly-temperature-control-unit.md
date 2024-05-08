@@ -1,4 +1,4 @@
-# Microlab Temperature Control Unit Assembly
+# MicroLab Temperature Control Unit Assembly
 
 ![Temperature Control Unit](/docs/media/microlab-temperature-control-unit.jpg)
 
@@ -35,7 +35,7 @@ The Temperature Control Unit has two major parts: The Power Box and the Heat Exc
 
 - Wire the inlet power module and insert the fuse according to manufacturer instructions
 - Connect the inlet power module to the GFCI outlet with the relay between them (it doesn't matter whether the relay is on the positive or negative side)
-   - NOTE: Carefully consult the wiring instructions for the inlet and be familiar with basic safety and wiring with mains power. We cannot stress enough that this is the most dangerous part of the Microlab itself and that you are weak to electrical damage. We **highly** recommend that you cover all exposed terminals with electrical tape and wrap it thorouthly.
+   - NOTE: Carefully consult the wiring instructions for the inlet and be familiar with basic safety and wiring with mains power. We cannot stress enough that this is the most dangerous part of the MicroLab itself and that you are weak to electrical damage. We **highly** recommend that you cover all exposed terminals with electrical tape and wrap it thorouthly.
    - Use the quick disconnect connectors.
 - Connect the GFCI ground to the Inlet's ground connection.
 - Put it all in the 2-gang electrical housing.

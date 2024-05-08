@@ -14,7 +14,7 @@ export function Home(props: { status: any }) {
         <Grid.Row columns={2} style={{ height: '100%' }}>
           <Grid.Column style={{ height: '100%' }}>
             <LogoContainer />
-            <p>Four Thieves Vinegar Microlab</p>
+            <p>Four Thieves Vinegar MicroLab</p>
           </Grid.Column>
           <Grid.Column className="home-page-menu">
             <div className="button-list">

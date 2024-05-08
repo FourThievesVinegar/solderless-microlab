@@ -1,10 +1,12 @@
-# Microlab Control Unit Assembly
+# MicroLab Control Unit Assembly
 
-<IMG ALT="Control Unit" SRC="./media/control-unit/control-unit-complete.jpg" WIDTH="40%" />
+The Control Unit is the brains of the operation. It's also the most complex component of the MicroLab itself, so 
+
+<IMG ALT="Control Unit" SRC="./media/control-unit/control-unit-complete.jpg" WIDTH="400" />
 
 **Some notes:**
 
-- The Microlab is designed to be assembled without the need for soldering or other specialized tooling. However, if you are equipped to solder and have some heat shrink, you can construct one at a lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints (or screw cap connectors).
+- The MicroLab is designed to be assembled without the need for soldering or other specialized tooling. However, if you are equipped to solder and have some heat shrink, you can construct one at a lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints (or screw cap connectors).
 - Additionally, you can save space in the case by splicing wires and modifying components like USB cables to remove extraneous material.
 
 TODO: Pic comparing stock and modified micro USB
@@ -68,12 +70,12 @@ A modified micro USB cable
 
 ## Raspberry Pi Formatting/Setup
 
-### Putting OS and Microlab software on an SD card
+### Putting OS and MicroLab software on an SD card
 
 1. Install Raspberry Pi Imager onto a computer.
 1. Download our disk image torrent from [our website" SRC="https://fourthievesvinegar.org/microlab/).
    1. Please continue to seed the torrent!
-   1. This image is a version of the OS with the Microlab software already installed.
+   1. This image is a version of the OS with the MicroLab software already installed.
       1. The production image already has drivers for the LCD screen installed - you MUST use the touchscreen with the production image.
       1. The development image uses the HDMI port and requires an external monitor.
       1. If you plan to do extensive development on an external monitor, you can cut or drill a hole in the side of the case to allow an HDMI cable to pass through.
@@ -123,11 +125,11 @@ You can do this step before assembling the Reactor if you have:
 - stepper motors or stepper-driven peristaltic pumps, and
 - the stepper motor cables.
 
-You can also perform this step after assembling the other units. You **DEFINITELY** want to tune the potentiometers. If you don't, the stepper motors will likely behave very strangely and could be damaged by excess voltage. You can use the Test Recipe on the Microlab to do this, which has an option to manually run each of the reagent pumps, as well as activing the stirrer and heating tools. You can also do this after assembling the other units, but be sure to do it before you close the lid on the Control Unit.
+You can also perform this step after assembling the other units. You **DEFINITELY** want to tune the potentiometers. If you don't, the stepper motors will likely behave very strangely and could be damaged by excess voltage. You can use the Test Recipe on the MicroLab to do this, which has an option to manually run each of the reagent pumps, as well as activing the stirrer and heating tools. You can also do this after assembling the other units, but be sure to do it before you close the lid on the Control Unit.
 
 #### Motor board potentiometer tuning
 
-<IMG ALT="Potentometers" SRC="./media/control-unit/potentiometers-annotated.jpg" WIDTH="40%" />
+<IMG ALT="Potentometers" SRC="./media/control-unit/potentiometers-annotated.jpg" WIDTH="600" />
 
 Note that in the image above, the potentiometers are circled and their slightly-flat sides are pointed to the left. This is the "slightly-open" position.
 
@@ -143,11 +145,11 @@ With the motor disconnected, you should be able to spin the shaft with your fing
 
 ## Control Unit assembly
 
-With the release of v0.6 of the microlab, all cases and housings are now 3D printed. The Control Unit box and lid are designed to support all components and ports that comprise the unit. Because the control unit has by far the most sub-components of any of the Microlab modules, we have broken down the instructrions by sub-assembly.
+With the release of v0.6 of the microlab, all cases and housings are now 3D printed. The Control Unit box and lid are designed to support all components and ports that comprise the unit. Because the control unit has by far the most sub-components of any of the MicroLab modules, we have broken down the instructrions by sub-assembly.
 
 ### Attaching straps (optional)
 
-The Control Unit box has holes in the bottom to accomodate short M3 screws to hold velcro straps in place. These straps can hold the Buck Converter and relays in place. They are optional, but highly recommended if you will be shipping your Microlab or otherwise expect it to get jostled. Be sure to cut the straps long enough to wrap around your components. Experiment with placing the Buck Converter and relays on the left side of the case to make sure they will fit under the Pi.
+The Control Unit box has holes in the bottom to accomodate short M3 screws to hold velcro straps in place. These straps can hold the Buck Converter and relays in place. They are optional, but highly recommended if you will be shipping your MicroLab or otherwise expect it to get jostled. Be sure to cut the straps long enough to wrap around your components. Experiment with placing the Buck Converter and relays on the left side of the case to make sure they will fit under the Pi.
 
 ### Assembling the 8-pin relay sub-assembly
 
@@ -168,9 +170,9 @@ Heat  |  Stir |
 
 Note that in our assembly, the cables inside the Control Unit are color-coded per circuit (blue for heat, red for cool, green for stir, and black for the light). When we assemble the cable later, we will simply use the ribbons in their regular order without any color coding by function.
 
-<IMG ALT="8-pin relay sub-assembly parts" SRC="./media/control-unit/8-pin-relay-sub-assembly-parts.jpg" WIDTH="40%" />
+<IMG ALT="8-pin relay sub-assembly parts" SRC="./media/control-unit/8-pin-relay-sub-assembly-parts.jpg" WIDTH="600" />
 
-<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/8-pin-relay-sub-assembly.jpg" WIDTH="40%" />
+<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/8-pin-relay-sub-assembly.jpg" WIDTH="600" />
 
 Note that in the image above, 3 (+) and 3 (-) wires are shown for connecting to the relay board even though the 4x board only requires one of each (+/-).
 
@@ -208,7 +210,7 @@ Take a moment to review and appreciate your work. This is the most fiddly part o
 
 ### Assembling the 12-pin stepper sub-assembly
 
-<IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12-pin-sub-assembly.jpg" width="40%" />
+<IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12-pin-sub-assembly.jpg" width="600" />
 
 **Components:**
 
@@ -226,8 +228,8 @@ Take a moment to review and appreciate your work. This is the most fiddly part o
 
 Mount the panel-mounted components to the case.
 
-<IMG ALT="Panel-mounted components" SRC="./media/control-unit/case-and-mounted-parts.jpg" width="40%" />
-<IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/case-with-parts-mounted.jpg" width="40%" />
+<IMG ALT="Panel-mounted components" SRC="./media/control-unit/case-and-mounted-parts.jpg" width="600" />
+<IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/case-with-parts-mounted.jpg" width="600" />
 
 **Components:**
 
@@ -252,9 +254,9 @@ Mount the panel-mounted components to the case.
 
 This is where we wire the power manifold and connect it to the other sub-assemblies.
 
-<IMG ALT="Power manifold parts" SRC="./media/control-unit/power-manifold-parts.jpg" width="40%" />
-<IMG ALT="Power manifold assembled" SRC="./media/control-unit/power-manifold-assembled.jpg" width="40%" />
-<IMG ALT="Power manifold in case" SRC="./media/control-unit/power-manifold-in-case.jpg" width="40%" />
+<IMG ALT="Power manifold parts" SRC="./media/control-unit/power-manifold-parts.jpg" width="600" />
+<IMG ALT="Power manifold assembled" SRC="./media/control-unit/power-manifold-assembled.jpg" width="600" />
+<IMG ALT="Power manifold in case" SRC="./media/control-unit/power-manifold-in-case.jpg" width="600" />
 
 **Components:**
 
@@ -302,8 +304,8 @@ This is where we wire the power manifold and connect it to the other sub-assembl
 
 The GPIO pins let the Pi control the relays in the case as well as the switchable power brick outside it.
 
-<IMG ALT="GPIO pins" SRC="./media/control-unit/pi-in-case.jpg" width="40%" />
-<IMG ALT="External control wires" SRC="./media/control-unit/heater-control-wires.jpg" width="40%" />
+<IMG ALT="GPIO pins" SRC="./media/control-unit/pi-in-case.jpg" width="600" />
+<IMG ALT="External control wires" SRC="./media/control-unit/heater-control-wires.jpg" width="600" />
 
 **Components:**
 
@@ -327,7 +329,7 @@ The GPIO pins let the Pi control the relays in the case as well as the switchabl
 
 ### Final mounting and assembly
 
-Before you close the case, you probably want to test that everything is wired correctly. We **highly** recommend testing all the functionality of the Microlab using the Test Recipe. Of course, if something doesn't work right or stops working in the future, you can always open it back up again.
+Before you close the case, you probably want to test that everything is wired correctly. We **highly** recommend testing all the functionality of the MicroLab using the Test Recipe. Of course, if something doesn't work right or stops working in the future, you can always open it back up again.
 
 NOTE: As you put things into the case, you may notice that the long wires that made things easy to work with during assembly are now getting in the way of things. Feel free to cut internal wires shorter - with non-solder connectors, this shouldn't be too hard.
 
@@ -344,7 +346,7 @@ NOTE: As you put things into the case, you may notice that the long wires that m
 
 🥳 YAY! ✨🦄✨ You did it! 💖
 
-<IMG ALT="Control Unit assembled" SRC="./media/control-unit/control-unit-complete-2.jpg" width="40%" />
+<IMG ALT="Control Unit assembled" SRC="./media/control-unit/control-unit-complete-2.jpg" width="600" />
 
 ### Connector Cables
 
@@ -352,8 +354,8 @@ To connect the Control Unit to the Pumps Unit, we will use a pair of cables: 8-w
 
 When this step is complete, you will have two cables that plug into the ports on the Control Unit and the Pumps Unit. It should not matter which end of the cable is in which unit. Make sure that the wire order is consistent at both ends of the cables.
 
-<IMG ALT="Cable parts" SRC="./media/control-unit/cable-parts.jpg" width="40%" />
-<IMG ALT="Assembled cables" SRC="./media/control-unit/cables-assembled.jpg" width="40%" />
+<IMG ALT="Cable parts" SRC="./media/control-unit/cable-parts.jpg" width="600" />
+<IMG ALT="Assembled cables" SRC="./media/control-unit/cables-assembled.jpg" width="600" />
 
 **Components:**
 
@@ -367,7 +369,7 @@ When this step is complete, you will have two cables that plug into the ports on
 - Cut and strip the cables so that the wire ends can be inserted into the male Phoenix connectors' receptacles. Instead of screws, these use small orange pushbuttons to open the receptacle.
 - NOTE: This is another place where wires can get crossed. To ensure proper connectivity between the Control Unit and the Pumps Unit, make sure that the wires are consistently placed. One way to do this is to plug the Phoenix connectors together and make sure that each wire retains its position from left to right when viewed from the front. You will also need to make sure that the wiring in the Pump Unit is consistent with this.
 
-<IMG ALT="Cable ends" SRC="./media/control-unit/cable-ends.jpg" width="40%" />
+<IMG ALT="Cable ends" SRC="./media/control-unit/cable-ends.jpg" width="600" />
 
 ## Wrapping up
 

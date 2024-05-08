@@ -1,4 +1,4 @@
-# Microlab Reactor Unit Assembly
+# MicroLab Reactor Unit Assembly
 
 ![Assembled Reactor Unit](/docs/media/microlab-reactor-unit-pump-unit-assembled.jpg)
 ![Assembled Reactor Unit rear](/docs/media/microlab-reactor-unit-pump-unit-assembled-rear.jpg)
