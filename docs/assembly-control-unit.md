@@ -1,25 +1,18 @@
 # MicroLab Control Unit Assembly
 
-The Control Unit is the brains of the operation. It's also the most complex component of the MicroLab itself, so 
+The Control Unit is the brains of the operation. It's also the most complex component of the MicroLab itself, so be ready to take some time and care to get everything wired up properly.
 
 <IMG ALT="Control Unit" SRC="./media/control-unit/control-unit-complete.jpg" WIDTH="400" />
 
 **Some notes:**
 
-- The MicroLab is designed to be assembled without the need for soldering or other specialized tooling. However, if you are equipped to solder and have some heat shrink, you can construct one at a lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints (or screw cap connectors).
+- The MicroLab is designed to be assembled without the need for soldering or other specialized tooling. However, if you are equipped to solder and have some heat shrink, you can construct one at a slightly lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints or screw cap connectors.
 - Additionally, you can save space in the case by splicing wires and modifying components like USB cables to remove extraneous material.
 
 TODO: Pic comparing stock and modified micro USB
 A modified micro USB cable
 
-## Tools required
-
-- Small screwdrivers for M3 screws, USB mount screws, and screw terminals
-- Wire cutters and strippers
-- Needle-nosed pliers
-- Flush cutters (optional but recommended)
-
-## Electronic Parts
+## Purchased Parts
 
 ### Wires and Cables and Connectors (Oh my!)
 
@@ -59,7 +52,7 @@ A modified micro USB cable
 
 - 3x Individual relays that can switch 12v and be activated by as low as 3.3v. Typically these are small and blue and come on their own little circuit board. A single 4-relay board will also work.
 - Buck Converter module (to step down 12v to 5v). Must have at least two 5v outputs.
-- Button-style switch for the reactor light.
+- Button-style switch. This switches the reactor light and indicates when the MicroLab is powered. You can use another switch if you have one you really like.
 - Double-sided velcro straps for wire management and for holding components in place (optional, but highly recommended)
 - Assorted M3 screws (TODO: Which lengths and how many?)
 
@@ -135,7 +128,7 @@ Note that in the image above, the potentiometers are circled and their slightly-
 
 **WARNING!** Failure to correctly tune the potentometers can damage the motor controller and the motors themselves.
 
-To tune them, **gently** turn the potentometers on the motor control boards clockwise using a small phillips head screw driver, taking care not to turn past any resistance. Turning them clockwise "closes" the voltage down while turning them counter-clockwise "opens" the voltage up. Start with the potentiometers in the "closed" position, and slowly "open" each of them a quarter of a turn at a time until the stepper motors respond correctly - they should turn smoothly. If they do not move, "open" the potentometer an eighth-turn and try again. If they move erratically, your voltage is likely too high.
+To tune them, **gently** turn the potentometers on the motor control boards clockwise using a small phillips head screw driver, taking care not to turn past any resistance. Turning them clockwise "closes" the voltage down while turning them counter-clockwise "opens" the voltage up. Start with the potentiometers in the "closed" position, and slowly "open" each of them an eighth of a turn at a time until the stepper motors respond correctly - the motors should turn smoothly. If they do not move, "open" the potentometer an eighth-turn and try again. If they move erratically, your voltage is likely too high.
 
 #### Stepper motor verification
 
@@ -341,7 +334,7 @@ NOTE: As you put things into the case, you may notice that the long wires that m
 
 **Assembly:**
 
-- Gently fold over the GPIO wires as much as possible, then attach the touchscreen to the Pi. If you find the headers are too tall, you can attempt to cut them shorter but this can cause problems as the insides are delicate and not designed for this. You may need shorder headers in this case.
+- Gently fold over the GPIO wires as much as possible, then attach the touchscreen to the Pi. If you find the headers are too tall, you can attempt to cut them shorter but this can cause problems as the insides are delicate and not designed for this. You may need shorter headers in this case.
 - Place the lid on top of the Control Unit box, slightly overhanging the front, then slide it toward the back so that the tabs on the lid fit into the slots on the box. Align the screw holes on each and secure the lid in place using the 16mm screws.
 
 🥳 YAY! ✨🦄✨ You did it! 💖
@@ -367,7 +360,7 @@ When this step is complete, you will have two cables that plug into the ports on
 **Assembly:**
 
 - Cut and strip the cables so that the wire ends can be inserted into the male Phoenix connectors' receptacles. Instead of screws, these use small orange pushbuttons to open the receptacle.
-- NOTE: This is another place where wires can get crossed. To ensure proper connectivity between the Control Unit and the Pumps Unit, make sure that the wires are consistently placed. One way to do this is to plug the Phoenix connectors together and make sure that each wire retains its position from left to right when viewed from the front. You will also need to make sure that the wiring in the Pump Unit is consistent with this.
+- NOTE: This is another place where wires can get crossed. To ensure proper connectivity between the Control Unit and the Pumps Unit, make sure that the wires are consistently placed. One way to do this is to place the male Phoenix connectors together and make sure that each wire retains its position from left to right when viewed from the front. You will also need to make sure that the wiring in the Pump Unit is consistent with this.
 
 <IMG ALT="Cable ends" SRC="./media/control-unit/cable-ends.jpg" width="600" />
 

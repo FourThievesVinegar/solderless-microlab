@@ -14,5 +14,9 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 
 ## Troubleshooting
 
+## Running reactions
+
+### Appropriate Tubing
+
 ## Writing recipes
 **TODO: Move to its own document**

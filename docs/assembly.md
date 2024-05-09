@@ -22,7 +22,7 @@ The MicroLab consists of five major parts:
 
 ### Reactor Core
 
-The central part of the MicroLab is the reaction chamber. It consists of a 3D printed manifold that interfaces with a Mason jar lid ring. This allows a small mason jar to nest into a larger, wide-mouthed mason jar. During operation, the large mason jar is partly filled with water. Holes in the manifold allow a circulation pump to inject hot or cold water to control the temperature inside the large, outer mason jar. A stir rod with paddle mixes the chemicals in the smaller jar.
+The central part of the MicroLab is the reaction chamber. It consists of a 3D printed manifold that interfaces with a Mason jar lid ring. This allows a small mason jar to nest into a larger, wide-mouthed mason jar. During operation, the large mason jar is partly filled with water. Holes in the manifold allow a circulation pump to inject hot or cold water to control the temperature in the core. A stir rod with paddle mixes the chemicals in the smaller jar.
 
 ### Reactor Pumps
 
@@ -43,6 +43,16 @@ The Arduino controls the reagent pumps. The Pi controls everything else, includi
 **Temperature Control Units**
 The Temperature Control Units contain (a) the heating element used to raise the temperature in the Reactor Core and (b) an ice bath used to cool the Reactor Core. These act as (a) a thermal source and (b) a thermal sink for closed-loop circulation systems using copper heat exchangers. The heating element is activated using an off-the-shelf switchable plug controlled by the Control Unit.
 
+### Tools required
+
+- Small screwdrivers for M3 screws, USB mount screws, and screw terminals
+- Wire cutters and strippers
+- Needle-nosed pliers
+- Flush cutters (optional but recommended)
+- Small hex bits to tighten set screws on the sirring shaft coupler.
+- Possibly required: power drill and 1/8" bit for drilling out holes
+- Possibly required: hacksaw or bolt cutters to cut the mixing paddle shaft.
+
 ### Safety
 
 #### Chemistry
@@ -62,6 +72,8 @@ TODO: PHOTO OF ALL PURCHASED PARTS
 
 The boards, components, and parts needed for this project are located in the Bill of Materials (BOM) file.
 
+TODO: UPDATE THE BOM!!!
+
 Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
 
 ### 3D Printed Parts
@@ -76,6 +88,7 @@ While most items on the parts list can be purchased, a few items will need to be
 1. cooling vessel lid (unless using a hand-modified jar lid)
 
 Parts files are available here: [https://github.com/FourThievesVinegar/Parts/](https://github.com/FourThievesVinegar/Parts/)
+TODO: Update this to point to v0.6 when it is done
 
 #### Inspect 3D printed parts
 
@@ -89,21 +102,23 @@ Before assembly, be sure to check the parts that have come out of the 3D printer
 
 ### Control Unit assembly
 
-Assembling the Control Unit involves assembling and wiring several electronic components of the MicroLab.
+Assembling the Control Unit involves assembling and wiring most of the electronic components of the MicroLab. It's all down hill from here.
 
 For full instructions, including the cables for connecting to the Pumps Unit, see [MicroLab Control Unit Assembly](/docs/assembly-control-unit.md).
 
 ### Pumps Unit assembly
 
-The Pumps Unit is assembled by mounting the various pumps and sockets to the printed housing and lid.
+The Pumps Unit is assembled by mounting the various pumps and 12v electrical sockets to the printed box and lid.
 
 For full instructions, see: [Pumps Unit](/docs/assembly-pumps-unit.md)
 
-### Reactor Unit assembly
+### Reactor assembly
 
-Assembling the reactor unit involves three major steps: assembling the Reactor Stand, attaching the Pumps Unit, and assembling the Reactor Core itself.
+Assembling the Reactor unit involves three major steps: assembling the Reactor Stand, attaching the Pumps Unit, and assembling the Reactor Core itself.
 
-For full instructions, see [MicroLab Reactor Unit Assembly](/docs/assembly-reactor-unit.md).
+For Reactor Core assembly instructions, see [MicroLab Reactor Core Assembly](/docs/assembly-reactor-core.md).
+
+For Stand and Reactor Unit assembly, see [Microlab Reactor Unit Assembly](/docs/assembly-reactor-unit.md).
 
 ### Temperature Control Unit assembly
 
