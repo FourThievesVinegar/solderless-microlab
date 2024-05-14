@@ -10,7 +10,7 @@ Welcome! This document will walk you through the steps to construct a MicroLab. 
 
 ## Building a MicroLab
 
-TODO: PHOTO OF FULLY ASSEMBLED MICROLAB
+<IMG ALT="Microlab fully assembled with all units" SRC="./media/microlab-v0.6.0-assembled.jpg" width="600" />
 
 The MicroLab consists of five major parts:
 

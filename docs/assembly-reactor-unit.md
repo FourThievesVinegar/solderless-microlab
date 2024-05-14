@@ -2,9 +2,9 @@
 
 These instructions assume you have already assembled the Pumps Unit and the Reactor Core.
 
-<IMG ALT="Reactor stand parts" SRC="./media/reactor-unit/reactor-stand-parts.jpg" />
-<IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/reactor-stand-assembled.jpg" />
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-unit-assembled.jpg" />
+<IMG ALT="Reactor stand parts" SRC="./media/reactor-unit/reactor-stand-parts.jpg" WIDTH="400"/>
+<IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/reactor-stand-assembled.jpg" WIDTH="400"/>
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-unit-assembled.jpg" WIDTH="400" />
 
 ## Parts
 
@@ -57,6 +57,6 @@ You've already built the core and the pump. All that's left to do is connect it 
   - We used self-adhesive 12v light strips, but attaching the barrel plug connector to that requires soldering. Any 12v light powered by a male barrel plug connector will work and if you know a good one, we are open to suggestions in an email or github issue.
   - We also recommend velcroing the light(s) to the under-side of the ¢ so they can be removed for packing and storage.
 - Connect the peristaltic pumps to the Reactor Core manifold's inner channels using appropriate tubing.
-  - More on this, see [MicroLab Operation](/docs/operation.md).
+  - For more on this, see [MicroLab Operation](/docs/operation.md).
 
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-unit-assembled.jpg" />
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-unit-assembled.jpg" WIDTH="400" />

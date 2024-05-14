@@ -1,6 +1,6 @@
 # MicroLab Reactor Core Assembly
 
-<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" />
+<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" />
 
 ## Parts
 
@@ -30,8 +30,8 @@ The Reactor Core houses the reaction chamber, which is where the SCIENCE happens
 
 First, we need to assemble the manifold that holds the jars together and allows tubing into the reaction chamber and temperature control regions of the reactor core.
 
-<IMG ALT="Reactor manifold parts" SRC="./media/reactor-unit/reactor-manifold-parts.jpg" />
-<IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/reactor-manifold-assembled.jpg" />
+<IMG ALT="Reactor manifold parts" SRC="./media/reactor-unit/reactor-manifold-parts.jpg" WIDTH="400"/>
+<IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/reactor-manifold-assembled.jpg"WIDTH="400"/>
 
 **Components:**
 
@@ -50,8 +50,8 @@ First, we need to assemble the manifold that holds the jars together and allows 
 
 Next, we need to attach the stirring motor mount to the top of the manifold, secure the stirring motor in place, and connect the motor shaft to the paddle.
 
-<IMG ALT="Reactor stirring assembly parts" SRC="./media/reactor-unit/reactor-stirring-assembly-parts.jpg" />
-<IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" />
+<IMG ALT="Reactor stirring assembly parts" SRC="./media/reactor-unit/reactor-stirring-assembly-parts.jpg" WIDTH="400"/>
+<IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" WIDTH="400"/>
 Please note that we are experimenting with sinking nuts into various components for more reliable and durable connections. This is why the screw holes on top of the manifold are hexagonal at the top. Doing this requires a soldering iron and a steady hand. You may also want to drill out the stirring mount screw holes with a 1/8" bit to give the screws more play to mate with the nuts.
 
 The motor mount is in active development as of v0.6 and we thank you for patience with the rough edges.
@@ -86,7 +86,7 @@ Almost there! Now we just have to put it all together!
 - 6oz jar and lid ring
 - 32oz jar and lid ring
 
-**Assembly**
+**Assembly:**
 
 - Place the mixing paddle in the 6oz jar and seal the lid ring.
   - If the paddle shaft is too long, you will need to cut it shorter using a hacksaw or bolt cutters.
@@ -94,4 +94,4 @@ Almost there! Now we just have to put it all together!
 
 TADA! Your Reactor Core is complete!
 
-<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" />
+<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400"/>
