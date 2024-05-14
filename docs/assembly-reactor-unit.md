@@ -15,7 +15,7 @@ These instructions assume you have already assembled the Pumps Unit and the Reac
 
 ### Printed Parts
 
-- All Reactor Stand pieces: H A ¢ k 
+- All Reactor Stand pieces: H A ¢ k
 - Jar flanges (thin c-shaped pieces used to hold the Reactor Core more securely)
 
 ## Assembling the Stand

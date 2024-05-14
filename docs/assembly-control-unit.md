@@ -9,8 +9,9 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 - The MicroLab is designed to be assembled without the need for soldering or other specialized tooling. However, if you are equipped to solder and have some heat shrink, you can construct one at a slightly lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints or screw cap connectors.
 - Additionally, you can save space in the case by splicing wires and modifying components like USB cables to remove extraneous material.
 
-TODO: Pic comparing stock and modified micro USB
-A modified micro USB cable
+<IMG ALT="A modified micro usb cable" SRC="./media/control-unit/modified-micro-usb-cable.jpg" WIDTH="400" />
+
+A modified micro USB cable with most of its plastic shell removed, sealed in clear heat shrink.
 
 ## Purchased Parts
 
