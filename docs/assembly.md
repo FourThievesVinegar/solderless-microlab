@@ -87,8 +87,7 @@ While most items on the parts list can be purchased, a few items will need to be
 1. heating vessel lid (unless using hand-modified jar lid)
 1. cooling vessel lid (unless using a hand-modified jar lid)
 
-Parts files are available here: [https://github.com/FourThievesVinegar/Parts/](https://github.com/FourThievesVinegar/Parts/)
-TODO: Update this to point to v0.6 when it is done
+Parts files are available here: [https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6)
 
 #### Inspect 3D printed parts
 
