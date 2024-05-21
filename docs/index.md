@@ -1,6 +1,6 @@
 # Welcome to The MicroLab
 
-![Built MicroLab](/docs/media/microlab-on-bench-labeled.jpg)
+![Built MicroLab](media/microlab-on-bench-labeled.jpg)
 
 ## What is the MicroLab?
 
