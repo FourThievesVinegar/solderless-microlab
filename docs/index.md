@@ -1,6 +1,6 @@
 # Welcome to The MicroLab
 
-<IMG ALT="Control Unit assembled" SRC="./media/control-unit/control-unit-complete-2.jpg" width="800" />
+<IMG ALT="The MicroLab assembled" SRC="./media/microlab-v0.6.0-assembled.jpg" width="800" />
 
 ## What is the MicroLab?
 
