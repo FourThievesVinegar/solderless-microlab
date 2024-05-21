@@ -53,7 +53,7 @@ export const ControllerHardwareConfig = (props: { refetch: any }) => {
 
   return (
     <Form>
-      <h2>Microlab Controller</h2>
+      <h2>MicroLab Controller</h2>
       <Dropdown
         selection
         loading={loading}

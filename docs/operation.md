@@ -1,18 +1,29 @@
-# Operating the Microlab
+# Operating the MicroLab
 
 ## Setting it up
 
-This section describes how to assemble a complete but disassembled Microlab. If you need to build one from scratch, see: [assembly.md](assembly.md) and the docs for the various major components
- 
+This section describes how to assemble a complete but disassembled MicroLab. If you need to build one from scratch, see: [assembly.md](assembly.md)
+
 **TODO: instructions for this and other sections:**
+
 - Assembly of modules and Reactor Unit housing.
-- Setup of heating and cooling
-- Adding water to the Temperature Control Unit
-- Plugging everything in
+  - Assembling the Reactor Stand
+  - Assembling the rest of the Reactor Unit
+- Plugging in the cables.
+- Setup of heating and cooling.
+- Adding water to the Temperature Control Unit.
+- Connecting the tubes
 
 ## Running recipes
 
-## Troubleshooting
+### The Test Recipe
+
+## Running reactions
+
+### Appropriate Tubing
 
 ## Writing recipes
-**TODO: Move to its own document**
+
+You can go to [apothecarium.fourthievesvinegar.org](https://apothecarium.fourthievesvinegar.org/) to create recipes. You can also start [a project in Vinni](https://vinni.fourthievesvinegar.org/projects/NVXg2yPAKaMu) and save your recipes that way. More on this as Vinni approaches a real release and our services get integrated.
+
+## Troubleshooting
