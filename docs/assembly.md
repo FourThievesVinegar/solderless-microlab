@@ -61,7 +61,7 @@ Chemicals can be dangerous. Make sure you research any reagents, solvents, and o
 
 #### Electricity
 
-You are a sweet bag of mostly water and you are highly vulnerable to electricity damage. Although we will only be doing DIY on 12v and below
+You are a sweet bag of mostly water and you are highly vulnerable to electricity damage. Although we will only be doing DIY on 12v and below, please keep yourself safe.
 
 ### Materials
 
@@ -71,8 +71,6 @@ TODO: PHOTO OF ALL PURCHASED PARTS
 ### Parts List
 
 The boards, components, and parts needed for this project are located in the Bill of Materials (BOM) file.
-
-TODO: UPDATE THE BOM!!!
 
 Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
 

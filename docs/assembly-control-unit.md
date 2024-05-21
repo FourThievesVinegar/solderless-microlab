@@ -55,7 +55,11 @@ A modified micro USB cable with most of its plastic shell removed, sealed in cle
 - Buck Converter module (to step down 12v to 5v). Must have at least two 5v outputs.
 - Button-style switch. This switches the reactor light and indicates when the MicroLab is powered. You can use another switch if you have one you really like.
 - Double-sided velcro straps for wire management and for holding components in place (optional, but highly recommended)
-- Assorted M3 screws (TODO: Which lengths and how many?)
+- Assorted M3 screws
+  - 6x 16mm M3 screws (for attaching Phoenix panels)
+  - 4x 3mm M3 screws (for strapping components to the case)
+  - 2x 20mm M3 screws (for connecting the 12v power manifold to the case)
+  - 2x 16mm M3 screws (for closing the case)
 
 ## Printed Parts
 

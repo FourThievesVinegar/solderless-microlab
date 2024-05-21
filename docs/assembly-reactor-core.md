@@ -39,6 +39,7 @@ First, we need to assemble the manifold that holds the jars together and allows 
 - Reactor Core lid
 - 6oz jar lid ring
 - 3x 12mm M3 screws
+- 3x 20mm M3 screws
 
 **Assembly:**
 

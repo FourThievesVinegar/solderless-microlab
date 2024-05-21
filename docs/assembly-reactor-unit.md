@@ -22,14 +22,14 @@ These instructions assume you have already assembled the Pumps Unit and the Reac
 
 **Components:**
 
-- All Reactor Stand pieces: H A ¢ k 
+- All Reactor Stand pieces: H A ¢ k
 
 **Assembly:**
 
 - Use the M3 screws to assemble the Reactor Stand pieces in the following way:
   - The H is the left side.
   - The k is the right side.
-  - The A connects them along the back. 
+  - The A connects them along the back.
   - Together, the H A k units support the ¢ and the Pumps Unit.
 - The H and k each have four holes that match up with the holes on the Pumps Unit
   - Note that putting nuts on these screws will require opening the Pumps Unit.
