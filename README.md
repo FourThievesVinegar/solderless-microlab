@@ -2,7 +2,7 @@
 
 An open source jacketed lab reactor made from off-the-shelf components you can buy online.
 
-<IMG ALT="Microlab fully assembled with all units" SRC="./media/microlab-v0.6.0-assembled.jpg" width="600" />
+<IMG ALT="Microlab fully assembled with all units" SRC="./docs/media/microlab-v0.6.0-assembled.jpg" width="600" />
 
 An introduction to the project is here: [docs/index.md](docs/index.md)
 
