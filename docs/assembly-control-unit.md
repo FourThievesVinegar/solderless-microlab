@@ -19,7 +19,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 
 - USB A/B cable for rPi to Arduino
 - USB A cable (cut off with + and - wires exposed and stripped)
-- Micro USB cable to power the rPi (check your SBC to see which cable is appropriate)
+- Micro USB cable to power the rPi (check your Pi to see which cable is appropriate)
 - Female barrel plug connector (5.5mm x 2.1mm)
 - Male barrel plug connector (5.5mm x 2.1mm)
 - KV-426 lever connector (i.e.: a 1-to-3 splitter for both + and - leads)
@@ -33,9 +33,9 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 - Cable materials (to connect to the Pumps Unit)
   - 2x 12-pin male Phoenix-style connector
   - 2x 8-pin male Phoenix-style connector
-  - ~10 feet of 4-wire cabling cut into 2-foot lengths
+  - 10+ feet of 4-wire cabling cut into equal 2+ ft lengths
 - Assorted wire for inside the case (more 4-wire cable can be handy, especially the ribbon-style that can be easily split into individual wires)
-- 5x male-to-female breadboard headers (at least). You want short headers so that they fit comfortably on the GPIO pins under the touchscreen.
+- 5x male-to-female breadboard headers (at least). You want short headers so that they fit comfortably on the rPi GPIO pins under the touchscreen.
 
 ### Raspberry Pi
 
