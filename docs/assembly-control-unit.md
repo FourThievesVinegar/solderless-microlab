@@ -95,7 +95,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 ### Installing the touchscreen
 
 1. Gently slide the screen's female headers over the Pi's GPIO pins.
-1. The screen should line up with the Pi's board and the end of the headers should aldo coincide.
+1. The screen should line up with the Pi's board and the end of the headers should also coincide.
 1. NOTE: We will need to remove this again to put the GPIO pins in place
 
 ## Arduino Setup
