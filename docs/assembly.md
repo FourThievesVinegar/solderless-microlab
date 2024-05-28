@@ -114,7 +114,7 @@ For full instructions, including the cables for connecting to the Pumps Unit, se
 
 The Pumps Unit is assembled by mounting the various pumps and 12v electrical sockets to the printed box and lid.
 
-For full instructions, see: [Pumps Unit](/docs/assembly-pumps-unit.md)
+For full instructions, see: [Pumps Unit Assembly](/docs/assembly-pumps-unit.md).
 
 ### Reactor assembly
 
@@ -128,7 +128,7 @@ For Stand and Reactor Unit assembly, see [Microlab Reactor Unit Assembly](/docs/
 
 Assembling the Temperature Control Units involves assembling (a) the Heating Unit and (b) the Cooling Unit. The Heating Unit is controlled by an off-the-shelf switchable plug controlled by a cable to the Control Unit.
 
-For full instructions, see [MicroLab Temperature Control Unit Assembly](/docs/assembly-temperature-control-unit.md)
+For full instructions, see [MicroLab Temperature Control Unit Assembly](/docs/assembly-temperature-control-unit.md).
 
 ### Putting it all together
 
