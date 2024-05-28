@@ -200,7 +200,7 @@ Note that in the image above, 3 (+) and 3 (-) wires are shown for connecting to 
     - We highly recommend gently bending the male header to a 90 degree angle before doing the previous step for reasons that will become clear in the following steps.
   - To conserve space and prevent short circuits, we also recommend using flush cutters to remove excess material from the underside of the boards. Once this is complete, use electrical tape to cover over the bottom of the boards.
   - Gently bend all wires on both sides of the relay up and wrap them with thin (half width) strips of electrical tape. This tape prevents shorts and helps keep the wires from being damaged as you arrange components in the case.
-  - Finally, insert the remaining red wires into one of the 2-wide lever connectors along with the (+) wire from the cut USB cable (usually this is red). Do the same with the black wires in the other lever connector (the (-) USB wire is usually black).
+  - Finally, insert the red wire from DC+ (wires if you have separate relay boards) into one of the 2-wide lever connectors along with the (+) wire from the cut USB cable (usually this is red). Do the same with the black wire(s) in the other lever connector (the (-) USB wire is usually black).
 
 Take a moment to review and appreciate your work. This is the most fiddly part of the assembly. Nice job! 🎉
 
