@@ -43,11 +43,9 @@ The Control Unit is the brains of the operation. It's also the most complex comp
     - Please note: we are aware that RPi hired a UK Spy Cop and were aggressively oblivious as to why that's a problem. For this and several other reasons, including increasing prices, we are investigating alternatives. We use "Raspberry Pi" as a short-hand for "single-board computer" (SBC) and encourage experimentation with Libre Computer and other replacements.
 - Raspberry Pi 3 b+ compatible display 3.5 inch TFT LCD Screen Kit, 3.5" 480x320 Resolution and XPT2046 touch controller
 - Micro SD card, 32GB
-- Arduino
 - Arduino UNO SMD Rev3
 - CNC Shield - Expansion Board V3.0 +UNO R3 Board
 - 4x A4988 Stepper Motor Driver with Heatsink (K75-CNC-UK)
-- Stepper motor drivers (quantity 4)
 
 ### Misc
 
