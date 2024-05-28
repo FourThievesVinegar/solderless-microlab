@@ -6,7 +6,7 @@ Welcome! This document will walk you through the steps to construct a MicroLab. 
 
 - The MicroLab is designed to be assembled without the need for soldering or other specialized tooling. If you are equipped to solder, you can construct one at a lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints (or screw cap connectors).
 - Additionally, you can save space in the case by splicing wires and modifying components like USB cables to remove extraneous material.
-- Send us your feedback! If you're replicating and you see opportunities to improve the design, the docs, or the code, please feel free to put up a PR or to contact us through the volunteer email posted on the website.
+- Send us your feedback! If you're replicating and you see opportunities to improve the design, the docs, or the code, please feel free to put up a pull request or to contact us through the volunteer email posted on the website.
 
 ## Building a MicroLab
 
