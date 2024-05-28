@@ -196,7 +196,7 @@ Note that in the image above, 3 (+) and 3 (-) wires are shown for connecting to 
   - Insert the corresponding ends of the 3-wire cable into the terminals labeled "COM" (common) and tighten the terminals.
   - Insert the other ends of the 3-wire cable into the other 3-wide lever connector, again doubling up in one of the slots. In the remaining open slot, insert one of the short red wires, which will later connect to the 12v manifold.
 - Wiring the 5v half of the sub-assembly
-  - Each relay board will have a (DC+), (DC-), and (IN) terminal. Insert and secure red wires into the (DC+), black wires into the (DC-), and the male end of the male-to-female breadboard headers into the (IN) terminal. 
+  - Each relay board will have a (DC+), (DC-), and (IN) terminal. Insert and secure red wires into the (DC+), black wires into the (DC-), and the male end of the male-to-female breadboard headers into the (IN) terminal. A 4x relay board will have IN1, IN2, IN3, and IN4 - insert a male header into each: IN1, IN2, and IN3.
     - We highly recommend gently bending the male header to a 90 degree angle before doing the previous step for reasons that will become clear in the following steps.
   - To conserve space and prevent short circuits, we also recommend using flush cutters to remove excess material from the underside of the boards. Once this is complete, use electrical tape to cover over the bottom of the boards.
   - Gently bend all wires on both sides of the relay up and wrap them with thin (half width) strips of electrical tape. This tape prevents shorts and helps keep the wires from being damaged as you arrange components in the case.
