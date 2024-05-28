@@ -87,7 +87,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 1. Allow the Raspberry Pi Imager program to write to the SD card.
 1. The imager program will also run a verification check to make sure the OS was installed correctly. This will take several minutes.
 
-### Installing SD the card
+### Installing the SD card
 
 1. Once complete, remove the SD card from your computer, and insert into your Raspberry Pi.
 1. Note that the SD card extends beyond the edge of the Pi's circuit board. The Pi is very delicate with the card inserted, so take care.
