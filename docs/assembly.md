@@ -78,12 +78,19 @@ Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microla
 
 While most items on the parts list can be purchased, a few items will need to be printed using a 3D printer:
 
-1. Control Unit (a) housing and (b) lid
-1. Reactor Stand parts: 5 total. Extra jar flanges may be helpful for securing the reactor core to the stand. (You could also cut this out of 1/8" plywood or another strong rigid material)
-1. Reactor Core (a) manifold, (b) lid, and (c) stirring motor mount
-1. Reactor Pumps (a) housing and (b) lid
-1. heating vessel lid (unless using hand-modified jar lid)
-1. cooling vessel lid (unless using a hand-modified jar lid)
+1. Control Unit
+    1. housing
+    1. lid
+1. Reactor Stand parts: 5 total: H A ¢ k and c. Extra jar flanges may be helpful for securing the reactor core to the stand.
+1. Reactor Core
+    1. manifold 
+    1. lid
+    1. stirring motor mount
+1. Reactor Pumps
+    1. housing
+    2. lid
+1. heating vessel lid
+1. cooling vessel lid
 
 Parts files are available here: [https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6)
 
