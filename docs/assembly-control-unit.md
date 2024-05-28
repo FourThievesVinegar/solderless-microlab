@@ -11,7 +11,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 
 <IMG ALT="A modified micro usb cable" SRC="./media/control-unit/modified-micro-usb-cable.jpg" WIDTH="400" />
 
-A modified micro USB cable with most of its plastic shell removed, sealed in clear heat shrink.
+*Pictured above: A modified micro USB cable with most of its plastic shell removed, sealed in clear heat shrink.*
 
 ## Purchased Parts
 
