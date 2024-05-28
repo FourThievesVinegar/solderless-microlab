@@ -69,7 +69,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 ### Putting OS and MicroLab software on an SD card
 
 1. Install Raspberry Pi Imager onto a computer.
-1. Download our disk image torrent from [our website" SRC="https://fourthievesvinegar.org/microlab/).
+1. Download our disk image torrent from [our website](https://fourthievesvinegar.org/microlab/).
    1. Please continue to seed the torrent!
    1. This image is a version of the OS with the MicroLab software already installed.
       1. The production image already has drivers for the LCD screen installed - you MUST use the touchscreen with the production image.
@@ -78,10 +78,10 @@ The Control Unit is the brains of the operation. It's also the most complex comp
       1. The external USB ports can be used to attach a mouse and keyboard for development or ease of use.
       1. NOTE: The touch screen is primarily used for mobility and portability. Users familiar with networking may also choose to run the lab “headless”, and connect across a network without a monitor or USB input devices.
       1. NOTE: The production image has drivers for the 3.5" display using goodtft and XPT2046 touch controller drivers. If you have a different display, you will need to use the development image, then download and install the appropriate drivers. The development image requires using an external monitor.
-1. Connect the MicroSD card to your computer. You may need an SD card to USB converter. [part #]
+1. Connect the MicroSD card to your computer. You may need an SD card to USB converter.
 1. Launch the Raspberry Pi Imager.
 1. Select “Choose OS”, and scroll down to “Use Custom”.
-1. Select the downloaded [imagefile].
+1. Select the downloaded image file.
 1. Click “storage”, and select your SD card.
 1. Click “Write”.
 1. Allow the Raspberry Pi Imager program to write to the SD card.
