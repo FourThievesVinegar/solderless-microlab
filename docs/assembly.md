@@ -1,6 +1,6 @@
 # MicroLab Assembly
 
-Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything. 
+Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything. 
 
 **Some notes:**
 
@@ -72,7 +72,7 @@ TODO: PHOTO OF ALL PURCHASED PARTS
 
 The boards, components, and parts needed for this project are located in the Bill of Materials (BOM) file.
 
-Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
+Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx)
 
 ### 3D Printed Parts
 
