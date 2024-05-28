@@ -134,4 +134,4 @@ For full instructions, see [MicroLab Temperature Control Unit Assembly](/docs/as
 
 Once you have assembled the 5 major components, you will have what you need to run the MicroLab. These components are designed to be modular and easy to disassemble for storage and transportation. All that's left is connecting the modules with appropriate wire and tubing, and plugging it all in!
 
-For full assembly instructions, see [MicroLab Operation](/docs/operation.md).
+Once you have all the individual modules assembled, read the operation instructions: [MicroLab Operation](/docs/operation.md).
