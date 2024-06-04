@@ -13,6 +13,7 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 - Setup of heating and cooling.
 - Adding water to the Temperature Control Unit.
 - Connecting the tubes
+- Pre-warming the warm reservoir (get it hot and insulated ahead of time)
 
 ## Running recipes
 

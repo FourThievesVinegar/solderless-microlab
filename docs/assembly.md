@@ -1,9 +1,10 @@
 # MicroLab Assembly
 
-Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything. 
+Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything.
 
 **Some notes:**
 
+- This documentation is a pre-release of v0.6 instructions. They are OK. They are not complete but they are better than their predecessors so 🎉 ta-da! 🎉
 - The MicroLab is designed to be assembled without the need for soldering or other specialized tooling. If you are equipped to solder, you can construct one at a lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints (or screw cap connectors).
 - Additionally, you can save space in the case by splicing wires and modifying components like USB cables to remove extraneous material.
 - Send us your feedback! If you're replicating and you see opportunities to improve the design, the docs, or the code, please feel free to put up a PR or to contact us through the volunteer email posted on the website.
