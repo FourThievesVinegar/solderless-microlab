@@ -11,7 +11,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 
 <IMG ALT="A modified micro usb cable" SRC="./media/control-unit/modified-micro-usb-cable.jpg" WIDTH="400" />
 
-A modified micro USB cable with most of its plastic shell removed, sealed in clear heat shrink.
+*Pictured above: A modified micro USB cable with most of its plastic shell removed, sealed in clear heat shrink.*
 
 ## Purchased Parts
 
@@ -19,7 +19,7 @@ A modified micro USB cable with most of its plastic shell removed, sealed in cle
 
 - USB A/B cable for rPi to Arduino
 - USB A cable (cut off with + and - wires exposed and stripped)
-- Micro USB cable to power the rPi (check your SBC to see which cable is appropriate)
+- Micro USB cable to power the rPi (check your Pi to see which cable is appropriate)
 - Female barrel plug connector (5.5mm x 2.1mm)
 - Male barrel plug connector (5.5mm x 2.1mm)
 - KV-426 lever connector (i.e.: a 1-to-3 splitter for both + and - leads)
@@ -33,21 +33,19 @@ A modified micro USB cable with most of its plastic shell removed, sealed in cle
 - Cable materials (to connect to the Pumps Unit)
   - 2x 12-pin male Phoenix-style connector
   - 2x 8-pin male Phoenix-style connector
-  - ~10 feet of 4-wire cabling cut into 2-foot lengths
+  - 10+ feet of 4-wire cabling cut into equal 2+ ft lengths
 - Assorted wire for inside the case (more 4-wire cable can be handy, especially the ribbon-style that can be easily split into individual wires)
-- 5x male-to-female breadboard headers (at least). You want short headers so that they fit comfortably on the GPIO pins under the touchscreen.
+- 5x male-to-female breadboard headers (at least). You want short headers so that they fit comfortably on the rPi GPIO pins under the touchscreen.
 
 ### Raspberry Pi
 
 - Raspberry Pi 3 Model B Board (We have also successfully done preliminary testing on a Libre Computer Le Potato, although the touch-screen can be finicky)
+    - Please note: we are aware that RPi hired a UK Spy Cop and were aggressively oblivious as to why that's a problem. For this and several other reasons, including increasing prices, we are investigating alternatives. We use "Raspberry Pi" as a short-hand for "single-board computer" (SBC) and encourage experimentation with Libre Computer and other replacements.
 - Raspberry Pi 3 b+ compatible display 3.5 inch TFT LCD Screen Kit, 3.5" 480x320 Resolution and XPT2046 touch controller
 - Micro SD card, 32GB
-  - Please note: we are aware that RPi hired a UK Spy Cop and were aggressively oblivious as to why that's a problem. For this and several other reasons, including increasing prices, we are investigating alternatives. We use "Raspberry Pi" as a short-hand for "single-board computer" (SBC) and encourage experimentation with Libre Computer and other replacements.
-- Arduino
 - Arduino UNO SMD Rev3
 - CNC Shield - Expansion Board V3.0 +UNO R3 Board
 - 4x A4988 Stepper Motor Driver with Heatsink (K75-CNC-UK)
-- Stepper motor drivers (quantity 4)
 
 ### Misc
 
@@ -71,7 +69,7 @@ A modified micro USB cable with most of its plastic shell removed, sealed in cle
 ### Putting OS and MicroLab software on an SD card
 
 1. Install Raspberry Pi Imager onto a computer.
-1. Download our disk image torrent from [our website" SRC="https://fourthievesvinegar.org/microlab/).
+1. Download our disk image torrent from [our website](https://fourthievesvinegar.org/microlab/).
    1. Please continue to seed the torrent!
    1. This image is a version of the OS with the MicroLab software already installed.
       1. The production image already has drivers for the LCD screen installed - you MUST use the touchscreen with the production image.
@@ -80,16 +78,16 @@ A modified micro USB cable with most of its plastic shell removed, sealed in cle
       1. The external USB ports can be used to attach a mouse and keyboard for development or ease of use.
       1. NOTE: The touch screen is primarily used for mobility and portability. Users familiar with networking may also choose to run the lab “headless”, and connect across a network without a monitor or USB input devices.
       1. NOTE: The production image has drivers for the 3.5" display using goodtft and XPT2046 touch controller drivers. If you have a different display, you will need to use the development image, then download and install the appropriate drivers. The development image requires using an external monitor.
-1. Connect the MicroSD card to your computer. You may need an SD card to USB converter. [part #]
+1. Connect the MicroSD card to your computer. You may need an SD card to USB converter.
 1. Launch the Raspberry Pi Imager.
 1. Select “Choose OS”, and scroll down to “Use Custom”.
-1. Select the downloaded [imagefile].
+1. Select the downloaded image file.
 1. Click “storage”, and select your SD card.
 1. Click “Write”.
 1. Allow the Raspberry Pi Imager program to write to the SD card.
 1. The imager program will also run a verification check to make sure the OS was installed correctly. This will take several minutes.
 
-### Installing SD the card
+### Installing the SD card
 
 1. Once complete, remove the SD card from your computer, and insert into your Raspberry Pi.
 1. Note that the SD card extends beyond the edge of the Pi's circuit board. The Pi is very delicate with the card inserted, so take care.
@@ -97,11 +95,11 @@ A modified micro USB cable with most of its plastic shell removed, sealed in cle
 ### Installing the touchscreen
 
 1. Gently slide the screen's female headers over the Pi's GPIO pins.
-1. The screen should line up with the Pi's board and the end of the headers should aldo coincide.
+1. The screen should line up with the Pi's board and the end of the headers should also coincide.
 1. NOTE: We will need to remove this again to put the GPIO pins in place
 
 ## Arduino Setup
-1. Before assembling, follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash grbl to the arduino
+1. Before assembling, follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash ```grbl``` to the arduino
    1. Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/](https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/)
    1. Note: Video overview of CNC shield assembly and operation [https://youtu.be/zUb8tiFCwmk?t=37](https://youtu.be/zUb8tiFCwmk?t=37)
    1. Note: Critical safety information when working with the CNC shields. Failure to follow them can hurt both you and the component. NEVER connect or disconnect any stepper motor to the CNC Shield while the power is on or connected
@@ -198,11 +196,11 @@ Note that in the image above, 3 (+) and 3 (-) wires are shown for connecting to 
   - Insert the corresponding ends of the 3-wire cable into the terminals labeled "COM" (common) and tighten the terminals.
   - Insert the other ends of the 3-wire cable into the other 3-wide lever connector, again doubling up in one of the slots. In the remaining open slot, insert one of the short red wires, which will later connect to the 12v manifold.
 - Wiring the 5v half of the sub-assembly
-  - Each relay board will have a (DC+), (DC-), and (IN) terminal. Insert and secure red wires into the (DC+), black wires into the (DC-), and the male end of the male-to-female breadboard headers into the (IN) terminal. 
+  - Each relay board will have a (DC+), (DC-), and (IN) terminal. Insert and secure red wires into the (DC+), black wires into the (DC-), and the male end of the male-to-female breadboard headers into the (IN) terminal. A 4x relay board will have IN1, IN2, IN3, and IN4 - insert a male header into each: IN1, IN2, and IN3.
     - We highly recommend gently bending the male header to a 90 degree angle before doing the previous step for reasons that will become clear in the following steps.
   - To conserve space and prevent short circuits, we also recommend using flush cutters to remove excess material from the underside of the boards. Once this is complete, use electrical tape to cover over the bottom of the boards.
   - Gently bend all wires on both sides of the relay up and wrap them with thin (half width) strips of electrical tape. This tape prevents shorts and helps keep the wires from being damaged as you arrange components in the case.
-  - Finally, insert the remaining red wires into one of the 2-wide lever connectors along with the (+) wire from the cut USB cable (usually this is red). Do the same with the black wires in the other lever connector (the (-) USB wire is usually black).
+  - Finally, insert the red wire from DC+ (wires if you have separate relay boards) into one of the 2-wide lever connectors along with the (+) wire from the cut USB cable (usually this is red). Do the same with the black wire(s) in the other lever connector (the (-) USB wire is usually black).
 
 Take a moment to review and appreciate your work. This is the most fiddly part of the assembly. Nice job! 🎉
 

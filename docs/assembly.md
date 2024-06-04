@@ -1,13 +1,13 @@
 # MicroLab Assembly
 
-Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything.
+Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything. 
 
 **Some notes:**
 
 - This documentation is a pre-release of v0.6 instructions. They are OK. They are not complete but they are better than their predecessors so 🎉 ta-da! 🎉
 - The MicroLab is designed to be assembled without the need for soldering or other specialized tooling. If you are equipped to solder, you can construct one at a lower cost and with less junk in the case by replacing the lever-action wire connectors with solder joints (or screw cap connectors).
 - Additionally, you can save space in the case by splicing wires and modifying components like USB cables to remove extraneous material.
-- Send us your feedback! If you're replicating and you see opportunities to improve the design, the docs, or the code, please feel free to put up a PR or to contact us through the volunteer email posted on the website.
+- Send us your feedback! If you're replicating and you see opportunities to improve the design, the docs, or the code, please feel free to put up a pull request or to contact us through the volunteer email posted on the website.
 
 ## Building a MicroLab
 
@@ -73,18 +73,25 @@ TODO: PHOTO OF ALL PURCHASED PARTS
 
 The boards, components, and parts needed for this project are located in the Bill of Materials (BOM) file.
 
-Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
+Download the BOM here: [https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx](https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx)
 
 ### 3D Printed Parts
 
 While most items on the parts list can be purchased, a few items will need to be printed using a 3D printer:
 
-1. Control Unit (a) housing and (b) lid
-1. Reactor Stand parts: 5 total. Extra jar flanges may be helpful for securing the reactor core to the stand. (You could also cut this out of 1/8" plywood or another strong rigid material)
-1. Reactor Core (a) manifold, (b) lid, and (c) stirring motor mount
-1. Reactor Pumps (a) housing and (b) lid
-1. heating vessel lid (unless using hand-modified jar lid)
-1. cooling vessel lid (unless using a hand-modified jar lid)
+1. Control Unit
+    1. housing
+    1. lid
+1. Reactor Stand parts: 5 total: H A ¢ k and c. Extra jar flanges may be helpful for securing the reactor core to the stand.
+1. Reactor Core
+    1. manifold 
+    1. lid
+    1. stirring motor mount
+1. Reactor Pumps
+    1. housing
+    2. lid
+1. heating vessel lid
+1. cooling vessel lid
 
 Parts files are available here: [https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6)
 
@@ -108,7 +115,7 @@ For full instructions, including the cables for connecting to the Pumps Unit, se
 
 The Pumps Unit is assembled by mounting the various pumps and 12v electrical sockets to the printed box and lid.
 
-For full instructions, see: [Pumps Unit](/docs/assembly-pumps-unit.md)
+For full instructions, see: [Pumps Unit Assembly](/docs/assembly-pumps-unit.md).
 
 ### Reactor assembly
 
@@ -122,10 +129,10 @@ For Stand and Reactor Unit assembly, see [Microlab Reactor Unit Assembly](/docs/
 
 Assembling the Temperature Control Units involves assembling (a) the Heating Unit and (b) the Cooling Unit. The Heating Unit is controlled by an off-the-shelf switchable plug controlled by a cable to the Control Unit.
 
-For full instructions, see [MicroLab Temperature Control Unit Assembly](/docs/assembly-temperature-control-unit.md)
+For full instructions, see [MicroLab Temperature Control Unit Assembly](/docs/assembly-temperature-control-unit.md).
 
 ### Putting it all together
 
 Once you have assembled the 5 major components, you will have what you need to run the MicroLab. These components are designed to be modular and easy to disassemble for storage and transportation. All that's left is connecting the modules with appropriate wire and tubing, and plugging it all in!
 
-For full assembly instructions, see [MicroLab Operation](/docs/operation.md).
+Once you have all the individual modules assembled, read the operation instructions: [MicroLab Operation](/docs/operation.md).

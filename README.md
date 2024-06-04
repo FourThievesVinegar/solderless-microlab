@@ -2,13 +2,15 @@
 
 An open source jacketed lab reactor made from off-the-shelf components you can buy online.
 
-![Built Microlab](/docs/media/microlab-on-bench-labeled.jpg)
+<IMG ALT="Microlab fully assembled with all units" SRC="./docs/media/microlab-v0.6.0-assembled.jpg" width="600" />
 
 An introduction to the project is here: [docs/index.md](docs/index.md)
 
 Read the motivation behind the project here: [docs/motivation.md](docs/motivation.md)
 
 The full replication and assembly instructions here: [docs/assembly.md](docs/assembly.md)
+
+PLEASE NOTE: These docs are in pre-release for v0.6. They are not considered complete and we are still finalizing some hardware recommendations. That said, if tinkering is your thing, you should be fine.
 
 ## Production vs Development
 

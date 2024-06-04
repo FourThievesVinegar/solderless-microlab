@@ -1,6 +1,6 @@
 # Welcome to The MicroLab
 
-![Built MicroLab](/docs/media/microlab-on-bench-labeled.jpg)
+<IMG ALT="The MicroLab assembled" SRC="./media/microlab-v0.6.0-assembled.jpg" width="800" />
 
 ## What is the MicroLab?
 
