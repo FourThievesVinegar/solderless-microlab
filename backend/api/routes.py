@@ -346,6 +346,27 @@ def downloadLabConfig(name):
     fileName = "{0}.yaml".format(secure_filename(name))
     return send_file(join(config.labHardwareDirectory, fileName), name, as_attachment=True)
 
+@app.route('/reloadHardware', methods=['POST'])
+def reloadHardware():
+    """
+    Reloads the hardware controller
+
+    :return:
+    object
+        response
+            One of:
+                ok
+                error
+        message
+            Only present if response is "error" and there is a message to present to the user.
+    """
+    microlabInterface.reloadConfig()
+    (success, msg) = microlabInterface.reloadHardware()
+    if success:
+        return (jsonify({'response': 'ok'}), 200)
+    else:
+        return jsonify({'response': 'error', 'message': msg}), 400
+
 @app.route('/log')
 def fetchLogs():
     """
