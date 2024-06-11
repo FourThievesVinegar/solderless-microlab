@@ -117,6 +117,12 @@ export const downloadLabConfig = (name: string) => {
   downloadFileFromURL(name, url)
 }
 
+export const reloadHardware = () => {
+  return fetch(apiUrl + 'reloadHardware', {
+    method: 'POST',
+  }).then(response => response.json())
+}
+
 export const getLogs = (callback: (data: any) => void) => {
   return fetch(apiUrl + 'log')
     .then(response => response.json())

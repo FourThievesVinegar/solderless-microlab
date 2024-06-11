@@ -6,6 +6,7 @@ import { LabHardwareConfig } from '../components/LabHardwareConfig'
 import { LabConfigUpload } from '../components/LabConfigUpload'
 import { ControllerConfigUpload } from '../components/ControllerConfigUpload'
 import { SoundSettings } from '../components/SoundSettings'
+import { ReloadHardware } from '../components/ReloadHardware'
 
 import SettingsContext from '../contexts/Settings'
 
@@ -31,6 +32,7 @@ export function Settings() {
         </ButtonGroup>
       </div>
       <div className="settings-block">
+        <ReloadHardware />
         <ControllerHardwareConfig refetch={counter} />
         <ControllerConfigUpload onUpload={updateCounter} />
       </div>

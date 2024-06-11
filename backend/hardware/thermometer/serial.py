@@ -3,6 +3,7 @@ from w1thermsensor import W1ThermSensor, Sensor
 import serial
 import time
 import logging
+from hardware.util import HardwareLoadError
 
 class SerialTempSensor(TempSensor):
     def __init__(self, args):
@@ -13,7 +14,10 @@ class SerialTempSensor(TempSensor):
             serialDevice
               A string with the device read from
         """
-        self.tempSer = serial.Serial(args["serialDevice"], timeout=0.5)
+        try:
+            self.tempSer = serial.Serial(args["serialDevice"], timeout=0.5)
+        except serial.SerialException as e:
+            raise HardwareLoadError("Thermometer could not be detected at {}, make sure it's plugged in, try another USB port if it is, or change the device name in your lab hardware config file to the correct device name.".format(args["serialDevice"])) from e
 
     def getTemp(self):
         """
