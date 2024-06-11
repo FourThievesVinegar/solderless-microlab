@@ -33,6 +33,8 @@ class BasicTempController(TempController):
         self.coolerPin = args["coolerPin"]
         self.maxTemp = args["maxTemp"]
         self.minTemp = args["minTemp"]
+        if "pidConfig" in args:
+          self.pidConfig = args["pidConfig"]
 
         self.gpio.setup(self.heaterPin)
         self.gpio.setup(self.heaterPumpPin)
@@ -53,7 +55,6 @@ class BasicTempController(TempController):
         """
         logging.info("heater turned on")
         self.gpio.output(self.heaterPin, RELAY_ON)
-        self.gpio.output(self.heaterPumpPin, RELAY_ON)
 
 
     def turnHeaterOff(self):
@@ -65,8 +66,14 @@ class BasicTempController(TempController):
         """
         logging.info("heater turned off")
         self.gpio.output(self.heaterPin, RELAY_OFF)
-        self.gpio.output(self.heaterPumpPin, RELAY_OFF)
 
+    def turnHeaterPumpOn(self):
+        logging.info("heater pump turned on")
+        self.gpio.output(self.heaterPumpPin, RELAY_ON)
+
+    def turnHeaterPumpOff(self):
+        logging.info("heater pump turned off")
+        self.gpio.output(self.heaterPumpPin, RELAY_OFF)
 
     def turnCoolerOn(self):
         """
@@ -103,4 +110,7 @@ class BasicTempController(TempController):
 
     def getMinTemperature(self):
         return self.minTemp
+
+    def getPIDConfig(self):
+        return self.pidConfig
 

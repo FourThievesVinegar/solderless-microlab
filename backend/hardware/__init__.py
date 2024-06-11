@@ -16,6 +16,7 @@ import hardware.temperaturecontroller as tc
 from hardware import devicelist
 from enum import Enum
 import logging
+
 class MicroLabHardwareState(Enum):
     STARTING = "STARTING"
     INITIALIZED = "INITIALIZED"
@@ -63,6 +64,7 @@ class MicroLabHardware:
         None
         """
         self.turnHeaterOff()
+        self.turnHeaterPumpOff()
         self.turnCoolerOff()
         self.turnStirrerOff()
 
@@ -138,6 +140,24 @@ class MicroLabHardware:
         """
         self.tempController.turnHeaterOff()
 
+    def turnHeaterPumpOn(self):
+        """
+        Turns on the heater pump.
+
+        :return:
+            None
+        """
+        self.tempController.turnHeaterPumpOn()
+
+    def turnHeaterPumpOff(self):
+        """
+        Turns off the heater pump.
+
+        :return:
+            None
+        """
+        self.tempController.turnHeaterPumpOff()
+
     def turnCoolerOn(self):
         """
         Start cooling the jacket.
@@ -183,6 +203,15 @@ class MicroLabHardware:
             The temperature as read from the sensor in Celsius
         """
         return self.tempController.getTemp()
+
+    def getPIDConfig(self):
+        """
+        Return the temperature.
+
+        :return:
+            The temperature as read from the sensor in Celsius
+        """
+        return self.tempController.getPIDConfig()
 
     def pumpDispense(self, pumpId, volume):
         """

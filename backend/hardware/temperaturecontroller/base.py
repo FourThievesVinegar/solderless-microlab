@@ -31,6 +31,28 @@ class TempController(ABC):
         pass
 
     @abstractmethod
+    def turnHeaterPumpOn():
+        """
+        Turns the heater pump on.
+
+        :return:
+        None
+        """
+        pass
+
+
+    @abstractmethod
+    def turnHeaterPumpOff():
+        """
+        Turns the heater pump off.
+
+        :return:
+        None
+        """
+        pass
+    
+
+    @abstractmethod
     def turnCoolerOn():
         """
         Turns the cooler on.
@@ -76,3 +98,19 @@ class TempController(ABC):
         :return:
         """
         pass
+
+    @abstractmethod
+    def getPIDConfig():
+        """
+        Read the temperature controller PID configuration
+
+        :return:
+        None if not configured, otherwise:
+        object
+            P: number
+            I: number
+            D: number
+            proportionalOnMeasurement: Boolean (optional)
+            differentialOnMeasurement: Boolean (optional)
+        """
+        return None
