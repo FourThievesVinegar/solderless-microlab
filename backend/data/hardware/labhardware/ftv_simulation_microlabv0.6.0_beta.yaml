@@ -1,0 +1,30 @@
+# In this file implementation is set as simulation
+devices:
+  - id: "reactor-temperature-controller"
+    type: "tempController"
+    implementation: "simulation"
+    # device ID of the thermometer to use for detecting reactor temperature
+    thermometerID: "reactor-thermometer"
+    # Maximum and minimum temperature in celsius that the hardware can support
+    # This simulation uses the same values as real hardware
+    maxTemp: 150
+    minTemp: -20
+    pidConfig:
+      P: 1
+      I: 0.5
+      D: 5
+      proportionalOnMeasurement: False
+      differentialOnMeasurement: True
+      minOutput: -100
+      maxOutput: 100
+      dutyCycleLength: 10
+    # Optional. Starting temperature in celsius, defaults to 24 if not set
+    temp: 24
+
+  - id: "reactor-reagent-dispenser"
+    type: "reagentDispenser"
+    implementation: "simulation"
+
+  - id: "reactor-stirrer"
+    type: "stirrer"
+    implementation: "simulation"
