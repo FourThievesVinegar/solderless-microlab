@@ -13,6 +13,10 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 
 *Pictured above: A modified micro USB cable with most of its plastic shell removed, sealed in clear heat shrink.*
 
+<IMG ALT="A close up of a lever connector with the probe hole circled" SRC="./media/control-unit/lever-connector-closeup.png" />
+
+*Pictured above: A lever connector. If you need to test your circuits, you can insert a multimeter probe into the circled hole to take a reading. Screws on screw terminals can be used in a similar way.*
+
 ## Purchased Parts
 
 ### Wires and Cables and Connectors (Oh my!)
@@ -63,6 +67,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 
 - Control Unit box
 - Control Unit lid
+- Sub-component mounts (optional but nice to hold your stuff in place)
 
 ## Raspberry Pi Formatting/Setup
 
