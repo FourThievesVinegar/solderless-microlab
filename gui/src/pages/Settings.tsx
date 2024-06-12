@@ -1,5 +1,5 @@
 import React, { useReducer, useContext } from 'react'
-import { ButtonGroup, Button, Icon } from 'semantic-ui-react'
+import { ButtonGroup, Button, Divider, Icon } from 'semantic-ui-react'
 
 import { ControllerHardwareConfig } from '../components/ControllerHardwareConfig'
 import { LabHardwareConfig } from '../components/LabHardwareConfig'
@@ -22,6 +22,7 @@ export function Settings() {
     <div className="page settings-page">
       <h1>Settings</h1>
       <div className="settings-block">
+        <h2>Theme</h2>
         <ButtonGroup>
           <Button color="yellow" size="small" onClick={() => updateSettings({ darkMode: false })}>
             <Icon name="sun" />
@@ -31,15 +32,18 @@ export function Settings() {
           </Button>
         </ButtonGroup>
       </div>
+      <Divider />
       <div className="settings-block">
         <ReloadHardware />
         <ControllerHardwareConfig refetch={counter} />
         <ControllerConfigUpload onUpload={updateCounter} />
       </div>
+      <Divider />
       <div className="settings-block">
         <LabHardwareConfig refetch={counter} />
         <LabConfigUpload onUpload={updateCounter} />
       </div>
+      <Divider />
       <div className="settings-block">
         <SoundSettings />
       </div>

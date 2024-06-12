@@ -13,6 +13,10 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 
 *Pictured above: A modified micro USB cable with most of its plastic shell removed, sealed in clear heat shrink.*
 
+<IMG ALT="A close up of a lever connector with the probe hole circled" SRC="./media/control-unit/lever-connector-closeup.png" />
+
+*Pictured above: A lever connector. If you need to test your circuits, you can insert a multimeter probe into the circled hole to take a reading. Screws on screw terminals can be used in a similar way.*
+
 ## Purchased Parts
 
 ### Wires and Cables and Connectors (Oh my!)
@@ -63,6 +67,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 
 - Control Unit box
 - Control Unit lid
+- Sub-component mounts (optional but nice to hold your stuff in place)
 
 ## Raspberry Pi Formatting/Setup
 
@@ -99,6 +104,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 1. NOTE: We will need to remove this again to put the GPIO pins in place
 
 ## Arduino Setup
+
 1. Before assembling, follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash ```grbl``` to the arduino
    1. Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/](https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/)
    1. Note: Video overview of CNC shield assembly and operation [https://youtu.be/zUb8tiFCwmk?t=37](https://youtu.be/zUb8tiFCwmk?t=37)
