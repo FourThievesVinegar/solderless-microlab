@@ -24,6 +24,7 @@ The Control Unit is the brains of the operation. It's also the most complex comp
 - USB A/B cable for rPi to Arduino
 - USB A cable (cut off with + and - wires exposed and stripped)
 - Micro USB cable to power the rPi (check your Pi to see which cable is appropriate)
+  - Look for right-angle / 90 degree micro ends that will fit better in the case
 - Female barrel plug connector (5.5mm x 2.1mm)
 - Male barrel plug connector (5.5mm x 2.1mm)
 - KV-426 lever connector (i.e.: a 1-to-3 splitter for both + and - leads)
