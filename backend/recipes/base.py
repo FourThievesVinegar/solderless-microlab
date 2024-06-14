@@ -288,10 +288,13 @@ class Recipe:
         if('icon' in step):
             self.icon = step['icon']
 
-        if STEP_TASKS not in step and TASK_TYPE in step and step[TASK_TYPE] != 'humanTask':
-            step[STEP_TASKS] = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
+        if TASK_TYPE in step and step[TASK_TYPE] != 'humanTask': # Run the base task for the step
+            if not STEP_TASKS in step: # this is the only task
+                step[STEP_TASKS] = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
+            else:   # We have other tasks, let's append the base task.
+                step[STEP_TASKS].append({TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]})
 
-        if STEP_TASKS in step:
+        if STEP_TASKS in step: # Run all tasks for the step
             for task in step[STEP_TASKS]:
                 if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
                     self.currentTasks.append(tasks.runTask(microlabHardware, task[TASK_TYPE], task[TASK_PARAMETERS]))
