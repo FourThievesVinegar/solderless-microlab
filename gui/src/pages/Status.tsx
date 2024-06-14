@@ -30,7 +30,7 @@ export function Status(props: {
     }
     if (window.confirm('Are you sure you want to stop?')) {
       stopRecipe()
-      window.history.back()
+      history.push('/recipes')
     }
   }
 
