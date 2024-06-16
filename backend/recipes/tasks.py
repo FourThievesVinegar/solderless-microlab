@@ -90,7 +90,34 @@ def maintainHeat(microlab, parameters):
 
 def maintain(microlab, parameters):
     """
-    Maintain a certain temperature using either the cooler or heater for a specified amount of time.
+    Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
+
+    :param parameters:
+        dictionary
+            'temp' - the desired temperature
+            'tolerance' - how much above or below the desired temperature to let
+                            the temperature drift before turning on the heater/cooler again
+            'time' - the amount of time to maintain the temperature in seconds
+            'type' - one of:
+                - heat
+                    Maintain temperature using heater.
+                - cool
+                    Maintain temperature using cooler.
+                - both
+                    Maintain temperature using heater and cooler.
+                    Default if not otherwise specified
+    :return:
+        None
+    """
+    if microlab.getPIDConfig() is None:
+        return maintainSimple(microlab, parameters)
+    else:
+        return maintainPID(microlab, parameters)
+
+
+def maintainSimple(microlab, parameters):
+    """
+    Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
 
     :param parameters:
         dictionary
@@ -123,91 +150,123 @@ def maintain(microlab, parameters):
     start = microlab.secondSinceStart()
 
     logging.info('Maintaining {0}C for {1} seconds with {2}C tolerance'.format(targetTemp, duration, tolerance))
-    if microlab.getPIDConfig() is None:
-        # default temp control
-        logging.debug('Maintaining with default temperature control')
+    # default temp control
+    logging.debug('Maintaining with default temperature control')
 
-        while True:
-            currentTemp = microlab.getTemp()
-            logging.debug('temperature @ {0}'.format(currentTemp))
-            if (microlab.secondSinceStart() - start) >= duration:
+    while True:
+        currentTemp = microlab.getTemp()
+        logging.debug('temperature @ {0}'.format(currentTemp))
+        if (microlab.secondSinceStart() - start) >= duration:
+            microlab.turnHeaterOff()
+            microlab.turnHeaterPumpOff()
+            microlab.turnCoolerOff()
+            yield None
+        if heaterEnabled:
+            if currentTemp > targetTemp:
                 microlab.turnHeaterOff()
                 microlab.turnHeaterPumpOff()
+            if currentTemp < targetTemp - tolerance:
+                microlab.turnHeaterOn()
+                microlab.turnHeaterPumpOn()
+        if coolerEnabled:
+            if currentTemp > targetTemp + tolerance:
+                microlab.turnCoolerOn()
+            if currentTemp < targetTemp:
                 microlab.turnCoolerOff()
-                yield None
+
+        yield interval
+
+            
+def maintainPID(microlab, parameters):
+    """
+    Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
+    Uses a PID control loop.
+
+    :param parameters:
+        dictionary
+            'temp' - the desired temperature
+            'tolerance' - how much above or below the desired temperature to let
+                            the temperature drift before turning on the heater/cooler again
+            'time' - the amount of time to maintain the temperature in seconds
+            'type' - one of:
+                - heat
+                    Maintain temperature using heater.
+                - cool
+                    Maintain temperature using cooler.
+                - both
+                    Maintain temperature using heater and cooler.
+                    Default if not otherwise specified
+    :return:
+        None
+    """
+    duration = parameters['time']
+    targetTemp = parameters['temp']
+    tolerance = parameters['tolerance']
+    if 'type' in parameters:
+        maintainType = parameters['type']
+    else:
+        maintainType =  'both'
+    heaterEnabled = (maintainType == 'heat' or maintainType == 'both')
+    coolerEnabled = (maintainType == 'cool' or maintainType == 'both')
+
+    interval = 0.5
+    start = microlab.secondSinceStart()
+
+    logging.info('Maintaining {0}C for {1} seconds with {2}C tolerance'.format(targetTemp, duration, tolerance))
+    logging.debug('Maintaining with PID temperature control')
+
+    pidConfig = microlab.getPIDConfig()
+    pid = PID(pidConfig['P'], pidConfig['I'], pidConfig['D'], setpoint=targetTemp)
+    maxOutput = pidConfig['maxOutput']
+    minOutput = pidConfig['minOutput']
+    pid.output_limits = (minOutput, maxOutput)
+    if pidConfig['proportionalOnMeasurement'] == True:
+        pid.proportional_on_measurement = True
+    if pidConfig['differentialOnMeasurement'] == False:
+        pid.differential_on_measurement = False
+
+    dutyCycleLength = pidConfig['dutyCycleLength']
+    heaterCycleSecond = dutyCycleLength/maxOutput
+    coolerCycleSecond = dutyCycleLength/minOutput
+
+    microlab.turnHeaterPumpOn()
+    while True:
+        currentTemp = microlab.getTemp()
+        control = pid(currentTemp)
+        p, i, d = pid.components
+        logging.info('Heater PID values: {} {} {} {} {}'.format(currentTemp, control, p, i, d))
+            
+        # We split the duty cycle length up into 1 second boxes,
+        # based on the control value, duty cycle length, and
+        # max/min outputs we enable the heater or cooler for
+        # control/(max or minOutput) percent of the duty cycle,
+        # rounded to the nearest second
+        for i in range(1, dutyCycleLength):
             if heaterEnabled:
-                if currentTemp > targetTemp:
-                    microlab.turnHeaterOff()
-                    microlab.turnHeaterPumpOff()
-                if currentTemp < targetTemp - tolerance:
+                if control * heaterCycleSecond > i:
                     microlab.turnHeaterOn()
-                    microlab.turnHeaterPumpOn()
+                else:
+                    microlab.turnHeaterOff()
+
             if coolerEnabled:
-                if currentTemp > targetTemp + tolerance:
+                if control * coolerCycleSecond > i:
                     microlab.turnCoolerOn()
-                if currentTemp < targetTemp:
+                else:
                     microlab.turnCoolerOff()
 
-            yield interval
-    else:
-        # PID temp control
-        logging.debug('Maintaining with PID temperature control')
-
-        pidConfig = microlab.getPIDConfig()
-        maxOutput = pidConfig['maxOutput']
-        minOutput = pidConfig['minOutput']
-        pid = PID(pidConfig['P'], pidConfig['I'], pidConfig['D'], setpoint=targetTemp)
-        pid.output_limits = (minOutput, maxOutput)
-        if pidConfig['proportionalOnMeasurement'] == True:
-            pid.proportional_on_measurement = True
-        if pidConfig['differentialOnMeasurement'] == False:
-            pid.differential_on_measurement = False
-        dutyCycleLength = pidConfig['dutyCycleLength']
-        heaterCycleSecond = dutyCycleLength/maxOutput
-        coolerCycleSecond = dutyCycleLength/minOutput
-
-        microlab.turnHeaterPumpOn()
-        while True:
-            currentTemp = microlab.getTemp()
-            control = pid(currentTemp)
-            p, i, d = pid.components
-            logging.info('Heater PID values: {} {} {} {} {}'.format(currentTemp, control, p, i, d))
-                
-            # We split the duty cycle length up into 1 second boxes,
-            # based on the control value, duty cycle length, and
-            # max/min outputs we enable the heater or cooler for
-            # control/(max or minOutput) percent of the duty cycle,
-            # rounded to the nearest second
-            for i in range(1, dutyCycleLength):
-                if heaterEnabled:
-                    if control * heaterCycleSecond > i:
-                        microlab.turnHeaterOn()
-                    else:
-                        microlab.turnHeaterOff()
-
-                if coolerEnabled:
-                    if control * coolerCycleSecond > i:
-                        microlab.turnCoolerOn()
-                    else:
-                        microlab.turnCoolerOff()
-
-                yield 1
-                t = microlab.getTemp()
-                a = pid(t)
-                p, i, d = pid.components
-                logging.debug('Heater PID values: {} {} {} {} {}'.format(t, a, p, i, d))
-                
-            
-            if (microlab.secondSinceStart() - start) >= duration:
-                microlab.turnHeaterOff()
-                microlab.turnHeaterPumpOff()
-                microlab.turnCoolerOff()
-                yield None
             yield 1
-
-
-
+            t = microlab.getTemp()
+            a = pid(t)
+            p, i, d = pid.components
+            logging.debug('Heater PID values: {} {} {} {} {}'.format(t, a, p, i, d))
             
+        
+        if (microlab.secondSinceStart() - start) >= duration:
+            microlab.turnHeaterOff()
+            microlab.turnHeaterPumpOff()
+            microlab.turnCoolerOff()
+            yield None
+        yield 1
         
 
 def pump(microlab, parameters):
