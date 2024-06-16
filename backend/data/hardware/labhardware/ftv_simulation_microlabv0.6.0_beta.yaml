@@ -13,11 +13,6 @@ devices:
       P: 1
       I: 0.5
       D: 5
-      proportionalOnMeasurement: False
-      differentialOnMeasurement: True
-      minOutput: -100
-      maxOutput: 100
-      dutyCycleLength: 10
     # Optional. Starting temperature in celsius, defaults to 24 if not set
     temp: 24
 

@@ -31,11 +31,6 @@ devices:
       P: 1
       I: 0.5
       D: 5
-      proportionalOnMeasurement: False
-      differentialOnMeasurement: True
-      minOutput: -100
-      maxOutput: 100
-      dutyCycleLength: 10
 
     # list of device IDs that must be setup before this device
     dependencies: ["reactor-thermometer"]
