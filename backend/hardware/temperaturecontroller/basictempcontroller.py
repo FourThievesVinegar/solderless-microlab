@@ -33,9 +33,6 @@ class BasicTempController(TempController):
         self.coolerPin = args["coolerPin"]
         self.maxTemp = args["maxTemp"]
         self.minTemp = args["minTemp"]
-        self.pidConfig = None
-        if "pidConfig" in args:
-          self.pidConfig = args["pidConfig"]
 
         self.gpio.setup(self.heaterPin)
         self.gpio.setup(self.heaterPumpPin)

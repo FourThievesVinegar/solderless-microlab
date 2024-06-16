@@ -13,12 +13,9 @@ class SimulatedTempController(TempController):
         self.minTemp = args["minTemp"]
         self.heating = False
         self.cooling = False
-        self.pidConfig = None
         self.temperature = 24
         if 'temp' in args:
             self.temperature = args['temp'] 
-        if "pidConfig" in args:
-            self.pidConfig = args["pidConfig"]
 
     def turnHeaterOn(self):
         """
