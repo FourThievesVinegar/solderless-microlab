@@ -209,7 +209,6 @@ def maintainPID(microlab, parameters):
     heaterEnabled = (maintainType == 'heat' or maintainType == 'both')
     coolerEnabled = (maintainType == 'cool' or maintainType == 'both')
 
-    interval = 0.5
     start = microlab.secondSinceStart()
 
     logging.info('Maintaining {0}C for {1} seconds with {2}C tolerance'.format(targetTemp, duration, tolerance))
