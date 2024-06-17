@@ -128,7 +128,7 @@ def devices(request):
         def recurseSettings(obj, devices):
             print("recurse ", obj)
             for key, value in obj.items():
-                if isinstance(value, dict):
+                if isinstance(value, dict) and key in devices:
                     recurseSettings(value, devices[key])
                 else:
                     devices[key] = value
@@ -302,3 +302,84 @@ def test_pump_invalid_pump_id(microlab):
     with pytest.raises(ValueError):
         res = next(fn)
 
+
+# MAINTAIN PID
+
+@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}}})
+def test_maintain_PID_heat_needed(microlab):
+    fn = tasks.maintainPID(microlab, {'temp': 100, 'tolerance': 3, 'time': 60})
+    microlab.turnHeaterPumpOn = MagicMock()
+    microlab.turnHeaterPumpOff = MagicMock()
+    for i in range(0,9):
+        res = next(fn)
+    microlab.turnHeaterOn = MagicMock()
+    microlab.turnHeaterOff = MagicMock()
+    microlab.turnCoolerOn = MagicMock()
+    microlab.turnCoolerOff = MagicMock()
+    for i in range(0,9):
+        res = next(fn)
+
+    assert not microlab.turnCoolerOn.called
+    assert microlab.turnCoolerOff.called
+
+    assert microlab.turnHeaterPumpOn.called
+    assert not microlab.turnHeaterPumpOff.called
+
+    assert microlab.turnHeaterOn.call_count > microlab.turnHeaterOff.call_count
+
+    assert res != None
+
+
+@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}, 'temp': 100}})
+def test_maintain_PID_cool_needed(microlab):
+    fn = tasks.maintainPID(microlab, {'temp': 40, 'tolerance': 3, 'time': 60})
+    microlab.turnHeaterPumpOn = MagicMock()
+    microlab.turnHeaterPumpOff = MagicMock()
+    for i in range(0,19):
+        res = next(fn)
+    microlab.turnHeaterOn = MagicMock()
+    microlab.turnHeaterOff = MagicMock()
+    microlab.turnCoolerOn = MagicMock()
+    microlab.turnCoolerOff = MagicMock()
+    for i in range(0,9):
+        res = next(fn)
+
+    assert microlab.turnCoolerOn.call_count > microlab.turnCoolerOff.call_count
+
+    assert microlab.turnHeaterPumpOn.called
+    assert not microlab.turnHeaterPumpOff.called
+
+    assert not microlab.turnHeaterOn.called
+    assert microlab.turnHeaterOff.called
+
+    assert res != None
+
+
+
+@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}, 'temp': 100}})
+def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
+    fn = tasks.maintainPID(microlab, {'temp': 40, 'tolerance': 3, 'time': 60})
+    microlab.turnHeaterPumpOn = MagicMock()
+    microlab.turnHeaterPumpOff = MagicMock()
+    res = next(fn)
+    assert microlab.turnHeaterPumpOn.called
+    assert not microlab.turnHeaterPumpOff.called
+    assert res != None
+
+
+@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}, 'temp': 100}})
+def test_maintain_PID_turns_off_heater_pump_when_done(microlab):
+    fn = tasks.maintainPID(microlab, {'temp': 40, 'tolerance': 3, 'time': 60})
+    microlab.turnHeaterPumpOn = MagicMock()
+    microlab.turnHeaterPumpOff = MagicMock()
+    microlab.secondSinceStart = MagicMock()
+    microlab.secondSinceStart.return_value = 0
+    res = next(fn)
+    assert microlab.turnHeaterPumpOn.called
+    for i in range(0,59):
+        microlab.secondSinceStart.return_value = i + 2
+        res = next(fn)
+
+    assert microlab.turnHeaterPumpOn.call_count == 1
+    assert microlab.turnHeaterPumpOff.call_count == 1
+    assert res == None
