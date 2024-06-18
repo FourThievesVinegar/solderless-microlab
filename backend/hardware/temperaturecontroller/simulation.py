@@ -38,6 +38,11 @@ class SimulatedTempController(TempController):
         log('Turning off heat')
         self.heating = False
 
+    def turnHeaterPumpOn(self):
+        log("heater pump turned on")
+
+    def turnHeaterPumpOff(self):
+        log("heater pump turned off")
 
     def turnCoolerOn(self):
         """
@@ -91,3 +96,20 @@ class SimulatedTempController(TempController):
 
     def getMinTemperature(self):
         return self.minTemp
+
+    def getPIDConfig(self):
+        """
+        Read the temperature controller PID configuration
+
+        :return:
+        None if not specified, otherwise:
+        object
+            P: number
+            I: number
+            D: number
+            proportionalOnMeasurement: Boolean (optional)
+            differentialOnMeasurement: Boolean (optional)
+        """
+        return self.pidConfig
+
+

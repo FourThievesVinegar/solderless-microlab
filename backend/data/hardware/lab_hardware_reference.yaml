@@ -52,6 +52,34 @@ devices:
     heaterPumpPin: BCM_20
     # GPIO pin for activating the cooler pump(s)
     coolerPin: BCM_21
+    # Optional dictionary specifying PID controller parameters.
+    # If not set uses a simple on/off for controlling temperature
+    # based on current readings and recipe temperature tolerances.
+    pidConfig:
+      # PID values, required
+      P: 1
+      I: 0.5
+      D: 5
+      ### All the following parameters of pidConfig are optional ###
+
+      # When true uses the measurement to calculate the proportional term.
+      # False uses the error instead.
+      # Defaults to False
+      proportionalOnMeasurement: False
+      # When true uses the measurement to calculate the differential term.
+      # False uses the error instead.
+      # Defaults to True
+      differentialOnMeasurement: True
+      # Min output of the PID controller
+      # Defaults to -100
+      minOutput: -100
+      # Max output of the PID controller
+      # Defaults to 100
+      maxOutput: 100
+      # Total length of the duty cycle for controlling the heater and cooler
+      # in seconds.
+      # Defaults to 10
+      dutyCycleLength: 10
     # list of device IDs that must be setup before this device
     dependencies: ["reactor-thermometer"]
 

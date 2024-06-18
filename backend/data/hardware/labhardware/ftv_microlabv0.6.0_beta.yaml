@@ -1,0 +1,86 @@
+devices:
+  - id: "reactor-thermometer"
+    type: "thermometer"
+    implementation: "serial"
+    # Which device to read data from.
+    serialDevice: "/dev/ttyUSB0"
+
+  - id: "reactor-temperature-controller"
+    type: "tempController"
+    implementation: "basic"
+    # device ID of the thermometer to use for detecting reactor temperature
+    thermometerID: "reactor-thermometer"
+    # Maximum and minimum temperature in celsius that the hardware can support
+    # The microlab v0.5 makes use of 3d printed parts made of PLA, PLA can only reach
+    # ~60C before it begins to mechanically fail. If you print with a different material,
+    # this may be increased, search for the glass transition temperature for your material.
+    # Water of course also boils at 100C, and will slowly boil off somewhat below that
+    # so consider something like Propylene Glycol instead of water as a heat exchanger fluid.
+    # Also keep in mind the recommended thermometer (DS18S20) only supports -55 to 125C.
+    maxTemp: 50
+    minTemp: -20
+    gpioID: "gpio-primary"
+    # GPIO pin for activating the heating element
+    heaterPin: BCM_26
+    # GPIO pin for activating the heater pump(s)
+    heaterPumpPin: BCM_20
+    # GPIO pin for activating the cooler pump(s)
+    coolerPin: BCM_21
+    #
+    pidConfig:
+      P: 1
+      I: 0.5
+      D: 5
+
+    # list of device IDs that must be setup before this device
+    dependencies: ["reactor-thermometer"]
+
+  - id: "reactor-reagent-dispenser"
+    type: "reagentDispenser"
+    implementation: "peristalticpump"
+    # Serial device for communication with the Arduino
+    arduinoPort: "/dev/ttyACM0"
+    # Configuration for the syringe pump motors
+    syringePumpsConfig:
+      X:
+        # Number of mm the stepper motor moves per full revolution,
+        # this is the pitch of the threaded rod
+        mmPerRev: 0.8
+        # Number of steps per revolution of the stepper motor, reference the documentation for the motor
+        stepsPerRev: 200
+        # Number of mm of movement needed to dispense 1 ml of fluid,
+        # this is the length of the syringe divided by its fluid capacity
+        mmPerml: 3.5
+        # Maximum speed the motor should run in mm/min
+        maxmmPerMin: 240
+      Y:
+        # These are all the same as documented above but for the Y axis
+        mmPerRev: 0.8
+        stepsPerRev: 200
+        mmPerml: 3.5
+        maxmmPerMin: 240
+      Z:
+        # These are all the same as documented above but for the Y axis
+        mmPerRev: 0.8
+        stepsPerRev: 200
+        mmPerml: 3.5
+        maxmmPerMin: 240
+    # Configuration for the peristaltic pump motors
+    peristalticPumpsConfig:
+      F: 175
+      X:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+      Y:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+      Z:
+        # scaling factor based on initial calibration
+        mlPerUnit: 0.5555555
+
+  - id: "reactor-stirrer"
+    type: "stirrer"
+    implementation: "gpio_stirrer"
+    gpioID: "gpio-primary"
+    # GPIO pin for activating the stirrer
+    stirrerPin: BCM_16
