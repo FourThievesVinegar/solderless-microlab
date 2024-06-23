@@ -382,7 +382,7 @@ def fetchLogs():
     print(logFiles)
     logFiles.sort(key=os.path.getmtime)
     data = ""
-    if logFiles[-2]:
+    if len(logFiles) > 1 and logFiles[-2]:
         data = Path(logFiles[-2]).read_text()
     mostRecent = logFiles[-1]
     data = data + Path(mostRecent).read_text()
