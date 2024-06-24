@@ -4,6 +4,7 @@
 
 ### Added
 
+- Many pre-release tweaks.
 - Massive docs update.
 - New printable cases, stands, and reactor parts.
 - Ability to manually reload hardware from the settings menu. (#197)
