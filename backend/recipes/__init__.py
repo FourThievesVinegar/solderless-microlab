@@ -129,6 +129,7 @@ def status(_):
     if microlabHardware.state is MicroLabHardwareState.FAILED_TO_START:
         message['status'] = 'error'
         message['message'] = 'MicroLab failed to start. Check hardware and configuration'
+        message['hardwareError'] = str(microlabHardware.error)
         return message
 
     if state.currentRecipe == None:
