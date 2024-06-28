@@ -5,7 +5,6 @@ import { Header } from './components/Header'
 import { Home } from './pages/Home'
 import { Recipes } from './pages/Recipes'
 import { RecipeDetails } from './pages/RecipeDetails'
-import { ReactionHistory } from './pages/ReactionHistory'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
 import { Logs } from './pages/Logs'
@@ -67,10 +66,6 @@ export function App() {
 
         <Route path="/recipes/:recipeName">
           <RecipeDetails />
-        </Route>
-
-        <Route path="/reaction-history">
-          <ReactionHistory />
         </Route>
 
         <Route path="/settings">
