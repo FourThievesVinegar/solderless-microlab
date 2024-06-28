@@ -12,6 +12,7 @@ import { Logs } from './pages/Logs'
 import SettingsContext from './contexts/Settings'
 import { SOUNDS, useAudio } from './hooks/useAudio'
 import { getStatus } from './utils'
+import { HardwareStatus } from './pages/HardwareStatus'
 
 import './styles/app.css'
 import './styles/4tv.scss'
@@ -79,6 +80,10 @@ export function App() {
 
         <Route path="/status">
           <Status status={status} />
+        </Route>
+
+        <Route path="/hardwareStatus">
+          <HardwareStatus status={status} />
         </Route>
 
         <Route path="/logs">
