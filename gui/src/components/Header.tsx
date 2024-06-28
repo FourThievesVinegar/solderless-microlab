@@ -66,9 +66,6 @@ export function Header(props: {
           <Button as={Link} color="blue" to="/settings" onClick={hideMenu}>
             Settings
           </Button>
-          <Button as={Link} color="blue" to="/reaction-history" onClick={hideMenu}>
-            Reaction History
-          </Button>
           <Button as={Link} color="blue" to="/logs" onClick={hideMenu}>
             View Logs
           </Button>
