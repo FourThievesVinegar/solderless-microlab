@@ -1,3 +1,5 @@
+DEPRECATED
+
 # MicroLab Reactor Core Assembly
 
 <IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" />

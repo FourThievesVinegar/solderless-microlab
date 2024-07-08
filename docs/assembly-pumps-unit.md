@@ -1,3 +1,5 @@
+DEPRECATED
+
 # Pumps Unit Assembly
 
 The Pumps Unit contains both the pumps that inject reagents into the Reactor Core as well as the pumps that circulate hot and cold fluids to control the Reactor Core's Temperature. It also has plugs for the stirring motor and the Reactor Stand's optional light.

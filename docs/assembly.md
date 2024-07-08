@@ -1,6 +1,6 @@
 # MicroLab Assembly
 
-Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything. 
+Welcome! This document will walk you through the steps to construct a MicroLab. Each major component has its own instructions. There is [a parts list](https://github.com/FourThievesVinegar/solderless-microlab/raw/master/docs/microlab-parts-list.xlsx) that you can peruse to make sure you have everything.
 
 **Some notes:**
 
@@ -84,7 +84,7 @@ While most items on the parts list can be purchased, a few items will need to be
     1. lid
 1. Reactor Stand parts: 5 total: H A ¢ k and c. Extra jar flanges may be helpful for securing the reactor core to the stand.
 1. Reactor Core
-    1. manifold 
+    1. manifold
     1. lid
     1. stirring motor mount
 1. Reactor Pumps

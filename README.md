@@ -1,6 +1,6 @@
 # Microlab
 
-Our goal is to build an open-source DIY automated controlled lab reactor that people can assemble with parts available online. We hope this will do for chemistry what the 3D printer did for manufacturing: provide a DIY, hackable, low-cost method to design and produce certain needful things that otherwise would be out of reach.
+The MicroLab is an open-source, DIY, automated controlled lab reactor (CLR) that people can assemble with parts available online. We hope this will do for chemistry what the 3D printer did for manufacturing: provide a DIY, hackable, low-cost method to design and produce certain needful things that otherwise would be out of reach.
 
 <IMG ALT="MicroLab fully assembled with all units" SRC="./docs/media/microlab-v0.6.0-assembled.jpg" width="600" />
 
@@ -13,10 +13,10 @@ https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/motiv
 
 
 ## Getting Started Making Your MicroLab
-This section is for you if you want to build a MicroLab and start using it. 
+This section is for you if you want to build a MicroLab and start using it.
 
-- Learn [About the MicroLab and MicroLab Suite](docs/motivation.md) 
-	         about.md 
+- Learn [About the MicroLab and MicroLab Suite](docs/motivation.md)
+	         about.md
 - Start here for [How to build & use the MicroLab and MicroLab Suite](docs/index.md)  
 		- include index + assembly
 		- microlab-parts-list.xlsx
@@ -25,20 +25,20 @@ This section is for you if you want to build a MicroLab and start using it.
 
 
 
-## Getting Started Developing the MicroLab 
+## Getting Started Developing the MicroLab
 
 This section is for you if you want to help develop the MicroLab and will need to tinker with the code base.  
 
-You will need to get a copy of the MicroLab software, set up your development environment either with a Docker container or locally on your computer. 
+You will need to get a copy of the MicroLab software, set up your development environment either with a Docker container or locally on your computer.
 
 
 ### Installing the MicroLab software locally
 
-Use the instructions below for a fresh install of the Microlab software (backend and GUI) on your development machine. 
+Use the instructions below for a fresh install of the Microlab software (backend and GUI) on your development machine.
 
-If you intend to construct a full Microlab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two: 
+If you intend to construct a full Microlab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two:
 - A "production" image that runs all software on startup and includes the drivers for a goodtft-compatible 3.5 inch mini-display. This would be the software to run on the MicroLab
-- A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard. This would be the software to run on a computer where the MicroLab hardware can be emulated. 
+- A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard. This would be the software to run on a computer where the MicroLab hardware can be emulated.
 
 If you are using the development image and running it on a computer with emulated hardware turn on, follow the instructions below.
 
@@ -165,4 +165,4 @@ If you have a MicroLab to run the software on, you may want to enable SSH on the
 
 
 ## Start Developing
-Once your environment is setup, head on over to the [Backend README](/backend) 
+Once your environment is setup, head on over to the [Backend README](/backend)
