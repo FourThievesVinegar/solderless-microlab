@@ -2,7 +2,7 @@ from abc import ABC,abstractmethod
 
 class ReagentDispenser(ABC):
     @abstractmethod
-    def dispense(pumpId, volume):
+    def dispense(pumpId, volume, duration=None):
         """
         Dispense reagent.
 

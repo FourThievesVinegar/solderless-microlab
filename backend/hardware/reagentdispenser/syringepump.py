@@ -2,6 +2,7 @@ import time
 import config
 import serial
 from hardware.reagentdispenser.base import ReagentDispenser
+import logging
 
 def grblWrite(grblSer, command):
     """
@@ -81,7 +82,7 @@ class SyringePump(ReagentDispenser):
             #configure max mm/min
             grblWrite(self.grblSer, '$11{0}={1}\n'.format(axisToCNCID[axis], syringeConfig['maxmmPerMin']))
 
-    def dispense(self, pumpId, volume):
+    def dispense(self, pumpId, volume, duration=None):
         """
         Dispense reagent from a syringe
 
@@ -95,8 +96,13 @@ class SyringePump(ReagentDispenser):
 
         maxmmPerMin = self.syringePumpsConfig[pumpId]['maxmmPerMin']
         mmPerml = self.syringePumpsConfig[pumpId]['mmPerml']
+        dispenseSpeed = maxmmPerMin
+        if duration:
+            dispenseSpeed = min((volume/duration) * 60 * mmPerml, dispenseSpeed)
         totalmm = volume*mmPerml
-        grblWrite(self.grblSer, 'G91{0}{1}\n'.format(pumpId, totalmm))
+        grblWrite(self.grblSer, 'G91{0}{1} F{2}\n'.format(pumpId, totalmm, dispenseSpeed))
+        dispenseTime = abs(totalmm)/(dispenseSpeed/60)
 
+        logging.info("Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(volume, dispenseSpeed, dispenseTime))
         # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
-        time.sleep(abs(totalmm)/maxmmPerMin*60 + 1)
+        time.sleep(dispenseTime + 1)

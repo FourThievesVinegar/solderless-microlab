@@ -281,8 +281,9 @@ def pump(microlab, parameters):
     """
     pump = parameters['pump']
     volume = parameters['volume']
+    duration = parameters.get('duration', None)
     logging.info('Dispensing {0}ml from pump {1}'.format(volume, pump))
-    microlab.pumpDispense(pump, volume)
+    microlab.pumpDispense(pump, volume, duration)
     yield None
 
 

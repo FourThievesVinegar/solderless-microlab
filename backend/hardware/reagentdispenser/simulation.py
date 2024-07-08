@@ -7,7 +7,7 @@ def log(message):
 
 class SimulatedReagentDispenser(ReagentDispenser):
 
-    def dispense(self, pumpId, volume):
+    def dispense(self, pumpId, volume, duration=None):
         """
         Displays pump dispensing message.
 

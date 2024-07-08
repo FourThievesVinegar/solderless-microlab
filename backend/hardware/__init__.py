@@ -213,7 +213,7 @@ class MicroLabHardware:
         """
         return self.tempController.getPIDConfig()
 
-    def pumpDispense(self, pumpId, volume):
+    def pumpDispense(self, pumpId, volume, duration=None):
         """
         Dispense a number of ml from a particular pump.
 
@@ -224,7 +224,7 @@ class MicroLabHardware:
         :return:
             None
         """
-        return self.reagentDispenser.dispense(pumpId, volume)
+        return self.reagentDispenser.dispense(pumpId, volume, duration)
 
 
 microlabHardware = None
