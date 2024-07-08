@@ -292,8 +292,8 @@ class Recipe:
         if TASK_TYPE in step and step[TASK_TYPE] != 'humanTask': # There are tasks to perform
             # Add the base task
             tasksToRun = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
-            if STEP_TASKS in step: # We have other tasks, let's append the base task and those other tasks
-                tasksToRun = tasksToRun + step[STEP_TASKS]
+        if STEP_TASKS in step: # We have other tasks, let's append the base task and those other tasks
+            tasksToRun = tasksToRun + step[STEP_TASKS]
 
         if tasksToRun: # Run all tasks for the step
             for task in tasksToRun:
