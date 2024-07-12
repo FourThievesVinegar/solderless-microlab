@@ -100,7 +100,9 @@ class SyringePump(ReagentDispenser):
         if duration:
             dispenseSpeed = min((volume/duration) * 60 * mmPerml, dispenseSpeed)
         totalmm = volume*mmPerml
-        grblWrite(self.grblSer, 'G91{0}{1} F{2}\n'.format(pumpId, totalmm, dispenseSpeed))
+        command = 'G91 G1 {0}{1} F{2}\n'.format(pumpId, totalmm, dispenseSpeed)
+        logging.debug("Dispensing with command '{}'".format(command))
+        grblWrite(self.grblSer, command)
         dispenseTime = abs(totalmm)/(dispenseSpeed/60)
 
         logging.info("Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(volume, dispenseSpeed, dispenseTime))
