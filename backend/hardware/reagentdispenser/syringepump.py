@@ -3,6 +3,7 @@ import config
 import serial
 from hardware.reagentdispenser.base import ReagentDispenser
 import logging
+import math
 
 def grblWrite(grblSer, command):
     """
@@ -70,6 +71,7 @@ class SyringePump(ReagentDispenser):
         """
         self.syringePumpsConfig = args["syringePumpsConfig"]
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
+        self.axisMinmmPerMin = {}
         for axis, syringeConfig in self.syringePumpsConfig.items():
             stepsPerMM = syringeConfig['stepsPerRev']/syringeConfig['mmPerRev']
             axisToCNCID = {
@@ -77,6 +79,7 @@ class SyringePump(ReagentDispenser):
                 "Y": "1",
                 "Z": "2",
             }
+            self.axisMinmmPerMin[axis] = math.ceil((30/stepsPerMM) * 120)
             #configure steps/mm
             grblWrite(self.grblSer, '$10{0}={1}\n'.format(axisToCNCID[axis], stepsPerMM))
             #configure max mm/min
@@ -106,5 +109,12 @@ class SyringePump(ReagentDispenser):
         dispenseTime = abs(totalmm)/(dispenseSpeed/60)
 
         logging.info("Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(volume, dispenseSpeed, dispenseTime))
-        # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
-        time.sleep(dispenseTime + 1)
+        return dispenseTime
+
+    def getPumpSpeedLimits(self, pumpId):
+        maxSpeed = self.syringePumpsConfig[pumpId]['maxmmPerMin'] / self.syringePumpsConfig[pumpId]['mmPerml'] / 60
+        minSpeed = self.axisMinmmPerMin[pumpId] / self.syringePumpsConfig[pumpId]['mmPerml'] / 60
+        return {
+            "minSpeed": minSpeed,
+            "maxSpeed": maxSpeed
+        }

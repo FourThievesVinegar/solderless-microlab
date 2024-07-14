@@ -72,5 +72,11 @@ class PeristalticPump(ReagentDispenser):
         
         dispenseTime = abs(totalmm)/(dispenseSpeed/60)
         logging.info("Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(volume, dispenseSpeed, dispenseTime))
-        # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
-        time.sleep(dispenseTime + 1)
+        return dispenseTime
+
+    def getPumpSpeedLimits(self, pumpId):
+        mmPerSecond = (30/250)
+        return {
+            "minSpeed": mmPerSecond/self.peristalticPumpsConfig[pumpId]['mlPerUnit'],
+            "maxSpeed": self.peristalticPumpsConfig['F']*self.peristalticPumpsConfig[pumpId]['mlPerUnit']/60
+        }

@@ -14,3 +14,19 @@ class ReagentDispenser(ABC):
             None
         """
         pass
+
+    @abstractmethod
+    def getPumpSpeedLimits(pumpId):
+        """
+        Get maximum and minimum speed of specified pump.
+
+        :param pumpId:
+            The pump id. One of 'X' or 'Y' or 'Z'
+        :return:
+            dict
+                minSpeed
+                    Minimum speed the pump can dispense in ml/s
+                maxSpeed
+                    Maximum speed the pump can dispense in ml/s
+        """
+        pass

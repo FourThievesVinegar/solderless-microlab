@@ -32,7 +32,7 @@ class MicroLabHardware:
         self.state = MicroLabHardwareState.STARTING
         self.error = None
     
-        self.startTime = time.time()
+        self.startTime = time.monotonic()
         self.loadHardware(deviceDefinition)
 
     def loadHardware(self, deviceDefinition):
@@ -77,7 +77,7 @@ class MicroLabHardware:
         :return:
         The number of seconds since this package was started multiplied by config.hardwareSpeedup.
         """
-        elapsed = time.time() - self.startTime
+        elapsed = time.monotonic() - self.startTime
         if hasattr(config,'hardwareSpeedup'):
             speed = config.hardwareSpeedup
             if not (speed == None):
@@ -226,5 +226,19 @@ class MicroLabHardware:
         """
         return self.reagentDispenser.dispense(pumpId, volume, duration)
 
+    def getPumpSpeedLimits(self, pumpId):
+        """
+        Get maximum and minimum speed of specified pump.
+
+        :param pumpId:
+            The pump id. One of 'X' or 'Y' or 'Z'
+        :return:
+            dict
+                minSpeed
+                    Minimum speed the pump can dispense in ml/s
+                maxSpeed
+                    Maximum speed the pump can dispense in ml/s
+        """
+        return self.reagentDispenser.getPumpSpeedLimits(pumpId)
 
 microlabHardware = None
