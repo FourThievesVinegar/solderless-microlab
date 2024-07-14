@@ -27,3 +27,9 @@ class SimulatedReagentDispenser(ReagentDispenser):
         else:
             raise ValueError("Pump '{0}' does not exist.".format(pumpId))
         time.sleep(abs(volume))
+
+    def getPumpSpeedLimits(self, pumpId):
+        return {
+            "minSpeed": 1,
+            "maxSpeed": 100
+        }

@@ -286,7 +286,10 @@ def pump(microlab, parameters):
     pumpSpeedLimits = microlab.getPumpSpeedLimits(pump)
     minSpeed = pumpSpeedLimits["minSpeed"]
     maxSpeed = pumpSpeedLimits["maxSpeed"]
-    mlPerSecond = volume/duration
+    mlPerSecond = maxSpeed
+    if duration:
+        mlPerSecond = volume/duration
+    
     if mlPerSecond > maxSpeed:
         raise Exception("Recipe task cannot be completed, pump {0} cannot operate fast enough.".format(pump))
     elif mlPerSecond >= minSpeed and mlPerSecond <= maxSpeed:
