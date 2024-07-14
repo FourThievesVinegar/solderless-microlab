@@ -276,6 +276,7 @@ def pump(microlab, parameters):
         dictionary
             'pump' - one of: 'X' or 'Y' or 'Z'
             'volume' - volume to dispense in ml
+            'duration' - optional, time to dispense volume over in seconds
     :return:
         None
     """

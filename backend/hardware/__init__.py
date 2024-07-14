@@ -221,8 +221,10 @@ class MicroLabHardware:
             The pump id. One of 'X', 'Y' or 'Z'
         :param volume:
             The number ml to dispense
+        :param duration:
+            optional - How long the dispense should take in seconds
         :return:
-            None
+            Number indicating how long the dispense should take to complete
         """
         return self.reagentDispenser.dispense(pumpId, volume, duration)
 
