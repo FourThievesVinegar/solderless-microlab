@@ -285,15 +285,21 @@ def test_stir_time_finished(microlab):
 def test_pump_x(microlab):
     fn = tasks.pump(microlab, {'pump': 'X', 'volume': 0.1})
     res = next(fn)
+    assert res > 0
+    res = next(fn)
     assert res == None
 
 def test_pump_y(microlab):
     fn = tasks.pump(microlab, {'pump': 'Y', 'volume': 0.1})
     res = next(fn)
+    assert res > 0
+    res = next(fn)
     assert res == None
 
 def test_pump_z(microlab):
     fn = tasks.pump(microlab, {'pump': 'Z', 'volume': 0.1})
+    res = next(fn)
+    assert res > 0
     res = next(fn)
     assert res == None
 
@@ -301,6 +307,24 @@ def test_pump_invalid_pump_id(microlab):
     fn = tasks.pump(microlab, {'pump': 'Q', 'volume': 0.1})
     with pytest.raises(ValueError):
         res = next(fn)
+
+def test_pump_errors_too_fast(microlab):
+    fn = tasks.pump(microlab, {'pump': 'X', 'volume': 100, 'duration': 0.1})
+    with pytest.raises(ValueError):
+        res = next(fn)
+
+@pytest.mark.microlab_data({'reactor-reagent-dispenser': {'minSpeed': 0.1}})
+def test_pumps_slow_dispense(microlab):
+    # should dispense in 10 bursts about 10 seconds apart.
+    fn = tasks.pump(microlab, {'pump': 'X', 'volume': 1, 'duration': 100})
+    for i in range(0,10):
+        res = next(fn)
+        assert 10 == pytest.approx(res, 0.001)
+    res = next(fn)
+    assert 0 == pytest.approx(res)
+
+    res = next(fn)
+    assert res == None
 
 
 # MAINTAIN PID

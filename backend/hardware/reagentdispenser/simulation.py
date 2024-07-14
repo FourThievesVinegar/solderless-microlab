@@ -6,6 +6,13 @@ def log(message):
     logging.info('reagentdispenser.simulation - {0}'.format(message))
 
 class SimulatedReagentDispenser(ReagentDispenser):
+    def __init__(self, args):
+        self.minSpeed = 0.1
+        self.maxSpeed = 10
+        if 'minSpeed' in args:
+            self.minSpeed = args['minSpeed'] 
+        if 'maxSpeed' in args:
+            self.maxSpeed = args['maxSpeed'] 
 
     def dispense(self, pumpId, volume, duration=None):
         """
@@ -26,10 +33,10 @@ class SimulatedReagentDispenser(ReagentDispenser):
             log('Dispensing {0}ml from pump Z'.format(volume))
         else:
             raise ValueError("Pump '{0}' does not exist.".format(pumpId))
-        time.sleep(abs(volume))
+        return abs(volume)
 
     def getPumpSpeedLimits(self, pumpId):
         return {
-            "minSpeed": 1,
-            "maxSpeed": 100
+            "minSpeed": self.minSpeed,
+            "maxSpeed": self.maxSpeed
         }
