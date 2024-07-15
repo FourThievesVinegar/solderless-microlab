@@ -4,7 +4,7 @@ pytest==8.0.0
 requests==2.31.0
 pyserial==3.5
 w1thermsensor==2.0.0
-pyyaml==6.0
+pyyaml==6.0.1
 configobj==5.0.8
 multiprocessing-logging==0.3.4
 simple-pid==2.0.0

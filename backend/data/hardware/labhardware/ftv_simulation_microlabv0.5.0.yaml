@@ -7,7 +7,7 @@ devices:
     thermometerID: "reactor-thermometer"
     # Maximum and minimum temperature in celsius that the hardware can support
     # This simulation uses the same values as real hardware
-    maxTemp: 50
+    maxTemp: 85
     minTemp: -20
     # Optional. Starting temperature in celsius, defaults to 24 if not set
     temp: 24

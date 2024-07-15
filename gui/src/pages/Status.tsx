@@ -8,7 +8,15 @@ import { selectOption, stopRecipe } from '../utils'
 import './Status.scss'
 
 export function Status(props: {
-  status: { status: string; step: number; stepCompletionTime: Date; icon: string; message: string; options: string[] }
+  status: {
+    status: string
+    step: number
+    stepCompletionTime: Date
+    icon: string
+    message: string
+    options: string[]
+    hardwareError?: string
+  }
 }) {
   const { status } = props
   const [loading, setLoading] = useState(false)

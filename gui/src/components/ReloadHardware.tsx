@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { reloadHardware } from '../utils'
 import { Button, Form } from 'semantic-ui-react'
 
-export const ReloadHardware = () => {
+export const ReloadHardware = (props: { onReload?: () => void; displayMessage?: boolean }) => {
+  const { onReload, displayMessage } = props
   const [message, setMessage] = useState('')
 
   const handleFormSubmit = () => {
     setMessage('Setting new configuration...')
+    onReload?.()
     reloadHardware()
       .then(data => {
         if (data.response === 'ok') {
@@ -29,7 +31,7 @@ export const ReloadHardware = () => {
         Reload Hardware
       </Button>
       <br />
-      {message}
+      {displayMessage && message}
     </Form>
   )
 }

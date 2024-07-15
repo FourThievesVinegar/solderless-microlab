@@ -276,6 +276,7 @@ class Recipe:
         self.stepCompletionTime = None
         self.currentTasks = []
         options = []
+        tasksToRun = []
 
         if STEP_USER_OPTIONS in step:
             for option in step[STEP_USER_OPTIONS]:
@@ -288,19 +289,19 @@ class Recipe:
         if('icon' in step):
             self.icon = step['icon']
 
-        if TASK_TYPE in step and step[TASK_TYPE] != 'humanTask': # Run the base task for the step
-            if not STEP_TASKS in step: # this is the only task
-                step[STEP_TASKS] = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
-            else:   # We have other tasks, let's append the base task.
-                step[STEP_TASKS].append({TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]})
+        if TASK_TYPE in step and step[TASK_TYPE] != 'humanTask': # There are tasks to perform
+            # Add the base task
+            tasksToRun = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
+            if STEP_TASKS in step: # We have other tasks, let's append the base task and those other tasks
+                tasksToRun = tasksToRun + step[STEP_TASKS]
 
-        if STEP_TASKS in step: # Run all tasks for the step
-            for task in step[STEP_TASKS]:
+        if tasksToRun: # Run all tasks for the step
+            for task in tasksToRun:
                 if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
                     self.currentTasks.append(tasks.runTask(microlabHardware, task[TASK_TYPE], task[TASK_PARAMETERS]))
             
             tasksWithDurations = filter(
-                lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), step[STEP_TASKS])
+                lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), tasksToRun)
             taskDurations = list(map(lambda task: task[TASK_PARAMETERS]['time'], tasksWithDurations))
             if len(taskDurations) > 0:
                 duration = timedelta(seconds=max(taskDurations))

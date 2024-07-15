@@ -5,13 +5,13 @@ import { Header } from './components/Header'
 import { Home } from './pages/Home'
 import { Recipes } from './pages/Recipes'
 import { RecipeDetails } from './pages/RecipeDetails'
-import { ReactionHistory } from './pages/ReactionHistory'
 import { Settings } from './pages/Settings'
 import { Status } from './pages/Status'
 import { Logs } from './pages/Logs'
 import SettingsContext from './contexts/Settings'
 import { SOUNDS, useAudio } from './hooks/useAudio'
 import { getStatus } from './utils'
+import { HardwareStatus } from './pages/HardwareStatus'
 
 import './styles/app.css'
 import './styles/4tv.scss'
@@ -69,16 +69,16 @@ export function App() {
           <RecipeDetails />
         </Route>
 
-        <Route path="/reaction-history">
-          <ReactionHistory />
-        </Route>
-
         <Route path="/settings">
           <Settings />
         </Route>
 
         <Route path="/status">
           <Status status={status} />
+        </Route>
+
+        <Route path="/hardwareStatus">
+          <HardwareStatus status={status} />
         </Route>
 
         <Route path="/logs">

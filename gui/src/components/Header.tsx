@@ -60,14 +60,14 @@ export function Header(props: {
       <aside className={`main-menu ${showMenu ? 'active' : ''}`}>
         <h2>Main menu</h2>
         <div className="button-list">
+          <Button as={Link} color="blue" to="/hardwareStatus" onClick={hideMenu}>
+            Microlab Status
+          </Button>
           <Button as={Link} color="blue" to="/recipes" onClick={hideMenu}>
             Recipes
           </Button>
           <Button as={Link} color="blue" to="/settings" onClick={hideMenu}>
             Settings
-          </Button>
-          <Button as={Link} color="blue" to="/reaction-history" onClick={hideMenu}>
-            Reaction History
           </Button>
           <Button as={Link} color="blue" to="/logs" onClick={hideMenu}>
             View Logs

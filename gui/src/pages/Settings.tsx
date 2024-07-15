@@ -34,7 +34,7 @@ export function Settings() {
       </div>
       <Divider />
       <div className="settings-block">
-        <ReloadHardware />
+        <ReloadHardware displayMessage={true} />
         <ControllerHardwareConfig refetch={counter} />
         <ControllerConfigUpload onUpload={updateCounter} />
       </div>
