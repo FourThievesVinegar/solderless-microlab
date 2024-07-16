@@ -1,6 +1,12 @@
 #MicroLab Troubleshooting
 
 
+
+
+Touchscreen for Raspberry Pi (CU-RPI). Make sure you get the proper drivers – different manufacturers may require different drivers. For the linked model, try these: link
+https://www.dropbox.com/scl/fo/hawpkmswazw5h7lv2p8vq/AJa3CosqXNYN0Y3zPbmVNjM/Driver?rlkey=ev89s381ag053wue395hf4ueb&e=1&subfolder_nav_tracking=1&dl=0
+
+
 ## Stepper Motor Calibration
 
 Before we continue with assembly we should tune the potentiometers and test the stepper motor wiring.

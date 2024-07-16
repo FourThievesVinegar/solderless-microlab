@@ -1,41 +1,42 @@
 
 # MicroLab Reactor Unit Assembly
 
-The Reactor Unit is where the action happens, it made up of the pumps, pump case, reactor core and reactor unit stand.
+The Reactor Unit is where the action happens, it is made up of the pumps, pump case, reactor core and reactor unit stand.
 
-* [Assembling the Pumps Unit](#pumps)
+* [Assembling the Pumps Box](#pumps)
 * [Assembling the Reactor Core](#core)
 * [Assembling the Reactor Unit](#unit)
 
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-unit-assembled.jpg" WIDTH="400" />
 
+### Skills Needed
+* Wire stripping - one example [video](https://www.youtube.com/watch?v=N__OLJvq2HE)
+* Reading pinout diagrams
+
 
 ### Parts
 
-| Section | Part ID      | Part Name     | Count | Notes |
-|--- | ------------- | ------------- |------| ----|  
+| Part ID      | Part Name     | Count | Notes |
+| ------------- | ------------- |------| ----|  
 |||
-|PUMPS UNIT|
-PU-PSP|Peristaltic pumps|3
-PU-SYR|Syringes|3+
-PU-HOU|Pumps Unit box and lid|1 each
-PU-PLG|Female barrel plug connector|2
-||
-|REACTOR UNIT|
-RX-MXM|Mixing motor|1
-RX-PDL|Mixing paddle|1
-RX-MXC|Mixing paddle coupling|
-RX-RED|Reducing fitting|
-RX-LID|Reactor manifold core and lid|1
-RX-MMM|Mixing motor mount|1
-RX-RUC|Reactor collar|2
-RX-COR|6 oz mason jar for core chamber|1
-RX-OUT|32oz wide mouth mason jar for outer jacket|1
-RX-STD|Reactor stand|1
-???|A 12v light with a male barrel connector plug|
-||
-|Shared Parts|
-SP-M3|Various M3 Screws|1
+RU-SRM|	Stir rod motor|	1
+RU-STR|	Stir rod |	1
+RU-SRC|	Stir rod coupling|
+RU-RED|	Reducing fitting|
+RU-LID|	Reactor manifold core and lid (Printed)|	1
+RU-SRM|	Stir rod mount (Printed)|	1
+RU-RJF|	Jar Flangers (Printed)|	2
+RU-COR|	6 oz mason jar for core chamber|	1
+RU-OUT|	32oz wide mouth mason jar for outer jacket|	1
+RU-SDH|	Reactor stand - H  (Printed)|	1
+RU-SDH|	Reactor stand - A  (Printed)|	1
+RU-SDH|	Reactor stand - ¢  (Printed)|	1
+RU-SDH|	Reactor stand - K  (Printed)|	1
+RU-TMP|	Thermistor|	1
+RU-PPM|	Peristaltic pumps with stepper motors|	3
+RU-SYR|	Syringes|	3
+RU-PUB|	Pumps box (Printed)|	1
+RU-PUL|	Pumps lid (Printed)|	1
 
 
 #### Printed Parts
@@ -46,10 +47,10 @@ SP-M3|Various M3 Screws|1
 
 ## Pumps Box Assembly
 
-The Pumps Box contains 3 Peristaltic pumps w/ stepper motors that inject reagents into the Reactor Core and 2  circulating pumps that move hot and cold fluids to control the Reactor Core's temperature. It also has plugs for the stirring motor and the Reactor Stand's optional light.
+The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject reagents into the Reactor Core and the 2 circulating pumps on the sides that move hot and cold fluids to control the Reactor Core's temperature. It also has plugs on the front for the stirring motor and the Reactor Stand's accessory port that can be used to power accessories like a light.
 
-<IMG ALT="Pumps Unit Front showing three peristaltic pumps and two female barrel connectors on the front of a 7 inch by 7 inch 3d printed box" SRC="./media/pumps-unit/pumps-unit-complete-front.jpg" WIDTH="400" />
-<IMG ALT="Pumps Unit Rear showing two phoenix connector sockets and screws at the corners." SRC="./media/pumps-unit/pumps-unit-complete-rear.jpg" WIDTH="400" />
+<IMG ALT="Pumps Box Front showing three peristaltic pumps and two female barrel connectors on the front of a 7 inch by 7 inch 3D printed box" SRC="./media/pumps-unit/pumps-unit-complete-front.jpg" WIDTH="400" />
+<IMG ALT="Pumps Box Rear showing two connector sockets and screws at the corners." SRC="./media/pumps-unit/pumps-unit-complete-rear.jpg" WIDTH="400" />
 
 ## Skills Needed
 
@@ -81,7 +82,7 @@ The Pumps Box contains 3 Peristaltic pumps w/ stepper motors that inject reagent
 - Pumps box
 - Pumps lid
 
-## Assembling the Pumps Unit
+## Assembling the Pumps Box
 <a name="pumps"></a>
 
 ### Mounting the Components to the Box
@@ -99,7 +100,7 @@ We're going to mount the pumps then install the plugs for the stirring motor and
 - 3 peristaltic pumps
 - 2 circulating pump
 - 16 M3 screws and nut
-  - 12 for the peristalic pumps
+  - 12 for the peristaltic pumps
   - 4 for circulating pumps
 - 2 barrel plug connectors, female
 - TODO: Maybe some wire connectors in here as well
@@ -126,7 +127,7 @@ Next, we'll install the 8-pin and 12-pin Phoenix connector sockets and wire them
 
 - Pumps box back panel
 - 12-pin panel-mounted female Phoenix-style connector
-- 3 stepper motor cables, already connected to the peristalic pumps
+- 3 stepper motor cables, already connected to the peristaltic pumps
 - 8-pin panel-mounted female Phoenix-style connector
 - Additional wire connectors (as needed)
 
@@ -170,14 +171,14 @@ Wiring the Phoenix connector
 
 ### 12pin wiring
 
-Connect the 12-wire Phoenix connector to the stepper motor cables for the 3 peristalic pumps. When viewed from the back of the open box the pump from left to right are Z, Y, X.
+Connect the 12-wire Phoenix connector to the stepper motor cables for the 3 peristaltic pumps. When viewed from the back of the open box the pump from left to right are Z, Y, X.
 - On the back on the Phoenix connector, from the left, insert and then screw down the power cables for the X and then Y and then Z cables. Each cable has 4 wires. From the left connect the wires in this order:
   - black
   - green
   - blue
   - red
     - Take the other end of the 4-wire cable and place the black and green wire in their own slots of the 4-to-1 wire connector #1. Then put the red and blue wires together in one slot. That leaves the last slot open for power (-12V), put the 4" black wire in that slot.
-  - Plug the X cable into the X motor, the Y cable into the Y motor and the the Z cable into the Z motor.
+  - Plug the X cable into the X motor, the Y cable into the Y motor and the Z cable into the Z motor.
 
     <IMG ALT="Wiring the pump wires" SRC="./media/pumps-unit/phx_cables.png" WIDTH="400" />
 
@@ -202,13 +203,13 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 
 <IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" />
 
-## Partse
+## Parts
 
 ### Purchased parts
 
 - Wide mouth quart Mason jar 32oz, plus its lid ring
 - Regular mouth Mason jar 6oz, plus its lid ring
-- MStir rod
+- Stir rod
 - Stir rod motor
   - Padding to hold the motor in place if it is smaller than the opening in the stirrer mount (we are looking into redesigning this)
 - Male barrel plug connector (if your motor does not already have one)
@@ -264,7 +265,7 @@ The motor mount is in active development as of v0.6 and we thank you for patienc
 
 - Stirring motor mount
 - Stirring motor
-  - Possiby necessary: Material such as dense foam to hold it in place.
+  - Possibly necessary: Material such as dense foam to hold it in place.
 - Shaft coupler to connect the motor to the stirring paddle shaft.
   - Possibly necessary: ~1" of silicone or surgical tubing to connect the shaft coupler to the stirring paddle's shaft. There are couplers that will mate various motors to the shaft, but finding them in the exact sizes required can be tricky. We have found that silicone tubing with 1mm walls and an 8mm outer diameter gives a snug fit that isn't too hard to work with.
 - Stirring paddle
@@ -278,10 +279,10 @@ The motor mount is in active development as of v0.6 and we thank you for patienc
 - Push one end of the shaft coupler over the motor's shaft and secure it with one of the M3 screws that came with the coupler.
    - Take care to center it as well as possible and note that the shaft is likely has a flat spot that makes it non-symmetrical
 - Insert the coupler into the hole in the top of the stirring motor mount.
-- From the bottom of Reacter Core manifold insert the mixing paddle's shaft through the center.
+- From the bottom of Reactor Core manifold insert the mixing paddle's shaft through the center.
 - Take the stirring motor mount and insert the mixing paddle's shaft until it slides into the coupling tubing.
 - Use the M3 screws to connect the stirring mount to the top of the manifold.
-  - Drilling or otherwise widening the motor mount's screw holes can make this easier depnding on you 3D print quality
+  - Drilling or otherwise widening the motor mount's screw holes can make this easier depending on you 3D print quality
 
 ## Reactor Unit reaction chamber assembly
 
@@ -363,11 +364,11 @@ You've already built the core and the pump. All that's left to do is connect it 
 - Place the reactor core in the center of the ¢.
 - Place the C shims in between the top of the ¢ and the underside of the rim on the neck of the Reactor Core's outer jar. Two shims should keep it snugly in place. If not, consider using another shim.
 - Plug the stirring motor's plug into the upper barrel connector socket.
-- Attch the tubing to the peristaltic pumps and Reactor Core manifold's inner channels.
+- Attach the tubing to the peristaltic pumps and Reactor Core manifold's inner channels.
   - For more on this, see [MicroLab Operation](/docs/operation.md).
 
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-unit-assembled.jpg" WIDTH="400" />
 
 
 
-This concludes the assembly instructions for the Reacter Unit. Next up: [MicroLab Operation](/docs/operation.md).
+This concludes the assembly instructions for the Reactor Unit. Next up: [MicroLab Operation](/docs/operation.md).

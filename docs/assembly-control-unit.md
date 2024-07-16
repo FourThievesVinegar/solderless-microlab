@@ -34,8 +34,8 @@ Steps:
 ## Skills Needed
 <a name="skills"></a>
 
-* Wire stripping [URL]
-* Reading circuit board diagrams [URL]
+* Wire stripping - one example [video](https://www.youtube.com/watch?v=N__OLJvq2HE)
+* Reading pinout diagrams
 * Torrenting software
 
 ## Tools Needed
@@ -50,17 +50,9 @@ Steps:
 
 ## Parts Needed
 
-For more information on purchased parts, check the [MicroLab Parts List](microlab-parts-list.xslx).
+**Purchased parts info.** For more information on purchased parts, check the [MicroLab Parts List](microlab-parts-list.xslx).
 
-For more information about the 3D printed parts, check [How to build & use the MicroLab and MicroLab Suite](docs/index.md#3d) page.
-
-Parts are referenced by their Part ID
-
-
-* Control Unit case
-* Control Unit lid
-* Sub-component mounts (optional but nice to hold your stuff in place)
-
+**Printer parts info.** Parts listed as printed, like "CU-CB Control Case (Printed)", are 3D printed, check the [3D Printed Parts section ](docs/index.md#3d) of the "How to build the MicroLab" page.
 
 | Section | Part ID      | Part Name     | Count | Notes |
 |--- | ------------- | ------------- |------| ----|
