@@ -65,8 +65,8 @@ This component heats and stores hot water used to heat the Reactor Core.
 **Parts:**
 
 - Large Mason Jar (16oz or 32oz - we are still determining optimal designs for the heat exchanger)
-- 5 - 10' of copper tubing (still experimenting with optimal configurations)
-  - Other heat exchangers may be used such as a larger home-brewing copper coil or an aluminum transmission oil cooler.
+- 5 - 10' of copper tubing
+  - Alternatives: Other heat exchangers may be used such as a larger home-brewing copper coil or an aluminum transmission oil cooler.
 - Printed Heating Unit lid
 
 **Assembly:**
