@@ -52,7 +52,7 @@ export function App() {
       <Header>
         {status
           ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
-              status?.temp ? `${status?.temp.toFixed(2)}C` : ''
+              typeof status?.temp === 'number' ? `${status?.temp.toFixed(2)}C` : ''
             }`
           : 'Waiting for control service'}
       </Header>
