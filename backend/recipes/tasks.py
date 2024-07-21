@@ -27,11 +27,14 @@ def heat(microlab, parameters):
     microlab.turnHeaterOn()
     microlab.turnHeaterPumpOn()
     while True:
-        if microlab.getTemp() >= targetTemp:
-            microlab.turnHeaterOff()
-            microlab.turnHeaterPumpOff()
-            yield None
-        yield 1
+        try: 
+            if microlab.getTemp() >= targetTemp:
+                microlab.turnHeaterOff()
+                microlab.turnHeaterPumpOff()
+                yield None
+            yield 1
+        except:
+            logging.error("Error in microlab.getTemp")
 
 
 def cool(microlab, parameters):
