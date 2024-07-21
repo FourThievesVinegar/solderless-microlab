@@ -23,7 +23,7 @@ def grblWrite(grblSer, command):
     # parsed the command
     response = grblSer.read_until()
     if 'error' in str(response):
-        raise Exception("grbl command error: {0}".format(response))
+        raise Exception("grbl command error: {0} for command: {1}".format(response, command))
 
 class SyringePump(ReagentDispenser):
     def __init__(self, args):
