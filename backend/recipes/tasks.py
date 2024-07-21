@@ -157,27 +157,31 @@ def maintainSimple(microlab, parameters):
     logging.debug('Maintaining with default temperature control')
 
     while True:
-        currentTemp = microlab.getTemp()
-        logging.debug('temperature @ {0}'.format(currentTemp))
-        if (microlab.secondSinceStart() - start) >= duration:
-            microlab.turnHeaterOff()
-            microlab.turnHeaterPumpOff()
-            microlab.turnCoolerOff()
-            yield None
-        if heaterEnabled:
-            if currentTemp > targetTemp:
+        try:
+            currentTemp = microlab.getTemp()
+            logging.debug('temperature @ {0}'.format(currentTemp))
+            if (microlab.secondSinceStart() - start) >= duration:
                 microlab.turnHeaterOff()
                 microlab.turnHeaterPumpOff()
-            if currentTemp < targetTemp - tolerance:
-                microlab.turnHeaterOn()
-                microlab.turnHeaterPumpOn()
-        if coolerEnabled:
-            if currentTemp > targetTemp + tolerance:
-                microlab.turnCoolerOn()
-            if currentTemp < targetTemp:
                 microlab.turnCoolerOff()
+                yield None
+            if heaterEnabled:
+                if currentTemp > targetTemp:
+                    microlab.turnHeaterOff()
+                    microlab.turnHeaterPumpOff()
+                if currentTemp < targetTemp - tolerance:
+                    microlab.turnHeaterOn()
+                    microlab.turnHeaterPumpOn()
+            if coolerEnabled:
+                if currentTemp > targetTemp + tolerance:
+                    microlab.turnCoolerOn()
+                if currentTemp < targetTemp:
+                    microlab.turnCoolerOff()
 
-        yield interval
+            yield interval
+
+        except:
+            logging.error("Error in maintainSimple. currentTemp: {0}, targetTemp: {1}".format(currentTemp, targetTemp))
 
             
 def maintainPID(microlab, parameters):
