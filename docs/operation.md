@@ -36,7 +36,7 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 <a name="reactor"></a>
 
 - **Assembled Reactor Unit.** If not already assembled, put together the stand, add the Pumps Box and Reactor Core. You can refer to [Building the Reactor Unit](/docs/assembly-reactor-unit.md) for more information.
-- **Add outer chamber liquid.** Unscrew the 32 oz mason jar outer chamber lid ring. Lift up the manifold lid and add the liquid to the jar. re-seat the manifold and screw the lid ring back to secure the manifold.
+- **Add outer chamber liquid.** Unscrew the 32 oz mason jar outer chamber lid ring. Lift up the manifold lid and add the liquid to the jar. Re-seat the manifold and screw the lid ring back to secure the manifold.
 - **Add Thermistor** Insert Thermistor in the opening on the manifold so the probe reaches the liquid in the 6oz mason jar inner chamber of the Reactor Core.
 
   <IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/ru_thermistor.png" WIDTH="300"/>
@@ -51,7 +51,7 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 - **Heat the liquid** Plug in the submersible heater and allow it to run and heat up the water.
 - Plug the heating unit into the barrel connector
 
-<IMG ALT="Temp Tubing" SRC="./media/temperature-units/tu_tubing.png" WIDTH="400"/>
+<IMG ALT="Temp Tubing" SRC="./media/temperature-units/ru_therm.png" WIDTH="400"/>
 
 
 
@@ -94,7 +94,7 @@ The MicroLab should now be connected and ready to be setup up for a recipe and r
 
 When you add power to the Control Unit, it will turn on. You should a see start-up sequence on the touchscreen.
 
-A setup MicroLab just needs a recipe to run, the ingredients loaded, and some human actions during the recipe making.
+Once your MicroLab is set up it just needs a recipe to run, the ingredients loaded, and some human actions during the recipe making.
 
 ## MicroLab Recipes
 
@@ -172,7 +172,7 @@ The MicroLab is able to do these tests by using and reusing its 10 steps.
 ## Using a Recipe
 
 Before starting a recipe:
-* Setup the MicroLab
+* Set up the MicroLab
 * Have Heating Unit reach the needed temperature
 * Have Cooling Unit reach the needed temperature
 * Load the syringes with the needed liquid ingredients
@@ -181,7 +181,7 @@ Before starting a recipe:
 In general, you will use the touchscreen to locate and start the recipe. Follow the steps of the recipe until completion.
 
 With the Test Recipe you would:
-* Setup the MicroLab
+* Set up the MicroLab
 * Load the syringes with water and attach to the top three peristaltic pumps
 * Let the Heating Unit heat up
 * Setup the Cooling Unit

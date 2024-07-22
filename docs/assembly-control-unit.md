@@ -40,12 +40,11 @@ Steps:
 
 ## Tools Needed
 
-* Wire strippers
-* Hex key for M3 screws, 2mm if from kit
-* Computer w/ SD readers. You may need an SD card to USB converter
-* Small phillips head screw driver
-* Flush cutters
-* Needle nose pilers
+* Wire cutters/stripper (CU-WCS)
+* Computer w/ SD reader. You may need an SD card to USB converter
+* Small phillips head screwdriver for M3 screws, one came in kit
+* Flush cutters (CU-FCT)
+* Needle nose pilers (CU-NNP)
 
 
 ## Parts Needed
@@ -56,61 +55,44 @@ Steps:
 
 | Section | Part ID      | Part Name     | Count | Notes |
 |--- | ------------- | ------------- |------| ----|
-Section|Parts|Name|Count
-Board - Pi|CU-RPI|Raspberry Pi 3 Model B Board|1
-Board - Pi|CU-SCR|Touch screen [For CU-RPI]|1
-Board - Pi|CU-SD32|Micro SD card - 32GB|1
-Board - Pi|CU-UPC|Micro USB Power Cable - right angle [For CU-RPI]|1 |
-|||
-Board - Arduino|CU-UNO|Arduino UNO|1
-Board - Arduino|CU-CNC|Arduino CNC shield|1
-Board - Arduino|CU-SMD|Stepper Motor Drivers [For CU-CNC]|1
-Board - Arduino|CU-SPS|CNC Shield Power Supply - 12V|1
-Board - Arduino|SP-SMC|Stepper Motor Cables| 3 | Used here and in [Assembling the Pumps](/docs/assembly-pumps-unit.md). Cables came with pumps.
-|||
-Calibration|N/A|Assembled Pi [From Boards section]|1
-Calibration|N/A|Assembled Arduino [includes CU-SPS and SP-SMC]|1
-Calibration|PU-PSP|Peristaltic pumps with stepper motors|3 | Used here for testing.  
-|||
-8Pin Relay|SP-PC8|Phoenix Connectors| 8-pin - female side|2
-8Pin Relay|CU-RLY|4 Channel Relay Board - 5V|1
-8Pin Relay|CU-WCL|Wire connectors| lever|
-8Pin Relay|CU-WCL|Wire connectors| lever|
-8Pin Relay|SP-CAB|Cables (Control to Pumps)|15ft| Used to make short wires
-8Pin Relay|CU-JMP|Breadboard Jumper Wires - male-female|5
-|||
-12Pin Relay|SP-PC12|Phoenix Connectors 12-pin - female side|2
-12Pin Relay|CU-RLY|4 Channel Relay Board - 5V|1
-|||
-Case|CU-CBC|Control Case (Printed)|1 | [Check the printed parts section](docs/index.md)
-Case|CU-CBL|Control Lid (Printed)|1 | [Check the printed parts section](docs/index.md)
-Case|CU-CBL|Sub-component mounts (Printed)|1 | [Check the printed parts section](docs/index.md)
-Case|MC-PLG|Barrel plug connector - female side (Control Unit and Pumps)|1 | 5.5mm x 2.1mm
-Case|SP-PC12|12-pin connector, panel-mount screw terminal |2
-Case|SP-PC8|8-pin connector, panel-mount screw terminal|2
-Case|SP-PC2|2-pin connector, panel-mount screw terminal|2
-Case|SP-QDC|Quick-disconnect connectors [for SP-PC2]|2
-Case|CU-BTN|12mm button 12v w/ lights (optional)|1
-Case|CU-USB|Mountable USB cables|1
-Case|SP-M3S-16|16mm M3 screws (Control Unit)|6
-|||
-12v USB|MC-PLG|Barrel plug connector - male (Control unit and Pumps)|1
-12v USB|CU-SDC|USB step-down converter - 12v to 5v|1
-12v USB|CU-A2B|USB A/B cable [For CU-RPI to CU-UNO]|1
-|SP-M3S-20|20mm M3 screws (Control Unit)|2
-|||
-GPIO Step|CU-JMP|Breadboard Jumper Wires - male-female|5
-GPIO Step|SP-QDC|Quick-disconnect connectors [for SP-PC2]|2
-|||
-Final Mount|CU-SCR|Touch screen [For CU-RPI]|1
-Final Mount|CU-CBL|Contol Lid (Printed)|1
-Final Mount|SP-M3S-16|16mm M3 screws (Control Unit)|2
-|||
-ML Cables |SP-CAB|Cables (Control to Pumps)|15 ft
-ML Cables |SP-PC8|8-pin connector, panel-mount screw terminal |2
-ML Cables |SP-PC12|12-pin connector, panel-mount screw terminal |2
-ML Cables |SP-SWW|Split Wire Wrap|?
-Shared Part |SP-ETN|Electrical tape, narrow|1 roll
+Control Unit (CU)|	CU-RPI|	1|	Raspberry Pi 3 Model B Board
+Control Unit (CU)|	CU-SCR|	1|	Touchscreen for Raspberry Pi
+Control Unit (CU)|	CU-SD32|1|	Micro SD card, 32GB
+Control Unit (CU)|	CU-UPC|	1|	 Micro USB Cable, right angle
+Control Unit (CU)|	CU-UNO|	1|	Arduino UNO
+Control Unit (CU)|	CU-CNC|	1|	Arduino CNC shield
+Control Unit (CU)|	CU-SMD|	3|	Stepper Motor Drivers [For CU-CNC]
+Control Unit (CU)|	CU-A2B|	1|	USB A/B cable for Raspberry Pi to Arduino
+Control Unit (CU)|	CU-RLY|	1|	4-Channel Relay Board
+Control Unit (CU)|	CU-WCL|	1|	Wire Connector (lever), 2-in-6-out
+Control Unit (CU)|	CU-JMP|	5|	Breadboard Jumper Wires, male-female
+Control Unit (CU)|	CU-RLY|	1|	4 Channel Relay Board, 5V
+Control Unit (CU)|	CU-POW|	1|	Power Supply, 12V 5A
+Control Unit (CU)|	CU-CBC|	1|	Control Case (Printed)
+Control Unit (CU)|	CU-CBL|	1|	Control Lid (Printed)
+Control Unit (CU)|	CU-CCP|	1|	Converter case (Printed)
+Control Unit (CU)|	CU-RCP|	1|	Relay case (Printed)
+Control Unit (CU)|	CU-PLG|	2|	Barrel plug connectors, 5.5mm x 2.1mm
+Control Unit (CU)|	CU-USB|	2|	Mountable USB cables
+Control Unit (CU)|	CU-USB|	2|	Mountable USB cables
+Control Unit (CU)|	CU-SDC|	1|	12V to 5V Converter, stepdown
+Control Unit (CU)|	CU-UTS|	1|	USB to Screw Terminal adapter
+Control Unit (CU)|	CU-RAH| 1|	Right angle header row
+Control Unit (CU)|	CU-WCS|	1|	Wire Cutter and Stripper
+Control Unit (CU)|	CU-FCT|	1|	Flush cutters
+Control Unit (CU)|	CU-NNP|	1|	Needle-nose pilers
+Shared Parts|	SP-CAB|	15ft roll|	4-wire cable, 18 gauge
+Shared Parts|	SP-RBW|	40ft roll|	2-wire cable, red and Black , 18 gauge
+Shared Parts|	SP-SWW|	15ft roll|	Split Wire Wrap
+Shared Parts|	SP-PC12|	2|	12-pin connector, panel-mount screw terminal
+Shared Parts|	SP-PC8|	2|	8-pin connector, panel-mount screw terminal
+Shared Parts|	SP-PC2|	1|	2-pin connector, panel-mount screw terminal
+Shared Parts|	SP-M3S-12|	23|	12mm M3 screws with nuts
+Shared Parts|	SP-M3S-16|	28|	16mm M3 screws with nuts
+Shared Parts|	SP-M3S-20|	5	|20mm M3 screws with nuts
+Shared Parts|	SP-M3S-30|	5	|30mm M3 screws with nuts
+Shared Parts|	SP-SMC|	6|	Stepper motor cables
+Shared Parts|	SP-ETN|	1 roll|	Electrical tape, narrow
 
 
 ## Control Boards Setup
@@ -137,20 +119,21 @@ The Raspberry Pi runs its software from the SD card. In this section we will hav
 #### Installing the touchscreen
 
 1. Line the touchscreen up with the Raspberry Pi's board. Position the screen's female headers over the Raspberry Pi's header pins (pins 1-26, see picture) and then push down gently until the screen is completely connected to the board.
-<IMG ALT="Installing the touchscreen" SRC="./media/control-unit/raspberrypi.jpg" WIDTH="1000" />
+<IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_pi_screen.jpeg" WIDTH="1000" />
 
 **NOTE:** We will need to remove the touchscreen to put the GPIO pins in place later in the instructions.
 
-### Arduino Setup <a name="arduino"></a>
+### Arduino Setup
+<a name="arduino"></a>
 
-In this section to setup the Arduino board we will:
+In this section to set up the Arduino board we will:
 * Install software that controls the CNC shield
 * Attach the CNC shield
-* Install the stepper motor boards on the shield
+* Install the stepper motor driver modules on the shield
 
 Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/](https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00-assembly-guide/)
 
-**Critical Safety Note:** ALWAYS disconnect the power before connecting or disconnecting the stepper motors from the CNC shield. Failure to follow them can hurt both you and the component.
+**Critical Safety Note:** ALWAYS disconnect the power before connecting or disconnecting the stepper motors from the CNC shield. Failure to do so can hurt both you and the component.
 
 1. **Installing the CNC shield controller software.** The Arduino needs the grbl software to control the CNC shield. Follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash ```grbl``` to the arduino
 1. **Watch the install video** This external video shows the assembly of the CNC shield and stepper motor driver boards. [YouTube Video link](https://youtu.be/zUb8tiFCwmk?t=37)
@@ -160,16 +143,16 @@ Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00
 1. **Install the CNC shield.** Place CNC shield on the Arduino, push the CNC pins into the header sockets on the Arduino until it is fully connected.
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_shield.png" WIDTH="200" />
 
-1. **Add Heatsinks to Stepper Motor Driver Modules** Each Stepper Motor Driver modules came with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
+1. **Add Heatsinks to Stepper Motor Driver Modules.** Each Stepper Motor Driver modules came with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_motor_driver.jpeg" WIDTH="300" />
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_driver_heat.png" WIDTH="200" />
 
-1. **Add the Stepper Motor Driver Modules** Orient and insert the stepper motors driver boards into the X, Y, and Z slots on the shield.
+1. **Add the Stepper Motor Driver Modules.** Orient and insert the stepper motors driver boards into the X, Y, and Z slots on the shield.
 <IMG ALT="Adding Stepper Motor Driver Boards" SRC="./media/control-unit/cu_arduino_assembled.png" WIDTH="300" />
 
-1. **Set Enable Pin to Ground** Place 1 female-female jumper lead on the enable and ground pins to enable the board.
+1. **Set Enable Pin to Ground.** Place 1 female-female jumper lead on the enable and ground pins to enable the board.
 
-1. **Add Stepper Motor Cables** The stepper motors cables have a female connector on one end and bare wire on the other. Connect a female connector to the X header, Y header, and Z header on the CNC shield.
+1. **Add Stepper Motor Cables.** The stepper motors cables have a female connector on one end and bare wire on the other. Connect a female connector to the X header, Y header, and Z header on the CNC shield.
 
 
 
@@ -184,7 +167,7 @@ The majority of the wires in the Control Unit can be grouped as:
 * 5V Power
 * Signals
 
-The 12V circuit is where all the necessary wires are connected so electricity can get from the 12V power supply into the Control Unit and then be sent out at the right time to the 12V components in the MicroLab:
+The 12V circuit is where all the necessary wires are connected so electricity can get from the 12V power supply into the Control Unit and then be sent out at the right time to the 12V components in the MicroLab, specifically:
  * Through the 4-channel relay board to the
     * Heating pump (circulating pump)
     * Cooling pump (circulating pump)
@@ -204,11 +187,11 @@ In order to send 12V out to components the 4-channel relay board, the 8-pin conn
 <BR>
 
 
+#### **Wire Order**
+<a name="wireorder"></a>
+Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
-#### **Wire Order** <a name="wireorder"></a>
-Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring) page. It's important to maintain the same wiring order throughout the project.
-
-**8-pin connector - internal**.
+**8-pin connector - internal**
 The 8-pin connector passes 12V along to the Accessory port (Acc), Stir rod (Stir), Cooling pump (Cool), and Heating pump (Heat) wires.
 
 From inside the case the 8pin connector wiring order will look like this:
@@ -246,7 +229,6 @@ You should now have:
     - 1 blue wire (for 8-pin)
     - 4 black wires (for 8-pin)
     - 4 red wires (for 8-pin)
-
 - 6" wires
     - 4 red wires (for Relay board to the 12V wire connector)
     - 4 black wires (for 8-pin connector to the 12V wire connector)
@@ -255,18 +237,17 @@ You should now have:
 #### **Wiring the 8-pin connector**
 We will attach the positive wires (color coded) and negative wires to the 8-pin connector socket (SP-PC8) first.
 * The connectors have 3 pieces: socket, mount plate and plug.
+
 <IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/connector_parts.png" width="200" />
 
 
-  - **Wiring the Positives.** Take one of the 8-pin connector sockets and from the back use a small screwdriver to loosen the 8 screw terminals. Working left to right, insert the 4" black, green, red, blue wires into the correct positive (+) terminals and tighten the terminals. Use the photo below or the [wiring order](/docs/microlab-wiring) page to confirm placement.
+  - **Wiring the Positives.** Take one of the 8-pin connector sockets and from the back use a small screwdriver to loosen the 8 screw terminals. Working left to right, insert the 4" black, green, red, blue wires into the correct positive (+) terminals and tighten the terminals. Use the photo below or the [wiring order](/docs/microlab-wiring.md) page to confirm placement.
      - Don't overtighten the screw terminal. Once done you should be able to lightly tug on the wires without them moving.  
 
   <IMG ALT="Cable order" SRC="./media/control-unit/wire_rev.png" WIDTH="200" />
 
 
-
 - **Wiring the Negatives.** Next on the 8-pin socket, insert the 6" black cables into the negative (+) terminals and tighten the terminals.
-
 - **Connecting the negative wires.** Take the 12V Wire Connector, open the first two lever slots on the negative side of the connector (shown as the right side with blue levers in our picture). Take the 8-pin negative wires, put two wires in each slot and close the slots.
 
   <IMG ALT="Wire the negative Phoenix wires and connector" SRC="./media/control-unit/cu_8pin_neg.png" WIDTH="400" />
@@ -276,23 +257,22 @@ We will attach the positive wires (color coded) and negative wires to the 8-pin 
 
 #### **Wiring the 4-channel Relay Board**
 
-A relay is electronic on/off switch for the pumps etc. Each of the 4 relays on the 4-channel Relay Board has three terminals.
+A relay is electronic on/off switch for the pumps etc. Each of the four relays on the 4-channel Relay Board has three screw terminals.
 <IMG ALT="4-channel relay" SRC="./media/control-unit/relay.png" WIDTH="200" />
 <BR><BR>
 For this project we will only use two of the terminals with each relay, the NO and the COM. The Normally Open (NO) means it keeps that part of the circuit open by default and no power flows. When the relay is activated, it physically connects the NO terminal to the Common (COM) terminal completing the circuit and then the power flows.
 <IMG ALT="Wiring the positive Phoenix wires and connector" SRC="./media/control-unit/relay_no.png" WIDTH="300" />
 
 - **Wiring the NOs**
-    - Take the 8-pin socket and insert the end of each of its 4" positive wires into the numbered NO terminals (NO1, NO2 etc) on the Relay Board. Tighten the terminals.
+    - Take the 8-pin socket and insert the end of each of the 4" positive wires into the numbered NO terminals (NO1, NO2 etc) on the Relay Board. Tighten the terminals.
        - Black - NO4
        - Green - NO3
        - Red - NO2
        - Blue - NO1
 
   <IMG ALT="Wiring the NOs" SRC="./media/control-unit/cu_8pin_no.png" WIDTH="200" />
-
 - **Wiring the COMs**
-  - Take the 4 red wires, insert one wire into each of the terminals labeled "COM" (common) tighten the terminals.
+   - Take the 4 red wires, insert one wire into each of the terminals labeled "COM" (common) tighten the terminals.
 
 - **Connecting the Relay Board to the 12V Wire Connector**
  - Take the 12V wire connector, open the first two lever slots on the positive side of the connector (shown as the left side with red levers in our picture). Take the other end of the relay board's red COM wires, put two wires in each slot and close the slots.
@@ -312,7 +292,7 @@ In order to send 12V out to the peristalic pumps, the Arduino CNC shield needs t
 <BR>
 
 #### **Wire Order** <a name="wireorder"></a>
-Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring) page. It's important to maintain the same wiring order throughout the project.
+Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
 **12-pin connector - internal**.
 The 12-pin connector passes 12V to the three peristaltic pumps. When looking at the pumps mounted to their box from left to right we'll call them X, Y and Z.
@@ -327,14 +307,14 @@ From inside the case the 12-pin connector wiring order will look like this:
 
 <IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12-pin-sub-assembly.jpg" width="600" />
 
-**Components**
+**Parts**
 
 | Part ID      | Part Name     | Count | Notes |
 | ------------- | ------------- |------| ----|
 |SP-PC12|12-pin connector|1|
 |SP-SMC|Stepper motor cables|6|
 
-- Assembled Ardunio with the 4-wire stepper motor cables that were connected tin the [Arduino Setup](#arduino) section.
+- Assembled Ardunio with the 4-wire stepper motor cables that were connected in the [Arduino Setup](#arduino) section.
 
 **Assembly**
 
@@ -356,7 +336,7 @@ With CNC shield wired for the stepper motors, we will now wire it for the 12V po
 <IMG ALT="Wiring 12V on CNC shield" SRC="./media/control-unit/12vshield2.png" width="600" />
 
 <BR><BR>
-**Components**
+**Parts**
 
 | Part ID      | Part Name     | Count | Notes |
 | ------------- | ------------- |------| ----|
@@ -398,7 +378,7 @@ The 12V Wire Connector passes the 12V power to the converter which, as the name 
 <IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/cu_convert_wire.png" width="300" />
 
 
-#### **Components**
+#### **Parts**
 
 | Part ID      | Part Name     | Count | Notes |
 | ------------- | ------------- |------| ----|
@@ -425,7 +405,7 @@ The Raspberry Pi, 4-Channel Relay Board and the Arduino all run using 5V power. 
 
 The Raspberry Pi sends 5V power (and data) out to the Ardunio and the 2 mounted USB ports through USB cables.  
 
-<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/5V_signals.jpg" WIDTH="600" />
+<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/cu_5V_signals.png" WIDTH="600" />
 
 #### Relay Board Layout
 
@@ -442,7 +422,7 @@ These six terminals are:
   - (IN4) terminal: Signals Relay Board to turn on/off Relay 4 (Black/Accessory)
 
 
-**Components**
+**Parts**
 
 | Part ID      | Part Name     | Count | Notes |
 | ------------- | ------------- |------| ----|
@@ -473,7 +453,7 @@ CU-JMP|Breadboard Jumper Wires - male-female|4| For consistency we used black, g
   - (IN2) terminal: Insert the right-angle male end of the red (Cool) jumper wire
   - (IN3) terminal: Insert the right-angle male end of the green (Stir) jumper wire
   - (IN4) terminal: Insert the right-angle male end of the black (Accessory) jumper wire
-- **Relay Board cleanup.** To conserve space and prevent short circuits, we recommend using flush cutters to remove excess material from the underside of the board. Then use electrical tape to cover the bottom of the.
+- **Relay Board cleanup.** To conserve space and prevent short circuits, we recommend using flush cutters to trim pins sticking out on the underside of the board. Then use electrical tape to cover the bottom of the board.
 - **Relay Board Case**. The Relay Board should fit in the Relay Board Case
    - For more information about the 3D printed parts check the [How to build & use the MicroLab and MicroLab Suite](docs/index.md) page.
 - **Cable Management.** Gently bend all wires on both sides of the relay up and wrap them with narrow strips of electrical tape.
@@ -501,7 +481,7 @@ To connect the Control Unit to the outside world we will mount the connectors to
 <IMG ALT="Panel-mounted components" SRC="./media/control-unit/case-and-mounted-parts.jpg" width="600" />
 
 
-#### **Components**
+#### **Parts**
 
 |Part ID      | Part Name     | Count | Notes |
 | ------------- | ------------- |------| ----|
@@ -529,7 +509,7 @@ SP-M3S-16|16 mm M3 screws with nuts| 6 |
    - 4-channel Relay Board
    - 12V Wired Connector
    - Arduino w/ CNC shield
-- In the bottom left of the case, place the 12V to 5V Converter.
+- In the bottom right of the case, place the 12V to 5V Converter.
 
 <IMG ALT="Panel-mounted components" SRC="./media/control-unit/Case_12V.png" width="600" />
 
@@ -568,17 +548,7 @@ Now we can connect some last wires and install all the components in the case:
 <IMG ALT="Power manifold parts" SRC="./media/control-unit/case_assembled.jpeg" width="600" />
 
 
-#### **Components**
-
-|Part ID      | Part Name     | Count | Notes |
-| ------------- | ------------- |------| ----|
-|CU-CBC|Control Case (Printed)|1
-|CU-CCP|Converter case (Printed)|1
-SP-PC12| 12-pin connector|1| Mount plate
-CU-PLG|	Barrel plug connectors | Male barrel plug connector
-SP-M3S-20|20 mm M3 screws with nuts| 2 |
-CU-UPC|Micro USB Cable, right angle| 1 |Power cable for Raspberry Pi
-CU-A2B|USB A/B cable for Raspberry Pi to Arduino|
+#### **Parts**
 
 - Case w/ connectors installed
 - 12V Circuit
@@ -586,64 +556,67 @@ CU-A2B|USB A/B cable for Raspberry Pi to Arduino|
   - Arduino w/ CNC shield, wired to the 12-pin socket
   - 12V Wired Connector
   - 12V to 5V Converter
-- M3 screws [SIZE???]
+- Converter case
+- Barrel plug connector
+- 20 mm M3 screws with nuts (2)
+- Micro USB Cable, right angle, Power cable for Raspberry Pi
+- USB A/B cable for Raspberry Pi to Arduino
+
 
 
 ### Installing the 12V to 5V Converter
 <a name="installcon"></a>
 
-**Components:**
+**Parts:**
 
 - 12V to 5V Converter
 - Converter case
-- USB to Screw Terminal adapter
 - Micro USB cable for Raspberry Pi
 - 4-channel Relay Board
 
 
 **Assembly**
-- **Place Converter in its converter case.** Orient the 12Vto 5V converter and slide it into the Converter Case.
+- **Place Converter in its converter case.** Orient the 12Vto 5V converter and slide it into the Converter Case (shows as orange case in picture).
 
 
 <IMG ALT="Slide converter into case" SRC="./media/control-unit/installcon.png" width="300" />
 
 <BR><BR>
 - **Add Power for the Raspberry Pi.** Plug the USB cable for the Raspberry Pi into the USB port on the converter.
-- **Add Power for the Relay Board.** Insert the DC+ red wire and DC- black wire into the USB-to-Screw-terminal adapter. Plug the adapter into the second USB port on the Converter.
+- **Add Power for the Relay Board.** Insert the DC+ red wire and DC- black wire into the screw terminal on the Relay Board.
 - **Install Converter in Control Unit Case.** Position the Converter in the lower right corner of the flat case. The circular mounting tab on the Converter case should line up with a hole in floor of the Control Unit case. Use an M3 screw to secure the Converter case to the floor.
 
 <IMG ALT="Slide converter into case" SRC="./media/control-unit/installcon.png" width="300" />
 
 ### Installing the 4-channel Relay Board
 
-**Components:**
+**Parts:**
 
 - 4-channel Relay Board
 - Relay Board case (3D printed)
-- M3 screws [SIZE???]
+- 12mm M3 screws (1)
 
 <IMG ALT="Relay Board installed in the case" SRC="./media/control-unit/installrelay.png" width="300" />
 <BR>
 <BR>
 
-- **Install Relay Board in Control Unit Case.** Position the Relay Board in the upper left corner of the flat case. The circular mounting tab on the Relay Board case should line up with a hole in floor of the Control Unit case. Use an M3 screw to secure the Realy Board case to the floor.
-- **Cable Management** You make need to unplug the cable from the converter. From the Relay Board run the cable to the bottom of the case and run it to the right to tuck the cable into the case.
+- **Install Relay Board in Control Unit Case.** Position the Relay Board in the upper left corner of the flat case. The circular mounting tab on the Relay Board case should line up with a hole in the floor of the Control Unit case. Use an M3 screw to secure the Relay Board case to the floor.
+- **Cable Management** You may need to unplug the cable from the converter. From the Relay Board run the cable to the bottom of the case and then run it to the right to tuck the cable into the case.
 
 <IMG ALT="Slide converter into case" SRC="./media/control-unit/installcon.png" width="300" />
 
 ### Installing the Arduino
 <a name="installard"></a>
 
-#### **Components**
+#### **Parts**
 
 - Arduino w/ CNC shield
 - USB A-to-B cable
-- 2x 20mm M3 screws
 
 #### **Assembly**
 
 - **Install Arduino in Control Unit Case.** Insert the Arduino w/ CNC shield into its spot in the upper right of the case with its USB port facing the center. It should slot into the supports snugly when pushed toward the right side of the case.
-- **Add power cable for the Arduino.** Plug the USB B side of the A-B cable into the USB micro port on the Arduino
+- **Add power cable for the Arduino.** Plug the USB B side of the A-B cable into the USB port on the Arduino
 - **Check your work** Verify the red and black wires are secured to the (+) and (-) terminals on the Arduino shield.
 
 <IMG ALT="Slide converter into case" SRC="./media/control-unit/installard.png" width="300" />
@@ -651,9 +624,9 @@ CU-A2B|USB A/B cable for Raspberry Pi to Arduino|
 ### Installing the 12V Wire Connector
 <a name="installwire"></a>
 
-- Female barrel plug connector attached to case
+- Female barrel plug connector, attached to case
 - 12V Wire Connector
-- M3 screws
+- 12mm M3 screws (2)
 
 
 <IMG ALT="Power manifold parts" SRC="./media/control-unit/12v_wire_connect.png" width="600" />
@@ -662,7 +635,7 @@ CU-A2B|USB A/B cable for Raspberry Pi to Arduino|
 
 **Add "12V power in" wires to the Wire Connector.** Take the two wires on the installed female barrel plug connector and connect the red wire (positive) to the red (positive) slot on the 2-in side of the Wire Connector. Take the black wire (negative) and insert it to the blue (negative) slot on the 2-in side of the Wire Connector.   
 
-**Install 12V Wire Connector in Case.** Position the 12V Wire Connector in the case and use 2 M3 screws to screw the connector to the floor of the case.
+**Install 12V Wire Connector in Case.** Position the 12V Wire Connector in the case and use 2two 12mm M3 screws to screw the connector to the floor of the case.
 
 <IMG ALT="Slide converter into case" SRC="./media/control-unit/install12vwire.png" width="300" />
 
@@ -674,14 +647,13 @@ CU-A2B|USB A/B cable for Raspberry Pi to Arduino|
 
 - Raspberry Pi
 - Mounted USB Cables
-- M3 screws
 - Micro A/B USB cable attached to the Arduino
 
 
 ### **Assembly**
 
 #### Attach USB Cables and Install in Case
-- Plug the Arduino's micro USB cable into the Raspberry Pi.
+- Plug the Arduino's USB cable into the Raspberry Pi.
 - Plug the USB cables into the Raspberry Pi.
 - Remove the touchscreen and set aside.
 - Insert the Raspberry Pi into its case supports, starting with the left side of the board, and keeping the USB ports toward the center. The supports have catches that should hold the board snugly in place.
@@ -694,37 +666,41 @@ CU-A2B|USB A/B cable for Raspberry Pi to Arduino|
 
 The wires we attach to the header GPIO pins let the Raspberry Pi control the relays on the Relay Board as well as the heater coil.
 
-<IMG ALT="GPIO pins" SRC="./media/control-unit/pi_wiring.png" width="600" />
+<IMG ALT="GPIO pins" SRC="./media/control-unit/cu_pi_pins.png" width="600" />
 
+**Tools:**
 
-**Components:**
+- Wire cutters
+- 4-channel Relay Board
+
+**Parts:**
 
 - Raspberry Pi with touchscreen off
 - 4-channel Relay Board
-- 2x quick-disconnect connectors (or other appropriate connector for your 2-pin connector)
+- 2-pin connector, Wired
+- Right angle header row, female-male
+
 
 **Assembly:**
 
+- **Add headers to the Raspberry Pi.** Take the right angle header row and use the wire cutters to cut two 4-pin pieces. Place them at the end of the pin block, push one on to the 34, 36, 38, 40 pins and the other on the 33, 35, 37, 39 pins.
 - **Connecting the Relay Board Wires**
   - Take the IN1 Blue (Heat) wire and attach the female header to Pin 38 (GPIO 20)
   - IN2 Red (Cool) and attach the female header to Pin 40 (GPIO 21)
   - IN3 Green (Stir) and attach the female header to Pin 36 (GPIO 16)
   - IN 4 Black (Accessory) and attach the female header to Pin 33 (GPIO 13) <BR>
-  <IMG ALT="External control wires" SRC="./media/control-unit/cu_5v_gpio_pi.jpeg" width="300" />
-- **Connecting the Heater Coil wired**
+  <IMG ALT="External control wires" SRC="./media/control-unit/cu_pi_pins.png" width="400" />
+- **Connecting the Heater Coil Wired**
   - Take the 2-pin connector and attach the
     - Black wire female header to Pin 34 (Ground)
     - Red wire female header to Pin 37 (GPIO 26)
-    <IMG ALT="External control wires" SRC="./media/control-unit/heater-control-wires.jpg" width="300" />
 - **Cable Management**
-* Tape the GPIO pins together to secure them. See picture.
-* Carefully tuck the wires into the case so that they will not obstruct the lid.
+   * Tape the GPIO pins together to secure them. See picture.
+   * Carefully tuck the wires into the case so that they will not obstruct the lid.
 <IMG ALT="GPIO pins" SRC="./media/control-unit/cu_5v_gpio_taped.jpeg" width="300" /> <BR><BR>
 - **Attach touchscreen.** Attach the touchscreen to the Raspberry Pi.
 
 <IMG ALT="GPIO pins" SRC="./media/control-unit/cu_case_inside_t.png" width="400" />
-
-
 
 
 ## Final Assembly
@@ -732,7 +708,7 @@ The wires we attach to the header GPIO pins let the Raspberry Pi control the rel
 
 Before you close the case, you probably want to test that everything is wired correctly. We **highly** recommend testing all the functionality of the MicroLab using the Test Recipe. Of course, if something doesn't work right or stops working in the future, you can always open it back up again.
 
-**Components:**
+**Parts:**
 - Control Unit lid
 - 2 M3 screws, 16mm
 
@@ -757,7 +733,7 @@ To connect your newly assembled Control Unit to the Pumps Unit, you will use a p
 
 **Important Note: The wire order here is different than in other sections.**
 
-Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring) page. It's important to maintain the same wiring order throughout the project.
+Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
 **8-pin cable**.
 
@@ -775,11 +751,7 @@ From left to right, repeat this wire order 3 times:
 
 <br><BR>
 
-#### **Components**
-
-| Section | Part ID      | Part Name     | Count | Notes |
-|--- | ------------- | ------------- |------| ----|  
-|||
+#### **Parts**
 
 - 4-wire cable, into 5 ~2.5-foot lengths
 - 8-pin connectors, plug (2)
@@ -792,7 +764,7 @@ From left to right, repeat this wire order 3 times:
 
 **Prepare Wires**
 
-- Take the 4-wire cable () and cut into five 2.5 foot sections
+- Take the 4-wire cable and cut into five 2.5 foot sections
 - Take the 2.5 foot sections and strip the wires on both ends  (see [Skills Needed](#raspberry) for help with stripping wires).
 
 

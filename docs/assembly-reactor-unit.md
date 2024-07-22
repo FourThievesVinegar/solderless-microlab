@@ -78,7 +78,7 @@ The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject
 - Pumps lid
 
 
-### Mounting the Components to the Box
+### Mounting the Parts to the Box
 
 We're going to mount the pumps then install the plugs for the stirring motor and light on the front of the box. After that we will mount the circulating pumps on the sides of the box.
 
@@ -358,7 +358,7 @@ These instructions assume you have already assembled the Pumps Box and the React
 
 You've already built the core and the pump. All that's left to do is connect it all up.
 
-**Components:**
+**Parts:**
 
 * Reactor Stand
 * Reactor Core
