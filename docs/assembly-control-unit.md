@@ -158,13 +158,20 @@ Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/arduino.jpg" WIDTH="1000" />
 
 1. **Install the CNC shield.** Place CNC shield on the Arduino, push the CNC pins into the header sockets on the Arduino until it is fully connected.
+<IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_shield.png" WIDTH="200" />
+
+1. **Add Heatsinks to Stepper Motor Driver Modules** Each Stepper Motor Driver modules came with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
+<IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_motor_driver.jpeg" WIDTH="300" />
+<IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_driver_heat.png" WIDTH="200" />
+
 1. **Add the Stepper Motor Driver Modules** Orient and insert the stepper motors driver boards into the X, Y, and Z slots on the shield.
-<IMG ALT="Adding Stepper Motor Driver Boards" SRC="./media/control-unit/potentiometers-annotated.jpg" WIDTH="300" />
+<IMG ALT="Adding Stepper Motor Driver Boards" SRC="./media/control-unit/cu_arduino_assembled.png" WIDTH="300" />
+
 1. **Set Enable Pin to Ground** Place 1 female-female jumper lead on the enable and ground pins to enable the board.
-  <IMG ALT="Set Enable to Ground" SRC="./media/control-unit/potentiometers-annotated.jpg" WIDTH="300" />
-1. **Add Stepper Motor Cables** The stepper motors cables have a female connector on one end and bare wire on the other. Place a connector on X header and then screw the wire end into the X side (right) of the 12pin connector in order. Repeat with Y putting the wires in the middle and then Z with wires on the left. See picture.
-<IMG ALT="Installing the touchscreen" SRC="./media/control-unit/arduino.jpg" WIDTH="1000" />   
-<IMG ALT="Adding Stepper Motor Cables" SRC="./media/control-unit/potentiometers-annotated.jpg" WIDTH="300" />
+
+1. **Add Stepper Motor Cables** The stepper motors cables have a female connector on one end and bare wire on the other. Connect a female connector to the X header, Y header, and Z header on the CNC shield.
+
+
 
 ## Assembling the 12V Circuit
 <a name="12V"></a>
@@ -202,7 +209,7 @@ In order to send 12V out to components the 4-channel relay board, the 8-pin conn
 Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring) page. It's important to maintain the same wiring order throughout the project.
 
 **8-pin connector - internal**.
-The 8-pin connector passes 12V along to the Accessory port (Acc), Stir rod (Stir), Cooling pump (Cool), and Heating pump (Heat).
+The 8-pin connector passes 12V along to the Accessory port (Acc), Stir rod (Stir), Cooling pump (Cool), and Heating pump (Heat) wires.
 
 From inside the case the 8pin connector wiring order will look like this:
 
@@ -210,7 +217,7 @@ From inside the case the 8pin connector wiring order will look like this:
 
 <br><BR>
 
-#### **Components**
+#### **Parts**
 
 | Part ID | Part Name  | Count | Notes |
 |--- | ------------- | ------------- |------|
@@ -256,11 +263,15 @@ We will attach the positive wires (color coded) and negative wires to the 8-pin 
 
   <IMG ALT="Cable order" SRC="./media/control-unit/wire_rev.png" WIDTH="200" />
 
+
+
 - **Wiring the Negatives.** Next on the 8-pin socket, insert the 6" black cables into the negative (+) terminals and tighten the terminals.
 
 - **Connecting the negative wires.** Take the 12V Wire Connector, open the first two lever slots on the negative side of the connector (shown as the right side with blue levers in our picture). Take the 8-pin negative wires, put two wires in each slot and close the slots.
 
-  <IMG ALT="Wire the negative Phoenix wires and connector" SRC="./media/control-unit/relay_8pin.png" WIDTH="400" />
+  <IMG ALT="Wire the negative Phoenix wires and connector" SRC="./media/control-unit/cu_8pin_neg.png" WIDTH="400" />
+
+
 
 
 #### **Wiring the 4-channel Relay Board**
@@ -278,7 +289,7 @@ For this project we will only use two of the terminals with each relay, the NO a
        - Red - NO2
        - Blue - NO1
 
-  <IMG ALT="Wiring the NOs" SRC="./media/control-unit/pos12v.png" WIDTH="300" />
+  <IMG ALT="Wiring the NOs" SRC="./media/control-unit/cu_8pin_no.png" WIDTH="200" />
 
 - **Wiring the COMs**
   - Take the 4 red wires, insert one wire into each of the terminals labeled "COM" (common) tighten the terminals.
@@ -286,7 +297,7 @@ For this project we will only use two of the terminals with each relay, the NO a
 - **Connecting the Relay Board to the 12V Wire Connector**
  - Take the 12V wire connector, open the first two lever slots on the positive side of the connector (shown as the left side with red levers in our picture). Take the other end of the relay board's red COM wires, put two wires in each slot and close the slots.
 
-<IMG ALT="Wiring relay to power" SRC="./media/control-unit/3wire.png" WIDTH="400" />
+<IMG ALT="Wiring relay to power" SRC="./media/control-unit/cu_8pin_coms.png" WIDTH="200" />
 
 <BR><BR>
 
@@ -294,7 +305,7 @@ For this project we will only use two of the terminals with each relay, the NO a
 <a name="12vshield"></a>
 In order to send 12V out to the peristalic pumps, the Arduino CNC shield needs to be connected to the 12V Wiring Connector and the 12-pin connector.
 
-<IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12vshield.png" width="600" />
+<IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12vshield.png" width="400" />
 
 
 <BR>
@@ -336,8 +347,11 @@ From inside the case the 12-pin connector wiring order will look like this:
 - Next attach the Y and then X wires using the same order.
 
 
+<IMG ALT="12-pin wiring to Arduino" SRC="./media/control-unit/cu_arduino_wire12v.png" WIDTH="300" />
+
+
 #### Wiring the 12V power on the CNC Shield
-The CNC shield is now wired for the stepper motors, now we will wire it for the 12V power needed to drive the motors.
+With CNC shield wired for the stepper motors, we will now wire it for the 12V power needed to drive those motors.
 
 <IMG ALT="Wiring 12V on CNC shield" SRC="./media/control-unit/12vshield2.png" width="600" />
 
@@ -367,7 +381,11 @@ The CNC shield is now wired for the stepper motors, now we will wire it for the 
 - On the 12V Wire Connector (CU-WCL) there should be an empty slot on the positive (red) side. Open that lever, add the red wire and then close the lever.
 - On the 12V Wire Connector there should be an empty slot on the negative (black) side. Open that lever, add the black wire and then close the lever.
 
-<BR>
+<IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/cu_arduino_wired.jpeg" width="300" />
+
+
+<BR><BR>
+
 Take a moment to review and appreciate your work. This is the most fiddly part of the assembly. Nice job! 🎉
 <BR><BR>
 
@@ -377,7 +395,7 @@ Take a moment to review and appreciate your work. This is the most fiddly part o
 The 12V Wire Connector passes the 12V power to the converter which, as the name says, will covert it into 5V power. The Converter sends the 5V power to the Raspberry Pi and 4-channel Relay Board as their power supplies.
 
 
-<IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12vconvert.png" width="300" />
+<IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/cu_convert_wire.png" width="300" />
 
 
 #### **Components**
@@ -394,18 +412,18 @@ The 12V Wire Connector passes the 12V power to the converter which, as the name 
 - On the 12V Wire Connector  locate the empty slot on the negative (black) side. Open that lever, insert the black wire and then close the lever.
 - Plug the male barrel plug connector into the 12V to 5V converter module.
 
-<IMG ALT="Power manifold parts" SRC="./media/control-unit/power-manifold-parts.jpg" width="600" />
+<IMG ALT="Power manifold parts" SRC="./media/control-unit/cu_convert_wires.png" width="300" />
 <br><br>
 
 
 ## Wiring 5V and Signals on the Relay Board
 <a name="5vrelay"></a>
 
-The rest of the wiring runs some combination of lower voltage power, signals and data between componets.
+The rest of the wiring runs some combination of lower voltage power, signals and data between components.
 
-The Raspberry Pi, 4-Channel Relay Board and the Arduino all run using 5V power. The 12V to 5V Converter supplies that power to the Raspbery Pi and 4-Channel Relay Board so they can work.
+The Raspberry Pi, 4-Channel Relay Board and the Arduino all run using 5V power. The 12V to 5V Converter supplies that power to the Raspberry Pi and 4-Channel Relay Board so they can work.
 
-The Raspberry Pi sends 5V power (and data) out to the Ardunio and the 2 mounted USB ports thrugh USB cables.  
+The Raspberry Pi sends 5V power (and data) out to the Ardunio and the 2 mounted USB ports through USB cables.  
 
 <IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/5V_signals.jpg" WIDTH="600" />
 
@@ -431,7 +449,7 @@ These six terminals are:
 |CU-CNC|12V to 5V Converter |1
 |CU-WCL|Wire Connector (lever), 2-in-6-out|1
 |SP-RBW|2-wire cable, red and black, 18 gauge |40ft roll| Used to make short wires
-CU-JMP|Breadboard Jumper Wires - male-female|4| For consistentcy we used black, green, red, and blue
+CU-JMP|Breadboard Jumper Wires - male-female|4| For consistency we used black, green, red, and blue
 |SP-ETN|Electrical tape, narrow|1 roll
 |CU-RCP|Relay case|1
 
@@ -441,15 +459,14 @@ CU-JMP|Breadboard Jumper Wires - male-female|4| For consistentcy we used black, 
   - Take the 2-wire cable (SP-RBW) and cut one 6" section
     - Take the 6" section and separate the red and black wires
     - Strip both ends on each of the wires (see [Skills Needed](#raspberry) for help with stripping wires).
-  - Use needle nose pilers to gently bend each of the male headers on the Jumper wires to a 90 degree angle.
+  - Use needle nose pilers to gently bend each of the male headers on the Jumper wires to a 90 degree angle. Shown in pic without wires for clarity.
 
-  [Pic needed]
-  <IMG ALT="90 degree bend on wire " SRC="./media/control-unit/relay_term.png" WIDTH="300" />
+  <IMG ALT="90 degree bend on wire " SRC="./media/control-unit/cu_relayb_5v.jpeg" WIDTH="300" />
 
 
 **Assembly**
 
-- **Adding wires.** Use a small screwdriver to open the 6 screw terminals on Relay Board. Then insert the apprioprate wire to the terminal and then tighten the screw terminal.
+- **Adding wires.** Use a small screwdriver to open the 6 screw terminals on Relay Board. Then insert the appropriate wire to the terminal and then tighten the screw terminal.
   - (DC+) terminal: insert 6" red wire
   - (DC-) terminal: insert 6" black wire
   - (IN1) terminal: Insert the right-angle male end of the blue (Heat) jumper wire
@@ -474,8 +491,8 @@ Now we will mount the connectors to the Control Unit Case.
 
 To connect the Control Unit to the outside world we will mount the connectors to the case:
 
-* 12-pin connector (out to peristalic pumps)
-* 8-pin connector (out to circulatnig pumps, stir rod, and accessory port)
+* 12-pin connector (out to peristaltic pumps)
+* 8-pin connector (out to circulating pumps, stir rod, and accessory port)
 * 2-pin connector (out to heating coil)
 * USB ports (2) (out to thermistor)
 * Barrel port (12V in)
@@ -691,21 +708,24 @@ The wires we attach to the header GPIO pins let the Raspberry Pi control the rel
 - **Connecting the Relay Board Wires**
   - Take the IN1 Blue (Heat) wire and attach the female header to Pin 38 (GPIO 20)
   - IN2 Red (Cool) and attach the female header to Pin 40 (GPIO 21)
-  - IN3 Green (Stir)  and attach the female headerto Pin 36 (GPIO 16)
-  - IN 4 Black (Accesorry) and attach the female header to Pin 33 (GPIO 13)
+  - IN3 Green (Stir) and attach the female header to Pin 36 (GPIO 16)
+  - IN 4 Black (Accessory) and attach the female header to Pin 33 (GPIO 13) <BR>
+  <IMG ALT="External control wires" SRC="./media/control-unit/cu_5v_gpio_pi.jpeg" width="300" />
 - **Connecting the Heater Coil wired**
-  - Take the 2-pin connector and attach t
-  he
+  - Take the 2-pin connector and attach the
     - Black wire female header to Pin 34 (Ground)
     - Red wire female header to Pin 37 (GPIO 26)
-- Carefully tuck the wires into the case so that they will not obstruct the lid.
-- Attach the touchscreen to the Raspberry Pi.
-  - If you find the headers are too tall, you may need shorter headers in this case.
+    <IMG ALT="External control wires" SRC="./media/control-unit/heater-control-wires.jpg" width="300" />
+- **Cable Management**
+* Tape the GPIO pins together to secure them. See picture.
+* Carefully tuck the wires into the case so that they will not obstruct the lid.
+<IMG ALT="GPIO pins" SRC="./media/control-unit/cu_5v_gpio_taped.jpeg" width="300" /> <BR><BR>
+- **Attach touchscreen.** Attach the touchscreen to the Raspberry Pi.
 
-  <IMG ALT="GPIO pins" SRC="./media/control-unit/pi-in-case.jpg" width="600" />
+<IMG ALT="GPIO pins" SRC="./media/control-unit/cu_case_inside_t.png" width="400" />
 
 
-  <IMG ALT="External control wires" SRC="./media/control-unit/heater-control-wires.jpg" width="600" />
+
 
 ## Final Assembly
 <a name="final"></a>
@@ -731,11 +751,11 @@ Before you close the case, you probably want to test that everything is wired co
 ## One Last Thing: Making MicroLab Cables
 <a name="cables"></a>
 
-To connect your newly assmebled Control Unit to the Pumps Unit, you will use a pair of cables: 8-wire and 12-wire. Savvy readers will notice that this corresponds with the 8-pin and 12-pin connectors.
+To connect your newly assembled Control Unit to the Pumps Unit, you will use a pair of cables: 8-wire and 12-wire. Savvy readers will notice that this corresponds with the 8-pin and 12-pin connectors.
 
 #### **Wire Order** <a name="wireorder"></a>
 
-**Important Note: The wire order here is dfferent than in other sections.**
+**Important Note: The wire order here is different than in other sections.**
 
 Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring) page. It's important to maintain the same wiring order throughout the project.
 
@@ -778,7 +798,7 @@ From left to right, repeat this wire order 3 times:
 
 **Assembly:**
 
-**Important Note: The wire order here is dfferent than in other sections, be sure you have the correct order.**
+**Important Note: The wire order here is different than in other sections, be sure you have the correct order.**
 
 
 **Making the 8-pin cable**

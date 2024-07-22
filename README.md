@@ -2,26 +2,22 @@
 
 The MicroLab is an open-source, DIY, automated controlled lab reactor (CLR) that people can assemble with parts available online. We hope this will do for chemistry what the 3D printer did for manufacturing: provide a DIY, hackable, low-cost method to design and produce certain needful things that otherwise would be out of reach.
 
-<IMG ALT="MicroLab fully assembled with all units" SRC="./docs/media/microlab-v0.6.0-assembled.jpg" width="600" />
+<IMG ALT="MicroLab fully assembled with all units" SRC="./docs/media/ML_assembled.jpeg" width="600" />
+<BR><BR>
 
-For the MicroLab to be accessible to the most people, it was developed as part of a hardware/software stack called the MicroLab Suite. The different software programs help take the information about a compound you want to make and translates it into a recipe (code) that the MicroLab runs to create the compound.
+The MicroLab Suite. For the MicroLab to be accessible to the most people, it was developed as part of a hardware/software stack called the MicroLab Suite. The different software programs help take the information about a compound you want to make and translate it into a recipe (code) that the MicroLab runs to create the compound.
 
 
-More Information. You can find the introduction to the project, what even is a  LR, the MicroLab Suite and why we are doing this at the about.md
-https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/motivation.md
+**More Information.** You can find the introduction to the project, what the heck is a CLR, what's in the MicroLab Suite and why we are doing this on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
 
 
 
 ## Getting Started Making Your MicroLab
-This section is for you if you want to build a MicroLab and start using it.
+This section is for you if you want to build a MicroLab and start using it. We tried to make building the MicroLab friendly for folks newer to electronics, but you will need some knowledge and skills with electronics (or the patience to learn a few things).
 
-- Learn [About the MicroLab and MicroLab Suite](docs/motivation.md)
-	         about.md
-- Start here for [How to build & use the MicroLab and MicroLab Suite](docs/index.md)  
-		- include index + assembly
-		- microlab-parts-list.xlsx
-			- Last updated
-			- Link to github
+- Learn [About the MicroLab and MicroLab Suite](docs/motivation.md) so you have an understanding of what you are building.
+- **Start here for [How to build & use the MicroLab and MicroLab Suite](docs/index.md)**
+
 
 
 
@@ -34,9 +30,9 @@ You will need to get a copy of the MicroLab software, set up your development en
 
 ### Installing the MicroLab software locally
 
-Use the instructions below for a fresh install of the Microlab software (backend and GUI) on your development machine.
+Use the instructions below for a fresh install of the MicroLab software (backend and GUI) on your development machine.
 
-If you intend to construct a full Microlab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two:
+If you intend to construct a full MicroLab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two:
 - A "production" image that runs all software on startup and includes the drivers for a goodtft-compatible 3.5 inch mini-display. This would be the software to run on the MicroLab
 - A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard. This would be the software to run on a computer where the MicroLab hardware can be emulated.
 
@@ -157,7 +153,7 @@ The GUI will now be listening on port 3000.
 
 ### Hardware Emulation
 
-To run the software without a functioning hardware environment, go to the settings menu and change the "Microlab Controller" setting to "simulation-pi" and "Lab Hardware Config" to "ftv_simulation_microlabv0.5.0"
+To run the software without a functioning hardware environment, go to the settings menu and change the "MicroLab Controller" setting to "simulation-pi" and "Lab Hardware Config" to "ftv_simulation_microlabv0.5.0"
 
 ### MicroLab Setup - Enabling SSH
 

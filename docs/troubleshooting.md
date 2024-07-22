@@ -75,3 +75,7 @@ If you do not feel any change in resistance, try jumpering other combinations of
 Please note that we are experimenting with sinking nuts into various components for more reliable and durable connections. This is why the screw holes on top of the manifold are hexagonal at the top. Doing this requires a soldering iron and a steady hand. You may also want to drill out the stirring mount screw holes with a 1/8" bit to give the screws more play to mate with the nuts.
 
 The motor mount is in active development as of v0.6 and we thank you for patience with the rough edges.
+
+###
+Heating Coolingg
+(We are looking into upcycling heat sinks from old computers but are still experimenting - please reach out if you have done this or have suggestions)
