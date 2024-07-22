@@ -25,6 +25,7 @@ class SerialTempSensor(TempSensor):
         Recommended sensor: DS18B20
 
         A successful read looks something like this: b"t1=+29.06\n"
+        It could also have single-digit temperatures
         The loop below looks for the '=' '\n' '.' to detect success
 
         :return:
@@ -58,7 +59,8 @@ class SerialTempSensor(TempSensor):
             end = len(lastLine) - 1
             
         logging.debug('found ' + str(start) + ' ' + str(end) + ' ' + lastLine + ' ' + lastLine[start:end]) 
-        if(start > -1 and end > -1):
+        # Make sure that we have a start and an end and that there is something between then
+        if(start > -1 and end > -1 and end - start > 2):
             try:
                 temperature = float(lastLine[start:end])
             except Exception as e:
