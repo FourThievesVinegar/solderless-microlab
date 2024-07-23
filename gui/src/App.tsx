@@ -26,7 +26,7 @@ export function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       getStatus(setStatus)
-    }, 1000)
+    }, 2500)
     return () => clearInterval(interval)
   }, [])
 
