@@ -23,11 +23,16 @@ export function App() {
   const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)
   const [promptPlaying, playPromptAudio] = useAudio(SOUNDS.PROMPT)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getStatus(setStatus)
+  const updateStatusAndGetItAgain = (data: any) => {
+    setStatus(data)
+
+    setTimeout(() => {
+      getStatus(updateStatusAndGetItAgain)
     }, 2500)
-    return () => clearInterval(interval)
+  }
+
+  useEffect(() => {
+    getStatus(updateStatusAndGetItAgain)
   }, [])
 
   useEffect(() => {
