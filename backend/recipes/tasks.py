@@ -182,10 +182,10 @@ def maintainSimple(microlab, parameters):
 
             yield interval
 
-        except:
+        except Exception as e:
             logging.error(
-                "Error in maintainSimple. currentTemp: {0}, targetTemp: {1}".format(
-                    currentTemp, targetTemp
+                "Error in maintainSimple. currentTemp: {0}, targetTemp: {1}. Exception: {2}".format(
+                    currentTemp, targetTemp, e
                 )
             )
 

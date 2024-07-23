@@ -7,6 +7,7 @@ import logging
 RELAY_ON = 1
 RELAY_OFF = 0
 
+
 class BasicTempController(TempController):
     def __init__(self, args, devices):
         """
@@ -42,7 +43,7 @@ class BasicTempController(TempController):
         self.gpio.output(self.heaterPumpPin, RELAY_OFF)
         self.gpio.output(self.coolerPin, RELAY_OFF)
 
-        self.thermometer = devices[args['thermometerID']]
+        self.thermometer = devices[args["thermometerID"]]
 
     def turnHeaterOn(self):
         """
@@ -53,7 +54,6 @@ class BasicTempController(TempController):
         """
         logging.info("heater turned on")
         self.gpio.output(self.heaterPin, RELAY_ON)
-
 
     def turnHeaterOff(self):
         """
@@ -83,7 +83,6 @@ class BasicTempController(TempController):
         logging.info("cooler turned on")
         self.gpio.output(self.coolerPin, RELAY_ON)
 
-
     def turnCoolerOff(self):
         """
         Turn cooler off.
@@ -94,7 +93,6 @@ class BasicTempController(TempController):
         logging.info("cooler turned off")
         self.gpio.output(self.coolerPin, RELAY_OFF)
 
-
     def getTemp(self):
         """
         Read the temperature from the temperature sensor.
@@ -102,7 +100,7 @@ class BasicTempController(TempController):
         The temperature of the temperature sensor.
         """
         return self.thermometer.getTemp()
-        
+
     def getMaxTemperature(self):
         return self.maxTemp
 
@@ -111,4 +109,3 @@ class BasicTempController(TempController):
 
     def getPIDConfig(self):
         return self.pidConfig
-
