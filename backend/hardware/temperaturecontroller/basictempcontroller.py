@@ -1,5 +1,3 @@
-import config
-import hardware.thermometer as therm
 from hardware.temperaturecontroller.base import TempController
 import logging
 
@@ -52,7 +50,7 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.info("heater turned on")
+        logging.debug("heater turned on")
         self.gpio.output(self.heaterPin, RELAY_ON)
 
     def turnHeaterOff(self):
@@ -62,15 +60,15 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.info("heater turned off")
+        logging.debug("heater turned off")
         self.gpio.output(self.heaterPin, RELAY_OFF)
 
     def turnHeaterPumpOn(self):
-        logging.info("heater pump turned on")
+        logging.debug("heater pump turned on")
         self.gpio.output(self.heaterPumpPin, RELAY_ON)
 
     def turnHeaterPumpOff(self):
-        logging.info("heater pump turned off")
+        logging.debug("heater pump turned off")
         self.gpio.output(self.heaterPumpPin, RELAY_OFF)
 
     def turnCoolerOn(self):
@@ -80,7 +78,7 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.info("cooler turned on")
+        logging.debug("cooler turned on")
         self.gpio.output(self.coolerPin, RELAY_ON)
 
     def turnCoolerOff(self):
@@ -90,7 +88,7 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.info("cooler turned off")
+        logging.debug("cooler turned off")
         self.gpio.output(self.coolerPin, RELAY_OFF)
 
     def getTemp(self):
