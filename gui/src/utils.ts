@@ -11,9 +11,18 @@ export const downloadFileFromURL = (fileName: string, url: string) => {
 }
 
 export const getStatus = (callback: (data: any) => void) => {
-  fetch(apiUrl + 'status')
+  try {
+    fetch(apiUrl + 'status')
     .then(response => response.json())
     .then(data => callback(data))
+  } catch (error) {
+    console.error("Error fetching status", error)
+    window.setTimeout(() => {
+      // Try again in a few seconds
+      getStatus(callback)
+    }, 5000)
+  }
+
 }
 
 export const listRecipes = (callback: (data: any) => void) => {
