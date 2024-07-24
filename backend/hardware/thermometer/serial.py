@@ -58,6 +58,9 @@ class SerialTempSensor(TempSensor):
 
         lastLine = str(line)
 
+        # Clear the serial buffer
+        self.tempSer.flush()
+
         # Look for 't1=' or 't=' in the input line
         # Unclear why sometimes the thermometer returns 't1=' and other times just 't='
         # Use rfind because we want the last '=' and sometimes input includes extras
