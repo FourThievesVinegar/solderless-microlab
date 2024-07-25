@@ -4,11 +4,12 @@
 
 ### Added
 
-- Many pre-release tweaks.
+- Many pre-release tweaks and bug fixes.
 - Massive docs update.
 - New printable cases, stands, and reactor parts.
 - Ability to manually reload hardware from the settings menu. (#197)
 - Hardware settings are configurable from the UI in a basic fashion (#141).
+- v0.6 hardware config supports PID temperature control
 - MicroLab 0.5 simulation configuration (#140).
 - Configurable hardware limits for supported temperatures. Recipes that require values outside of the configured range will no longer run. (#146).
 - Sounds that play on recipe completion, errors, and user input steps (#149).
