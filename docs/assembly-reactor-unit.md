@@ -3,17 +3,15 @@
 
 The Reactor Unit is where the action happens, it is made up of the pumps, pump case, reactor core and reactor unit stand.
 
-* [Assembling the Pumps Box](#pumps)
-* [Assembling the Reactor Core](#core)
-* [Assembling the Reactor Unit](#unit)
-
+- [Assembling the Pumps Box](#pumps)
+- [Assembling the Reactor Core](#core)
+- [Assembling the Reactor Unit](#unit)
 
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/ru_add_rc.png" WIDTH="300" />
 
-
 ## Skills Needed
-* Wire stripping - one example [video](https://www.youtube.com/watch?v=N__OLJvq2HE)
 
+- Wire stripping - one example [video](https://www.youtube.com/watch?v=N__OLJvq2HE)
 
 ## Parts
 
@@ -27,7 +25,6 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 RU-SRM|	Stir rod motor|	1
 RU-STR|	Stir rod |	1
 RU-SRC|	Stir rod coupling|
-RU-RED|	Reducing fitting|
 RU-LID|	Reactor manifold core and lid (Printed)|	1
 RU-SRM|	Stir rod mount (Printed)|	1
 RU-RJF|	Jar Flanges (Printed)|	2
@@ -48,16 +45,14 @@ SP-PC12| 12-pin connector, panel-mount screw terminal| 1
 SP-PC8|	8-pin connector, panel-mount screw terminal| 1
 CU-PLG|	Barrel plug connectors, 5.5mm x 2.1mm| 2 |female
 
-
-
 ## Assembling the Pumps Box
+
 <a name="pumps"></a>
 
 The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject reagents into the Reactor Core and the 2 circulating pumps on the sides that move hot and cold fluids to control the Reactor Core's temperature. It also has plugs on the front for the stirring motor and an accessory port that can be used to power accessories like a light.
 
 <IMG ALT="Pumps Box Front showing three peristaltic pumps and two female barrel connectors on the front of a 7 inch by 7 inch 3D printed box" SRC="./media/pumps-unit/pumps-unit-complete-front.jpg" WIDTH="400" />
 <IMG ALT="Pumps Box Rear showing two connector sockets and screws at the corners." SRC="./media/pumps-unit/pumps-unit-complete-rear.jpg" WIDTH="400" />
-
 
 ### Tools required
 
@@ -77,14 +72,11 @@ The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject
 - Pumps box
 - Pumps lid
 
-
 ### Mounting the Parts to the Box
 
 We're going to mount the pumps then install the plugs for the stirring motor and light on the front of the box. After that we will mount the circulating pumps on the sides of the box.
 
 <IMG ALT="Pump unit box and parts" SRC="./media/pumps-unit/pumps-unit-box-parts.jpg" WIDTH="400" />
-<br><br>
-
 
 **Assembly:**
 
@@ -92,17 +84,16 @@ We're going to mount the pumps then install the plugs for the stirring motor and
 - Place each of the peristaltic pumps in large diamond shaped holes and screw each in with four 16mm M3 screws and nuts.
 - Place the circulation pumps inside of the box, one on each side on the box. Use the manufacturer-provided mounting hardware and two 16mm M3 screws to secure each pump.
 
-  <IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pumps-unit-box-assembled.jpg" WIDTH="400" />
-
+<IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pumps-unit-box-assembled.jpg" WIDTH="400" />
 
 ### Mounting and Wiring the Back Panel
 
 Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the components in the box.
+
 <IMG ALT="Pump lid and parts" SRC="./media/control-unit/connector_parts.png" WIDTH="300" />
 
 <IMG ALT="Pump lid and parts" SRC="./media/pumps-unit/pumps-unit-lid-parts.jpg" WIDTH="400" />
 
-<BR><BR>
 **Assembly:**
 
 - Connect the 12-pin and 8-pin connector sockets with their mounting plates and use 2 M3 screws with each to attach them securely to the lid.
@@ -137,7 +128,6 @@ The 8-pin connector is connected to the positive and negative power wires for th
 
     <IMG ALT="Cable order" SRC="./media/control-unit/wire_rev.png" WIDTH="200" />
 
-
 ### 12-pin wiring
 
 - **Wire the pumps.** Attach each of the connector ends of the stepper motor cables to one of the peristaltic pumps.
@@ -150,9 +140,7 @@ The 8-pin connector is connected to the positive and negative power wires for th
 
     <IMG ALT="Wiring the pump wires" SRC="./media/pumps-unit/phx_cables.png" WIDTH="400" />
 
-
 <IMG ALT="Pump unit fully assembled with the lid open and wire connections visible" SRC="./media/pumps-unit/pumps-unit-lid-open.jpg" WIDTH="400" />
-
 
 ### Closing it up
 
@@ -168,7 +156,10 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 
 
 ## Reactor Core Assembly
+
 <a name="core"></a>
+
+The Reactor Core houses the reaction chamber, which is where the SCIENCE happens. We're going to build the manifold, attach the stirring assembly, and put it all inside the mason jars!
 
 <IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" />
 
@@ -180,7 +171,6 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 RU-SRM|	Stir rod motor|	1
 RU-STR|	Stir rod | 1
 RU-SRC|	Stir rod coupler| 1
-RU-RED|	Reducing fitting| 1
 RU-COR|	Reactor manifold core (Printed)| 1
 RU-LID|	Reactor manifold lid (Printed)| 1
 RU-SRM|	Stir rod mount (Printed)|	1
@@ -198,46 +188,32 @@ SP-M3S-12| 12mm M3 screws with nuts | 3
 SP-M3S-20| 20mm M3 screws with nuts | 3
 SP-STB|Silicone tubing 7mm OD x 5mm ID|1
 
+### Tools
 
-### Reactor Core Assembly
-
-The Reactor Core houses the reaction chamber, which is where the SCIENCE happens. We're going to build the manifold, attach the stirring assembly, and put it all inside the mason jars!
+- A hack saw or bolt cutter that can cut through the stirring paddle's shaft
 
 #### Assembling the Reactor Core Manifold
 
 First, we need to assemble the manifold lid that holds the jars together and allows tubing into the reaction chamber and temperature control chamber.
 
-
-
 <IMG ALT="Reactor manifold parts" SRC="./media/reactor-unit/reactor-manifold-parts.jpg" WIDTH="400" />
-
-
-<BR><BR>
 
 **Parts:**
 
-* Reactor manifold core (Printed) (RU-COR)
-* Reactor manifold lid (Printed) (RU-LID)
-* 6 oz regular mouth mason jar for core chamber (RU-COR)
-* 12mm M3 screws with nuts (SP-M3S-12)
-* 20mm M3 screws with nuts (SP-M3S-20)
-
-<IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/ru_manifold_core.png" WIDTH="200" />
-
-<IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/ru_manifold_lid.png" WIDTH="200" />
-
-<BR><BR>
+- Reactor manifold core (Printed) (RU-COR)
+- Reactor manifold lid (Printed) (RU-LID)
+- 6 oz regular mouth mason jar for core chamber (RU-COR)
+- 12mm M3 screws with nuts (SP-M3S-12)
+- 20mm M3 screws with nuts (SP-M3S-20)
 
 **Assembly:**
 
 - Place the jar lid ring over the manifold core.
-<IMG ALT="Reactor manifold parts" SRC="./media/reactor-unit/reactor-manifold-parts.jpg" WIDTH="400"/>
 - Insert the manifold core through the manifold lid, then twist the lid slightly so that the manifold core fits snugly in the manifold lid.
 - Check to make sure the holes on the side of the manifold core line up with those on the manifold lid
 - The screwholes on sides of the lid and manifold core should be lined up, screw in the three 12mm M3 screws.
 
-  <IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/reactor-manifold-assembled.jpg" WIDTH="400"/>
-
+<IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/reactor-manifold-assembled.jpg" WIDTH="400"/>
 
 #### Assembling and Attaching the Stirring Motor Mount
 
@@ -246,37 +222,30 @@ Next, we need to attach the stirring motor mount to the top of the manifold, sec
 <IMG ALT="Reactor stirring assembly parts" SRC="./media/reactor-unit/reactor-stirring-assembly-parts.jpg" WIDTH="400"/>
 <IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" WIDTH="400"/>
 
-
-
-
 **Parts:**
 
-* Stir rod motor (RU-SRM)
-* Stir rod (RU-STR)
-* Stir rod coupler (RU-SRC)
-* Reducing fitting (RU-RED)
-* Stir rod mount (Printed)(RU-SRM)
-* Silicone tubing 8mm OD with 1mm wall, 1"
-* Possibly necessary: Material such as dense foam to hold it in place.
-* 20mm M3 screws with nuts (SP-M3S-20)
+- Stir rod motor (RU-SRM)
+- Stir rod (RU-STR)
+- Stir rod coupler (RU-SRC)
+- Stir rod mount (Printed)(RU-SRM)
+- Possibly necessary: Material such as dense foam to hold it in place.
+- 20mm M3 screws with nuts (SP-M3S-20)
+
+<IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/ru_coupler.png" WIDTH="50"/>
 
 **Assembly:**
 
-
-- **Attach stir rod motor to coupler.** Push one end of the stir rod coupler over the motor's shaft and secure it with one of the M3 screws that came with the coupler.
-   - Take care to center it and be aware that the shaft likely has a flat spot that makes it non-symmetrical
-   <IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/ru_coupler.png" WIDTH="50"/>
-- **Attach tubing.** Push the tubing up over the other end of the shaft coupler, working it up until it is just below the set screws for the other end.
-- **Insert coupler into mount.** Insert the coupler into the hole in the top of the stirring motor mount.
-- **Insert stir rod into manifold** From the bottom of Reactor Core manifold insert the mixing paddle's shaft through the center.
-- **Connect stir rod to mount.** Take the stirring motor mount and insert the stir rod's shaft until it slides into the coupling tubing.
 - **Attach the mount to the manifold.** Use the M3 screws to connect the stirring mount to the top of the manifold.
-
+- **Attach stir rod motor to coupler.** Push the end of the stir rod coupler with the smaller hole over the motor's shaft and secure it with one of the set screws that came with the coupler.
+  - Take care to center it and be aware that the shaft likely has a flat spot that makes it non-symmetrical
+- **Insert motor into mount.** Insert the motor into the hole in the top of the stirring motor mount.
+  - You may need to wrap the motor in dense flexible foam and wrap it in electrical tape for it to fit snugly.
+- **Insert stir rod into manifold.** Strip a few mm of PTFE coating from the end of the stirrer's shaft. Then, from the bottom of Reactor Core manifold insert the mixing paddle's shaft through the center.
+- **Connect stir rod to coupler.** Insert the mixing paddle's shaft into the wide end of the coupler.
+- **Be ready to resize.** When fully assembled, the mixing paddle should be suspended in the reaction chamber and should not touch the bottom or sides of the chamber. You will likely need to cut the stirrer's shaft short for this to fit properly. Take your time when cutting the shaft, as cutting it too short will make it impossible to use.
 
   <IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/ru_manifold_assmebled.png" WIDTH="200" />
   <IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" WIDTH="400" />
-
-
 
 ### Reactor Unit reaction chamber assembly
 
@@ -297,9 +266,8 @@ TADA! Your Reactor Core is complete!
 
 <IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400"/>
 
-
-
 ### Reactor Unit Assembly
+
 <a name="unit"></a>
 
 These instructions assume you have already assembled the Pumps Box and the Reactor Core.
@@ -310,34 +278,29 @@ These instructions assume you have already assembled the Pumps Box and the React
 
 **Parts:**
 
-* 6 oz mason jar for core chamber| (RU-COR)
-* 32oz wide mouth mason jar for outer jacket (RU-OUT)
-* Reactor stand - H  (Printed) (RU-SDH)
-* Reactor stand - A  (Printed) (RU-SDA)
-* Reactor stand - ¢  (Printed) (RU-SDC)
-* Reactor stand - K  (Printed) (RU-SDK)
-
+- 6 oz mason jar for core chamber| (RU-COR)
+- 32oz wide mouth mason jar for outer jacket (RU-OUT)
+- Reactor stand - H  (Printed) (RU-SDH)
+- Reactor stand - A  (Printed) (RU-SDA)
+- Reactor stand - ¢  (Printed) (RU-SDC)
+- Reactor stand - K  (Printed) (RU-SDK)
 
 <IMG ALT="Reactor stand parts" SRC="./media/reactor-unit/reactor-stand-parts.jpg" WIDTH="400"/>
 
 <IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/reactor-stand-assembled.jpg" WIDTH="400"/>
-<br>
-<br>
 
 **Assembly:**
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-stand-parts.jpg" WIDTH="300" />
 
-
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/ru_stand.png" WIDTH="300" />
-
 
 - Use the M3 screws to assemble the Reactor Stand pieces in the following way:
   - **Connect H and A**
-    -  Place the H on the left, tilted up in its left side, the top "arms" of the H at the back should have 2 slots.
+    - Place the H on the left, tilted up in its left side, the top "arms" of the H at the back should have 2 slots.
     - Place the A at the back tilted on its left side so the "feet" of the A line up with the top of the H.
     <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_h.png" WIDTH="200"/>
       <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_a.png" WIDTH="190"/>
-    -  Slide the hooks on the A into the slots on H
+    - Slide the hooks on the A into the slots on H
 
   - **Connect the A and K**
     - A is already positioned
@@ -352,40 +315,32 @@ These instructions assume you have already assembled the Pumps Box and the React
 
   <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand.png" WIDTH="200"/>
 
-
-  -
 ### Reactor Unit - Putting it All Together
 
 You've already built the core and the pump. All that's left to do is connect it all up.
 
 **Parts:**
 
-* Reactor Stand
-* Reactor Core
-* Pumps Unit
-* Jar Flanges (Printed) (RU-RJF)
-
+- Reactor Stand
+- Reactor Core
+- Pumps Unit
+- Jar Flanges (Printed) (RU-RJF)
 
 **Assembly:**
 
 - **Attach the Pumps box to the Reactor Stand.**
   - Take the Pumps Box and insert the tabs on H, ¢ , and K
 
-  <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_assembled.png" WIDTH="200"/>
+<IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_assembled.png" WIDTH="200"/>
 
 - **Attach the Reactor Core**
-  * Place the Reactor Core in the center of the ¢.
-  * Add the jar flanges (C shaped pieces) as shims in between the top of the ¢ part and the Reactor Core's outer jar. Two flanges should keep it snugly in place. If not, consider using another shim. (See picture below for reference, the jar flanges are orange and the ¢ piece is yellow.)
-
+  - Place the Reactor Core in the center of the ¢.
+  - Add the jar flanges (C shaped pieces) as shims in between the top of the ¢ part and the Reactor Core's outer jar. Two flanges should keep it snugly in place. If not, consider using another shim. (See picture below for reference, the jar flanges are orange and the ¢ piece is yellow.)
 
 - **Connecting Reactor Core to Pumps Box**
-  * Plug the stirring motor's plug into the upper barrel connector socket on the Pumps Box.
-  * Attach one piece of tubing to each of the the peristaltic pumps and through the holes in the Reactor Core manifold to reach the 6oz mason jar chamber.
-
-
+  - Plug the stirring motor's plug into the upper barrel connector socket on the Pumps Box.
+  - Attach one piece of tubing to each of the the peristaltic pumps and through the holes in the Reactor Core manifold to reach the 6oz mason jar chamber.
 
 <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_add_rc.png" WIDTH="400"/>
 
-
-<BR><BR>
 This concludes the assembly instructions for the Reactor Unit. Next up: [MicroLab Setup & Operation](/docs/operation.md).

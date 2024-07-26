@@ -1,20 +1,17 @@
-# MicroLab
-
-
 # Control Unit Assembly
-
 
 We'll start by assembling the brains of the operation, the Control Unit. As the most complex component of the MicroLab, this will take some time and patience.
 
 <IMG ALT="Control Unit" SRC="./media/control-unit/control-unit-complete.jpeg" WIDTH="400" />  
 
 <br />  
-<br />   
+<br />
 
 To wire things up properly we'll tackle different parts of the Control Unit and then put them all together. We've broken it down by setting up the control boards....
 
 Steps:
-* [Setup Control Boards - Raspberry Pi ](#raspberry)
+
+* [Setup Control Boards - Raspberry Pi](#raspberry)
 * [Setup Control Boards - Arduino](#arduino)
 * [Assembling the 12V Circuit](#12V)
    * [Relay Board Wiring](#12vrelay)
@@ -30,8 +27,8 @@ Steps:
 * [Final Assembly](#final)
 * [Making MicroLab Cables](#cables)
 
-
 ## Skills Needed
+
 <a name="skills"></a>
 
 * Wire stripping - one example [video](https://www.youtube.com/watch?v=N__OLJvq2HE)
@@ -45,7 +42,6 @@ Steps:
 * Small phillips head screwdriver for M3 screws, one came in kit
 * Flush cutters (CU-FCT)
 * Needle nose pilers (CU-NNP)
-
 
 ## Parts Needed
 
@@ -477,10 +473,6 @@ To connect the Control Unit to the outside world we will mount the connectors to
 * USB ports (2) (out to thermistor)
 * Barrel port (12V in)
 
-
-<IMG ALT="Panel-mounted components" SRC="./media/control-unit/case-and-mounted-parts.jpg" width="600" />
-
-
 #### **Parts**
 
 |Part ID      | Part Name     | Count | Notes |
@@ -530,9 +522,6 @@ SP-M3S-16|16 mm M3 screws with nuts| 6 |
 **Install the Barrel Port.** Insert the female barrel plug connector in the circular hole on the left side of the case and attach with the matching nut.
 
 **Install the USB Ports.** Mount the USB ports to the case. The USB case holes are between the 8-pin and 12-pin connectors. They should have come with their own screws. We recommend installing them with the plastic rectangle at the top, but feel free to be a chaos muppet about it if that's your jam.
-
-<IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/case-with-parts-mounted.jpg" width="600" />
-
 
 ## Installing the Components in the Control Unit Case
 <a name="installcase"></a>
@@ -697,7 +686,9 @@ The wires we attach to the header GPIO pins let the Raspberry Pi control the rel
 - **Cable Management**
    * Tape the GPIO pins together to secure them. See picture.
    * Carefully tuck the wires into the case so that they will not obstruct the lid.
+
 <IMG ALT="GPIO pins" SRC="./media/control-unit/cu_5v_gpio_taped.jpeg" width="300" /> <BR><BR>
+
 - **Attach touchscreen.** Attach the touchscreen to the Raspberry Pi.
 
 <IMG ALT="GPIO pins" SRC="./media/control-unit/cu_case_inside_t.png" width="400" />
