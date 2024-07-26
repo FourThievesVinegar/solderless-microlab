@@ -2,10 +2,7 @@
 
 <IMG ALT="The MicroLab assembled" SRC="./media/ML_assembled.jpeg" width="800" />
 
-<BR>
-<BR>
-
-The MicroLab is part of the MicroLad Suite. Learn more about the hardware/software stack [here](/docs/motivation.md#Meet-the-MicroLab-Suite)
+The MicroLab is part of the MicroLab Suite. Learn more about the hardware/software stack [here](/docs/motivation.md#Meet-the-MicroLab-Suite)
 
 
 The MicroLab is made up of:
@@ -28,10 +25,10 @@ The MicroLab is made up of:
   - [Using the MicroLab](#use)
   - [Resources](#resources)
 
-
 ## Parts
 
 ### Purchased Parts
+
 <a name="purchased_parts"></a>
 
 We created a parts list with all the purchased and printed parts that you will need to build a MicroLab.
@@ -40,8 +37,8 @@ For the purchased items, we have links to one or more sources. We used the links
 
 [The MicroLab's Parts List](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
 
-
 ### Printed Parts
+
 <a name="3d"></a>
 
 The MicroLab uses several custom parts, listed on [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx), the raw and printable files for these parts can be found on the [MicroLab Parts' Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6).
