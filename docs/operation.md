@@ -4,8 +4,6 @@
 
 This section describes how to assemble a complete but disassembled MicroLab. If you need to build one from scratch, see: [assembly.md](assembly.md)
 
-
-
 ## Parts
 
 * [Reactor Unit](/docs/assembly-reactor-unit.md)
@@ -22,7 +20,6 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 
 <IMG ALT="Reactor stand assembled" SRC="./media/ML_units.png" WIDTH="400"/>
 
-
 ## MicroLab Assembly
 
 * [Setting up the Reactor Unit ](#reactor)
@@ -30,9 +27,8 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 * [Setting up Cooling Unit](#cool)
 * [Cabling the Control Unit](#control)
 
-
-
 ## Setting up the Reactor Unit
+
 <a name="reactor"></a>
 
 - **Assembled Reactor Unit.** If not already assembled, put together the stand, add the Pumps Box and Reactor Core. You can refer to [Building the Reactor Unit](/docs/assembly-reactor-unit.md) for more information.
@@ -53,10 +49,6 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 
 <IMG ALT="Temp Tubing" SRC="./media/temperature-units/ru_therm.png" WIDTH="400"/>
 
-
-
-
-
 ## Setting up the Cooling Unit
 <a name="cool"></a>
 
@@ -70,20 +62,19 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 <IMG ALT="Temp Tubing" SRC="./media/reactor-unit/ru_tubes_crossed.jpeg" WIDTH="400"/>
 
 ## Cabling the Control Unit
+
 <a name="control"></a>
+
 The Control Unit will need to be connected to the power supply, the Pumps box to run the pumps and power the ports, and the Thermistor to power it.
+
+<IMG ALT="Temp Tubing" SRC="./media/control-unit/cu_cables.jpeg" WIDTH="200"/>
 
 * **8-pin cable** Connect the 8-pin cable to mounted 8-pin connector on the Control Unit box and on the Pumps Box.
 * **12-pin cable Connect** the 12-pin cable to mounted 12-pin connector on the Control Unit box and on the Pumps Box.
-<IMG ALT="Temp Tubing" SRC="./media/control-unit/cu_cables.jpeg" WIDTH="200"/>
-
 * **Connect Thermistor USB to Control Unit** Plug the USB end of the Thermistor into the Control Unit's USB port.
 * **Plug in Power supply** Insert the barrel connector of the power supply to the barrel connector power port on the Control Unit.
 
-
 <IMG ALT="Temp Tubing" SRC="./media/ML_case_cabled.jpeg" WIDTH="400"/>
-<BR><BR>
-
 
 The MicroLab should now be connected and ready to be setup up for a recipe and run.
 * The picture below shows the syringes attached, we left that step for later when actually using it, but wanted to show the connected MicroLab in all its glory.
@@ -102,8 +93,9 @@ Recipes are a set of instructions the MicroLab uses to run chemical reactions. T
 
 <IMG ALT="Recipe Press Logo" SRC="media/apoth_logo.png" WIDTH="100"/>[Recipe Press Site](media/apoth_logo.png)
 
-
 ### About Recipes
+
+<IMG ALT="Temp Tubing" SRC="./media/ops/ops_authoring_recipes.jpeg" WIDTH="1000"/>
 
 A recipe is a series of numbered steps. Each step has:
  * User message - test displayed on the touchscreen
@@ -114,8 +106,6 @@ A recipe is a series of numbered steps. Each step has:
 
    <IMG ALT="Recipe Press Logo" SRC="media/OPS/ops_step5.png" WIDTH="250"/>
 
-<BR><BR>
-
 The MicroLab is able to perform 5 task types:
 * Human Task - pause until the person completes the task shown on the touchscreen and taps on a menu button to move to the next stop
 * Pump - turn one pump on to dispense a set volume of liquid
@@ -123,9 +113,8 @@ The MicroLab is able to perform 5 task types:
 * Cool - maintains reactor core liquid at the set temperature
 * Heat - maintains reactor core liquid at the set temperature
 
-
-
 ### The Test Recipe
+
 We have a Test Recipe designed to check that all the parts of the MicroLab are working correctly. It is available on the Recipe Press site and is also preloaded on the Control Unit.
 
 On the Press Recipe site, you can see the how the Test Recipe is built.
