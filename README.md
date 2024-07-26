@@ -17,6 +17,8 @@ This section is for you if you want to build a MicroLab and start using it. We t
 
 ## Getting Started Developing the MicroLab
 
+<IMG ALT="MicroLab architecture diagram" SRC="./docs/media/ML_architecture.jpeg" width="1000" />
+
 This section is for you if you want to help develop the MicroLab and will need to tinker with the code base.  
 
 You will need to get a copy of the MicroLab software, set up your development environment either with a Docker container or locally on your computer.
