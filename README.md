@@ -1,26 +1,44 @@
-# FTVC Solderless Microlab
+# Microlab
 
-An open source jacketed lab reactor made from off-the-shelf components you can buy online.
+The MicroLab is an open-source, DIY, automated controlled lab reactor (CLR) that people can assemble with parts available online. We hope this will do for chemistry what the 3D printer did for manufacturing: provide a DIY, hackable, low-cost method to design and produce certain needful things that otherwise would be out of reach.
 
-<IMG ALT="Microlab fully assembled with all units" SRC="./docs/media/microlab-v0.6.0-assembled.jpg" width="600" />
+<IMG ALT="MicroLab fully assembled with all units" SRC="./docs/media/ML_assembled.jpeg" width="600" />
+<BR><BR>
 
-An introduction to the project is here: [docs/index.md](docs/index.md)
+The MicroLab Suite. For the MicroLab to be accessible to the most people, it was developed as part of a hardware/software stack called the MicroLab Suite. The different software programs help take the information about a compound you want to make and translate it into a recipe (code) that the MicroLab runs to create the compound.
 
-Read the motivation behind the project here: [docs/motivation.md](docs/motivation.md)
 
-The full replication and assembly instructions here: [docs/assembly.md](docs/assembly.md)
+**More Information.** You can find the introduction to the project, what the heck is a CLR, what's in the MicroLab Suite and why we are doing this on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
 
-PLEASE NOTE: These docs are in pre-release for v0.6. They are not considered complete and we are still finalizing some hardware recommendations. That said, if tinkering is your thing, you should be fine.
 
-## Production vs Development
 
-The instructions below are for a fresh install of the Microlab software (backend and GUI) on your development machine. If you intend to construct a full Microlab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two: 
-- A "production" image that runs all software on startup and includes the drivers for a goodtft-compatible 3.5 inch mini-display. 
-- A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard.
+## Getting Started Making Your MicroLab
+This section is for you if you want to build a MicroLab and start using it. We tried to make building the MicroLab friendly for folks newer to electronics, but you will need some knowledge and skills with electronics (or the patience to learn a few things).
 
-If you wish to develop on a regular computer with emulated hardware, follow the instructions below.
+- Learn [About the MicroLab and MicroLab Suite](docs/motivation.md) so you have an understanding of what you are building.
+- **Start here for [How to build & use the MicroLab and MicroLab Suite](docs/index.md)**
 
-## Docker Development
+
+
+
+## Getting Started Developing the MicroLab
+
+This section is for you if you want to help develop the MicroLab and will need to tinker with the code base.  
+
+You will need to get a copy of the MicroLab software, set up your development environment either with a Docker container or locally on your computer.
+
+
+### Installing the MicroLab software locally
+
+Use the instructions below for a fresh install of the MicroLab software (backend and GUI) on your development machine.
+
+If you intend to construct a full MicroLab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two:
+- A "production" image that runs all software on startup and includes the drivers for a goodtft-compatible 3.5 inch mini-display. This would be the software to run on the MicroLab
+- A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard. This would be the software to run on a computer where the MicroLab hardware can be emulated.
+
+If you are using the development image and running it on a computer with emulated hardware turn on, follow the instructions below.
+
+## Dev Environment Option 1: Docker Development
 
 For ease of setup/experimentation we added docker containers for both the GUI and the API.
 If you don't have docker-compose installed on your system you can install docker desktop following [these docs](https://docs.docker.com/compose/install/)
@@ -39,7 +57,7 @@ docker-compose up --build api
 
 If you're running docker with a hardware setup you'll need to edit docker-compose.yml and uncomment the lines specified in the file.
 
-## Setup
+## Dev Environment Option 1: Laptop Setup
 
 Clone the repo:
 
@@ -131,10 +149,16 @@ $ yarn start
 
 The GUI will now be listening on port 3000.
 
-## Hardware Emulation
+## MicroLab Hardware Options
 
-To run the software without a functioning hardware environment, go to the settings menu and change the "Microlab Controller" setting to "simulation-pi" and "Lab Hardware Config" to "ftv_simulation_microlabv0.5.0"
+### Hardware Emulation
 
-## Enabling SSH
+To run the software without a functioning hardware environment, go to the settings menu and change the "MicroLab Controller" setting to "simulation-pi" and "Lab Hardware Config" to "ftv_simulation_microlabv0.5.0"
 
-For ease of remote development, you may want to enable SSH on the Pi. Instructions for doing so can be found here: https://itsfoss.com/ssh-into-raspberry/
+### MicroLab Setup - Enabling SSH
+
+If you have a MicroLab to run the software on, you may want to enable SSH on the Pi. This makes remote development easier. Instructions for doing so can be found here: https://itsfoss.com/ssh-into-raspberry/
+
+
+## Start Developing
+Once your environment is setup, head on over to the [Backend README](/backend)
