@@ -40,6 +40,7 @@ SP-SMC|	Stepper motor cables | 3 | 6-pin end for motors
 RU-SYR|	Syringes|	3
 RU-PUB|	Pumps box (Printed)|	1
 RU-PUL|	Pumps lid (Printed)|	1
+RU-SUP|	Pumps lid (Printed)|	1
 TC-PMP|	Circulating pump| 2
 SP-PC12| 12-pin connector, panel-mount screw terminal| 1
 SP-PC8|	8-pin connector, panel-mount screw terminal| 1
@@ -71,6 +72,7 @@ The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject
 - 4 M3 screws, 30mm
 - Pumps box
 - Pumps lid
+- Wire coat hanger
 
 ### Mounting the Parts to the Box
 
@@ -142,11 +144,13 @@ The 8-pin connector is connected to the positive and negative power wires for th
 
 <IMG ALT="Pump unit fully assembled with the lid open and wire connections visible" SRC="./media/pumps-unit/pumps-unit-lid-open.jpg" WIDTH="400" />
 
-### Closing it up
+### Finishing it up
 
 - NOTE: You may want to test everything before closing the lid.
 - Use the four 30mm M3 screws to attach the lid to the box, closing it up.
+- Place the coat hanger on top of the pumps Box and cut it so that it has approximately 3 inches of length beyond the pumps box on either side. Once it is cut, bend it so that it has two 90 degree bends at each end (see image below). Insert the ends into the holes in the top corners of the pumps box and use straps so that it can support the syringes when they are in use.
 
+<IMG ALT="Wiring the pump wires" SRC="./media/pumps-unit/syringe-supports.jpeg" WIDTH="400" />
 
 ✨ 💖 ✨
 
@@ -186,7 +190,7 @@ RU-SYR|	Syringes|	3
 CU-PLG|	Barrel plug connectors, 5.5mm x 2.1mm| 2 |female
 SP-M3S-12| 12mm M3 screws with nuts | 3
 SP-M3S-20| 20mm M3 screws with nuts | 3
-SP-STB|Silicone tubing 7mm OD x 5mm ID|1
+SP-STB|Silicone tubing 8mm OD x 5mm ID|1
 
 ### Tools
 
