@@ -19,13 +19,13 @@ import sys
 
 def setupLogging():
     logHandlers = []
-    formatter = MultiLineFormatter(
-        fmt='%(asctime)s [%(levelname)s]: %(message)s'
-    )
+    formatter = MultiLineFormatter(fmt="%(asctime)s [%(levelname)s]: %(message)s")
 
-    fileLogger = handlers.RotatingFileHandler("{0}/microlab.log".format(config.microlabConfig.logDirectory), 
-                                                maxBytes=config.microlabConfig.logFileMaxBytes, 
-                                                backupCount=config.microlabConfig.logFileBackupCount)
+    fileLogger = handlers.RotatingFileHandler(
+        "{0}/microlab.log".format(config.microlabConfig.logDirectory),
+        maxBytes=config.microlabConfig.logFileMaxBytes,
+        backupCount=config.microlabConfig.logFileBackupCount,
+    )
     fileLogger.setFormatter(formatter)
     logHandlers.append(fileLogger)
     if config.microlabConfig.logToStderr:
@@ -36,14 +36,19 @@ def setupLogging():
     logging.basicConfig(handlers=logHandlers, level=config.microlabConfig.logLevel)
     multiprocessing_logging.install_mp_handler()
 
+
 if __name__ == "__main__":
     config.initialSetup()
     setupLogging()
 
+    logging.info("### STARTING MAIN MICROLAB SERVICE ###")
+
     q1 = Queue()
     q2 = Queue()
 
-    microlabProcess = Process(target=startMicrolabProcess, args=(q1, q2), name="microlab")
+    microlabProcess = Process(
+        target=startMicrolabProcess, args=(q1, q2), name="microlab"
+    )
     microlabProcess.start()
     flaskProcess = Process(target=runFlask, args=(q2, q1), name="flask")
     flaskProcess.start()
@@ -54,4 +59,3 @@ if __name__ == "__main__":
     q2.close()
     q1.join_thread()
     q2.join_thread()
-    
