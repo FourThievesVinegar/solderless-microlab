@@ -66,3 +66,47 @@ Please note that we are experimenting with sinking nuts into various components 
 ### Optimizing Heat Exchange
 
 We are looking into upcycling heat sinks from old computers but are still experimenting - please reach out if you have done this or have suggestions.
+
+## Touch Screen Settings
+
+### The screen doesn't work
+
+The small touchscreen doesn't work at all. It shows all white or fails to light up at all.
+
+**Issue:**
+Touchscreen doesn't light up at all
+
+**Solution:**
+This indicates a hardware problem. It's likely the screen isn't getting power or is broken. If you have extra screens or microcomputers, try a different screen or another computer. If none of this resolves the issue, you may need to order a replacement or reach out to the manufacturer for help
+
+**Issue:**
+Touchscreen lights up but is all white
+
+**Solution:**
+This likely indicates that the drivers are not properly installed. Check the screen manufacturer's documentation and ensure that you're following their instructions for installation. Check to make sure that your microcomputer is compatible with the screen and the display drivers. If the HDMI port still sends video, this may indicate that the driver installation was not completed.
+
+### X or Y touch axis is reversed
+
+**Issue:**
+Your touch screen works, but not correctly. Tapping near two of the corners kinda works, but the other two corners seem reversed.
+
+**Solution:**
+There is a configuration file change that should fix this. Open the following file.
+
+```bash
+sudo nano /etc/X11/xorg.conf.d/99-calibration.conf
+```
+
+Look for a line like this one:
+
+```bash
+Option "SwapAxes" "1"
+```
+
+Try changing that `"1"` to a `"0"` and restarting the Pi.
+
+```bash
+sudo shutdown -r now
+```
+
+If that doesn't work, try searching for the manufacturer and model number of your screen with terms like "swapped axes".

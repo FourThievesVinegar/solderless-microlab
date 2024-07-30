@@ -23,16 +23,25 @@ export function App() {
   const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)
   const [promptPlaying, playPromptAudio] = useAudio(SOUNDS.PROMPT)
 
+  const handleGetStatusError = () => {
+    const mockStatus = {
+      message: 'Service down',
+      status: 'Waiting for control service',
+      step: -1,
+    }
+    setStatus(mockStatus)
+  }
+
   const updateStatusAndGetItAgain = (data: any) => {
     setStatus(data)
 
     setTimeout(() => {
-      getStatus(updateStatusAndGetItAgain)
+      getStatus(updateStatusAndGetItAgain, handleGetStatusError)
     }, 2500)
   }
 
   useEffect(() => {
-    getStatus(updateStatusAndGetItAgain)
+    getStatus(updateStatusAndGetItAgain, handleGetStatusError)
   }, [])
 
   useEffect(() => {
