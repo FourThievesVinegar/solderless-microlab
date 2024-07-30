@@ -2,9 +2,11 @@
 
 The MicroLab is an open-source, DIY, automated controlled lab reactor (CLR) that people can assemble with parts available online. We hope this will do for chemistry what the 3D printer did for manufacturing: provide a DIY, hackable, low-cost method to design and produce certain needful things that otherwise would be out of reach.
 
-<IMG ALT="MicroLab fully assembled with all units" SRC="./docs/media/ML_assembled.jpeg" width="600" />
+<IMG ALT="MicroLab fully assembled with all units" SRC="https://fourthievesvinegar.org/wp-content/uploads/2024/07/microlab-stirring-3.gif" width="600" />
 
-The MicroLab Suite. For the MicroLab to be accessible to the most people, it was developed as part of a hardware/software stack called the MicroLab Suite. The different software programs help take the information about a compound you want to make and translate it into a recipe (code) that the MicroLab runs to create the compound.
+## The MicroLab Suite
+
+For the MicroLab to be accessible to the most people, it was developed as part of a hardware/software stack called the MicroLab Suite. The different software programs help take the information about a compound you want to make and translate it into a recipe (code) that the MicroLab runs to create the compound.
 
 **More Information.** You can find the introduction to the project, what the heck is a CLR, what's in the MicroLab Suite and why we are doing this on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
 
