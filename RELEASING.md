@@ -1,0 +1,14 @@
+# Performing a Release of the MicroLab
+
+The MicroLab is an open source hardware/software project with many moving parts. This document is a concise guide for how to go about creating a releasing a stable version.
+
+## Preparing for Release
+
+- Perform end-to-end testing on a completed unit. Typically this will mean running a test recipe such as Caffeine Extraction on an assembled unit. A mock unit can also be used (for example, one that switches LED's instead of running pumps and motors) but nothing brings out the bugs like a real-life test that does some sort of actual chemistry.
+- Make sure that documentation is up to date, including the main README.md, CHANGELOG.md, and any instructions in the docs folder.
+
+## Doing the Release
+
+- Make a stable branch off of `master`, cherry-pick to it if you make last-minute changes.
+- Update version numbers in files as appropriate and update the CHANGELOG document as well.
+- Once deployed to units and confirmed working, make disk images and post them somewhere they can be torrented.
