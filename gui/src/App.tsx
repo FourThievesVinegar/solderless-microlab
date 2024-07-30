@@ -33,7 +33,6 @@ export function App() {
   }
 
   const updateStatusAndGetItAgain = (data: any) => {
-    console.log('updateStatusAndGetItAgain', data)
     setStatus(data)
 
     setTimeout(() => {
