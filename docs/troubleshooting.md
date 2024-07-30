@@ -66,3 +66,8 @@ Please note that we are experimenting with sinking nuts into various components 
 ### Optimizing Heat Exchange
 
 We are looking into upcycling heat sinks from old computers but are still experimenting - please reach out if you have done this or have suggestions.
+
+## Touch Screen Settings
+
+### X or Y axis is reversed
+
