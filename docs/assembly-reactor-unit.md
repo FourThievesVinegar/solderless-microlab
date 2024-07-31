@@ -102,9 +102,8 @@ Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the 
 - Cut and strip the wires on the pumps and barrel plug connectors.
 - The connectors need to be wired the same as the ones in the Control Unit.
   - [Wire Order in the Control Unit ](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/assembly-control-unit.md#wireorder) as seen from outside the case. <br>
-  <IMG ALT="Cable order" SRC="./media/control-unit/connector.png" WIDTH="300" />
-  <IMG ALT="Pump lid fully assembled" SRC="./media/pumps-unit/pumps-unit-lid-assembled.jpg" WIDTH="400" />
-
+<IMG ALT="Cable order" SRC="./media/control-unit/connector.png" WIDTH="300" />
+<IMG ALT="Pump lid fully assembled" SRC="./media/pumps-unit/pumps-unit-lid-assembled.jpg" WIDTH="400" />
 
 ### 8-pin wiring
 
@@ -116,7 +115,7 @@ The 8-pin connector is connected to the positive and negative power wires for th
   - The left pump is for the Cooling Pump Unit
   - The right pump is for the Heating Pump Unit
 
-  <IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pump_box_label.png" WIDTH="300" />
+<IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pump_box_label.png" WIDTH="300" />
 
   - **Wire the 8-pin connector.** On the back on the  8-pin connector, from the left, insert and then screw down the power cables:
     - accessory positive (red)
@@ -157,7 +156,6 @@ The 8-pin connector is connected to the positive and negative power wires for th
 Congratulations! You did it. Hopefully it wasn't too bad!
 
 (Sorry if it was. We're trying to be encouraging here, not snarky.)
-
 
 ## Reactor Core Assembly
 
@@ -213,6 +211,7 @@ First, we need to assemble the manifold lid that holds the jars together and all
 **Assembly:**
 
 - Place the jar lid ring over the manifold core.
+  - Note: for high-temperatures or strong solvents, you may want to order a high-performance version of this part. See the parts list for more details.
 - Insert the manifold core through the manifold lid, then twist the lid slightly so that the manifold core fits snugly in the manifold lid.
 - Check to make sure the holes on the side of the manifold core line up with those on the manifold lid
 - The screwholes on sides of the lid and manifold core should be lined up, screw in the three 12mm M3 screws.
