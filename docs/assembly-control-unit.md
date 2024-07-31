@@ -397,7 +397,7 @@ The Raspberry Pi, 4-Channel Relay Board and the Arduino all run using 5V power. 
 
 The Raspberry Pi sends 5V power (and data) out to the Ardunio and the 2 mounted USB ports through USB cables.  
 
-<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/cu_5V_signals.png" WIDTH="600" />
+<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/cu_5v_signals.png" WIDTH="600" />
 
 #### Relay Board Layout
 
