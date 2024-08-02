@@ -4,9 +4,10 @@ import serial
 from hardware.reagentdispenser.base import ReagentDispenser
 import logging
 
-def grblWrite(grblSer, command):
+
+def grblWrite(grblSer, command, retries=3):
     """
-    Writes the given command to grbl. 
+    Writes the given command to grbl.
 
     :param grblSer:
     Serial device to write the command to
@@ -18,13 +19,19 @@ def grblWrite(grblSer, command):
     None
     """
     grblSer.reset_input_buffer()
-    grblSer.write(bytes(command, 'utf-8'))
+    grblSer.write(bytes(command, "utf-8"))
     # Grbl will execute commands in serial as soon as the previous is completed.
     # No need to wait until previous commands are complete. Ok only signifies that it
     # parsed the command
     response = grblSer.read_until()
-    if 'error' in str(response):
-        raise Exception("grbl command error: {0}".format(response))
+    if "error" in str(response):
+        if retries > 0:
+            grblWrite(grblSer, command, retries - 1)
+        else:
+            raise Exception(
+                "grbl error: {0} for command: {1}".format(response, command)
+            )
+
 
 class PeristalticPump(ReagentDispenser):
     def __init__(self, args):
@@ -33,7 +40,7 @@ class PeristalticPump(ReagentDispenser):
         :param args:
           dict
             arduinoPort
-                string - Serial device for communication with the Arduino 
+                string - Serial device for communication with the Arduino
             peristalticPumpsConfig
                 dict - Configuration for the peristaltic pump motors
                 F   Flow rate
@@ -46,7 +53,7 @@ class PeristalticPump(ReagentDispenser):
         """
         self.peristalticPumpsConfig = args["peristalticPumpsConfig"]
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
-        grblWrite(self.grblSer, 'G91')
+        grblWrite(self.grblSer, "G91")
 
     def dispense(self, pumpId, volume, duration=None):
         """

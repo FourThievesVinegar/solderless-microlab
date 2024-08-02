@@ -5,9 +5,10 @@ from hardware.reagentdispenser.base import ReagentDispenser
 import logging
 import math
 
-def grblWrite(grblSer, command):
+
+def grblWrite(grblSer, command, retries=3):
     """
-    Writes the given command to grbl. 
+    Writes the given command to grbl.
 
     :param grblSer:
     Serial device to write the command to
@@ -19,13 +20,19 @@ def grblWrite(grblSer, command):
     None
     """
     grblSer.reset_input_buffer()
-    grblSer.write(bytes(command, 'utf-8'))
+    grblSer.write(bytes(command, "utf-8"))
     # Grbl will execute commands in serial as soon as the previous is completed.
     # No need to wait until previous commands are complete. Ok only signifies that it
     # parsed the command
     response = grblSer.read_until()
-    if 'error' in str(response):
-        raise Exception("grbl command error: {0}".format(response))
+    if "error" in str(response):
+        if retries > 0:
+            grblWrite(grblSer, command, retries - 1)
+        else:
+            raise Exception(
+                "grbl error: {0} for command: {1}".format(response, command)
+            )
+
 
 class SyringePump(ReagentDispenser):
     def __init__(self, args):
@@ -34,7 +41,7 @@ class SyringePump(ReagentDispenser):
         :param args:
           dict
             arduinoPort
-                string - Serial device for communication with the Arduino 
+                string - Serial device for communication with the Arduino
             syringePumpsConfig
                 dict - Configuration for the syringe pump motors
 
@@ -42,27 +49,27 @@ class SyringePump(ReagentDispenser):
                     dict - configuration of the X axis/motor
 
                     mmPerRev
-                        Number of mm the stepper motor moves per full revolution, 
+                        Number of mm the stepper motor moves per full revolution,
                         this is the pitch of the threaded rod
                     stepsPerRev
-                        Number of steps per revolution of the stepper motor, 
+                        Number of steps per revolution of the stepper motor,
                         reference the documentation for the motor
                     mmPerml
-                        Number of mm of movement needed to dispense 1 ml of fluid, 
+                        Number of mm of movement needed to dispense 1 ml of fluid,
                         this is the length of the syringe divided by its fluid capacity
                     maxmmPerMin
                         Maximum speed the motor should run in mm/min
                 Y
-                    dict - configuration of the Y axis/motor, 
-                    same as documented above but for the Y axis  
+                    dict - configuration of the Y axis/motor,
+                    same as documented above but for the Y axis
 
                     mmPerRev
                     stepsPerRev
                     mmPerml
                     maxmmPerMin
                 Z
-                    dict - configuration of the Z axis/motor, 
-                    same as documented above but for the Z axis  
+                    dict - configuration of the Z axis/motor,
+                    same as documented above but for the Z axis
 
                     mmPerRev
                     stepsPerRev
@@ -73,7 +80,7 @@ class SyringePump(ReagentDispenser):
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
         self.axisMinmmPerMin = {}
         for axis, syringeConfig in self.syringePumpsConfig.items():
-            stepsPerMM = syringeConfig['stepsPerRev']/syringeConfig['mmPerRev']
+            stepsPerMM = syringeConfig["stepsPerRev"] / syringeConfig["mmPerRev"]
             axisToCNCID = {
                 "X": "0",
                 "Y": "1",

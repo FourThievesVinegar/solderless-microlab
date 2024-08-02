@@ -23,11 +23,25 @@ export function App() {
   const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)
   const [promptPlaying, playPromptAudio] = useAudio(SOUNDS.PROMPT)
 
+  const handleGetStatusError = () => {
+    const mockStatus = {
+      message: 'Service down',
+      status: 'Waiting for control service',
+      step: -1,
+    }
+    setStatus(mockStatus)
+  }
+
+  const updateStatusAndGetItAgain = (data: any) => {
+    setStatus(data)
+
+    setTimeout(() => {
+      getStatus(updateStatusAndGetItAgain, handleGetStatusError)
+    }, 2500)
+  }
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      getStatus(setStatus)
-    }, 1000)
-    return () => clearInterval(interval)
+    getStatus(updateStatusAndGetItAgain, handleGetStatusError)
   }, [])
 
   useEffect(() => {
@@ -52,7 +66,7 @@ export function App() {
       <Header>
         {status
           ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
-              status?.temp ? `${status?.temp.toFixed(2)}C` : ''
+              typeof status?.temp === 'number' ? `${status?.temp.toFixed(2)}C` : ''
             }`
           : 'Waiting for control service'}
       </Header>

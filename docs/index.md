@@ -1,49 +1,97 @@
 # Welcome to The MicroLab
 
-<IMG ALT="The MicroLab assembled" SRC="./media/microlab-v0.6.0-assembled.jpg" width="800" />
+<IMG ALT="The MicroLab assembled" SRC="./media/ML_assembled.jpeg" width="800" />
 
-## What is the MicroLab?
+The MicroLab is part of the MicroLab Suite. Learn more about the hardware/software stack [here](/docs/motivation.md#Meet-the-MicroLab-Suite)
 
-The MicroLab is a do-it-yourself Controlled Lab Reactor (CLR).  You don’t need a CLR to make chemical reactions happen, but it makes the process of synthesizing compounds from precursors much easier and more reliable. 
- 
-A CLR is to organic chemistry what an espresso machine is to coffee. It is possible to make coffee over an open fire with nothing more than beans, water, and a tin can. But you will get a better, more consistent cup of coffee from an automatic machine that dispenses the right amount of water at the right temperature in such a way that ensures the water is in contact with the grounds for the right amount of time.
 
-Commercial CLRs are the equivalent of high end, fully automatic espresso machines. As long as the appropriate reservoirs are filled with beans, water, milk, and flavoring, anyone can craft a perfect mocha topped with steamed milk at the touch of a button.
+The MicroLab is made up of:
+* **Control Unit** - Runs the software and hardware
+* **Heating Unit** - Heats the liquid that circulates outside the reactor to warm it
+* **Cooling Unit** - Cools the liquid that circulates outside the reactor to cool it
+* **Reactor Unit** - Reactor core and pumps box assembled together
+   * Reactor Core - made up of the inner chamber (small glass jar) where compounds are made, outer chamber (large glass jar) where liquid circulates to warm or cool the inner chamber, thermistor to take temperature in the inner chamber, stir rod to mix things in the inner chamber, and the parts to mount and hold all the pieces together.
+   * Pumps Box - houses the circulating pumps, peristaltic pumps and two ports, one for the stir rod and one as an accessory port.
 
-The MicroLab is more like a home espresso machine that will let you reliably make a good cappuccino but won’t do every single step for you. For both the espresso machine and the CLR you need to understand basic lab procedures, measurement techniques, and safety.
+<IMG ALT="The MicroLab assembled" SRC="./media/ML_units.png" width="600" />
 
-The MicroLab is designed to load a recipe for a chemical reaction, then automate the temperature control, reagent addition, and stirring that are needed. It is designed for small-molecule organic chemistry to make certain medicinal compounds in your own home or workshop.
-  
-### How does a Controlled Lab Reactor (CLR) work?
+## Index
 
-A CLR has 3 main jobs.
+- [About the MicroLab and MicroLab Suite](docs/motivation.md)
+- [Welcome to the MicroLab](docs/index.md)  <-- You are Here
+  - [Purchased Parts](#purchased_parts)
+  - [Printed Parts](#3d)
+  - [Building the MicroLab](#build)
+  - [Using the MicroLab](#use)
+  - [Resources](#resources)
 
-1. Maintain the ideal reaction conditions
+## Parts
 
-    The core of a CLR is a temperature controlled vessel (the smaller mason jar) where the chemical reaction takes place. The reaction vessel is surrounded by an outer vessel (the large mason jar) through which hot or cold water is continuously circulated to keep the reaction at the correct temperature. Advanced CLRs often have mechanisms for regulating pressure, pH, and otherwise maintaining ideal conditions for the desired reaction to take place.
+### Purchased Parts
 
-1. Mix the reactants
+<a name="purchased_parts"></a>
 
-    The microlab achieves this with a stirring rod driven by a small motor that is switched on and off by a relay. Commercial systems may have significantly more powerful mixing systems with a variety of paddles that can handle large quantities of liquids with varying viscosity, but they function in the same way.
+We created a parts list with all the purchased and printed parts that you will need to build a MicroLab.
 
-1. Allow materials to be added and removed from the reaction vessel
+For the purchased items, we have links to one or more sources. We used the links more as reference so you can see the item and specifications. We did not optimize for price or local availablity. We encourage everyone to look for the best price and supplier for themselves.
 
-    CLRs need a way to introduce precise quantities of reactants into the reaction vessel without disturbing the reaction conditions. This can be as simple as a graduated cylinder with a stopcock, or in the case of the microlab, a set of computer controlled pumps. The microlab software dispenses the correct quantities at the correct time, reducing the chance of user error. Commercial CLRs also have a way to drain the reaction vessel without disassembling the reactor, but the microlab lacks this feature... for now.
+[The MicroLab's Parts List](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx)
 
-## Meet the MicroLab Suite
+### Printed Parts
 
-The microlab suite is a hardware/software stack that enables the full drug development lifecycle from the chemistry itself back through reaction planning, and even initial research in scientific literature.
-|||
-|-----|-----|
-|![MicroLab](media/microlab_logo.png)|**The MicroLab** - A DIY automated lab that you download, 3D print, and assemble with commonly available hardware. The MicroLab works together with a suite of apps to guide and automate a variety of lifesaving drugs from your home.|
-| ![Recipe Press](media/apoth_logo.png) | **[Recipe Press](https://apothecarium.fourthievesvinegar.org/)** - A simple web app to create "recipes" - sets of instructions the MicroLab uses to run chemical reactions. |
-| ![Chemhacktica](media/chem_logo.png) | **[Chemhacktica](https://synth.fourthievesvinegar.org/)** - A tool that uses machine learning to automagically discover reaction pathways to target compounds. Please use the link gently, it's our development server. |
-| ![Vinni](media/vinni_logo.png) | **Vinni** - Your guide to your new medical laboratory. Vinni keeps track of your projects including "recipes" from the Apocatherium and compounds of interest from Chemhacktica. Stay tuned for updates on Vinni's ability to help you sift through all the latest scientific literature. |
+<a name="3d"></a>
 
-## Further Documentation
+The MicroLab uses several custom parts, listed on [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/microlab-parts-list.xlsx), the raw and printable files for these parts can be found on the [MicroLab Parts' Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6).
 
-    docs/
-        index.md      # The documentation homepage  (you are here)
-        assembly.md   # How to build the microlab
-        operation.md  # How to use it (currently a stub)
-        motivation.md # Why we're doing it
+Below we have linked to the printable files in the repo for the parts. These files have the extension .stl at the end. The STL file format is what 3D printers use when printing an item.
+
+No 3D printer? If you do not have a 3D printer, there are a few options including:
+* Have a friend with a 3D printer print the parts.
+* Check if a local library or makerspace has a 3D printer you can use -- and maybe get help with printing.
+* Use an online 3D printing service. We don't endorse any service but have linked a couple sites below as a starting point. We urge you to look at reviews and get quotes to find the best option for you.  
+  * https://www.pcbway.com/rapid-prototyping/manufacture/
+  * https://www.shapeways.com/
+
+**Printable Files (STLs) for the 3D Parts**
+* Control Unit
+  * [Case for the Control Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-flat-v.1.0.stl)
+  * [Lid for the Control Unit Case](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-lid-flat-v.1.0.stl)
+  * Internal Subcomponent - [Case for the 4-channel Relay Board](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-flat-v.1.0.stl)
+  * Internal Subcomponent- [Case for the 12V to 5V Converter](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-flat-v.1.0.stl)
+* Cooling Unit
+  * [Lid for Cooling Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/temperature-units/cold-unit-lid-v.1.0.stl)
+* Heating Unit
+  * [Lid for Heating Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/temperature-units/hot-unit-lid-v.1.0.stl)
+* Reactor Unit
+  * Pumps box
+     * [Box for the Pumps](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/pumps-box/pumps-box-v.1.0.stl)
+     * [Lid for the Pumps Box](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/pumps-box/pumps-box-lid-v0.3.stl)
+  * Reactor Core
+     * [Manifold Core](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-manifold/reactor-manifold-core-v0.1.stl)
+     * [Manifold Lid](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-manifold/reactor-manifold-lid-v0.1.stl)
+     * [Stirring Mount](  https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-manifold/stirring-mount-screws-accessible.stl)
+  * Reactor stand
+     * [Piece 1: H shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-H.v1.0.stl)
+     * [Piece 2: A shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-A.v1.0.stl)
+     * [Piece 3: ¢ shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-c.v1.0.stl)
+     * [Piece 4: K shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-k.v1.0.stl)
+     * [Piece 5: Jar flange shape (2)](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-jar-flange.v0.1.STL)
+
+
+## Building the MicroLab
+<a name="build"></a>
+Use the following index to build the units and then assemble into the MicroLab
+  1. [Building the Control Unit](/docs/assembly-control-unit.md)
+  1. [Building the Heating and Cooling Units](/docs/assembly-temperature-exchangers-unit.md)
+  1. [Building the Reactor Unit](/docs/assembly-reactor-unit.md)
+
+## Using the MicroLab
+<a name="use"></a>       
+- [Setting up and using the MicroLab](/docs/operation.md)
+
+
+## Resources
+<a name="resources"></a>
+
+[MicroLab Suite - Vinni](https://vinni.fourthievesvinegar.org/projects/NVXg2yPAKaMu)
+[MicroLab Suite - Recipe Press](https://recipepress.fourthievesvinegar.org/)
