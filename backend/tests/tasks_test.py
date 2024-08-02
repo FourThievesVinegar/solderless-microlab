@@ -5,6 +5,7 @@ import yaml
 import hardware
 from unittest.mock import patch, MagicMock
 
+
 @pytest.fixture
 def devices(request):
     simulation_devices = """devices:
@@ -94,13 +95,13 @@ def devices(request):
       F: 175
       X:
         # scaling factor based on initial calibration
-        mlPerUnit: 0.5555555
+        mmPerml: 0.5555555
       Y:
         # scaling factor based on initial calibration
-        mlPerUnit: 0.5555555
+        mmPerml: 0.5555555
       Z:
         # scaling factor based on initial calibration
-        mlPerUnit: 0.5555555
+        mmPerml: 0.5555555
     ## simulation MODE ARGS
     # None needed or supported at the moment
 
@@ -121,10 +122,11 @@ def devices(request):
 
 """
 
-    devices = yaml.safe_load(simulation_devices)['devices']
+    devices = yaml.safe_load(simulation_devices)["devices"]
     marker = request.node.get_closest_marker("microlab_data")
     if marker:
         print("marker", marker.args)
+
         def recurseSettings(obj, devices):
             print("recurse ", obj)
             for key, value in obj.items():
@@ -132,9 +134,10 @@ def devices(request):
                     recurseSettings(value, devices[key])
                 else:
                     devices[key] = value
+
         # recurseSettings(marker.args[0], devices)
         for key, value in marker.args[0].items():
-            device = list(filter(lambda x: x['id'] == key, devices))[0]
+            device = list(filter(lambda x: x["id"] == key, devices))[0]
             recurseSettings(value, device)
     print("devices", devices)
     return devices
@@ -144,19 +147,21 @@ def devices(request):
 def microlab(request, devices):
     return hardware.MicroLabHardware(devices)
 
+
 # HEATING
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 42}})
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 42}})
 def test_heat_done(microlab):
-    fn = tasks.heat(microlab, {'temp': 30})
+    fn = tasks.heat(microlab, {"temp": 30})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
     assert microlab.turnHeaterOff.called
     assert res == None
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 18}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_heat_needed(microlab):
-    fn = tasks.heat(microlab, {'temp': 30})
+    fn = tasks.heat(microlab, {"temp": 30})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
@@ -165,11 +170,10 @@ def test_heat_needed(microlab):
     assert res != None
 
 
-
 # COOLING
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 42}})
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 42}})
 def test_cool_needed(microlab):
-    fn = tasks.cool(microlab, {'temp': 30})
+    fn = tasks.cool(microlab, {"temp": 30})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
@@ -177,9 +181,10 @@ def test_cool_needed(microlab):
     assert not microlab.turnCoolerOff.called
     assert res != None
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 18}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_cool_done(microlab):
-    fn = tasks.cool(microlab, {'temp': 30})
+    fn = tasks.cool(microlab, {"temp": 30})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
@@ -189,9 +194,10 @@ def test_cool_done(microlab):
 
 # MAINTAIN HEAT
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 18}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_needed(microlab):
-    fn = tasks.maintainHeat(microlab, {'temp': 30, 'tolerance': 3, 'time': 5})
+    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 3, "time": 5})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
@@ -199,18 +205,20 @@ def test_maintain_heat_needed(microlab):
     assert not microlab.turnHeaterOff.called
     assert res != None
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 18}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_within_tolerance(microlab):
-    fn = tasks.maintainHeat(microlab, {'temp': 30, 'tolerance': 15, 'time': 5})
+    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
     assert not microlab.turnHeaterOn.called
     assert res != None
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 18}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_time_finished(microlab):
-    fn = tasks.maintainHeat(microlab, {'temp': 30, 'tolerance': 15, 'time': 5})
+    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     res = next(fn)
     microlab.turnCoolerOff = MagicMock()
     microlab.turnHeaterOff = MagicMock()
@@ -224,9 +232,10 @@ def test_maintain_heat_time_finished(microlab):
 
 # MAINTAIN COOL
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 40}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_needed(microlab):
-    fn = tasks.maintainCool(microlab, {'temp': 30, 'tolerance': 3, 'time': 5})
+    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 3, "time": 5})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
@@ -234,18 +243,20 @@ def test_maintain_cool_needed(microlab):
     assert not microlab.turnCoolerOff.called
     assert res != None
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 40}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_within_tolerance(microlab):
-    fn = tasks.maintainCool(microlab, {'temp': 30, 'tolerance': 15, 'time': 5})
+    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
     assert not microlab.turnCoolerOn.called
     assert res != None
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'temp': 40}})
+
+@pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_time_finished(microlab):
-    fn = tasks.maintainCool(microlab, {'temp': 30, 'tolerance': 15, 'time': 5})
+    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     res = next(fn)
     microlab.turnCoolerOff = MagicMock()
     microlab.turnHeaterOff = MagicMock()
@@ -261,7 +272,7 @@ def test_maintain_cool_time_finished(microlab):
 
 
 def test_stir_still_running(microlab):
-    fn = tasks.stir(microlab, {'time': 5})
+    fn = tasks.stir(microlab, {"time": 5})
     microlab.turnStirrerOn = MagicMock()
     microlab.turnStirrerOff = MagicMock()
     res = next(fn)
@@ -269,8 +280,9 @@ def test_stir_still_running(microlab):
     assert not microlab.turnStirrerOff.called
     assert res != None
 
+
 def test_stir_time_finished(microlab):
-    fn = tasks.stir(microlab, {'time': 5})
+    fn = tasks.stir(microlab, {"time": 5})
     res = next(fn)
     microlab.turnStirrerOff = MagicMock()
     microlab.secondSinceStart = MagicMock()
@@ -282,42 +294,48 @@ def test_stir_time_finished(microlab):
 
 # PUMP DISPENSE
 
+
 def test_pump_x(microlab):
-    fn = tasks.pump(microlab, {'pump': 'X', 'volume': 0.1})
+    fn = tasks.pump(microlab, {"pump": "X", "volume": 0.1})
     res = next(fn)
     assert res > 0
     res = next(fn)
     assert res == None
+
 
 def test_pump_y(microlab):
-    fn = tasks.pump(microlab, {'pump': 'Y', 'volume': 0.1})
+    fn = tasks.pump(microlab, {"pump": "Y", "volume": 0.1})
     res = next(fn)
     assert res > 0
     res = next(fn)
     assert res == None
+
 
 def test_pump_z(microlab):
-    fn = tasks.pump(microlab, {'pump': 'Z', 'volume': 0.1})
+    fn = tasks.pump(microlab, {"pump": "Z", "volume": 0.1})
     res = next(fn)
     assert res > 0
     res = next(fn)
     assert res == None
 
+
 def test_pump_invalid_pump_id(microlab):
-    fn = tasks.pump(microlab, {'pump': 'Q', 'volume': 0.1})
+    fn = tasks.pump(microlab, {"pump": "Q", "volume": 0.1})
     with pytest.raises(ValueError):
         res = next(fn)
+
 
 def test_pump_errors_too_fast(microlab):
-    fn = tasks.pump(microlab, {'pump': 'X', 'volume': 100, 'duration': 0.1})
+    fn = tasks.pump(microlab, {"pump": "X", "volume": 100, "duration": 0.1})
     with pytest.raises(ValueError):
         res = next(fn)
 
-@pytest.mark.microlab_data({'reactor-reagent-dispenser': {'minSpeed': 0.1}})
+
+@pytest.mark.microlab_data({"reactor-reagent-dispenser": {"minSpeed": 0.1}})
 def test_pumps_slow_dispense(microlab):
     # should dispense in 10 bursts about 10 seconds apart.
-    fn = tasks.pump(microlab, {'pump': 'X', 'volume': 1, 'duration': 100})
-    for i in range(0,10):
+    fn = tasks.pump(microlab, {"pump": "X", "volume": 1, "duration": 100})
+    for i in range(0, 10):
         res = next(fn)
         assert 10 == pytest.approx(res, 0.001)
     res = next(fn)
@@ -329,18 +347,21 @@ def test_pumps_slow_dispense(microlab):
 
 # MAINTAIN PID
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}}})
+
+@pytest.mark.microlab_data(
+    {"reactor-temperature-controller": {"pidConfig": {"P": 1, "I": 0.5, "D": 5}}}
+)
 def test_maintain_PID_heat_needed(microlab):
-    fn = tasks.maintainPID(microlab, {'temp': 100, 'tolerance': 3, 'time': 60})
+    fn = tasks.maintainPID(microlab, {"temp": 100, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
-    for i in range(0,9):
+    for i in range(0, 9):
         res = next(fn)
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
-    for i in range(0,9):
+    for i in range(0, 9):
         res = next(fn)
 
     assert not microlab.turnCoolerOn.called
@@ -354,18 +375,25 @@ def test_maintain_PID_heat_needed(microlab):
     assert res != None
 
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}, 'temp': 100}})
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {"P": 1, "I": 0.5, "D": 5},
+            "temp": 100,
+        }
+    }
+)
 def test_maintain_PID_cool_needed(microlab):
-    fn = tasks.maintainPID(microlab, {'temp': 40, 'tolerance': 3, 'time': 60})
+    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
-    for i in range(0,19):
+    for i in range(0, 19):
         res = next(fn)
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
-    for i in range(0,9):
+    for i in range(0, 9):
         res = next(fn)
 
     assert microlab.turnCoolerOn.call_count > microlab.turnCoolerOff.call_count
@@ -379,10 +407,16 @@ def test_maintain_PID_cool_needed(microlab):
     assert res != None
 
 
-
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}, 'temp': 100}})
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {"P": 1, "I": 0.5, "D": 5},
+            "temp": 100,
+        }
+    }
+)
 def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
-    fn = tasks.maintainPID(microlab, {'temp': 40, 'tolerance': 3, 'time': 60})
+    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     res = next(fn)
@@ -391,16 +425,23 @@ def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
     assert res != None
 
 
-@pytest.mark.microlab_data({'reactor-temperature-controller': {'pidConfig': {'P': 1, 'I': 0.5, 'D': 5}, 'temp': 100}})
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {"P": 1, "I": 0.5, "D": 5},
+            "temp": 100,
+        }
+    }
+)
 def test_maintain_PID_turns_off_heater_pump_when_done(microlab):
-    fn = tasks.maintainPID(microlab, {'temp': 40, 'tolerance': 3, 'time': 60})
+    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     microlab.secondSinceStart = MagicMock()
     microlab.secondSinceStart.return_value = 0
     res = next(fn)
     assert microlab.turnHeaterPumpOn.called
-    for i in range(0,59):
+    for i in range(0, 59):
         microlab.secondSinceStart.return_value = i + 2
         res = next(fn)
 
