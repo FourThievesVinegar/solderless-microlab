@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { ChangeEventHandler, useContext } from 'react'
 import { Form, Checkbox, Dropdown } from 'semantic-ui-react'
 import SettingsContext from '../contexts/Settings'
 import { AUDIO_THEMES } from '../hooks/useAudio'
@@ -15,6 +15,10 @@ export const SoundSettings = (props: any) => {
     text: AUDIO_THEMES[theme],
   }))
 
+  const updateVolume: ChangeEventHandler<HTMLInputElement> = event => {
+    updateSettings({ volume: Number(event.target.value) })
+  }
+
   return (
     <Form>
       <h2>Sound Settings</h2>
@@ -28,6 +32,11 @@ export const SoundSettings = (props: any) => {
             updateSettings({ audioTheme: data.value })
           }}
         />
+      </div>
+      <div className="settings-block">
+        <label>Volume: </label>
+        <br />
+        <input type="range" min="0" max="1" step="0.01" value={settings.volume} onChange={updateVolume} />
       </div>
       <div className="settings-block">
         <span>Play Sounds:</span>
