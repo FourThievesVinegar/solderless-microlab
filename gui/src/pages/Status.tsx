@@ -71,7 +71,7 @@ export function Status(props: {
             </Grid.Column>
             <Grid.Column className="status-page-menu">
               <div className="button-list">
-                {status.options.map(x => (
+                {status?.options?.map(x => (
                   <Button color="purple" key={x} onClick={() => handleOptionButtonClick(x)} loading={loading}>
                     {x}
                   </Button>
