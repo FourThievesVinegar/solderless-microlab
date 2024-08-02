@@ -294,23 +294,27 @@ def pump(microlab, parameters):
         dictionary
             'pump' - one of: 'X' or 'Y' or 'Z'
             'volume' - volume to dispense in ml
-            'duration' - optional, time to dispense volume over in seconds
+            'time' - optional, time to dispense volume over in seconds
     :return:
         None
     """
-    pump = parameters['pump']
-    volume = parameters['volume']
-    duration = parameters.get('duration', None)
-    logging.info('Dispensing {0}ml from pump {1}'.format(volume, pump))
+    pump = parameters["pump"]
+    volume = parameters["volume"]
+    duration = parameters.get("time", None)
+    logging.info("Dispensing {0}ml from pump {1}".format(volume, pump))
     pumpSpeedLimits = microlab.getPumpSpeedLimits(pump)
     minSpeed = pumpSpeedLimits["minSpeed"]
     maxSpeed = pumpSpeedLimits["maxSpeed"]
     mlPerSecond = maxSpeed
     if duration:
-        mlPerSecond = volume/duration
-    
+        mlPerSecond = volume / duration
+
     if mlPerSecond > maxSpeed:
-        raise ValueError("Recipe task cannot be completed, pump {0} cannot operate fast enough.".format(pump))
+        raise ValueError(
+            "Recipe task cannot be completed, pump {0} cannot operate fast enough.".format(
+                pump
+            )
+        )
     elif mlPerSecond >= minSpeed and mlPerSecond <= maxSpeed:
         dispenseTime = microlab.pumpDispense(pump, volume, duration)
         yield dispenseTime
@@ -319,7 +323,7 @@ def pump(microlab, parameters):
     # dispense in 1 seconds bursts at slowest possible speed, waiting
     # for required time to emulate slower dispensing speed.
     elif mlPerSecond < minSpeed:
-        onTime = mlPerSecond/minSpeed
+        onTime = mlPerSecond / minSpeed
         volumeDispensed = 0
         while volumeDispensed + minSpeed < volume:
             startTime = microlab.secondSinceStart()
@@ -329,14 +333,14 @@ def pump(microlab, parameters):
             # from the total time taken for each step.
             # helps keep the actual task completion time more accurate
             # to desired duration
-            executionTime = (microlab.secondSinceStart()-startTime)
-            logging.debug('dispense exeuction time: {0}'.format(executionTime))
-            yield 1/onTime - executionTime
+            executionTime = microlab.secondSinceStart() - startTime
+            logging.debug("dispense exeuction time: {0}".format(executionTime))
+            yield 1 / onTime - executionTime
         # dispense remaining volume
-        remaining = volume-volumeDispensed
+        remaining = volume - volumeDispensed
         microlab.pumpDispense(pump, remaining)
         # shorten duration based on amount that remains to be dispensed
-        yield (1/onTime) * remaining/minSpeed
+        yield (1 / onTime) * remaining / minSpeed
         yield None
     yield None
 
