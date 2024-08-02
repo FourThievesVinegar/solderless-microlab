@@ -1,6 +1,6 @@
 # Welcome to The MicroLab
 
-<IMG ALT="The MicroLab assembled" SRC="./media/ML_assembled.jpeg" width="800" />
+<IMG ALT="The MicroLab assembled" SRC="https://fourthievesvinegar.org/wp-content/uploads/2024/07/microlab-stirring-3.gif" width="800" />
 
 The MicroLab is part of the MicroLab Suite. Learn more about the hardware/software stack [here](/docs/motivation.md#Meet-the-MicroLab-Suite)
 

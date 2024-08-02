@@ -54,6 +54,10 @@ If the motor is wired correctly you should now feel some resistance when you spi
 
 If you do not feel any change in resistance, try jumpering other combinations of pins until you identify the two pairs. See Troubleshooting Stepper Motor if you continue to have issues.
 
+### The Y pump works but the others don't
+
+This likely means you reversed the stepper motor wires at some point.
+
 ## Pumps Box Assembly
 
 - If your pump does not come with mounting hardware, you may need to get creative. In a pinch, zipties should work although you may want to double them up or drill out the holes to support thicker ties.
