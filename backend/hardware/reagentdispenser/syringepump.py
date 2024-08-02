@@ -2,6 +2,8 @@ import time
 import config
 import serial
 from hardware.reagentdispenser.base import ReagentDispenser
+import logging
+import math
 
 
 def grblWrite(grblSer, command, retries=3):
@@ -76,6 +78,7 @@ class SyringePump(ReagentDispenser):
         """
         self.syringePumpsConfig = args["syringePumpsConfig"]
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
+        self.axisMinmmPerMin = {}
         for axis, syringeConfig in self.syringePumpsConfig.items():
             stepsPerMM = syringeConfig["stepsPerRev"] / syringeConfig["mmPerRev"]
             axisToCNCID = {
@@ -83,17 +86,13 @@ class SyringePump(ReagentDispenser):
                 "Y": "1",
                 "Z": "2",
             }
-            # configure steps/mm
-            grblWrite(
-                self.grblSer, "$10{0}={1}\n".format(axisToCNCID[axis], stepsPerMM)
-            )
-            # configure max mm/min
-            grblWrite(
-                self.grblSer,
-                "$11{0}={1}\n".format(axisToCNCID[axis], syringeConfig["maxmmPerMin"]),
-            )
+            self.axisMinmmPerMin[axis] = math.ceil((30/stepsPerMM) * 120)
+            #configure steps/mm
+            grblWrite(self.grblSer, '$10{0}={1}\n'.format(axisToCNCID[axis], stepsPerMM))
+            #configure max mm/min
+            grblWrite(self.grblSer, '$11{0}={1}\n'.format(axisToCNCID[axis], syringeConfig['maxmmPerMin']))
 
-    def dispense(self, pumpId, volume):
+    def dispense(self, pumpId, volume, duration=None):
         """
         Dispense reagent from a syringe
 
@@ -105,10 +104,24 @@ class SyringePump(ReagentDispenser):
             None
         """
 
-        maxmmPerMin = self.syringePumpsConfig[pumpId]["maxmmPerMin"]
-        mmPerml = self.syringePumpsConfig[pumpId]["mmPerml"]
-        totalmm = volume * mmPerml
-        grblWrite(self.grblSer, "G91{0}{1}\n".format(pumpId, totalmm))
+        maxmmPerMin = self.syringePumpsConfig[pumpId]['maxmmPerMin']
+        mmPerml = self.syringePumpsConfig[pumpId]['mmPerml']
+        dispenseSpeed = maxmmPerMin
+        if duration:
+            dispenseSpeed = min((volume/duration) * 60 * mmPerml, dispenseSpeed)
+        totalmm = volume*mmPerml
+        command = 'G91 G1 {0}{1} F{2}\n'.format(pumpId, totalmm, dispenseSpeed)
+        logging.debug("Dispensing with command '{}'".format(command))
+        grblWrite(self.grblSer, command)
+        dispenseTime = abs(totalmm)/(dispenseSpeed/60)
 
-        # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
-        time.sleep(abs(totalmm) / maxmmPerMin * 60 + 1)
+        logging.info("Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(volume, dispenseSpeed, dispenseTime))
+        return dispenseTime
+
+    def getPumpSpeedLimits(self, pumpId):
+        maxSpeed = self.syringePumpsConfig[pumpId]['maxmmPerMin'] / self.syringePumpsConfig[pumpId]['mmPerml'] / 60
+        minSpeed = self.axisMinmmPerMin[pumpId] / self.syringePumpsConfig[pumpId]['mmPerml'] / 60
+        return {
+            "minSpeed": minSpeed,
+            "maxSpeed": maxSpeed
+        }

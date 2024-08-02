@@ -2,6 +2,7 @@ import time
 import config
 import serial
 from hardware.reagentdispenser.base import ReagentDispenser
+import logging
 
 
 def grblWrite(grblSer, command, retries=3):
@@ -54,7 +55,7 @@ class PeristalticPump(ReagentDispenser):
         self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
         grblWrite(self.grblSer, "G91")
 
-    def dispense(self, pumpId, volume):
+    def dispense(self, pumpId, volume, duration=None):
         """
         Dispense reagent from a peristaltic pump
 
@@ -65,11 +66,24 @@ class PeristalticPump(ReagentDispenser):
         :return:
             None
         """
-        fValue = self.peristalticPumpsConfig["F"]
-        moveValue = volume * self.peristalticPumpsConfig[pumpId]["mlPerUnit"]
+        fValue = self.peristalticPumpsConfig['F']
+        mmPerml = self.peristalticPumpsConfig[pumpId]['mlPerUnit']
+        totalmm = volume * mmPerml
 
-        grblWrite(self.grblSer, "G91")  # Without this, steppers will only advance once.
-        grblWrite(self.grblSer, "G1 {0}{1} F{2}\n".format(pumpId, moveValue, fValue))
+        dispenseSpeed = fValue
+        if duration:
+            dispenseSpeed = min((volume/duration) * 60 * mmPerml, dispenseSpeed)
+        command = 'G91 G1 {0}{1} F{2}\n'.format(pumpId, totalmm, dispenseSpeed)
+        logging.debug("Dispensing with command '{}'".format(command))
+        grblWrite(self.grblSer, command)
+        
+        dispenseTime = abs(totalmm)/(dispenseSpeed/60)
+        logging.info("Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(volume, dispenseSpeed, dispenseTime))
+        return dispenseTime
 
-        # sleep for estimated dispense time, plus one second to account for (de)acceleration of the motor
-        time.sleep(volume / 5 + 1)
+    def getPumpSpeedLimits(self, pumpId):
+        mmPerSecond = (30/250)
+        return {
+            "minSpeed": mmPerSecond/self.peristalticPumpsConfig[pumpId]['mlPerUnit'],
+            "maxSpeed": self.peristalticPumpsConfig['F']*self.peristalticPumpsConfig[pumpId]['mlPerUnit']/60
+        }
