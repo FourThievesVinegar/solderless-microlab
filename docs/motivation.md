@@ -60,7 +60,7 @@ The microlab suite is a hardware/software stack that enables the full drug devel
 |![MicroLab](media/microlab_logo.png)|**The MicroLab** - A DIY automated lab that you download, 3D print, and assemble with commonly available hardware. The MicroLab works together with a suite of apps to guide and automate a variety of lifesaving drugs from your home.|
 | ![Recipe Press](media/apoth_logo.png) | **[Recipe Press](https://apothecarium.fourthievesvinegar.org/)** - A simple web app to create "recipes" - sets of instructions the MicroLab uses to run chemical reactions. |
 | ![Chemhacktica](media/chem_logo.png) | **[Chemhacktica](https://synth.fourthievesvinegar.org/)** - A tool that uses machine learning to automagically discover reaction pathways to target compounds. Please use the link gently, it's our development server. |
-| ![Vinni](media/vinni_logo.png) | **Vinni** - Your guide to your new medical laboratory. Vinni keeps track of your projects including "recipes" from the Apocatherium and compounds of interest from Chemhacktica. Stay tuned for updates on Vinni's ability to help you sift through all the latest scientific literature. |
+| ![Vinni](media/vinni_logo.png) | **Vinni** - Your guide to your new medical laboratory. Vinni keeps track of your projects including "recipes" from the Recipe Press and compounds of interest from Chemhacktica. Stay tuned for updates on Vinni's ability to help you sift through all the latest scientific literature. |
 |||
 
 ## Being the change we want to see in the Cyberpunk Dystopia
