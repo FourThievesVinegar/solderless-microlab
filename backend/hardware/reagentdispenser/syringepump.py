@@ -86,11 +86,16 @@ class SyringePump(ReagentDispenser):
                 "Y": "1",
                 "Z": "2",
             }
-            self.axisMinmmPerMin[axis] = math.ceil((30/stepsPerMM) * 120)
-            #configure steps/mm
-            grblWrite(self.grblSer, '$10{0}={1}\n'.format(axisToCNCID[axis], stepsPerMM))
-            #configure max mm/min
-            grblWrite(self.grblSer, '$11{0}={1}\n'.format(axisToCNCID[axis], syringeConfig['maxmmPerMin']))
+            self.axisMinmmPerMin[axis] = math.ceil((30 / stepsPerMM) * 120)
+            # configure steps/mm
+            grblWrite(
+                self.grblSer, "$10{0}={1}\n".format(axisToCNCID[axis], stepsPerMM)
+            )
+            # configure max mm/min
+            grblWrite(
+                self.grblSer,
+                "$11{0}={1}\n".format(axisToCNCID[axis], syringeConfig["maxmmPerMin"]),
+            )
 
     def dispense(self, pumpId, volume, duration=None):
         """
@@ -104,24 +109,33 @@ class SyringePump(ReagentDispenser):
             None
         """
 
-        maxmmPerMin = self.syringePumpsConfig[pumpId]['maxmmPerMin']
-        mmPerml = self.syringePumpsConfig[pumpId]['mmPerml']
+        maxmmPerMin = self.syringePumpsConfig[pumpId]["maxmmPerMin"]
+        mmPerml = self.syringePumpsConfig[pumpId]["mmPerml"]
         dispenseSpeed = maxmmPerMin
         if duration:
-            dispenseSpeed = min((volume/duration) * 60 * mmPerml, dispenseSpeed)
-        totalmm = volume*mmPerml
-        command = 'G91 G1 {0}{1} F{2}\n'.format(pumpId, totalmm, dispenseSpeed)
+            dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
+        totalmm = volume * mmPerml
+        command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
         logging.debug("Dispensing with command '{}'".format(command))
         grblWrite(self.grblSer, command)
-        dispenseTime = abs(totalmm)/(dispenseSpeed/60)
+        dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
 
-        logging.info("Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(volume, dispenseSpeed, dispenseTime))
+        logging.info(
+            "Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(
+                volume, dispenseSpeed, dispenseTime
+            )
+        )
         return dispenseTime
 
     def getPumpSpeedLimits(self, pumpId):
-        maxSpeed = self.syringePumpsConfig[pumpId]['maxmmPerMin'] / self.syringePumpsConfig[pumpId]['mmPerml'] / 60
-        minSpeed = self.axisMinmmPerMin[pumpId] / self.syringePumpsConfig[pumpId]['mmPerml'] / 60
-        return {
-            "minSpeed": minSpeed,
-            "maxSpeed": maxSpeed
-        }
+        maxSpeed = (
+            self.syringePumpsConfig[pumpId]["maxmmPerMin"]
+            / self.syringePumpsConfig[pumpId]["mmPerml"]
+            / 60
+        )
+        minSpeed = (
+            self.axisMinmmPerMin[pumpId]
+            / self.syringePumpsConfig[pumpId]["mmPerml"]
+            / 60
+        )
+        return {"minSpeed": minSpeed, "maxSpeed": maxSpeed}
