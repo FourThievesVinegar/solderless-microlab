@@ -2,8 +2,11 @@
 
 ## [Unreleased]
 
+## [0.6.0]
+
 ### Added
 
+- Slowly dispense reagents over time.
 - Many pre-release tweaks and bug fixes.
 - Massive docs update.
 - New printable cases, stands, and reactor parts.
