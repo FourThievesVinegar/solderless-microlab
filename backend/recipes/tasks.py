@@ -310,11 +310,14 @@ def pump(microlab, parameters):
         mlPerSecond = volume / duration
 
     if mlPerSecond > maxSpeed:
-        raise ValueError(
-            "Recipe task cannot be completed, pump {0} cannot operate fast enough.".format(
+        logging.info(
+            "Pump {0} cannot operate fast enough. Dispensing at maximum speed.".format(
                 pump
             )
         )
+        dispenseTime = microlab.pumpDispense(pump, volume, None)
+        yield dispenseTime
+        yield None
     elif mlPerSecond >= minSpeed and mlPerSecond <= maxSpeed:
         dispenseTime = microlab.pumpDispense(pump, volume, duration)
         yield dispenseTime
