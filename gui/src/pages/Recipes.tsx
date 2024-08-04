@@ -8,14 +8,18 @@ import { SOUNDS, useAudio } from '../hooks/useAudio'
 import { listRecipes } from '../utils'
 
 export function Recipes() {
-  const [recipies, setRecipies] = useState<false | any[]>(false)
+  const [recipies, setRecipies] = useState<false | string[]>(false)
   const history = useHistory()
   const { settings } = useContext(SettingsContext)
 
   const [introPlaying, playIntroSound] = useAudio(SOUNDS.INTRO)
 
-  useEffect(() => {
+  const reloadRecipes = () => {
     listRecipes(setRecipies)
+  }
+
+  useEffect(() => {
+    reloadRecipes()
     if (!settings.muteIntroSound) {
       playIntroSound(true)
     }
@@ -33,7 +37,7 @@ export function Recipes() {
             </Button>
           ))}
           <h2>Upload a Recipe</h2>
-          <RecipeUpload />
+          <RecipeUpload onUpload={reloadRecipes} />
         </div>
       ) : (
         <p>Loading...</p>
