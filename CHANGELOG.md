@@ -35,6 +35,7 @@
 - Syringe pump configuration was not being used (#118).
 - Error responses no longer return status code 200. (#144).
 - Kiosk mode now properly launches and restore dialog not shown (#133)
+- Uploading recipes now immediately shows the uploaded recipe in the recipe list (#236)
 
 ### Removed
 
