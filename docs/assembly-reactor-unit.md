@@ -144,14 +144,9 @@ The 8-pin connector is connected to the positive and negative power wires for th
     - blue
     - red
 
-<<<<<<< Updated upstream
-    <IMG ALT="Wiring the pump wires" SRC="./media/pumps-unit/phx_cables.png" WIDTH="400" />
-
-=======
   <IMG ALT="Cable order" SRC="./media/control-unit/12pin_wire.png" WIDTH="300" />
 
 <BR><BR>
->>>>>>> Stashed changes
 <IMG ALT="Pump unit fully assembled with the lid open and wire connections visible" SRC="./media/pumps-unit/pumps-unit-lid-open.jpg" WIDTH="400" />
 
 ### Finishing it up

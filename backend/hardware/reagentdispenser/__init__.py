@@ -13,5 +13,5 @@ def createReagentDispenser(reagentdispenserConfig, devices):
     elif reagentdispenserType == "peristalticpump":
         return PeristalticPump(reagentdispenserConfig)
     elif reagentdispenserType == "simulation":
-        return SimulatedReagentDispenser()
+        return SimulatedReagentDispenser(reagentdispenserConfig)
     raise Exception("Unsupported reagentdispenserType")

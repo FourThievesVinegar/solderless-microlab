@@ -7,6 +7,7 @@ export type Settings = {
   muteUserInputSound: boolean
   muteCompletionSound: boolean
   muteIntroSound: boolean
+  volume: number
   darkMode: boolean
   audioTheme: string
 }
@@ -21,6 +22,7 @@ const defaultSettings = {
   muteUserInputSound: false,
   muteCompletionSound: false,
   muteIntroSound: false,
+  volume: 1,
   darkMode: true,
   audioTheme: AUDIO_THEMES.RAGE,
 }

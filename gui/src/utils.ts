@@ -10,15 +10,16 @@ export const downloadFileFromURL = (fileName: string, url: string) => {
   link.remove()
 }
 
-export const getStatus = (callback: (data: any) => void) => {
+export const getStatus = (callback: (data: any) => void, handleGetStatusError: () => void) => {
   fetch(apiUrl + 'status')
     .then(response => response.json())
     .then(data => callback(data))
     .catch(rejected => {
       console.error('Error fetching status', rejected)
+      handleGetStatusError()
       window.setTimeout(() => {
         // Try again in a few seconds
-        getStatus(callback)
+        getStatus(callback, handleGetStatusError)
       }, 5000)
     })
 }

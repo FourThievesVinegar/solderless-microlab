@@ -138,16 +138,20 @@ Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00
 1. **Installing the CNC shield controller software.** The Arduino needs the grbl software to control the CNC shield. Follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash ```grbl``` to the arduino
 1. **Watch the install video** This external video shows the assembly of the CNC shield and stepper motor driver boards. [YouTube Video link](https://youtu.be/zUb8tiFCwmk?t=37)
      * Note: We use 3 motor driver modules (the X, Y, and Z) while the video shows 4 being installed.
+
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/arduino.jpg" WIDTH="1000" />
 
 1. **Install the CNC shield.** Place CNC shield on the Arduino, push the CNC pins into the header sockets on the Arduino until it is fully connected.
+
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_shield.png" WIDTH="200" />
 
 1. **Add Heatsinks to Stepper Motor Driver Modules.** Each Stepper Motor Driver modules came with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
+
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_motor_driver.jpeg" WIDTH="300" />
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_driver_heat.png" WIDTH="200" />
 
 1. **Add the Stepper Motor Driver Modules.** Orient and insert the stepper motors driver boards into the X, Y, and Z slots on the shield.
+
 <IMG ALT="Adding Stepper Motor Driver Boards" SRC="./media/control-unit/cu_arduino_assembled.png" WIDTH="300" />
 
 1. **Set Enable Pin to Ground.** Place 1 female-female jumper lead on the Enable and Ground pins to enable the board.
@@ -256,8 +260,9 @@ We will attach the positive wires (color coded) and negative wires to the 8-pin 
 #### **Wiring the 4-channel Relay Board**
 
 A relay is electronic on/off switch for the pumps etc. Each of the four relays on the 4-channel Relay Board has three screw terminals.
+
 <IMG ALT="4-channel relay" SRC="./media/control-unit/relay.png" WIDTH="200" />
-<BR><BR>
+
 For this project we will only use two of the terminals with each relay, the NO and the COM. The Normally Open (NO) means it keeps that part of the circuit open by default and no power flows. When the relay is activated, it physically connects the NO terminal to the Common (COM) terminal completing the circuit and then the power flows.
 <IMG ALT="Wiring the positive 8-pin connector wires and connector" SRC="./media/control-unit/relay_no.png" WIDTH="300" />
 
@@ -268,7 +273,8 @@ For this project we will only use two of the terminals with each relay, the NO a
        - Red - NO2
        - Blue - NO1
 
-  <IMG ALT="Wiring the NOs" SRC="./media/control-unit/cu_8pin_no.png" WIDTH="200" />
+<IMG ALT="Wiring the NOs" SRC="./media/control-unit/cu_8pin_no.png" WIDTH="200" />
+
 - **Wiring the COMs**
    - Take the 4 red wires, insert one wire into each of the terminals labeled "COM" (common) tighten the terminals.
 
@@ -277,19 +283,16 @@ For this project we will only use two of the terminals with each relay, the NO a
 
 <IMG ALT="Wiring relay to power" SRC="./media/control-unit/cu_8pin_coms.png" WIDTH="200" />
 
-<BR><BR>
-
 ###  Arduino Shield wiring
+
 <a name="12vshield"></a>
 In order to send 12V out to the peristalic pumps, the Arduino CNC shield needs to be connected to the 12V Wiring Connector and the 12-pin connector.
 
 <IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12vshield.png" width="400" />
 
+#### Wire Order
 
-<BR>
-<BR>
-
-#### **Wire Order** <a name="wireorder"></a>
+<a name="wireorder"></a>
 Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
 **12-pin connector - internal**.
@@ -298,8 +301,6 @@ The 12-pin connector passes 12V to the three peristaltic pumps. When looking at 
 From inside the case the 12-pin connector wiring order will look like this:
 
 <IMG ALT="Cable order" SRC="./media/control-unit/12pin_wire_temp.png" WIDTH="200" />
-
-<BR><BR>
 
 #### Assembling the 12-pin Connector
 
@@ -329,11 +330,11 @@ From inside the case the 12-pin connector wiring order will look like this:
 
 
 #### Wiring the 12V power on the CNC Shield
+
 With CNC shield wired for the stepper motors, we will now wire it for the 12V power needed to drive those motors.
 
 <IMG ALT="Wiring 12V on CNC shield" SRC="./media/control-unit/12vshield2.png" width="600" />
 
-<BR><BR>
 **Parts**
 
 | Part ID      | Part Name     | Count | Notes |
@@ -342,7 +343,6 @@ With CNC shield wired for the stepper motors, we will now wire it for the 12V po
 |SP-RBW|2-wire cable, red and black, 18 gauge |40ft roll| Used to make short wires
 
 - Assembled Ardunio with the 4-wire stepper motor cables that were connected tin the [Arduino Setup](#arduino) section.
-
 
 **Prepare Wires**
 
@@ -363,22 +363,17 @@ With CNC shield wired for the stepper motors, we will now wire it for the 12V po
 
 <IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/cu_arduino_wired.jpeg" width="300" />
 
-
-<BR><BR>
-
 Take a moment to review and appreciate your work. This is the most fiddly part of the assembly. Nice job! 🎉
-<BR><BR>
 
 ### Wiring the 12V to 5V Converter
+
 <a name="12vconvert"></a>
 
 The 12V Wire Connector passes the 12V power to the converter which, as the name says, will covert it into 5V power. The Converter sends the 5V power to the Raspberry Pi and 4-channel Relay Board as their power supplies.
 
-
 <IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/cu_convert_wire.png" width="300" />
 
-
-#### **Parts**
+#### Parts
 
 | Part ID      | Part Name     | Count | Notes |
 | ------------- | ------------- |------| ----|
@@ -387,16 +382,16 @@ The 12V Wire Connector passes the 12V power to the converter which, as the name 
 |CU-SDC|12V to 5V Converter |1 |
 
 
-#### **Assembly**
+#### Assembly
+
 - Take the 12V Wire Connector, locate the empty slot on the positive (red) side. Open the lever, insert the red wire and then close the lever.
 - On the 12V Wire Connector  locate the empty slot on the negative (black) side. Open that lever, insert the black wire and then close the lever.
 - Plug the male barrel plug connector into the 12V to 5V converter module.
 
 <IMG ALT="Power manifold parts" SRC="./media/control-unit/cu_convert_wires.png" width="300" />
-<br><br>
-
 
 ## Wiring 5V and Signals on the Relay Board
+
 <a name="5vrelay"></a>
 
 The rest of the wiring runs some combination of lower voltage power, signals and data between components.

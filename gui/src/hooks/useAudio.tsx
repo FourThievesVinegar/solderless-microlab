@@ -29,6 +29,7 @@ export const useAudio = (type: string): [boolean, React.Dispatch<React.SetStateA
 
   useEffect(() => {
     if (settings.audioPlaybackAllowed) {
+      audio.volume = settings.volume
       playing ? audio.play() : audio.pause()
     }
   }, [playing])
