@@ -85,5 +85,6 @@ The 12-pin connector passes 12V to the three peristaltic pumps. From inside the 
   * Pump X cable - red wire
   * Pump X cable - blue wire
 
+NOTE: Your cables may differ from these - the color and order can vary between different manufacturers. When in doubt, keep the order consistent with the cables that shipped with your pumps / motors.
 
   <IMG ALT="Cable order" SRC="./media/control-unit/12pin_wire.png" WIDTH="300" />
