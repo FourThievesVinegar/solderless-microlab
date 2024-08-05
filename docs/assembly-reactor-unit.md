@@ -100,10 +100,15 @@ Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the 
 
 - Connect the 12-pin and 8-pin connector sockets with their mounting plates and use 2 M3 screws with each to attach them securely to the lid.
 - Cut and strip the wires on the pumps and barrel plug connectors.
-- The connectors need to be wired the same as the ones in the Control Unit.
-  - [Wire Order in the Control Unit ](https://github.com/FourThievesVinegar/solderless-microlab/blob/master/docs/assembly-control-unit.md#wireorder) as seen from outside the case. <br>
-<IMG ALT="Cable order" SRC="./media/control-unit/connector.png" WIDTH="300" />
-<IMG ALT="Pump lid fully assembled" SRC="./media/pumps-unit/pumps-unit-lid-assembled.jpg" WIDTH="400" />
+
+### **Wire Order**
+<a name="wireorder"></a>
+The connectors need to be wired the same as the ones in the Control Unit. The wiring order is further explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
+<br>
+
+
+  <IMG ALT="Pump lid fully assembled" SRC="./media/pumps-unit/pumps-unit-lid-assembled.jpg" WIDTH="400" />
+
 
 ### 8-pin wiring
 
@@ -115,7 +120,7 @@ The 8-pin connector is connected to the positive and negative power wires for th
   - The left pump is for the Cooling Pump Unit
   - The right pump is for the Heating Pump Unit
 
-<IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pump_box_label.png" WIDTH="300" />
+  <IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pump_box_label.png" WIDTH="300" />
 
   - **Wire the 8-pin connector.** On the back on the  8-pin connector, from the left, insert and then screw down the power cables:
     - accessory positive (red)
@@ -127,7 +132,7 @@ The 8-pin connector is connected to the positive and negative power wires for th
     - heating pump positive (red)
     - heating pump negative (black)
 
-    <IMG ALT="Cable order" SRC="./media/control-unit/wire_rev.png" WIDTH="200" />
+    <IMG ALT="Cable order" SRC="./media/reactor-unit/ru_reverse_wire.png" WIDTH="200" />
 
 ### 12-pin wiring
 
@@ -139,8 +144,9 @@ The 8-pin connector is connected to the positive and negative power wires for th
     - blue
     - red
 
-    <IMG ALT="Wiring the pump wires" SRC="./media/pumps-unit/phx_cables.png" WIDTH="400" />
+  <IMG ALT="Cable order" SRC="./media/control-unit/12pin_wire.png" WIDTH="300" />
 
+<BR><BR>
 <IMG ALT="Pump unit fully assembled with the lid open and wire connections visible" SRC="./media/pumps-unit/pumps-unit-lid-open.jpg" WIDTH="400" />
 
 ### Finishing it up
@@ -156,6 +162,7 @@ The 8-pin connector is connected to the positive and negative power wires for th
 Congratulations! You did it. Hopefully it wasn't too bad!
 
 (Sorry if it was. We're trying to be encouraging here, not snarky.)
+
 
 ## Reactor Core Assembly
 
@@ -211,7 +218,6 @@ First, we need to assemble the manifold lid that holds the jars together and all
 **Assembly:**
 
 - Place the jar lid ring over the manifold core.
-  - Note: for high-temperatures or strong solvents, you may want to order a high-performance version of this part. See the parts list for more details.
 - Insert the manifold core through the manifold lid, then twist the lid slightly so that the manifold core fits snugly in the manifold lid.
 - Check to make sure the holes on the side of the manifold core line up with those on the manifold lid
 - The screwholes on sides of the lid and manifold core should be lined up, screw in the three 12mm M3 screws.

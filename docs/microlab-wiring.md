@@ -1,51 +1,89 @@
 # MicroLab Wiring Guide
 
-The most important part of wiring is to be consistent through out the circuit.
+The most important part of wiring is to be consistent throughout the project.
+
+We use two kinds of wires for connecting the electronic components in the MicroLab:
+* 16 gauge wire in blue, red, green, black
+* 22 gauge breadboard jumper wire
+
+Several of the boards and connectors have a fairly straight forwarding wiring. For example the barrel connectors have 2 wires for power, one red (positive) and one black (negative).
+
+* Relay Board
+* 12v to 5v converter
+* Arduino
+* Raspberry Pi
+
+There are two connectors that have more complex wiring: the 8-pin and 12-pin mountable screw terminal connectors.
+
+This style of connector has 3 pieces: socket, mount plate and plug.
+
+
+<IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/connector_parts.png" width="200" />
+
+<BR><BR>
+
 
 
 ###  **8-pin Wire Order:**
 <a name="wireorder"></a>
-Important note: This where the order of wires for one of your cables is determined!
- It's important to maintain the same wiring order throughout the project.
+Note: It's important to maintain the same wiring order throughout the project.
 
- The 8-pin connector passes 12V along to the Accessory port (Acc), Stir rod (Stir), Cooling pump (Cool), and Heating pump (Heat) wires.
+The 8-pin connector passes 12V along to the Accessory port (Acc), Stir rod (Stir), Cooling pump (Cool), and Heating pump (Heat) wires.
 
-**8-pin connector - external & cable**
-If looking at the connector from outside the case, from left to right the wires will go:
-* Heat negative (-), blue
+There are four 8-pin connectors that will need to be wired. One mounted to the Control Unit and one mounted to the Pumps Box. The other two are for the ends of the 8-pin MicroLab cable used to connect the 8-pin connectors on both boxes.
+
+**Front order - 8-pin connector - external & cable**
+If looking at the front of 8-pin socket connector from outside the case, from left to right the wires will go:
+* Heat negative (-), black
 * Heat positive (+), blue
-* Cool negative (-), red
+* Cool negative (-), black
 * Cool positive (+), red
-* Stir negative (-), green
+* Stir negative (-), black
 * Stir positive (+), green
-* Accesory negative (-), black
+* Accessory negative (-), black
 * Accessory positive (+), black
 
 This is the same order for placing the wires at the back of the 8-pin socket for MicroLab cable.
 
-<IMG ALT="Cable order" SRC="./media/control-unit/connector.png" WIDTH="300" />
+<IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/connector_front.png" width="200" />
 <BR><BR>
 
-**8-pin connector - internal**
-From inside the case the 8pin connector wiring order will look like this:
+<IMG ALT="Cable order" SRC="./media/control-unit/8pin_socket_front.png" WIDTH="300" />
+<BR><BR>
 
-<IMG ALT="Cable order" SRC="./media/control-unit/wire_rev.png" WIDTH="200" />
+**Reverse order - 8-pin connector - internal**
+From inside the case, looking at the back of the 8pin connector then the wiring order will be reversed and look like this:
 
-#### **Wiring the 8-pin connector**
-We will attach the positive wires (color coded) and negative wires to the 8-pin connector socket (SP-PC8) first.
-* The connectors have 3 pieces: socket, mount plate and plug.
-
-<IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/connector_parts.png" width="200" />
+<IMG ALT="Cable order" SRC="./media/control-unit/cable_socket_back.png" WIDTH="300" />
 
 
-  - **Wiring the Positives.** Take one of the 8-pin connector sockets and from the back use a small screwdriver to loosen the 8 screw terminals. Working left to right, insert the 4" black, green, red, blue wires into the correct positive (+) terminals and tighten the terminals. Use the photo below or the [wiring order](/docs/microlab-wiring.md) page to confirm placement.
-     - Don't overtighten the screw terminal. Once done you should be able to lightly tug on the wires without them moving.  
+###  **12-pin Wire Order:**
+Note: It's important to maintain the same wiring order throughout the project.
 
-  <IMG ALT="Cable order" SRC="./media/control-unit/wire_rev.png" WIDTH="200" />
+The 12-pin connector passes 12V along to three peristaltic pumps. When viewed from front of pumps box they are named X, Y, and Z.
+
+<IMG ALT="Cable order" SRC="./media/wire-order/pumps.png" WIDTH="300" />
+
+The stepper motor cable that comes with the pumps will be cut in half and the cut ends stripped, creating 6 cables. Three will be used in the Control unit and three will be used in the Pumps Box.
+
+There are four 12-pin connectors that will need to be wired. One mounted to the Control Unit and one mounted to the Pumps Box. The other two are for the ends of the 12-pin MicroLab cable used to connect the 12-pin connectors on both boxes.
 
 
-  #### **Wire Order** <a name="wireorder"></a>
-  Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
-  **12-pin connector - internal**.
-  The 12-pin connector passes 12V to the three peristaltic pumps. When looking at the pumps mounted to their box from left to right we'll call them X, Y and Z.
+### **12-pin connector - internal**.
+The 12-pin connector passes 12V to the three peristaltic pumps. From inside the case, we'll wire the back of the 12-pin connector. When attaching the stripped wires to the back of the 12-pin connector socket the order is from left to right:
+  * Pump Z cable - black wire
+  * Pump Z cable - green wire
+  * Pump Z cable - red wire
+  * Pump Z cable - blue wire
+  * Pump Y cable - black wire
+  * Pump Y cable - green wire
+  * Pump Y cable - red wire
+  * Pump Y cable - blue wire
+  * Pump X cable - black wire
+  * Pump X cable - green wire
+  * Pump X cable - red wire
+  * Pump X cable - blue wire
+
+
+  <IMG ALT="Cable order" SRC="./media/control-unit/12pin_wire.png" WIDTH="300" />
