@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { uploadRecipe } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
 
-export const RecipeUpload = () => {
+export const RecipeUpload = ({ onUpload }: { onUpload?: () => void }) => {
   const [message, setMessage] = useState('')
 
   const [file, setFile] = useState<any>()
@@ -16,6 +16,7 @@ export const RecipeUpload = () => {
     uploadRecipe(file)
       .then(() => {
         setMessage('Recipe upload successful.')
+        onUpload?.()
       })
       .catch(() => {
         setMessage('Recipe upload failed.')
