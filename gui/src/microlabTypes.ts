@@ -1,4 +1,4 @@
-export enum StatusEnum {
+export enum MicrolabStatus {
   NO_BACKEND_RESPONSE = 'Waiting for control service',
   COMPLETE = 'complete',
   ERROR = 'error',
@@ -8,11 +8,11 @@ export enum StatusEnum {
   RECIPE_UNSUPPORTED = 'recipe_unsupported',
 }
 
-export type MicrolabStatus = {
+export type MicrolabStatusResponse = {
   message?: string
   options?: string[]
   recipe?: string
-  status: StatusEnum
+  status: MicrolabStatus
   step: number
   stepCompletionTime?: string
   hardwareError?: string

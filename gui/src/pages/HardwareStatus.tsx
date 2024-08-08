@@ -3,11 +3,11 @@ import { Button, Container, Grid } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
 import { ReloadHardware } from '../components/ReloadHardware'
-import { MicrolabStatus, StatusEnum } from '../microlabTypes'
+import { MicrolabStatusResponse, MicrolabStatus } from '../microlabTypes'
 
 import './Status.scss'
 
-export function HardwareStatus(props: { status: MicrolabStatus }) {
+export function HardwareStatus(props: { status: MicrolabStatusResponse }) {
   const { status } = props
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -41,15 +41,15 @@ export function HardwareStatus(props: { status: MicrolabStatus }) {
           </Grid.Column>
           <Grid.Column className="status-page-menu">
             <div className="button-list">
-              {status.status === StatusEnum.IDLE && (
+              {status.status === MicrolabStatus.IDLE && (
                 <>
                   <p>Microlab is idle. </p>
                 </>
               )}
-              {(status.status === StatusEnum.RUNNING ||
-                status.status === StatusEnum.COMPLETE ||
-                status.status === StatusEnum.USER_INPUT ||
-                status.status === StatusEnum.RECIPE_UNSUPPORTED) && (
+              {(status.status === MicrolabStatus.RUNNING ||
+                status.status === MicrolabStatus.COMPLETE ||
+                status.status === MicrolabStatus.USER_INPUT ||
+                status.status === MicrolabStatus.RECIPE_UNSUPPORTED) && (
                 <>
                   <p>Microlab is running a recipe.</p>
                   <Button color="purple" onClick={() => handleRecipeButtonClick()}>
@@ -57,7 +57,7 @@ export function HardwareStatus(props: { status: MicrolabStatus }) {
                   </Button>
                 </>
               )}
-              {status.status === StatusEnum.ERROR && (
+              {status.status === MicrolabStatus.ERROR && (
                 <>
                   <p>Error: {status.hardwareError}</p>
                   <Button color="purple" onClick={() => handleLogsButtonClick()}>
@@ -65,7 +65,7 @@ export function HardwareStatus(props: { status: MicrolabStatus }) {
                   </Button>
                 </>
               )}
-              {(status.status === StatusEnum.ERROR || status.status === StatusEnum.IDLE) && (
+              {(status.status === MicrolabStatus.ERROR || status.status === MicrolabStatus.IDLE) && (
                 <ReloadHardware onReload={handleHardwareReloadClick} />
               )}
             </div>

@@ -1,4 +1,4 @@
-import { MicrolabStatus } from './microlabTypes'
+import { MicrolabStatusResponse } from './microlabTypes'
 
 export const apiUrl = 'http://' + window.location.hostname + ':8081/'
 
@@ -12,7 +12,7 @@ export const downloadFileFromURL = (fileName: string, url: string) => {
   link.remove()
 }
 
-export const getStatus = (callback: (data: MicrolabStatus) => void, handleGetStatusError: () => void) => {
+export const getStatus = (callback: (data: MicrolabStatusResponse) => void, handleGetStatusError: () => void) => {
   fetch(apiUrl + 'status')
     .then(response => response.json())
     .then(data => callback(data))

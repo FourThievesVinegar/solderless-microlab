@@ -4,11 +4,11 @@ import { Button, Container, Grid } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
 import { selectOption, stopRecipe } from '../utils'
-import { MicrolabStatus, StatusEnum } from '../microlabTypes'
+import { MicrolabStatusResponse, MicrolabStatus } from '../microlabTypes'
 
 import './Status.scss'
 
-export function Status(props: { status: MicrolabStatus }) {
+export function Status(props: { status: MicrolabStatusResponse }) {
   const { status } = props
   const [loading, setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(-1)
@@ -22,7 +22,7 @@ export function Status(props: { status: MicrolabStatus }) {
   }
 
   const handleStopButtonClick = () => {
-    if (status.status === StatusEnum.COMPLETE) {
+    if (status.status === MicrolabStatus.COMPLETE) {
       stopRecipe()
       history.push('/')
       return
@@ -67,20 +67,20 @@ export function Status(props: { status: MicrolabStatus }) {
                     {x}
                   </Button>
                 ))}
-                {(status.status === StatusEnum.RUNNING ||
-                  status.status === StatusEnum.USER_INPUT ||
-                  status.status === StatusEnum.ERROR ||
-                  status.status === StatusEnum.RECIPE_UNSUPPORTED) && (
+                {(status.status === MicrolabStatus.RUNNING ||
+                  status.status === MicrolabStatus.USER_INPUT ||
+                  status.status === MicrolabStatus.ERROR ||
+                  status.status === MicrolabStatus.RECIPE_UNSUPPORTED) && (
                   <Button color="yellow" onClick={() => handleStopButtonClick()}>
                     Stop Reaction
                   </Button>
                 )}
-                {status.status === StatusEnum.COMPLETE && (
+                {status.status === MicrolabStatus.COMPLETE && (
                   <Button color="purple" onClick={() => handleStopButtonClick()}>
                     Finish Reaction
                   </Button>
                 )}
-                {status.status === StatusEnum.IDLE && (
+                {status.status === MicrolabStatus.IDLE && (
                   <>
                     <p>Waiting on backend... </p>
                     <Button color="yellow" onClick={() => handleStopButtonClick()}>

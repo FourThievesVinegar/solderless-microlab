@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Grid } from 'semantic-ui-react'
 import { LogoContainer } from '../components/LogoContainer'
-import { MicrolabStatus } from '../microlabTypes'
+import { MicrolabStatusResponse } from '../microlabTypes'
 
 import './Home.scss'
 
-export function Home(props: { status: MicrolabStatus }) {
+export function Home(props: { status: MicrolabStatusResponse }) {
   const { status } = props
 
   return (
