@@ -3,37 +3,27 @@ import { capitalize, get, isArray, isEmpty, reduce } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import { apiUrl } from '../utils'
+import { getRecipe, startRecipe } from '../utils'
+import { MicrolabRecipe, RecipeMaterial, RecipeStep } from '../microlabTypes'
 
-import './RecipeDetails.scss'
+import './RecipeDetailsPage.scss'
 
 export function RecipeDetails() {
-  const [recipeDetails, setRecipeDetails] = useState<any>({})
+  const [recipeDetails, setRecipeDetails] = useState<MicrolabRecipe>()
   const history = useHistory()
   const { recipeName } = useParams<any>()
 
   // fetch recipe details, such as steps, ingredients, time
   useEffect(() => {
-    fetch(apiUrl + 'recipe/' + recipeName)
-      .then(response => response.json())
-      .then(data => setRecipeDetails(data))
+    getRecipe(recipeName).then(setRecipeDetails)
   }, [recipeName])
-
-  const startRecipe = (name: string) => {
-    fetch(apiUrl + 'start/' + name, {
-      method: 'POST',
-    })
-      .then(response => response.json())
-      .then(data => history.push('/status'))
-  }
 
   const StartRecipeButton = () => {
     return (
       <Button
         color="purple"
         onClick={() => {
-          startRecipe(recipeName)
-          history.push('/status')
+          startRecipe(recipeName).then(data => history.push('/status'))
         }}>
         Start A Reaction Using This Recipe
       </Button>
@@ -45,7 +35,7 @@ export function RecipeDetails() {
       <h1>{capitalize(recipeName)}</h1>
       <StartRecipeButton />
 
-      {!isEmpty(recipeDetails) ? (
+      {recipeDetails && !isEmpty(recipeDetails) ? (
         <>
           <MaterialsNeeded materials={recipeDetails.materials} />
           <TimeNeeded steps={recipeDetails.steps} />
@@ -59,7 +49,7 @@ export function RecipeDetails() {
   )
 }
 
-function MaterialsNeeded({ materials }: { materials: any[] }) {
+function MaterialsNeeded({ materials }: { materials: RecipeMaterial[] }) {
   let body
   if (isArray(materials) && materials.length > 0) {
     body = (
@@ -84,7 +74,7 @@ function MaterialsNeeded({ materials }: { materials: any[] }) {
 /**
  * total time? which steps are time sensitive and how long between them?
  * */
-function TimeNeeded({ steps }: { steps: any[] }) {
+function TimeNeeded({ steps }: { steps: RecipeStep[] }) {
   if (!isArray(steps) || steps.length < 1) {
     return <></>
   }
@@ -114,7 +104,7 @@ function TimeNeeded({ steps }: { steps: any[] }) {
   )
 }
 
-function Steps({ steps }: { steps: any[] }) {
+function Steps({ steps }: { steps: RecipeStep[] }) {
   if (!isArray(steps) || steps.length < 1) {
     return <span>No steps</span>
   }

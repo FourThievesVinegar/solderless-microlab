@@ -2,18 +2,24 @@ import React, { useState } from 'react'
 import { uploadControllerConfig } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
 
-export const ControllerConfigUpload = (props: { onUpload: any }) => {
+export const ControllerConfigUpload = (props: { onUpload: () => void }) => {
   const { onUpload } = props
   const [message, setMessage] = useState('')
 
-  const [file, setFile] = useState<any>()
+  const [file, setFile] = useState<File | undefined>()
 
-  const fileChange = (event: any) => {
-    setFile(event.target.files[0])
+  const fileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0])
+    }
   }
 
   const handleFileUpload = () => {
     setMessage('Uploading config...')
+    if (!file) {
+      setMessage('Failed, no file attached.')
+      return
+    }
     uploadControllerConfig(file)
       .then(() => {
         setMessage('Config upload successful.')

@@ -4,20 +4,11 @@ import { Button, Container, Grid } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
 import { selectOption, stopRecipe } from '../utils'
+import { MicrolabStatusResponse, MicrolabStatus } from '../microlabTypes'
 
-import './Status.scss'
+import './StatusPage.scss'
 
-export function Status(props: {
-  status: {
-    status: string
-    step: number
-    stepCompletionTime: Date
-    icon: string
-    message: string
-    options: string[]
-    hardwareError?: string
-  }
-}) {
+export function StatusPage(props: { status: MicrolabStatusResponse }) {
   const { status } = props
   const [loading, setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(-1)
@@ -31,7 +22,7 @@ export function Status(props: {
   }
 
   const handleStopButtonClick = () => {
-    if (status.status === 'complete') {
+    if (status.status === MicrolabStatus.COMPLETE) {
       stopRecipe()
       history.push('/')
       return
@@ -61,7 +52,7 @@ export function Status(props: {
           <Grid.Row columns={2}>
             <Grid.Column>
               <Container textAlign="center">
-                <StatusIcon icon={status.icon} />
+                <StatusIcon icon={status.icon ?? ''} />
                 <p className="status-message">{status.message}</p>
                 {stepTime && (
                   //@ts-ignore
@@ -76,20 +67,20 @@ export function Status(props: {
                     {x}
                   </Button>
                 ))}
-                {(status.status === 'running' ||
-                  status.status === 'user_input' ||
-                  status.status === 'error' ||
-                  status.status === 'recipe_unsupported') && (
+                {(status.status === MicrolabStatus.RUNNING ||
+                  status.status === MicrolabStatus.USER_INPUT ||
+                  status.status === MicrolabStatus.ERROR ||
+                  status.status === MicrolabStatus.RECIPE_UNSUPPORTED) && (
                   <Button color="yellow" onClick={() => handleStopButtonClick()}>
                     Stop Reaction
                   </Button>
                 )}
-                {status.status === 'complete' && (
+                {status.status === MicrolabStatus.COMPLETE && (
                   <Button color="purple" onClick={() => handleStopButtonClick()}>
                     Finish Reaction
                   </Button>
                 )}
-                {status.status === 'idle' && (
+                {status.status === MicrolabStatus.IDLE && (
                   <>
                     <p>Waiting on backend... </p>
                     <Button color="yellow" onClick={() => handleStopButtonClick()}>

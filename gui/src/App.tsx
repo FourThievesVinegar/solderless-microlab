@@ -2,37 +2,38 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { Header } from './components/Header'
-import { Home } from './pages/Home'
-import { Recipes } from './pages/Recipes'
-import { RecipeDetails } from './pages/RecipeDetails'
-import { Settings } from './pages/Settings'
-import { Status } from './pages/Status'
-import { Logs } from './pages/Logs'
+import { HomePage } from './pages/HomePage'
+import { RecipesPage } from './pages/RecipesPage'
+import { RecipeDetails } from './pages/RecipeDetailsPage'
+import { SettingsPage } from './pages/SettingsPage'
+import { StatusPage } from './pages/StatusPage'
+import { LogsPage } from './pages/LogsPage'
 import SettingsContext from './contexts/Settings'
 import { SOUNDS, useAudio } from './hooks/useAudio'
 import { getStatus } from './utils'
-import { HardwareStatus } from './pages/HardwareStatus'
+import { HardwareStatusPage } from './pages/HardwareStatusPage'
+import { MicrolabStatusResponse, MicrolabStatus } from './microlabTypes'
 
 import './styles/app.css'
 import './styles/4tv.scss'
 
 export function App() {
-  const [status, setStatus] = useState<any>()
+  const mockStatus = {
+    message: 'Service down',
+    status: MicrolabStatus.NO_BACKEND_RESPONSE,
+    step: -1,
+  }
+  const [status, setStatus] = useState<MicrolabStatusResponse>(mockStatus)
   const { settings } = useContext(SettingsContext)
   const [errorPlaying, playErrorSound] = useAudio(SOUNDS.ERROR)
   const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)
   const [promptPlaying, playPromptAudio] = useAudio(SOUNDS.PROMPT)
 
   const handleGetStatusError = () => {
-    const mockStatus = {
-      message: 'Service down',
-      status: 'Waiting for control service',
-      step: -1,
-    }
     setStatus(mockStatus)
   }
 
-  const updateStatusAndGetItAgain = (data: any) => {
+  const updateStatusAndGetItAgain = (data: MicrolabStatusResponse) => {
     setStatus(data)
 
     setTimeout(() => {
@@ -45,9 +46,9 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    if (status?.status === 'error' && !settings.muteErrorSound) {
+    if (status?.status === MicrolabStatus.ERROR && !settings.muteErrorSound) {
       playErrorSound(true)
-    } else if (status?.status === 'user_input' && !settings.muteUserInputSound) {
+    } else if (status?.status === MicrolabStatus.USER_INPUT && !settings.muteUserInputSound) {
       playPromptAudio(true)
       const interval = setInterval(() => {
         if (!settings.muteUserInputSound) {
@@ -56,7 +57,7 @@ export function App() {
       }, 30 * 1000)
 
       return () => clearInterval(interval)
-    } else if (status?.status === 'complete' && !settings.muteCompletionSound) {
+    } else if (status?.status === MicrolabStatus.COMPLETE && !settings.muteCompletionSound) {
       playCompleteSound(true)
     }
   }, [status?.status, status?.step])
@@ -72,11 +73,11 @@ export function App() {
       </Header>
       <Switch>
         <Route exact path="/">
-          <Home status={status} />
+          <HomePage status={status} />
         </Route>
 
         <Route exact path="/recipes">
-          <Recipes />
+          <RecipesPage />
         </Route>
 
         <Route path="/recipes/:recipeName">
@@ -84,19 +85,19 @@ export function App() {
         </Route>
 
         <Route path="/settings">
-          <Settings />
+          <SettingsPage />
         </Route>
 
         <Route path="/status">
-          <Status status={status} />
+          <StatusPage status={status} />
         </Route>
 
         <Route path="/hardwareStatus">
-          <HardwareStatus status={status} />
+          <HardwareStatusPage status={status} />
         </Route>
 
         <Route path="/logs">
-          <Logs />
+          <LogsPage />
         </Route>
       </Switch>
     </div>

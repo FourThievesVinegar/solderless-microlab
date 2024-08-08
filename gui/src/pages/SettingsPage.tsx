@@ -10,9 +10,9 @@ import { ReloadHardware } from '../components/ReloadHardware'
 
 import SettingsContext from '../contexts/Settings'
 
-import './Settings.scss'
+import './SettingsPage.scss'
 
-export function Settings() {
+export function SettingsPage() {
   // dummy counter to have components refetch data
   const [counter, updateCounter] = useReducer(x => x + 1, 0)
 

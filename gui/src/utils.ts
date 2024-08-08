@@ -1,3 +1,5 @@
+import { MicrolabStatusResponse, MicrolabRecipe } from './microlabTypes'
+
 export const apiUrl = 'http://' + window.location.hostname + ':8081/'
 
 export const downloadFileFromURL = (fileName: string, url: string) => {
@@ -10,7 +12,7 @@ export const downloadFileFromURL = (fileName: string, url: string) => {
   link.remove()
 }
 
-export const getStatus = (callback: (data: any) => void, handleGetStatusError: () => void) => {
+export const getStatus = (callback: (data: MicrolabStatusResponse) => void, handleGetStatusError: () => void) => {
   fetch(apiUrl + 'status')
     .then(response => response.json())
     .then(data => callback(data))
@@ -24,7 +26,11 @@ export const getStatus = (callback: (data: any) => void, handleGetStatusError: (
     })
 }
 
-export const listRecipes = (callback: (data: any) => void) => {
+export const getRecipe = (recipeName: string): Promise<MicrolabRecipe> => {
+  return fetch(apiUrl + 'recipe/' + recipeName).then(response => response.json())
+}
+
+export const listRecipes = (callback: (data: string[]) => void) => {
   fetch(apiUrl + 'list') //this route returns an array with all the names ex: ['recipe1',recipe2']
     .then(response => response.json())
     .then(data => callback(data))
@@ -47,7 +53,7 @@ export const stopRecipe = () => {
 }
 
 export const startRecipe = (name: string) => {
-  fetch(apiUrl + 'start/' + name, {
+  return fetch(apiUrl + 'start/' + name, {
     method: 'POST',
   })
     .then(response => response.json())
@@ -65,15 +71,15 @@ export const uploadRecipe = (file: string | Blob | File) => {
     .then(data => console.log(data))
 }
 
-export const getControllerHardware = () => {
+export const getControllerHardware = (): Promise<{ controllerHardware: string }> => {
   return fetch(apiUrl + 'controllerHardware').then(response => response.json())
 }
 
-export const listControllerHardware = () => {
+export const listControllerHardware = (): Promise<string[]> => {
   return fetch(apiUrl + 'controllerHardware/list').then(response => response.json())
 }
 
-export const setControllerHardware = (name: string) => {
+export const setControllerHardware = (name: string): Promise<{ response: 'ok' | 'error'; message?: string }> => {
   return fetch(apiUrl + 'controllerHardware/' + name, {
     method: 'POST',
   }).then(response => response.json())
@@ -95,15 +101,15 @@ export const uploadControllerConfig = (file: string | Blob | File) => {
     .then(data => console.log(data))
 }
 
-export const getLabHardware = () => {
+export const getLabHardware = (): Promise<{ labHardware: string }> => {
   return fetch(apiUrl + 'labHardware').then(response => response.json())
 }
 
-export const listLabHardware = () => {
+export const listLabHardware = (): Promise<string[]> => {
   return fetch(apiUrl + 'labHardware/list').then(response => response.json())
 }
 
-export const setLabHardware = (name: string) => {
+export const setLabHardware = (name: string): Promise<{ response: 'ok' | 'error'; message?: string }> => {
   return fetch(apiUrl + 'labHardware/' + name, {
     method: 'POST',
   }).then(response => response.json())
@@ -125,13 +131,13 @@ export const downloadLabConfig = (name: string) => {
   downloadFileFromURL(name, url)
 }
 
-export const reloadHardware = () => {
+export const reloadHardware = (): Promise<{ response: 'ok' | 'error'; message?: string }> => {
   return fetch(apiUrl + 'reloadHardware', {
     method: 'POST',
   }).then(response => response.json())
 }
 
-export const getLogs = (callback: (data: any) => void) => {
+export const getLogs = (callback: (data: { logs: string }) => void) => {
   return fetch(apiUrl + 'log')
     .then(response => response.json())
     .then(data => callback(data))

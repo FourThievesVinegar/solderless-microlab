@@ -5,13 +5,19 @@ import { Button, Input, Form } from 'semantic-ui-react'
 export const RecipeUpload = ({ onUpload }: { onUpload?: () => void }) => {
   const [message, setMessage] = useState('')
 
-  const [file, setFile] = useState<any>()
+  const [file, setFile] = useState<File>()
 
-  const fileChange = (event: any) => {
-    setFile(event.target.files[0])
+  const fileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0])
+    }
   }
 
   const handleFileUpload = () => {
+    if (!file) {
+      setMessage('Failed, no recipe selected to upload.')
+      return
+    }
     setMessage('Uploading recipe...')
     uploadRecipe(file)
       .then(() => {

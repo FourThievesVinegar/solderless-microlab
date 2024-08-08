@@ -3,9 +3,9 @@ import { Dropdown, DropdownProps } from 'semantic-ui-react'
 
 import { getLogs } from '../utils'
 
-import './Logs.scss'
+import './LogsPage.scss'
 
-export function Logs() {
+export function LogsPage() {
   const [logs, setLogs] = useState<false | { logs: string }>(false)
   const logLevels = ['INFO', 'WARNING', 'ERROR', 'CRITICAL', 'DEBUG']
   const [selection, setSelection] = useState(logLevels)
