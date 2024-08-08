@@ -8,14 +8,14 @@ import { SOUNDS, useAudio } from '../hooks/useAudio'
 import { listRecipes } from '../utils'
 
 export function RecipesPage() {
-  const [recipies, setRecipies] = useState<false | string[]>(false)
+  const [recipes, setRecipes] = useState<false | string[]>(false)
   const history = useHistory()
   const { settings } = useContext(SettingsContext)
 
   const [introPlaying, playIntroSound] = useAudio(SOUNDS.INTRO)
 
   const reloadRecipes = () => {
-    listRecipes(setRecipies)
+    listRecipes(setRecipes)
   }
 
   useEffect(() => {
@@ -28,9 +28,9 @@ export function RecipesPage() {
   return (
     <section className="page recipes-page">
       <h1>Recipe list</h1>
-      {recipies ? (
+      {recipes ? (
         <div className="button-list">
-          {recipies.map((recipe, i) => (
+          {recipes.map((recipe, i) => (
             // click on recipe to view details
             <Button key={i} color="blue" onClick={() => history.push(`/recipes/${recipe}`)}>
               {recipe.toUpperCase()}

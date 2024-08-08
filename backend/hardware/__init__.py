@@ -72,7 +72,7 @@ class MicroLabHardware:
         """
         The number of seconds since this package was started multiplied by config.hardwareSpeedup.
 
-        This can effectively simulate time speedups for testing recipies.
+        This can effectively simulate time speedups for testing recipes.
 
         :return:
         The number of seconds since this package was started multiplied by config.hardwareSpeedup.
