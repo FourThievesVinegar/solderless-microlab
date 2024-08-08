@@ -20,7 +20,8 @@ export type MicrolabStatusResponse = {
   temp?: number
 }
 
-export type RecipeDetailsType = {
+export type MicrolabRecipe = {
+  title: string
   materials: RecipeMaterial[]
   steps: RecipeStep[]
 }

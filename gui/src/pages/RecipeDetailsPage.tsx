@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import { getRecipe, startRecipe } from '../utils'
-import { RecipeDetailsType, RecipeMaterial, RecipeStep } from '../microlabTypes'
+import { MicrolabRecipe, RecipeMaterial, RecipeStep } from '../microlabTypes'
 
 import './RecipeDetailsPage.scss'
 
 export function RecipeDetails() {
-  const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType>()
+  const [recipeDetails, setRecipeDetails] = useState<MicrolabRecipe>()
   const history = useHistory()
   const { recipeName } = useParams<any>()
 
