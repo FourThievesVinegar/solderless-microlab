@@ -5,9 +5,9 @@ import { StatusIcon } from '../components/StatusIcon'
 import { ReloadHardware } from '../components/ReloadHardware'
 import { MicrolabStatusResponse, MicrolabStatus } from '../microlabTypes'
 
-import './Status.scss'
+import './StatusPage.scss'
 
-export function HardwareStatus(props: { status: MicrolabStatusResponse }) {
+export function HardwareStatusPage(props: { status: MicrolabStatusResponse }) {
   const { status } = props
   const [loading, setLoading] = useState(false)
   const history = useHistory()

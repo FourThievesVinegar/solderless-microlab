@@ -7,7 +7,7 @@ import SettingsContext from '../contexts/Settings'
 import { SOUNDS, useAudio } from '../hooks/useAudio'
 import { listRecipes } from '../utils'
 
-export function Recipes() {
+export function RecipesPage() {
   const [recipies, setRecipies] = useState<false | string[]>(false)
   const history = useHistory()
   const { settings } = useContext(SettingsContext)

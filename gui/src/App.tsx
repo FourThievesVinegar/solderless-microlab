@@ -2,16 +2,16 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import { Header } from './components/Header'
-import { Home } from './pages/Home'
-import { Recipes } from './pages/Recipes'
-import { RecipeDetails } from './pages/RecipeDetails'
-import { Settings } from './pages/Settings'
-import { Status } from './pages/Status'
-import { Logs } from './pages/Logs'
+import { HomePage } from './pages/HomePage'
+import { RecipesPage } from './pages/RecipesPage'
+import { RecipeDetails } from './pages/RecipeDetailsPage'
+import { SettingsPage } from './pages/SettingsPage'
+import { StatusPage } from './pages/StatusPage'
+import { LogsPage } from './pages/LogsPage'
 import SettingsContext from './contexts/Settings'
 import { SOUNDS, useAudio } from './hooks/useAudio'
 import { getStatus } from './utils'
-import { HardwareStatus } from './pages/HardwareStatus'
+import { HardwareStatusPage } from './pages/HardwareStatusPage'
 import { MicrolabStatusResponse, MicrolabStatus } from './microlabTypes'
 
 import './styles/app.css'
@@ -73,11 +73,11 @@ export function App() {
       </Header>
       <Switch>
         <Route exact path="/">
-          <Home status={status} />
+          <HomePage status={status} />
         </Route>
 
         <Route exact path="/recipes">
-          <Recipes />
+          <RecipesPage />
         </Route>
 
         <Route path="/recipes/:recipeName">
@@ -85,19 +85,19 @@ export function App() {
         </Route>
 
         <Route path="/settings">
-          <Settings />
+          <SettingsPage />
         </Route>
 
         <Route path="/status">
-          <Status status={status} />
+          <StatusPage status={status} />
         </Route>
 
         <Route path="/hardwareStatus">
-          <HardwareStatus status={status} />
+          <HardwareStatusPage status={status} />
         </Route>
 
         <Route path="/logs">
-          <Logs />
+          <LogsPage />
         </Route>
       </Switch>
     </div>

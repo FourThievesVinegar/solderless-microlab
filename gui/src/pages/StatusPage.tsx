@@ -6,9 +6,9 @@ import { StatusIcon } from '../components/StatusIcon'
 import { selectOption, stopRecipe } from '../utils'
 import { MicrolabStatusResponse, MicrolabStatus } from '../microlabTypes'
 
-import './Status.scss'
+import './StatusPage.scss'
 
-export function Status(props: { status: MicrolabStatusResponse }) {
+export function StatusPage(props: { status: MicrolabStatusResponse }) {
   const { status } = props
   const [loading, setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(-1)

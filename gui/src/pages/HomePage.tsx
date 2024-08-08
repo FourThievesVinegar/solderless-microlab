@@ -4,9 +4,9 @@ import { Button, Grid } from 'semantic-ui-react'
 import { LogoContainer } from '../components/LogoContainer'
 import { MicrolabStatusResponse } from '../microlabTypes'
 
-import './Home.scss'
+import './HomePage.scss'
 
-export function Home(props: { status: MicrolabStatusResponse }) {
+export function HomePage(props: { status: MicrolabStatusResponse }) {
   const { status } = props
 
   return (

@@ -6,7 +6,7 @@ import { Button } from 'semantic-ui-react'
 import { getRecipe, startRecipe } from '../utils'
 import { RecipeDetailsType, RecipeMaterial, RecipeStep } from '../microlabTypes'
 
-import './RecipeDetails.scss'
+import './RecipeDetailsPage.scss'
 
 export function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType>()
