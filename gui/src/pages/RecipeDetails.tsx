@@ -3,7 +3,7 @@ import { capitalize, get, isArray, isEmpty, reduce } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import { apiUrl } from '../utils'
+import { getRecipe, startRecipe } from '../utils'
 import { RecipeDetailsType, RecipeMaterial, RecipeStep } from '../microlabTypes'
 
 import './RecipeDetails.scss'
@@ -15,26 +15,15 @@ export function RecipeDetails() {
 
   // fetch recipe details, such as steps, ingredients, time
   useEffect(() => {
-    fetch(apiUrl + 'recipe/' + recipeName)
-      .then(response => response.json())
-      .then(data => setRecipeDetails(data))
+    getRecipe(recipeName).then(setRecipeDetails)
   }, [recipeName])
-
-  const startRecipe = (name: string) => {
-    fetch(apiUrl + 'start/' + name, {
-      method: 'POST',
-    })
-      .then(response => response.json())
-      .then(data => history.push('/status'))
-  }
 
   const StartRecipeButton = () => {
     return (
       <Button
         color="purple"
         onClick={() => {
-          startRecipe(recipeName)
-          history.push('/status')
+          startRecipe(recipeName).then(data => history.push('/status'))
         }}>
         Start A Reaction Using This Recipe
       </Button>

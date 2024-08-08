@@ -1,4 +1,4 @@
-import { MicrolabStatusResponse } from './microlabTypes'
+import { MicrolabStatusResponse, RecipeDetailsType } from './microlabTypes'
 
 export const apiUrl = 'http://' + window.location.hostname + ':8081/'
 
@@ -26,6 +26,10 @@ export const getStatus = (callback: (data: MicrolabStatusResponse) => void, hand
     })
 }
 
+export const getRecipe = (recipeName: string): Promise<RecipeDetailsType> => {
+  return fetch(apiUrl + 'recipe/' + recipeName).then(response => response.json())
+}
+
 export const listRecipes = (callback: (data: string[]) => void) => {
   fetch(apiUrl + 'list') //this route returns an array with all the names ex: ['recipe1',recipe2']
     .then(response => response.json())
@@ -49,7 +53,7 @@ export const stopRecipe = () => {
 }
 
 export const startRecipe = (name: string) => {
-  fetch(apiUrl + 'start/' + name, {
+  return fetch(apiUrl + 'start/' + name, {
     method: 'POST',
   })
     .then(response => response.json())
