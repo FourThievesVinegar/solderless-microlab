@@ -12,27 +12,28 @@ import SettingsContext from './contexts/Settings'
 import { SOUNDS, useAudio } from './hooks/useAudio'
 import { getStatus } from './utils'
 import { HardwareStatus } from './pages/HardwareStatus'
+import { MicrolabStatus, StatusEnum } from './microlabTypes'
 
 import './styles/app.css'
 import './styles/4tv.scss'
 
 export function App() {
-  const [status, setStatus] = useState<any>()
+  const mockStatus = {
+    message: 'Service down',
+    status: StatusEnum.NO_BACKEND_RESPONSE,
+    step: -1,
+  }
+  const [status, setStatus] = useState<MicrolabStatus>(mockStatus)
   const { settings } = useContext(SettingsContext)
   const [errorPlaying, playErrorSound] = useAudio(SOUNDS.ERROR)
   const [completePlaying, playCompleteSound] = useAudio(SOUNDS.COMPLETE)
   const [promptPlaying, playPromptAudio] = useAudio(SOUNDS.PROMPT)
 
   const handleGetStatusError = () => {
-    const mockStatus = {
-      message: 'Service down',
-      status: 'Waiting for control service',
-      step: -1,
-    }
     setStatus(mockStatus)
   }
 
-  const updateStatusAndGetItAgain = (data: any) => {
+  const updateStatusAndGetItAgain = (data: MicrolabStatus) => {
     setStatus(data)
 
     setTimeout(() => {
@@ -45,9 +46,9 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    if (status?.status === 'error' && !settings.muteErrorSound) {
+    if (status?.status === StatusEnum.ERROR && !settings.muteErrorSound) {
       playErrorSound(true)
-    } else if (status?.status === 'user_input' && !settings.muteUserInputSound) {
+    } else if (status?.status === StatusEnum.USER_INPUT && !settings.muteUserInputSound) {
       playPromptAudio(true)
       const interval = setInterval(() => {
         if (!settings.muteUserInputSound) {
@@ -56,7 +57,7 @@ export function App() {
       }, 30 * 1000)
 
       return () => clearInterval(interval)
-    } else if (status?.status === 'complete' && !settings.muteCompletionSound) {
+    } else if (status?.status === StatusEnum.COMPLETE && !settings.muteCompletionSound) {
       playCompleteSound(true)
     }
   }, [status?.status, status?.step])

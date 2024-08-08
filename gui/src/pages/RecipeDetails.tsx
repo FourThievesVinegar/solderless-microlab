@@ -4,11 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import { apiUrl } from '../utils'
+import { RecipeDetailsType, RecipeMaterial, RecipeStep } from '../microlabTypes'
 
 import './RecipeDetails.scss'
 
 export function RecipeDetails() {
-  const [recipeDetails, setRecipeDetails] = useState<any>({})
+  const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType>()
   const history = useHistory()
   const { recipeName } = useParams<any>()
 
@@ -45,7 +46,7 @@ export function RecipeDetails() {
       <h1>{capitalize(recipeName)}</h1>
       <StartRecipeButton />
 
-      {!isEmpty(recipeDetails) ? (
+      {recipeDetails && !isEmpty(recipeDetails) ? (
         <>
           <MaterialsNeeded materials={recipeDetails.materials} />
           <TimeNeeded steps={recipeDetails.steps} />
@@ -59,7 +60,7 @@ export function RecipeDetails() {
   )
 }
 
-function MaterialsNeeded({ materials }: { materials: any[] }) {
+function MaterialsNeeded({ materials }: { materials: RecipeMaterial[] }) {
   let body
   if (isArray(materials) && materials.length > 0) {
     body = (
@@ -84,7 +85,7 @@ function MaterialsNeeded({ materials }: { materials: any[] }) {
 /**
  * total time? which steps are time sensitive and how long between them?
  * */
-function TimeNeeded({ steps }: { steps: any[] }) {
+function TimeNeeded({ steps }: { steps: RecipeStep[] }) {
   if (!isArray(steps) || steps.length < 1) {
     return <></>
   }
@@ -114,7 +115,7 @@ function TimeNeeded({ steps }: { steps: any[] }) {
   )
 }
 
-function Steps({ steps }: { steps: any[] }) {
+function Steps({ steps }: { steps: RecipeStep[] }) {
   if (!isArray(steps) || steps.length < 1) {
     return <span>No steps</span>
   }
