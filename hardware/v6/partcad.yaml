@@ -1,0 +1,108 @@
+name: /pub/medical/4tvc/microlab/v6
+desc: The latest version Microlab by Four Thieves Vinegar Collective.
+cover:
+  assembly: microlab
+
+docs:
+  intro: |
+    This is a [PartCAD](https://partcad.org/) package for MicroLab.
+    It is intended to maintain the information about all the parts
+    for the following purposes: manufacturing, procurement and assembly
+    (both manual and automated assembly instructions).
+
+    *DISCLAIMER: PartCAD is still under heavy development, and so is
+    the PartCAD package for Microlab. Please, consider contributing to
+    both PartCAD and this package, but do not yet use this package
+    for manufacturing or ordering Microlab parts.*
+
+{% from 'urls.j2' import url_prefix %}
+{% set url = url_prefix + '/v6' %}
+
+parts:
+  control-box:
+    desc: Regular size control box
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/control-box/control-box-v.1.1.step
+    implements:
+      "/pub/std/metric/m:m3-thru":
+        outer-left: [[3, 3, 75], [1, 0, 0], 180]
+        outer-right: [[205, 3, 75], [1, 0, 0], 180]
+        inner-left: [[3, 3, 69.5], [1, 0, 0], 0]
+        inner right: [[205, 3, 69.5], [1, 0, 0], 0]
+    ports:
+      rpi: [[8, 36, 51], [-0.71, -0.71, 0], 180]
+      uno: [[131.5, 39.5, 8], [0.71, 0.71, 0], 180]
+  control-box-lid:
+    desc: Control box lid for regular size control box
+    type: step
+    fileFrom: url
+    # TODO(clairbee): Update the fileUrl to the correct file once it is fixed
+    fileUrl: {{ url }}/control-box/control-box-lid-v.1.0.step
+    # fileUrl: {{ url }}/control-box/control-box-lid-flat-v.1.0.step
+    implements:
+      "/pub/std/metric/m:m3-thru":
+        outer-left: [[-101, -47, 4], [1, 0, 0], 180]
+        outer-right: [[101, -47, 4], [1, 0, 0], 180]
+        inner-left: [[-101, -47, 0], [1, 0, 0], 0]
+        inner-right: [[101, -47, 0], [1, 0, 0], 0]
+  control-box-flat:
+    desc: Low profile control box
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/control-box/control-box-flat-v.1.0.step
+    implements:
+      "/pub/std/metric/m:m3-thru":
+        outer-left: [[3, 3, 44], [1, 0, 0], 180]
+        outer-right: [[185, 3, 44], [1, 0, 0], 180]
+        inner-left: [[3, 3, 34], [1, 0, 0], 0]
+        inner-right: [[185, 3, 34], [1, 0, 0], 0]
+    ports:
+      rpi: [[8, 22.5, 20], [-0.71, -0.71, 0], 180]
+      uno: [[179.5, 92, 8], [0, 1, 0], 180]
+  control-box-lid-flat:
+    desc: Control box lid for low profile control box
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/control-box/control-box-lid-flat-v.1.0.step
+    implements:
+      "/pub/std/metric/m:m3-thru":
+        outer-left: [[-91, -89, 4], [1, 0, 0], 180]
+        outer-right: [[91, -89, 4], [1, 0, 0], 180]
+        inner-left: [[-91, -89, 0], [1, 0, 0], 0]
+        inner-right: [[91, -89, 0], [1, 0, 0], 0]
+  relay-case-no-top:
+    desc: Relay board case without a top cover
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/control-box/sub-components/relay-board-case-50x73x17mm-no-top.step
+  relay-case:
+    desc: Relay board case with a top cover
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/control-box/sub-components/relay-case-50x73x17mm.step
+  stepdown-case:
+    desc: A case fir 12V-to-5V stepdown converter
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/control-box/sub-components/stepdown-case-63x27x14mm.step
+
+assemblies:
+  microlab:
+    type: assy
+    path: microlab.assy
+    parameters:
+      profile:
+        type: string
+        desc: Profile of the control box
+        enum: [regular, flat]
+        default: flat
+    render:
+      svg:
+        viewportOrigin: [75, 0, 150]
+
+
+render:
+  svg:
+    lineWeight: 1.5
+  readme:
