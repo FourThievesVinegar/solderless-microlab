@@ -1,4 +1,4 @@
-name: /pub/medical/4tvc/microlab
+name: /pub/medical/laboratory/4tvc-microlab
 desc: Microlab by Four Thieves Vinegar Collective.
 partcad: ">=0.6.33"
 cover:
