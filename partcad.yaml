@@ -1,5 +1,6 @@
 name: /pub/medical/4tvc/microlab
 desc: Microlab by Four Thieves Vinegar Collective.
+partcad: ">=0.6.33"
 cover:
   assembly: microlab
 
@@ -24,7 +25,7 @@ import:
     type: local
     desc: The latest version of MicroLab.
     path: hardware/v6
-    includePaths: ["hardware"]
+    includePaths: [".."]
 
 assemblies:
   microlab:
