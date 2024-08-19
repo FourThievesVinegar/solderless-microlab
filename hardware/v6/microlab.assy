@@ -18,7 +18,7 @@ links:
       # slide: [10, 0, 0]
       # slideSecondary: [0, 0, 50]
 
-  - part: /pub/medical/4tvc/microlab/pub/electronics/sbcs/arduino:unoR3
+  - part: /pub/electronics/sbcs/arduino:unoR3
     name: unoR3
     connectPorts:
       with: corner-bottom-back-left
