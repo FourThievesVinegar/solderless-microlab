@@ -8,7 +8,7 @@ The MicroLab is an open-source, DIY, automated controlled lab reactor (CLR) that
 
 For the MicroLab to be accessible to the most people, it was developed as part of a hardware/software stack called the MicroLab Suite. The different software programs help take the information about a compound you want to make and translate it into a recipe (code) that the MicroLab runs to create the compound.
 
-**More Information.** You can find the introduction to the project, what the heck is a CLR, what's in the MicroLab Suite and why we are doing this on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
+You can find an introduction to the project, what the heck is a CLR, what's in the MicroLab Suite, and why we are doing this at all on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
 
 ## Getting Started Making Your MicroLab
 
@@ -55,7 +55,7 @@ docker-compose up --build api
 
 If you're running docker with a hardware setup you'll need to edit docker-compose.yml and uncomment the lines specified in the file.
 
-## Dev Environment Option 1: Laptop Setup
+## Dev Environment Option 2: Laptop Setup
 
 Clone the repo:
 
