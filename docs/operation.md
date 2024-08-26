@@ -161,17 +161,15 @@ Before starting a recipe:
 * Have Heating Unit reach the needed temperature
 * Have Cooling Unit reach the needed temperature
 * Load the syringes with the needed liquid ingredients
-* Load the inner reactor chamber with needed solid ingredients
+* Load the inner reaction chamber with needed ingredients
 
-In general, you will use the touchscreen to locate and start the recipe. Follow the steps of the recipe until completion.
-
-With the Test Recipe you would:
+With the Test Recipe you:
 * Set up the MicroLab
 * Load the syringes with water and attach to the top three peristaltic pumps
 * Let the Heating Unit heat up
 * Setup the Cooling Unit
 
-Once ready, you would use the touchscreen to start the Test Recipe. follow the steps to test each pump and confirm the contents of syringes enter the chamber. Run the heating and confirm the MicroLab heats the chamber to 30C. Run the stirring and confirm the stir rids runs for 10 seconds. Once all tests are complete, you can exit the recipe.  
+Once ready, use the touchscreen to start the Test Recipe. follow the steps to test each pump and confirm the contents of syringes enter the chamber. Run the heating and confirm the MicroLab heats the chamber to 30C. Run the stirring and confirm the stir rids runs for the appropriate time. Once all tests are complete, you can exit the recipe.  
 
 ## Writing a Recipe
 
