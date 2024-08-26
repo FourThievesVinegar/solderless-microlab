@@ -91,8 +91,6 @@ Once your MicroLab is set up it just needs a recipe to run, the ingredients load
 
 Recipes are a set of instructions the MicroLab uses to run chemical reactions. They are created on the Recipe Press site.
 
-<IMG ALT="Recipe Press Logo" SRC="media/apoth_logo.png" WIDTH="100"/>[Recipe Press Site](media/apoth_logo.png)
-
 ### About Recipes
 
 <IMG ALT="Temp Tubing" SRC="./media/ops/ops_authoring_recipes.jpeg" WIDTH="1000"/>
@@ -104,7 +102,7 @@ A recipe is a series of numbered steps. Each step has:
  * User Option(s) - "links" to next steps that depend on user input or judgement (used with Human Tasks)
  * Detailed description - more text that can be shown on the touchscreen
 
-   <IMG ALT="Recipe Press Logo" SRC="media/OPS/ops_step5.png" WIDTH="250"/>
+   <IMG ALT="Recipe Press Logo" SRC="./media/ops/ops_step5.png" WIDTH="250"/>
 
 The MicroLab is able to perform 5 task types:
 * Human Task - pause until the person completes the task shown on the touchscreen and taps on a menu button to move to the next stop
@@ -119,7 +117,7 @@ We have a Test Recipe designed to check that all the parts of the MicroLab are w
 
 On the Press Recipe site, you can see the how the Test Recipe is built.
 
-<IMG ALT="Recipe Press Logo" SRC="media/OPS/ops_recipe_press.png" WIDTH="400"/>
+<IMG ALT="Recipe Press Logo" SRC="./media/ops/ops_recipe_press.png" WIDTH="400"/>
 
 #### **Closer Look at Step 0**
 
@@ -132,10 +130,11 @@ Let's take a look at Step 0 to see how a step works. Step 0 is where the MicroLa
 * Task icon - shows the Human Task icon
 * User Option(s) - there is one option, called "Yes", it sets the next step to Step 1.
 * Detailed description - this field is empty in step 0
-<IMG ALT="Recipe Press Logo" SRC="media/OPS/ops_steps.png" WIDTH="300"/>
+<IMG ALT="Recipe Press Logo" SRC="./media/ops/ops_steps.png" WIDTH="300"/>
 
-When displayed on the MicroLab, step 0 is similar to this:
-<IMG ALT="Recipe Press Logo" SRC="media/OPS/ops_step0_ml.png" WIDTH="300"/>
+The Recipe Press also allows you to simulate your recipe:
+
+<IMG ALT="Recipe Press Logo" SRC="./media/ops/ops_step0_ml.png" WIDTH="300"/>
 
 #### Test Recipe Steps
 
@@ -178,7 +177,7 @@ Once ready, you would use the touchscreen to start the Test Recipe. follow the s
 
 New recipes can be made online, downloaded to a thumbdrive and then uploaded to the Control Unit.  
 
-You make make a recipe directly on the [Recipe Press site](https://recipepress.fourthievesvinegar.org/).
+You make make a recipe directly on the [Recipe Press site](https://recipe-press.fourthievesvinegar.org/).
 
 Another option is to start [a project in Vinni](https://vinni.fourthievesvinegar.org/projects/NVXg2yPAKaMu) and save your recipes that way.
    * More on this as Vinni approaches a real release and our services get integrated.
