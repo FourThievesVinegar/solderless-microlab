@@ -6,6 +6,7 @@ The MicroLab is an open source hardware/software project with many moving parts.
 
 - Perform end-to-end testing on a completed unit. Typically this will mean running a test recipe such as Caffeine Extraction on an assembled unit. A mock unit can also be used (for example, one that switches LED's instead of running pumps and motors) but nothing brings out the bugs like a real-life test that does some sort of actual chemistry.
 - Make sure that documentation is up to date, including the main README.md, CHANGELOG.md, and any instructions in the docs folder.
+- If you have pulled down changes in the GUI code, be sure to run `yarn build` in the `gui` directory so that the latest changes are built and served.
 
 ### Removing extraneous data
 
