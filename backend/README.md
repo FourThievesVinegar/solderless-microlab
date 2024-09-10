@@ -22,13 +22,13 @@ Both of these file types can be selected, downloaded and uploaded from the setti
 
 A reference for the possible hardware devices and the settings used can be seen in the following two files.
 
-[controller_hardware_reference](backend/data/controller_hardware_reference.yaml)
+[controller_hardware_reference](data/hardware/controller_hardware_reference.yaml)
 
-[lab_hardware_reference](backend/data/lab_hardware_reference.yaml)
+[lab_hardware_reference](data/hardware/lab_hardware_reference.yaml)
 
 #### Expanding support to other SBCs
 
-If you want to use something other than a pi or the potato, you can do so by creating a custom controller hardware file. [backend/data/controllerhardware/](backend/data/controllerhardware/) contains the hardware device description for the two currently supported boards which you can reference.
+If you want to use something other than a pi or the potato, you can do so by creating a custom controller hardware file. [backend/data/controllerhardware/](data/hardware/controllerhardware/) contains the hardware device description for the two currently supported boards which you can reference.
 
 Only a device named `gpio-primary` using some kind of `gpiochip` describing the available gpio ports is needed at the moment.
 
@@ -39,7 +39,7 @@ The microlab by default loads recipes from files located in `/var/lib/microlab/r
 ## API
 
 The Microlab backend API includes several endpoints described below. This list is incomplete, for more details, see the implementation at
-[/backend/api/routes.py](backend/api/routes.py)
+[/backend/api/routes.py](api/routes.py)
 
 ### List
 
