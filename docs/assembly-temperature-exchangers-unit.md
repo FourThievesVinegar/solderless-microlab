@@ -33,7 +33,7 @@ The Heating Unit and Cooling Units are supporting components of the MicroLab tha
 TC-PMP|Circulating pump|2
 TC-SBH|Submersible heater|1
 TC-CTB|Copper tubing 1/4" OD x 3/16" ID|1
-TC-ST7|Silicone tubing 7mm OD x 5mm ID|1
+TC-STB|Silicone tubing 8mm OD x 5mm ID|1
 RX-TEE|Barbed tee fittings for 6mm tubing|2
 TC-JAR|32oz canning jar |2 | We've don't have a optimal size for the jar, we've also used 16oz jars. You may want to experiment to find the best size for your project.
 TC-REL|Switchable power supply|1
