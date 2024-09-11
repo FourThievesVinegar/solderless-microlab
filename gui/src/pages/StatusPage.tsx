@@ -5,10 +5,12 @@ import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
 import { selectOption, stopRecipe } from '../utils'
 import { MicrolabStatusResponse, MicrolabStatus } from '../microlabTypes'
+import { useTranslation } from 'react-i18next'
 
 import './StatusPage.scss'
 
 export function StatusPage(props: { status: MicrolabStatusResponse }) {
+  const { t } = useTranslation()
   const { status } = props
   const [loading, setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(-1)
@@ -27,7 +29,7 @@ export function StatusPage(props: { status: MicrolabStatusResponse }) {
       history.push('/')
       return
     }
-    if (window.confirm('Are you sure you want to stop?')) {
+    if (window.confirm(t('confirm-stop-recipe'))) {
       stopRecipe()
       history.push('/recipes')
     }
@@ -72,19 +74,19 @@ export function StatusPage(props: { status: MicrolabStatusResponse }) {
                   status.status === MicrolabStatus.ERROR ||
                   status.status === MicrolabStatus.RECIPE_UNSUPPORTED) && (
                   <Button color="yellow" onClick={() => handleStopButtonClick()}>
-                    Stop Reaction
+                    {t('stop-reaction-button-text')}
                   </Button>
                 )}
                 {status.status === MicrolabStatus.COMPLETE && (
                   <Button color="purple" onClick={() => handleStopButtonClick()}>
-                    Finish Reaction
+                    {t('finish-reaction-button-text')}
                   </Button>
                 )}
                 {status.status === MicrolabStatus.IDLE && (
                   <>
-                    <p>Waiting on backend... </p>
+                    <p>{t('waiting-on-backend')}</p>
                     <Button color="yellow" onClick={() => handleStopButtonClick()}>
-                      Go Back
+                      {t('go-back-button-text')}
                     </Button>
                   </>
                 )}
@@ -93,7 +95,7 @@ export function StatusPage(props: { status: MicrolabStatusResponse }) {
           </Grid.Row>
         </Grid>
       ) : (
-        <p>Loading...</p>
+        <p>{t('loading-placeholder')}</p>
       )}
     </section>
   )

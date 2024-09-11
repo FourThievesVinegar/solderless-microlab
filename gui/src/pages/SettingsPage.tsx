@@ -9,10 +9,12 @@ import { SoundSettings } from '../components/SoundSettings'
 import { ReloadHardware } from '../components/ReloadHardware'
 
 import SettingsContext from '../contexts/Settings'
+import { useTranslation } from 'react-i18next'
 
 import './SettingsPage.scss'
 
 export function SettingsPage() {
+  const { t } = useTranslation()
   // dummy counter to have components refetch data
   const [counter, updateCounter] = useReducer(x => x + 1, 0)
 
@@ -20,9 +22,9 @@ export function SettingsPage() {
 
   return (
     <div className="page settings-page">
-      <h1>Settings</h1>
+      <h1>{t('settings')}</h1>
       <div className="settings-block">
-        <h2>Theme</h2>
+        <h2>{t('settings-theme')}</h2>
         <ButtonGroup>
           <Button color="yellow" size="small" onClick={() => updateSettings({ darkMode: false })}>
             <Icon name="sun" />

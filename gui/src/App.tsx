@@ -13,13 +13,15 @@ import { SOUNDS, useAudio } from './hooks/useAudio'
 import { getStatus } from './utils'
 import { HardwareStatusPage } from './pages/HardwareStatusPage'
 import { MicrolabStatusResponse, MicrolabStatus } from './microlabTypes'
+import { useTranslation } from 'react-i18next'
 
 import './styles/app.css'
 import './styles/4tv.scss'
 
 export function App() {
+  const { t } = useTranslation()
   const mockStatus = {
-    message: 'Service down',
+    message: t('backend-down'),
     status: MicrolabStatus.NO_BACKEND_RESPONSE,
     step: -1,
   }
@@ -69,7 +71,7 @@ export function App() {
           ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
               typeof status?.temp === 'number' ? `${status?.temp.toFixed(2)}C` : ''
             }`
-          : 'Waiting for control service'}
+          : t('waiting-for-backend')}
       </Header>
       <Switch>
         <Route exact path="/">

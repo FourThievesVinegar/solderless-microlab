@@ -4,8 +4,10 @@ import { Dropdown, DropdownProps } from 'semantic-ui-react'
 import { getLogs } from '../utils'
 
 import './LogsPage.scss'
+import { useTranslation } from 'react-i18next'
 
 export function LogsPage() {
+  const { t } = useTranslation()
   const [logs, setLogs] = useState<false | { logs: string }>(false)
   const logLevels = ['INFO', 'WARNING', 'ERROR', 'CRITICAL', 'DEBUG']
   const [selection, setSelection] = useState(logLevels)
@@ -47,7 +49,7 @@ export function LogsPage() {
 
   return (
     <section className="page logs-page">
-      <h4>Logs</h4>
+      <h4>{t('Logs')}</h4>
       <Dropdown
         selection
         multiple={true}
