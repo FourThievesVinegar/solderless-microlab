@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { Icon, Button, Menu } from 'semantic-ui-react'
 
 import SettingsContext from '../contexts/Settings'
+import { useTranslation } from 'react-i18next'
 
 import './Header.scss'
 
@@ -17,6 +18,7 @@ export function Header(props: {
     | null
     | undefined
 }) {
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.Header' })
   const history = useHistory()
   const { settings } = useContext(SettingsContext)
 
@@ -58,19 +60,19 @@ export function Header(props: {
         </Menu>
       </section>
       <aside className={`main-menu ${showMenu ? 'active' : ''}`}>
-        <h2>Main menu</h2>
+        <h2>{t('main-menu')}</h2>
         <div className="button-list">
           <Button as={Link} color="blue" to="/hardwareStatus" onClick={hideMenu}>
-            Microlab Status
+            {t('status-button-text')}
           </Button>
           <Button as={Link} color="blue" to="/recipes" onClick={hideMenu}>
-            Recipes
+            {t('recipes-button-text')}
           </Button>
           <Button as={Link} color="blue" to="/settings" onClick={hideMenu}>
-            Settings
+            {t('settings-button-text')}
           </Button>
           <Button as={Link} color="blue" to="/logs" onClick={hideMenu}>
-            View Logs
+            {t('logs-button-text')}
           </Button>
         </div>
       </aside>

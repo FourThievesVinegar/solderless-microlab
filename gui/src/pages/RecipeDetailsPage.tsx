@@ -5,10 +5,12 @@ import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 import { getRecipe, startRecipe } from '../utils'
 import { MicrolabRecipe, RecipeMaterial, RecipeStep } from '../microlabTypes'
+import { useTranslation } from 'react-i18next'
 
 import './RecipeDetailsPage.scss'
 
 export function RecipeDetails() {
+  const { t } = useTranslation()
   const [recipeDetails, setRecipeDetails] = useState<MicrolabRecipe>()
   const history = useHistory()
   const { recipeName } = useParams<any>()
@@ -25,7 +27,7 @@ export function RecipeDetails() {
         onClick={() => {
           startRecipe(recipeName).then(data => history.push('/status'))
         }}>
-        Start A Reaction Using This Recipe
+        {t('start-reaction-button-text')}
       </Button>
     )
   }
@@ -42,7 +44,7 @@ export function RecipeDetails() {
           <Steps steps={recipeDetails.steps} />
         </>
       ) : (
-        <p>loading...</p>
+        <p>{t('loading-placeholder')}</p>
       )}
       <StartRecipeButton />
     </section>
@@ -50,6 +52,7 @@ export function RecipeDetails() {
 }
 
 function MaterialsNeeded({ materials }: { materials: RecipeMaterial[] }) {
+  const { t } = useTranslation()
   let body
   if (isArray(materials) && materials.length > 0) {
     body = (
@@ -60,12 +63,12 @@ function MaterialsNeeded({ materials }: { materials: RecipeMaterial[] }) {
       </ol>
     )
   } else {
-    body = <span>No materials needed</span>
+    body = <span>{t('no-materials-needed')}</span>
   }
 
   return (
     <>
-      <h3>Materials Needed:</h3>
+      <h3>{t('recipe-materials-needed')}</h3>
       {body}
     </>
   )
@@ -75,6 +78,7 @@ function MaterialsNeeded({ materials }: { materials: RecipeMaterial[] }) {
  * total time? which steps are time sensitive and how long between them?
  * */
 function TimeNeeded({ steps }: { steps: RecipeStep[] }) {
+  const { t } = useTranslation()
   if (!isArray(steps) || steps.length < 1) {
     return <></>
   }
@@ -98,20 +102,21 @@ function TimeNeeded({ steps }: { steps: RecipeStep[] }) {
 
   return (
     <>
-      <h3>Time Needed:</h3>
-      <TimeNeededSection label="Time needed for automated tasks" seconds={waitTime} />
+      <h3>{t('recipe-time-needed')}</h3>
+      <TimeNeededSection label={t('recipe-time-needed-for-tasks')} seconds={waitTime} />
     </>
   )
 }
 
 function Steps({ steps }: { steps: RecipeStep[] }) {
+  const { t } = useTranslation()
   if (!isArray(steps) || steps.length < 1) {
-    return <span>No steps</span>
+    return <span>{t('recipe-has-no-steps')}</span>
   }
 
   return (
     <>
-      <h3>Steps:</h3>
+      <h3>{t('')}</h3>
       <ol>
         {steps.map((step, index) => (
           <li key={`${step.message}-${index}`}>

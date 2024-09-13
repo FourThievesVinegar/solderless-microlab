@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { uploadControllerConfig } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
 
 export const ControllerConfigUpload = (props: { onUpload: () => void }) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.ControllerConfigUpload' })
   const { onUpload } = props
   const [message, setMessage] = useState('')
 
@@ -15,18 +17,18 @@ export const ControllerConfigUpload = (props: { onUpload: () => void }) => {
   }
 
   const handleFileUpload = () => {
-    setMessage('Uploading config...')
+    setMessage(t('uploading'))
     if (!file) {
-      setMessage('Failed, no file attached.')
+      setMessage(t('upload-failed-no-file'))
       return
     }
     uploadControllerConfig(file)
       .then(() => {
-        setMessage('Config upload successful.')
+        setMessage(t('upload-success'))
         onUpload()
       })
       .catch(() => {
-        setMessage('Config upload failed.')
+        setMessage(t('upload-failed'))
       })
   }
 
@@ -34,7 +36,7 @@ export const ControllerConfigUpload = (props: { onUpload: () => void }) => {
     <Form onSubmit={handleFileUpload} encType="multipart/form-data">
       {message}
       <Input type="file" id="File" onChange={fileChange} />
-      <Button type="submit">Upload new controller config</Button>
+      <Button type="submit">{t('upload-button-text')}</Button>
     </Form>
   )
 }

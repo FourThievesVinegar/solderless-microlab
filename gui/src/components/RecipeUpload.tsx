@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { uploadRecipe } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
 
 export const RecipeUpload = ({ onUpload }: { onUpload?: () => void }) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.RecipeUpload' })
   const [message, setMessage] = useState('')
 
   const [file, setFile] = useState<File>()
@@ -15,17 +17,17 @@ export const RecipeUpload = ({ onUpload }: { onUpload?: () => void }) => {
 
   const handleFileUpload = () => {
     if (!file) {
-      setMessage('Failed, no recipe selected to upload.')
+      setMessage(t('failed-no-recipe-selected'))
       return
     }
-    setMessage('Uploading recipe...')
+    setMessage(t('upload-waiting-message'))
     uploadRecipe(file)
       .then(() => {
-        setMessage('Recipe upload successful.')
+        setMessage(t('upload-successful'))
         onUpload?.()
       })
       .catch(() => {
-        setMessage('Recipe upload failed.')
+        setMessage(t('upload-failed-generic'))
       })
   }
 
@@ -34,7 +36,7 @@ export const RecipeUpload = ({ onUpload }: { onUpload?: () => void }) => {
       {message}
       <Input type="file" id="File" onChange={fileChange} />
       <Button color="purple" type="submit">
-        Upload
+        {t('upload-button-text')}
       </Button>
     </Form>
   )

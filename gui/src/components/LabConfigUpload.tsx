@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { uploadLabConfig } from '../utils'
 import { Button, Input, Form } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
 
 export const LabConfigUpload = (props: { onUpload: () => void }) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.LabConfigUpload' })
   const { onUpload } = props
   const [message, setMessage] = useState('')
 
@@ -16,14 +18,14 @@ export const LabConfigUpload = (props: { onUpload: () => void }) => {
 
   const handleFileUpload = () => {
     if (file) {
-      setMessage('Uploading config...')
+      setMessage(t('upload-waiting-message'))
       uploadLabConfig(file)
         .then(() => {
-          setMessage('Config upload successful.')
+          setMessage(t('upload-successful'))
           onUpload()
         })
         .catch(() => {
-          setMessage('Config upload failed.')
+          setMessage(t('failed-generic'))
         })
     }
   }
@@ -32,7 +34,7 @@ export const LabConfigUpload = (props: { onUpload: () => void }) => {
     <Form onSubmit={handleFileUpload} encType="multipart/form-data">
       {message}
       <Input type="file" id="File" onChange={fileChange} />
-      <Button type="submit">Upload new lab config</Button>
+      <Button type="submit">{t('upload-button-text')}</Button>
     </Form>
   )
 }

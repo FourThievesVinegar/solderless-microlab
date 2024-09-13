@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { setLabHardware, listLabHardware, getLabHardware, downloadLabConfig } from '../utils'
 import { Button, Form, Dropdown } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
 
 export const LabHardwareConfig = (props: { refetch: any }) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.LabHardwareConfig' })
   const { refetch } = props
   const [hardwareOptions, setHardwareOptions] = useState<undefined | string[]>()
   const [selection, setSelection] = useState<string>()
@@ -29,30 +31,30 @@ export const LabHardwareConfig = (props: { refetch: any }) => {
 
   const handleFormSubmit = (event: any, data: any) => {
     if (!selection) {
-      setMessage('Failed, no configuration is selected.')
+      setMessage(t('failed-no-selected-config'))
       return
     }
-    setMessage('Setting new configuration...')
+    setMessage(t('setting-new-config-waiting-message'))
     setLabHardware(selection)
       .then(data => {
         if (data.response === 'ok') {
-          setMessage('Hardware configuration changed successfully.')
+          setMessage(t('config-changed-successfully'))
           setTimeout(() => {
             setMessage('')
           }, 1000 * 10)
         } else {
-          setMessage(`Configuring hardware failed: "${data.message}"`)
+          setMessage(t('failed-config-change-request', { msg: data.message }))
         }
         reloadData()
       })
       .catch(() => {
-        setMessage('Configuring hardware failed.')
+        setMessage(t('failed-generic'))
       })
   }
 
   return (
     <Form>
-      <h2>Lab Hardware Config</h2>
+      <h2>{t('header')}</h2>
       <Dropdown
         selection
         loading={loading}
@@ -63,7 +65,7 @@ export const LabHardwareConfig = (props: { refetch: any }) => {
       />
       {startingValue !== selection ? (
         <Button type="submit" onClick={handleFormSubmit}>
-          Save
+          {t('save', {})}
         </Button>
       ) : (
         <></>
@@ -75,7 +77,7 @@ export const LabHardwareConfig = (props: { refetch: any }) => {
       )}
       {selection && startingValue === selection && (
         <Button className="cancel-button" onClick={() => downloadLabConfig(selection)}>
-          Download
+          {t('download')}
         </Button>
       )}
       <br />

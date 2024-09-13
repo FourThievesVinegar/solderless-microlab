@@ -4,10 +4,12 @@ import { useHistory } from 'react-router-dom'
 import { StatusIcon } from '../components/StatusIcon'
 import { ReloadHardware } from '../components/ReloadHardware'
 import { MicrolabStatusResponse, MicrolabStatus } from '../microlabTypes'
+import { useTranslation } from 'react-i18next'
 
 import './StatusPage.scss'
 
 export function HardwareStatusPage(props: { status: MicrolabStatusResponse }) {
+  const { t } = useTranslation()
   const { status } = props
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -43,7 +45,7 @@ export function HardwareStatusPage(props: { status: MicrolabStatusResponse }) {
             <div className="button-list">
               {status.status === MicrolabStatus.IDLE && (
                 <>
-                  <p>Microlab is idle. </p>
+                  <p>{t('microlab-status-idle-message')}</p>
                 </>
               )}
               {(status.status === MicrolabStatus.RUNNING ||
@@ -51,9 +53,9 @@ export function HardwareStatusPage(props: { status: MicrolabStatusResponse }) {
                 status.status === MicrolabStatus.USER_INPUT ||
                 status.status === MicrolabStatus.RECIPE_UNSUPPORTED) && (
                 <>
-                  <p>Microlab is running a recipe.</p>
+                  <p>{t('microlab-status-running-message')}</p>
                   <Button color="purple" onClick={() => handleRecipeButtonClick()}>
-                    Go to Recipe
+                    {t('go-to-recipe-button-text')}
                   </Button>
                 </>
               )}
@@ -61,7 +63,7 @@ export function HardwareStatusPage(props: { status: MicrolabStatusResponse }) {
                 <>
                   <p>Error: {status.hardwareError}</p>
                   <Button color="purple" onClick={() => handleLogsButtonClick()}>
-                    View Logs
+                    {t('view-logs-button-text')}
                   </Button>
                 </>
               )}

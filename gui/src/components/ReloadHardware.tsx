@@ -1,34 +1,36 @@
 import React, { useState } from 'react'
 import { reloadHardware } from '../utils'
 import { Button, Form } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
 
 export const ReloadHardware = (props: { onReload?: () => void; displayMessage?: boolean }) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.ReloadHardware' })
   const { onReload, displayMessage } = props
   const [message, setMessage] = useState('')
 
   const handleFormSubmit = () => {
-    setMessage('Setting new configuration...')
+    setMessage(t('reloading-waiting-for-response-message'))
     onReload?.()
     reloadHardware()
       .then(data => {
         if (data.response === 'ok') {
-          setMessage('Hardware loaded successfully.')
+          setMessage(t('reload-successful'))
           setTimeout(() => {
             setMessage('')
           }, 1000 * 10)
         } else {
-          setMessage(`Loading hardware failed: "${data.message}"`)
+          setMessage(t('reload-failed-with-message', { message: data.message }))
         }
       })
       .catch(() => {
-        setMessage('Loading hardware failed.')
+        setMessage(t('reload-failed-generic'))
       })
   }
 
   return (
     <Form>
       <Button type="submit" onClick={handleFormSubmit}>
-        Reload Hardware
+        {t('reload-button-text')}
       </Button>
       <br />
       {displayMessage && message}

@@ -2,9 +2,11 @@ import React, { ChangeEventHandler, useContext } from 'react'
 import { Form, Checkbox, Dropdown } from 'semantic-ui-react'
 import SettingsContext from '../contexts/Settings'
 import { AUDIO_THEMES } from '../hooks/useAudio'
+import { useTranslation } from 'react-i18next'
 import './SoundSettings.scss'
 
 export const SoundSettings = (props: any) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.SoundSettings' })
   const { settings, updateSettings } = useContext(SettingsContext)
 
   const audioThemeOptions = Object.keys(AUDIO_THEMES)?.map(theme => ({
@@ -21,11 +23,11 @@ export const SoundSettings = (props: any) => {
 
   return (
     <Form>
-      <h2>Sound Settings</h2>
+      <h2>{t('settings-header')}</h2>
       <div className="settings-block">
-        <label>Soundscape: </label>
+        <label>{t('soundscape-label')}: </label>
         <Dropdown
-          placeholder="Select your audio theme"
+          placeholder={t('select-audio-theme-placeholder')}
           options={audioThemeOptions}
           value={settings.audioTheme}
           onChange={(event: any, data: any) => {
@@ -34,15 +36,15 @@ export const SoundSettings = (props: any) => {
         />
       </div>
       <div className="settings-block">
-        <label>Volume: </label>
+        <label>{t('volume-label')}: </label>
         <br />
         <input type="range" min="0" max="1" step="0.01" value={settings.volume} onChange={updateVolume} />
       </div>
       <div className="settings-block">
-        <span>Play Sounds:</span>
+        <span>{t('play-sounds-label')}:</span>
         <Checkbox
           className="sound-setting-checkbox"
-          label="On Error"
+          label={t('sound-on-error-label')}
           checked={!settings.muteErrorSound}
           onChange={() => {
             updateSettings({ muteErrorSound: !settings.muteErrorSound })
@@ -50,7 +52,7 @@ export const SoundSettings = (props: any) => {
         />
         <Checkbox
           className="sound-setting-checkbox"
-          label="Step Requires User Input"
+          label={t('sound-requires-user-input-label')}
           checked={!settings.muteUserInputSound}
           onChange={() => {
             updateSettings({ muteUserInputSound: !settings.muteUserInputSound })
@@ -58,7 +60,7 @@ export const SoundSettings = (props: any) => {
         />
         <Checkbox
           className="sound-setting-checkbox"
-          label="On Recipe Completion"
+          label={t('sound-on-recipe-completion-label')}
           checked={!settings.muteCompletionSound}
           onChange={() => {
             updateSettings({ muteCompletionSound: !settings.muteCompletionSound })
@@ -66,7 +68,7 @@ export const SoundSettings = (props: any) => {
         />
         <Checkbox
           className="sound-setting-checkbox"
-          label="On Recipe List Load (intro)"
+          label={t('sound-intro-label')}
           checked={!settings.muteIntroSound}
           onChange={() => {
             updateSettings({ muteIntroSound: !settings.muteIntroSound })

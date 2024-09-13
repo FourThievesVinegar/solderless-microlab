@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import { Button, Grid } from 'semantic-ui-react'
 import { LogoContainer } from '../components/LogoContainer'
 import { MicrolabStatusResponse } from '../microlabTypes'
+import { useTranslation } from 'react-i18next'
 
 import './HomePage.scss'
 
 export function HomePage(props: { status: MicrolabStatusResponse }) {
+  const { t } = useTranslation()
   const { status } = props
 
   return (
@@ -15,7 +17,7 @@ export function HomePage(props: { status: MicrolabStatusResponse }) {
         <Grid.Row columns={2} style={{ height: '100%' }}>
           <Grid.Column style={{ height: '100%' }}>
             <LogoContainer />
-            <p>Four Thieves Vinegar MicroLab</p>
+            <p>{t('Four Thieves Vinegar MicroLab')}</p>
           </Grid.Column>
           <Grid.Column className="home-page-menu">
             <div className="button-list">
@@ -23,18 +25,18 @@ export function HomePage(props: { status: MicrolabStatusResponse }) {
                 //if there's a recipe in progress, give a link to see its status
                 //if not, offer option to start reaction
                 <div>
-                  <p>{status.recipe} reaction in progress.</p>
+                  <p>{t('reaction-in-progress', { reactionName: status.recipe })}</p>
                   <Button color="purple" as={Link} to="/status">
-                    Resume {status.recipe.toUpperCase()} Reaction
+                    {t('resume-reaction', { reactionName: status.recipe.toUpperCase() })}
                     {/* maybe this would be a good place to preview next step? */}
                   </Button>
                   <Button as={Link} to="/recipes">
-                    View Recipes
+                    {t('view-recipes-button-text')}
                   </Button>
                 </div>
               ) : (
                 <Button color="purple" as={Link} to="/recipes">
-                  View Recipes
+                  {t('view-recipes-button-text')}
                 </Button>
               )}
             </div>
