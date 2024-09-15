@@ -1,5 +1,6 @@
 from hardware.stirring.base import Stirrer
 
+
 class SimulatedStirrer(Stirrer):
     def turnStirrerOn(self):
         """

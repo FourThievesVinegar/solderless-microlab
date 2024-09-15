@@ -3,6 +3,7 @@ from hardware.stirring.base import Stirrer
 RELAY_ON = 1
 RELAY_OFF = 0
 
+
 class GPIOStirrer(Stirrer):
 
     def __init__(self, args, devices):
@@ -29,7 +30,6 @@ class GPIOStirrer(Stirrer):
         None
         """
         self.gpio.output(self.stirrerPin, RELAY_ON)
-
 
     def turnStirrerOff(self):
         """

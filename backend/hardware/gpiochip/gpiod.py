@@ -2,6 +2,7 @@ from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT, LINE_REQ_DIR_IN
 import gpiod
 import logging
 
+
 class GPIODChip(GPIOChip):
     def __init__(self, args):
         """
@@ -21,10 +22,9 @@ class GPIODChip(GPIOChip):
         self.lineAliases = {}
         self.chip = gpiod.Chip(args['chipName'])
         if 'lineAliases' in args:
-          for alias, line in args['lineAliases'].items():
-            self.lineAliases[alias] = line
+            for alias, line in args['lineAliases'].items():
+                self.lineAliases[alias] = line
         logging.debug(self.lineAliases)
-
 
     def __output(self):
         """
@@ -45,12 +45,12 @@ class GPIODChip(GPIOChip):
             The line number for that pin
         """
         if type(pin) == str:
-          if self.lineAliases[pin]:
-            return self.lineAliases[pin]
-          else:
-            raise Exception("Invalid GPIO pin {0}".format(pin))
+            if self.lineAliases[pin]:
+                return self.lineAliases[pin]
+            else:
+                raise Exception("Invalid GPIO pin {0}".format(pin))
         else:
-          return pin
+            return pin
 
     def setup(self, pin, pinType=LINE_REQ_DIR_OUT, outputValue=0):
         """
@@ -68,13 +68,12 @@ class GPIODChip(GPIOChip):
         lineNumber = self.__getLineNumber(pin)
         
         if pinType == LINE_REQ_DIR_OUT:
-          #line = self.chip.get_line(lineNumber)
-          #line.request(consumer="microlab", type=gpiod.LINE_REQ_DIR_OUT)
-          self.output_offsets.append(lineNumber)
-          self.output_values.append(outputValue)
-          #self.output_lines.append(line)
-          self.__output()
-        
+            # line = self.chip.get_line(lineNumber)
+            # line.request(consumer="microlab", type=gpiod.LINE_REQ_DIR_OUT)
+            self.output_offsets.append(lineNumber)
+            self.output_values.append(outputValue)
+            # self.output_lines.append(line)
+            self.__output()
 
     def output(self, pin, value):
         """
@@ -91,4 +90,3 @@ class GPIODChip(GPIOChip):
         index = self.output_offsets.index(lineNumber)
         self.output_values[index] = value
         self.__output()
-

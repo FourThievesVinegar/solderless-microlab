@@ -1,6 +1,7 @@
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT, LINE_REQ_DIR_IN
 import logging
 
+
 class GPIODChipSimulation():
     def __init__(self, args):
         """
@@ -19,10 +20,9 @@ class GPIODChipSimulation():
         self.chip = None
         self.lineAliases = {}
         if 'lineAliases' in args:
-          for alias, line in args['lineAliases'].items():
-            self.lineAliases[alias] = line
+            for alias, line in args['lineAliases'].items():
+                self.lineAliases[alias] = line
         logging.debug(self.lineAliases)
-
 
     def __output(self):
         """
@@ -39,12 +39,12 @@ class GPIODChipSimulation():
             The line number for that pin
         """
         if type(pin) == str:
-          if self.lineAliases[pin]:
-            return self.lineAliases[pin]
-          else:
-            raise Exception("Invalid GPIO pin {0}".format(pin))
+            if self.lineAliases[pin]:
+                return self.lineAliases[pin]
+            else:
+                raise Exception("Invalid GPIO pin {0}".format(pin))
         else:
-          return pin
+            return pin
 
     def setup(self, pin, pinType=LINE_REQ_DIR_OUT, outputValue=0):
         """
@@ -64,10 +64,9 @@ class GPIODChipSimulation():
         # add better simulation
 
         if pinType == LINE_REQ_DIR_OUT:
-          self.output_offsets.append(lineNumber)
-          self.output_values.append(outputValue)
-          self.__output()
-        
+            self.output_offsets.append(lineNumber)
+            self.output_values.append(outputValue)
+            self.__output()
 
     def output(self, pin, value):
         """
@@ -84,4 +83,3 @@ class GPIODChipSimulation():
         index = self.output_offsets.index(lineNumber)
         self.output_values[index] = value
         self.__output()
-

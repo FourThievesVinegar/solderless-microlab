@@ -2,6 +2,7 @@ from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT, LINE_REQ_DIR_IN
 import gpiod
 import logging
 
+
 class GPIODChipset(GPIOChip):
     def __init__(self, args, devices):
         """
@@ -23,13 +24,12 @@ class GPIODChipset(GPIOChip):
         self.lineAliases = {}
 
         for chipID, chip in self.chips.items(): 
-          for alias, line in chip.lineAliases.items():
-            if alias in self.lineAliases:
-                logging.warning("GPIO line alias '{0}' has a conflict between chips {1} and {2}. Using {2}.".format(alias, chipID, self.lineAliases[alias]))
-                continue
+            for alias, line in chip.lineAliases.items():
+                if alias in self.lineAliases:
+                    logging.warning("GPIO line alias '{0}' has a conflict between chips {1} and {2}. Using {2}.".format(alias, chipID, self.lineAliases[alias]))
+                    continue
             self.lineAliases[alias] = chipID
         logging.debug(self.lineAliases)
-
 
     def setup(self, pin, pinType=LINE_REQ_DIR_OUT, outputValue=0):
         """
