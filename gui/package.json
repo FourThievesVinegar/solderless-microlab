@@ -14,7 +14,7 @@
     "@types/react-dom": "^18.2.18",
     "@uidotdev/usehooks": "^2.4.1",
     "humanize-duration": "^3.25.1",
-    "i18next": "^23.14.0",
+    "i18next": "^23.15.1",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

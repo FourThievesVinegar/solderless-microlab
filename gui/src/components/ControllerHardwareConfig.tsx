@@ -59,7 +59,6 @@ export const ControllerHardwareConfig = (props: { refetch: any }) => {
 
   return (
     <Form>
-      <h2>{t('header')}</h2>
       <Dropdown
         selection
         loading={loading}

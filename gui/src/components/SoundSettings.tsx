@@ -23,7 +23,6 @@ export const SoundSettings = (props: any) => {
 
   return (
     <Form>
-      <h2>{t('settings-header')}</h2>
       <div className="settings-block">
         <label>{t('soundscape-label')}: </label>
         <Dropdown
