@@ -13,9 +13,16 @@ export const LanguageSelector = () => {
     i18n.changeLanguage(value)
   }
 
+  const selectorOptions = locales.map(lang => ({ key: lang, value: lang, text: lang }))
+
   return (
     <Form>
-      <Select options={locales} placeholder={t('locale')} onChange={handleLocaleChange} value={i18n.resolvedLanguage} />
+      <Select
+        options={selectorOptions}
+        placeholder={t('locale')}
+        onChange={handleLocaleChange}
+        value={i18n.resolvedLanguage}
+      />
     </Form>
   )
 }
