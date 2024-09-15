@@ -32,7 +32,7 @@ export const ReloadHardware = (props: { onReload?: () => void; displayMessage?: 
       <Button type="submit" onClick={handleFormSubmit}>
         {t('reload-button-text')}
       </Button>
-      {message.length > 0 && <p className="hardware-reload-message">{displayMessage && message}</p>}
+      {message.length > 0 && displayMessage && <p className="hardware-reload-message">{message}</p>}
     </Form>
   )
 }
