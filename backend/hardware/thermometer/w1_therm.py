@@ -2,6 +2,7 @@ from hardware.thermometer.base import TempSensor
 from w1thermsensor import W1ThermSensor, Sensor, SensorNotReadyError
 from datetime import datetime, timedelta
 
+
 class W1TempSensor(TempSensor):
     
     def __init__(self):

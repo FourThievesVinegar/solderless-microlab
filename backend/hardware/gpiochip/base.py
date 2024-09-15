@@ -1,7 +1,8 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
 
 LINE_REQ_DIR_OUT = 'output'
 LINE_REQ_DIR_IN = 'input'
+
 
 class GPIOChip(ABC):
     @abstractmethod

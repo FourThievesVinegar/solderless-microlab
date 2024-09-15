@@ -10,6 +10,7 @@ from configobj import ConfigObj, flatten_errors
 from configobj.validate import Validator 
 import shutil
 
+
 class MicrolabConfig:
     """
     Contains all the microlab configuration values fetched from disk. Uses a
@@ -22,7 +23,6 @@ class MicrolabConfig:
         configFileName = '/etc/microlab/microlab.ini'
 
         makedirs(path.dirname(configFileName), exist_ok=True)
-
 
         self.config = ConfigObj(configFileName, configspec="defaultconfig.ini")
 
@@ -44,10 +44,10 @@ class MicrolabConfig:
                 section_string = '.'.join(section_list)
                 if error == False:
                     error = 'Missing value or section.'
-                logging.warning("Configuration error at {0}: '{1}', falling back to default value '{2}'."
+                logging.warning(
+                    "Configuration error at {0}: '{1}', falling back to default value '{2}'."
                     .format(section_string, error, default))
 
-    
     def reloadConfig(self):
         """
         Reloads microlab configuration from disk.
@@ -58,9 +58,11 @@ class MicrolabConfig:
     @property
     def dataDirectory(self):
         return self.config["GENERAL"]["dataDirectory"]
+
     @property
     def recipesDirectory(self):
         return '{0}/recipes/'.format(self.dataDirectory)
+
     @property
     def controllerHardwareDirectory(self):
         return '{0}/controllerhardware/'.format(self.hardwareDirectory)
@@ -85,7 +87,6 @@ class MicrolabConfig:
     def logLevel(self):
         return self.config["GENERAL"]["logLevel"]
 
-
     ## FLASK CONFIGURATION ##
     @property
     def apiPort(self):
@@ -100,6 +101,7 @@ class MicrolabConfig:
     @property
     def controllerHardware(self):
         return self.config["HARDWARE"]["controllerHardware"]
+
     @controllerHardware.setter
     def controllerHardware(self, value):
         self.config["HARDWARE"]["controllerHardware"] = value
@@ -108,58 +110,64 @@ class MicrolabConfig:
     @property
     def hardwareDirectory(self):
         return '{0}/hardware/'.format(self.dataDirectory)
+
     @property
     def controllerHardwareDirectory(self):
         return '{0}/controllerhardware/'.format(self.hardwareDirectory)
+
     @property
     def labHardwareDirectory(self):
         return '{0}/labhardware/'.format(self.hardwareDirectory)
+
     @property
     def labHardware(self):
         return self.config["HARDWARE"]["labHardware"]
+
     @labHardware.setter
     def labHardware(self, value):
         self.config["HARDWARE"]["labHardware"] = value
         self.config.write()
 
+
 microlabConfig = MicrolabConfig()
 
+
 def initialSetup():
-  dataDirectory = microlabConfig.dataDirectory
-  recipesDirectory = microlabConfig.recipesDirectory
-  hardwareDirectory = microlabConfig.hardwareDirectory
-  controllerHardwareDirectory = microlabConfig.controllerHardwareDirectory
-  labHardwareDirectory = microlabConfig.labHardwareDirectory
-  # ensure data directories exist
-  makedirs(path.dirname(dataDirectory), exist_ok=True)
-  makedirs(path.dirname(recipesDirectory), exist_ok=True)
-  makedirs(path.dirname(hardwareDirectory), exist_ok=True)
-  makedirs(path.dirname(controllerHardwareDirectory), exist_ok=True)
-  makedirs(path.dirname(labHardwareDirectory), exist_ok=True)
+    dataDirectory = microlabConfig.dataDirectory
+    recipesDirectory = microlabConfig.recipesDirectory
+    hardwareDirectory = microlabConfig.hardwareDirectory
+    controllerHardwareDirectory = microlabConfig.controllerHardwareDirectory
+    labHardwareDirectory = microlabConfig.labHardwareDirectory
+    # ensure data directories exist
+    makedirs(path.dirname(dataDirectory), exist_ok=True)
+    makedirs(path.dirname(recipesDirectory), exist_ok=True)
+    makedirs(path.dirname(hardwareDirectory), exist_ok=True)
+    makedirs(path.dirname(controllerHardwareDirectory), exist_ok=True)
+    makedirs(path.dirname(labHardwareDirectory), exist_ok=True)
   
-  # ensure log directory exists
-  makedirs(path.dirname(microlabConfig.logDirectory + "/"), exist_ok=True)
+    # ensure log directory exists
+    makedirs(path.dirname(microlabConfig.logDirectory + "/"), exist_ok=True)
 
-  # copy builtin controller configurations to data directory, 
-  # overwriting old configurations if they exist
-  defaultControllerConfigsDir = "./data/hardware/controllerhardware/"
-  for controllerhardware in os.listdir(defaultControllerConfigsDir):
-    src = "{0}/{1}".format(defaultControllerConfigsDir, controllerhardware)
-    dest = "{0}/{1}".format(controllerHardwareDirectory, controllerhardware)
-    shutil.copy2(src, dest)
+    # copy builtin controller configurations to data directory, 
+    # overwriting old configurations if they exist
+    defaultControllerConfigsDir = "./data/hardware/controllerhardware/"
+    for controllerhardware in os.listdir(defaultControllerConfigsDir):
+        src = "{0}/{1}".format(defaultControllerConfigsDir, controllerhardware)
+        dest = "{0}/{1}".format(controllerHardwareDirectory, controllerhardware)
+        shutil.copy2(src, dest)
 
-  # copy builtin lab configurations to data directory,
-  # overwriting old configurations if they exist
-  defaultLabConfigsDir = "./data/hardware/labhardware/"
-  for labhardware in os.listdir(defaultLabConfigsDir):
-    src = "{0}/{1}".format(defaultLabConfigsDir, labhardware)
-    dest = "{0}/{1}".format(labHardwareDirectory, labhardware)
-    shutil.copy2(src, dest)
+    # copy builtin lab configurations to data directory,
+    # overwriting old configurations if they exist
+    defaultLabConfigsDir = "./data/hardware/labhardware/"
+    for labhardware in os.listdir(defaultLabConfigsDir):
+        src = "{0}/{1}".format(defaultLabConfigsDir, labhardware)
+        dest = "{0}/{1}".format(labHardwareDirectory, labhardware)
+        shutil.copy2(src, dest)
 
-  # copy builtin recipes to data directory, 
-  # overwriting old recipes if they exist
-  defaultRecipesDir = "./data/recipes/"
-  for recipe in os.listdir(defaultRecipesDir):
-    src = "{0}/{1}".format(defaultRecipesDir, recipe)
-    dest = "{0}/{1}".format(recipesDirectory, recipe)
-    shutil.copy2(src, dest)
+    # copy builtin recipes to data directory, 
+    # overwriting old recipes if they exist
+    defaultRecipesDir = "./data/recipes/"
+    for recipe in os.listdir(defaultRecipesDir):
+        src = "{0}/{1}".format(defaultRecipesDir, recipe)
+        dest = "{0}/{1}".format(recipesDirectory, recipe)
+        shutil.copy2(src, dest)

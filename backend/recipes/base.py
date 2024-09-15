@@ -89,6 +89,7 @@ import traceback
 from enum import Enum
 import logging
 
+
 class RecipeState(str, Enum):
     IDLE = "idle"
     ERROR = "error"
@@ -105,6 +106,7 @@ TASK_PARAMETERS = 'parameters'
 NEXT_STEP = 'next'
 STEP_USER_OPTIONS = 'options'
 LAST_STEP = 'done'
+
 
 class Recipe:
     
@@ -222,7 +224,7 @@ class Recipe:
         if self.status == RecipeState.RUNNING:
             if self.areTasksComplete():
                 currentStep = self.plan[RECIPE_STEPS][self.step]
-                if(LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
+                if (LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
                     self.stop()
                 else:
                     if NEXT_STEP in currentStep:
@@ -286,7 +288,7 @@ class Recipe:
 
         self.options = options
 
-        if('icon' in step):
+        if ('icon' in step):
             self.icon = step['icon']
 
         if TASK_TYPE in step and step[TASK_TYPE] != 'humanTask': # There are tasks to perform
@@ -359,5 +361,3 @@ class Recipe:
                     self.status = RecipeState.ERROR
                     self.message = 'Task execution failed.'
                     self.stop()
-
-

@@ -2,6 +2,7 @@ import logging
 import textwrap
 import io
 
+
 class MultiLineFormatter(logging.Formatter):
     """Multi-line formatter."""
     def get_header_length(self, record):
@@ -19,4 +20,3 @@ class MultiLineFormatter(logging.Formatter):
         indent = ' ' * self.get_header_length(record)
         head, *trailing = super().format(record).splitlines(True)
         return head + ''.join(indent + line for line in trailing)
-

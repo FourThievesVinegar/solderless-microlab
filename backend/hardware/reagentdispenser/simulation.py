@@ -2,8 +2,10 @@ from hardware.reagentdispenser.base import ReagentDispenser
 import time
 import logging
 
+
 def log(message):
     logging.info('reagentdispenser.simulation - {0}'.format(message))
+
 
 class SimulatedReagentDispenser(ReagentDispenser):
     def __init__(self, args):

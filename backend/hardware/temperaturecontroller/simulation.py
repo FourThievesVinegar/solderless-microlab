@@ -2,6 +2,7 @@ import time
 from hardware.temperaturecontroller.base import TempController
 import logging
 
+
 def log(message):
     logging.info('tempcontroller.simulation - ' + str(message))
 
@@ -26,7 +27,6 @@ class SimulatedTempController(TempController):
         """
         log('Turning on heat')
         self.heating = True
-
 
     def turnHeaterOff(self):
         """
@@ -54,7 +54,6 @@ class SimulatedTempController(TempController):
         log('Turning on cooling')
         self.cooling = True
 
-
     def turnCoolerOff(self):
         """
         Un-sets the cooler flag for the simulation.
@@ -64,7 +63,6 @@ class SimulatedTempController(TempController):
         """
         log('Turning off cooling')
         self.cooling = False
-
 
     def getTemp(self):
         """
@@ -111,5 +109,3 @@ class SimulatedTempController(TempController):
             differentialOnMeasurement: Boolean (optional)
         """
         return self.pidConfig
-
-
