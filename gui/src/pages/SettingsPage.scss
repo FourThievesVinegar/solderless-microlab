@@ -2,10 +2,30 @@
   overflow-y: scroll;
   display: block;
 }
-
 .status-icon {
   max-width: 100px;
 }
 .settings-block {
   margin-bottom: 1rem;
+}
+.general-settings {
+  display: flex;
+  justify-content: space-around;
+}
+.ui.dropdown.selection {
+  min-height: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.ui.selection.dropdown > .delete.icon,
+.ui.selection.dropdown > .dropdown.icon,
+.ui.selection.dropdown > .search.icon {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.hardware-reload-message {
+  position: absolute;
+  color: #fff;
+  background-color: #000;
+  border: 1px solid #fff;
 }

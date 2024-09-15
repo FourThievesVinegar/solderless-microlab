@@ -65,19 +65,8 @@
   "go-back-button-text": "Go Back",
   "waiting-on-backend": "Waiting on backend...",
   "recipe-time-needed-for-tasks": "Time needed for automated tasks",
-  "settings": "Settings",
-  "settings-theme": "Theme",
+  "locale": "Locale",
   "components": {
-    "LabHardwareConfig": {
-      "failed-no-selected-config": "Failed, no configuration is selected",
-      "setting-new-config-waiting-message": "Setting new configuration...",
-      "config-changed-successfully": "Hardware configuration changed successfully.",
-      "failed-config-change-request": "Configuring hardware failed: \"{{data.message}}\"",
-      "failed-generic": "Configuring hardware failed.",
-      "save": "Save",
-      "download": "Download",
-      "header": "Lab Hardware Config"
-    },
     "ControllerConfigUpload": {
       "uploading": "Uploading config...",
       "upload-failed-no-file": "Failed, no file attached.",
@@ -92,21 +81,7 @@
       "failed-config-change-request": "Configuring controller failed: \"{{data.message}}\"",
       "failed-generic": "Configuring controller failed.",
       "save": "Save",
-      "download": "Download",
-      "header": "MicroLab Controller"
-    },
-    "LabConfigUpload": {
-      "upload-waiting-message": "Uploading config...",
-      "upload-successful": "Config upload successful.",
-      "failed-generic": "Config upload failed.",
-      "upload-button-text": "Upload new lab config"
-    },
-    "RecipeUpload": {
-      "failed-no-recipe-selected": "Failed, no recipe selected to upload.",
-      "upload-waiting-message": "Uploading recipe...",
-      "upload-successful": "Recipe upload successful.",
-      "upload-failed-generic": "Recipe upload failed.",
-      "upload-button-text": "Upload"
+      "download": "Download"
     },
     "Header": {
       "main-menu": "Main menu",
@@ -115,6 +90,28 @@
       "settings-button-text": "Settings",
       "logs-button-text": "View Logs"
     },
+    "LabConfigUpload": {
+      "upload-waiting-message": "Uploading config...",
+      "upload-successful": "Config upload successful.",
+      "failed-generic": "Config upload failed.",
+      "upload-button-text": "Upload new lab config"
+    },
+    "LabHardwareConfig": {
+      "failed-no-selected-config": "Failed, no configuration is selected",
+      "setting-new-config-waiting-message": "Setting new configuration...",
+      "config-changed-successfully": "Hardware configuration changed successfully.",
+      "failed-config-change-request": "Configuring hardware failed: \"{{data.message}}\"",
+      "failed-generic": "Configuring hardware failed.",
+      "save": "Save",
+      "download": "Download"
+    },
+    "RecipeUpload": {
+      "failed-no-recipe-selected": "Failed, no recipe selected to upload.",
+      "upload-waiting-message": "Uploading recipe...",
+      "upload-successful": "Recipe upload successful.",
+      "upload-failed-generic": "Recipe upload failed.",
+      "upload-button-text": "Upload"
+    },
     "ReloadHardware": {
       "reloading-waiting-for-response-message": "Setting new configuration...",
       "reload-successful": "Hardware loaded successfully.",
@@ -122,8 +119,13 @@
       "reload-failed-generic": "Loading hardware failed.",
       "reload-button-text": "Reload Hardware"
     },
+    "SettingsPage": {
+      "settings-page-header": "Settings",
+      "lab-hardware-config-header": "Lab Hardware Config",
+      "controller-hardware-config-header": "MicroLab Controller",
+      "sound-config-header": "Sound Settings"
+    },
     "SoundSettings": {
-      "settings-header": "Sound Settings",
       "soundscape-label": "Soundscape",
       "select-audio-theme-placeholder": "Select your audio theme",
       "volume-label": "Volume",
