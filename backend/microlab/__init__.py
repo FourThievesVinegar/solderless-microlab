@@ -3,6 +3,7 @@ Module init.
 Contains function for starting up the microlab process
 """
 
+
 def startMicrolabProcess(in_queue, out_queue):
     """
     Starts up the microlab process
@@ -92,7 +93,6 @@ def startMicrolabProcess(in_queue, out_queue):
 
     microlab = threading.Thread(target=runMicrolab)
     microlab.start()
-
 
     def handleSignal(_a, _b):
         logging.info("")
