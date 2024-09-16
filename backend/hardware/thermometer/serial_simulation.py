@@ -1,19 +1,18 @@
 from hardware.thermometer.base import TempSensor
-import time
 
 
 class SerialTempSensorSimulation(TempSensor):
-    def __init__(self, args):
+    def __init__(self, thermometer_config: dict):
         """
         Constructor. Initializes the sensor.
-        :param args:
+        :param thermometer_config:
           dict
             serialDevice
               A string with the device read from
         """
         self.tempSer = 0
-        if 'temp' in args:
-            self.temp = args['temp']
+        if 'temp' in thermometer_config:
+            self.temp = thermometer_config['temp']
 
     def getTemp(self):
         """
@@ -30,5 +29,10 @@ class SerialTempSensorSimulation(TempSensor):
             return self.temp
         line = "12345678901"
         lastLine = "+29.06"
-        temperature = float(lastLine[start:end])
+
+        # Commenting the below line out for the time being, no 'start' or 'end' variables are defined so this will throw
+        # an exception. Replacing it with just returning a float cast of 'lastLine' as that looks like a valid value
+        # temperature = float(lastLine[start:end])
+
+        temperature = float(lastLine[1:])  # Trimming off the '+' before casting
         return temperature
