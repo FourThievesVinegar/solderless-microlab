@@ -3,11 +3,11 @@ This module contains the implementations of the temperature controller. See base
 and either the individual files or backend/config.py for configuration information.
 """
 
-import config
 from hardware.temperaturecontroller.basictempcontroller import BasicTempController
 from hardware.temperaturecontroller.simulation import SimulatedTempController
 
-def createTemperatureController(tempControllerConfig, devices):
+
+def createTemperatureController(tempControllerConfig: dict, devices: dict):
     tempControllerType = tempControllerConfig['implementation']
     if tempControllerType == "basic":
         return BasicTempController(tempControllerConfig, devices)

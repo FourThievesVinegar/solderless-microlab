@@ -6,18 +6,18 @@ RELAY_OFF = 0
 
 class GPIOStirrer(Stirrer):
 
-    def __init__(self, args, devices):
+    def __init__(self, stirrer_config: dict, devices: dict):
         """
         Constructor. Initializes the stirrer.
-        :param args:
+        :param stirrer_config:
           dict
             stirrerPin
               Which gpio pin to control the stirrer
             gpioID
               The ID of the GPIO device used to control stirring
         """
-        self.gpio = devices[args["gpioID"]]
-        self.stirrerPin = args["stirrerPin"]
+        self.gpio = devices[stirrer_config["gpioID"]]
+        self.stirrerPin = stirrer_config["stirrerPin"]
         
         self.gpio.setup(self.stirrerPin)
         self.gpio.output(self.stirrerPin, RELAY_OFF)

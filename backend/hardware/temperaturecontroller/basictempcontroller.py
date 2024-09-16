@@ -7,10 +7,10 @@ RELAY_OFF = 0
 
 
 class BasicTempController(TempController):
-    def __init__(self, args, devices):
+    def __init__(self, temp_controller_config: dict, devices: dict):
         """
         Constructor. Initializes the stirrer.
-        :param args:
+        :param temp_controller_config:
           dict
             heaterPin
               Which gpio pin to control the heating element
@@ -25,13 +25,13 @@ class BasicTempController(TempController):
             minTemp
               Minimum temperature the hardware will support
         """
-        super().__init__(args, devices)
-        self.gpio = devices[args["gpioID"]]
-        self.heaterPin = args["heaterPin"]
-        self.heaterPumpPin = args["heaterPumpPin"]
-        self.coolerPin = args["coolerPin"]
-        self.maxTemp = args["maxTemp"]
-        self.minTemp = args["minTemp"]
+        super().__init__(temp_controller_config, devices)
+        self.gpio = devices[temp_controller_config["gpioID"]]
+        self.heaterPin = temp_controller_config["heaterPin"]
+        self.heaterPumpPin = temp_controller_config["heaterPumpPin"]
+        self.coolerPin = temp_controller_config["coolerPin"]
+        self.maxTemp = temp_controller_config["maxTemp"]
+        self.minTemp = temp_controller_config["minTemp"]
 
         self.gpio.setup(self.heaterPin)
         self.gpio.setup(self.heaterPumpPin)
@@ -41,7 +41,7 @@ class BasicTempController(TempController):
         self.gpio.output(self.heaterPumpPin, RELAY_OFF)
         self.gpio.output(self.coolerPin, RELAY_OFF)
 
-        self.thermometer = devices[args["thermometerID"]]
+        self.thermometer = devices[temp_controller_config["thermometerID"]]
 
     def turnHeaterOn(self):
         """

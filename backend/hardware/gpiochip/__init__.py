@@ -3,7 +3,8 @@ This module contains the implementations for gpio control. See base.py for the a
 and the individual files for configuration information.
 """
 
-def createGPIOChip(gpioConfig, devices):
+
+def createGPIOChip(gpioConfig: dict, devices: dict):
     gpioType = gpioConfig['implementation']
     if gpioType == "gpiod":
         from hardware.gpiochip.gpiod import GPIODChip

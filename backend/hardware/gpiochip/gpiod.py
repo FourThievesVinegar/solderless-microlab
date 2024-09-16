@@ -1,13 +1,13 @@
-from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT, LINE_REQ_DIR_IN
+from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 import gpiod
 import logging
 
 
 class GPIODChip(GPIOChip):
-    def __init__(self, args):
+    def __init__(self, gpio_config: dict):
         """
         Constructor. Initializes the GPIO chip.
-        :param args:
+        :param gpio_config:
           dict
             chipName
               Name of the chip according to gpiod
@@ -20,9 +20,9 @@ class GPIODChip(GPIOChip):
         self.output_lines = []
         self.chip = None
         self.lineAliases = {}
-        self.chip = gpiod.Chip(args['chipName'])
-        if 'lineAliases' in args:
-            for alias, line in args['lineAliases'].items():
+        self.chip = gpiod.Chip(gpio_config['chipName'])
+        if 'lineAliases' in gpio_config:
+            for alias, line in gpio_config['lineAliases'].items():
                 self.lineAliases[alias] = line
         logging.debug(self.lineAliases)
 
@@ -44,7 +44,7 @@ class GPIODChip(GPIOChip):
         :return:
             The line number for that pin
         """
-        if type(pin) == str:
+        if isinstance(pin, str):
             if self.lineAliases[pin]:
                 return self.lineAliases[pin]
             else:

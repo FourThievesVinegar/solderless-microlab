@@ -1,4 +1,3 @@
-import time
 from hardware.temperaturecontroller.base import TempController
 import logging
 
@@ -8,15 +7,15 @@ def log(message):
 
 
 class SimulatedTempController(TempController):
-    def __init__(self, args):
-        super().__init__(args, devices=None)
-        self.maxTemp = args["maxTemp"]
-        self.minTemp = args["minTemp"]
+    def __init__(self, sim_temp_controller_config: dict):
+        super().__init__(sim_temp_controller_config, devices=None)
+        self.maxTemp = sim_temp_controller_config["maxTemp"]
+        self.minTemp = sim_temp_controller_config["minTemp"]
         self.heating = False
         self.cooling = False
         self.temperature = 24
-        if 'temp' in args:
-            self.temperature = args['temp'] 
+        if 'temp' in sim_temp_controller_config:
+            self.temperature = sim_temp_controller_config['temp']
 
     def turnHeaterOn(self):
         """
@@ -77,9 +76,9 @@ class SimulatedTempController(TempController):
         if self.temperature == -1:
             self.temperature = 24
         else:
-            if self.heating == True:
+            if self.heating is True:
                 self.temperature = self.temperature + 1
-            elif self.cooling == True:
+            elif self.cooling is True:
                 self.temperature = self.temperature - 1
             else:
                 if self.temperature > 24:
