@@ -12,8 +12,10 @@ from datetime import datetime
 import logging
 from simple_pid import PID
 
+from hardware import MicroLabHardware
 
-def heat(microlab, parameters):
+
+def heat(microlab: MicroLabHardware, parameters: dict):
     """
     Turn on the heater and reach a target temperature.
 
@@ -35,7 +37,7 @@ def heat(microlab, parameters):
         yield 1
 
 
-def cool(microlab, parameters):
+def cool(microlab: MicroLabHardware, parameters: dict):
     """
     Turn on the cooler and reach a target temperature.
 
@@ -55,7 +57,7 @@ def cool(microlab, parameters):
         yield 1
 
 
-def maintainCool(microlab, parameters):
+def maintainCool(microlab: MicroLabHardware, parameters: dict):
     """
     Maintain a certain temperature using the cooler for a specified amount of time.
 
@@ -72,7 +74,7 @@ def maintainCool(microlab, parameters):
     return maintain(microlab, parameters)
 
 
-def maintainHeat(microlab, parameters):
+def maintainHeat(microlab: MicroLabHardware, parameters: dict):
     """
     Maintain a certain temperature using the heater for a specified amount of time.
 
@@ -89,7 +91,7 @@ def maintainHeat(microlab, parameters):
     return maintain(microlab, parameters)
 
 
-def maintain(microlab, parameters):
+def maintain(microlab: MicroLabHardware, parameters: dict):
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
 
@@ -116,7 +118,7 @@ def maintain(microlab, parameters):
         return maintainPID(microlab, parameters)
 
 
-def maintainSimple(microlab, parameters):
+def maintainSimple(microlab: MicroLabHardware, parameters: dict):
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
 
@@ -190,7 +192,7 @@ def maintainSimple(microlab, parameters):
             )
 
 
-def maintainPID(microlab, parameters):
+def maintainPID(microlab: MicroLabHardware, parameters: dict):
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
     Uses a PID control loop.
@@ -286,7 +288,7 @@ def maintainPID(microlab, parameters):
         yield 1
 
 
-def pump(microlab, parameters):
+def pump(microlab: MicroLabHardware, parameters: dict):
     """
     Dispense a certain amount of liquid from a pump.
 
@@ -348,7 +350,7 @@ def pump(microlab, parameters):
     yield None
 
 
-def stir(microlab, parameters):
+def stir(microlab: MicroLabHardware, parameters: dict):
     """
     Turn on the stirrer for a predefined amount of time.
 
@@ -380,7 +382,7 @@ tasks = {
 }
 
 
-def runTask(microlab, task, parameters):
+def runTask(microlab: MicroLabHardware, task: str, parameters: dict):
     """
     Create an iterator for running a task.
 
