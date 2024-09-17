@@ -1,13 +1,12 @@
-from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT, LINE_REQ_DIR_IN
-import gpiod
+from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 import logging
 
 
 class GPIODChipset(GPIOChip):
-    def __init__(self, args, devices):
+    def __init__(self, gpio_config: dict, devices: dict):
         """
         Constructor. Initializes the GPIO chip.
-        :param args:
+        :param gpio_config:
           dict
             chipName
               Name of the chip according to gpiod
@@ -16,9 +15,9 @@ class GPIODChipset(GPIOChip):
               for adding human readable names to GPIO lines
         """
         self.chips = {
-            "defaultChip": devices[args["defaultChipID"]],
+            "defaultChip": devices[gpio_config["defaultChipID"]],
         }
-        for chipID in args['additionalChips']:
+        for chipID in gpio_config['additionalChips']:
             self.chips[chipID] = devices[chipID]
         
         self.lineAliases = {}

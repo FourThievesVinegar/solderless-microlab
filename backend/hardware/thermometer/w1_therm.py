@@ -1,5 +1,5 @@
 from hardware.thermometer.base import TempSensor
-from w1thermsensor import W1ThermSensor, Sensor, SensorNotReadyError
+from w1thermsensor import W1ThermSensor, SensorNotReadyError
 from datetime import datetime, timedelta
 
 

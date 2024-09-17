@@ -1,6 +1,6 @@
-from hardware.reagentdispenser.base import ReagentDispenser
-import time
 import logging
+
+from hardware.reagentdispenser.base import ReagentDispenser
 
 
 def log(message):
@@ -8,13 +8,13 @@ def log(message):
 
 
 class SimulatedReagentDispenser(ReagentDispenser):
-    def __init__(self, args):
+    def __init__(self, reagent_dispenser_config: dict):
         self.minSpeed = 0.1
         self.maxSpeed = 10
-        if 'minSpeed' in args:
-            self.minSpeed = args['minSpeed'] 
-        if 'maxSpeed' in args:
-            self.maxSpeed = args['maxSpeed'] 
+        if 'minSpeed' in reagent_dispenser_config:
+            self.minSpeed = reagent_dispenser_config['minSpeed']
+        if 'maxSpeed' in reagent_dispenser_config:
+            self.maxSpeed = reagent_dispenser_config['maxSpeed']
 
     def dispense(self, pumpId, volume, duration=None):
         """

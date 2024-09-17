@@ -6,7 +6,8 @@ and either the individual files or backend/config.py for configuration informati
 from hardware.stirring.gpiostirrer import GPIOStirrer
 from hardware.stirring.simulation import SimulatedStirrer
 
-def createStirrer(stirrerConfig, devices):
+
+def createStirrer(stirrerConfig: dict, devices: dict):
     stirrerType = stirrerConfig['implementation']
     if stirrerType == "gpio_stirrer":
         return GPIOStirrer(stirrerConfig, devices)

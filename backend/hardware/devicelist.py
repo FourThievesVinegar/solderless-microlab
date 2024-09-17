@@ -9,7 +9,7 @@ from os.path import exists
 import logging
 
 
-def loadHardwareConfiguration():
+def loadHardwareConfiguration() -> dict:
     if config.controllerHardware != "custom":
         path = '{0}/{1}.yaml'.format(config.controllerHardwareDirectory, config.controllerHardware)
         if not exists(path):
@@ -24,12 +24,10 @@ def loadHardwareConfiguration():
     return {"devices": controllerHardware["devices"] + userHardware["devices"]}
 
 
-def setupDevices(deviceDefinitions):
+def setupDevices(deviceDefinitions: list[dict]):
     validateConfiguration(deviceDefinitions)
     
-    devices = {
-
-    }
+    devices = {}
 
     for device in deviceDefinitions:
         logging.info('Loading device "{0}".'.format(device['id']))
@@ -52,11 +50,11 @@ def setupDevices(deviceDefinitions):
     return devices
 
 
-def validateConfiguration(deviceConfigs):
+def validateConfiguration(deviceConfigs: list[dict]):
     deviceDict = {}
     for device in deviceConfigs:
 
-        if deviceDict.get(device['id'], None) == None:
+        if deviceDict.get(device['id'], None) is None:
             deviceDict[device['id']] = device
         else:
             raise Exception("Duplicate device id {0}".format(device['id']))

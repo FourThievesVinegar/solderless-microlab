@@ -5,6 +5,7 @@ disk and/or passed in as environment variables. Import and use this file with
 Configuration is stored on disk at '/etc/microlab/microlab.ini'
 """
 import os
+import logging
 from os import environ, makedirs, path
 from configobj import ConfigObj, flatten_errors
 from configobj.validate import Validator 
@@ -62,10 +63,6 @@ class MicrolabConfig:
     @property
     def recipesDirectory(self):
         return '{0}/recipes/'.format(self.dataDirectory)
-
-    @property
-    def controllerHardwareDirectory(self):
-        return '{0}/controllerhardware/'.format(self.hardwareDirectory)
 
     @property
     def logDirectory(self):

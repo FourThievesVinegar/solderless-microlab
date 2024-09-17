@@ -6,7 +6,8 @@ from hardware.reagentdispenser.peristalticpump import PeristalticPump
 from hardware.reagentdispenser.syringepump import SyringePump
 from hardware.reagentdispenser.simulation import SimulatedReagentDispenser
 
-def createReagentDispenser(reagentdispenserConfig, devices):
+
+def createReagentDispenser(reagentdispenserConfig: dict, devices: dict):
     reagentdispenserType = reagentdispenserConfig['implementation']
     if reagentdispenserType == "syringepump":
         return SyringePump(reagentdispenserConfig)

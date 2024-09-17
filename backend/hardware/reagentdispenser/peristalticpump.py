@@ -1,40 +1,10 @@
-import time
-import config
 import serial
 from hardware.reagentdispenser.base import ReagentDispenser
 import logging
 
 
-def grblWrite(grblSer, command, retries=3):
-    """
-    Writes the given command to grbl.
-
-    :param grblSer:
-    Serial device to write the command to
-
-    :param command:
-    String of grbl command to execute
-
-    :return:
-    None
-    """
-    grblSer.reset_input_buffer()
-    grblSer.write(bytes(command, "utf-8"))
-    # Grbl will execute commands in serial as soon as the previous is completed.
-    # No need to wait until previous commands are complete. Ok only signifies that it
-    # parsed the command
-    response = grblSer.read_until()
-    if "error" in str(response):
-        if retries > 0:
-            grblWrite(grblSer, command, retries - 1)
-        else:
-            raise Exception(
-                "grbl error: {0} for command: {1}".format(response, command)
-            )
-
-
 class PeristalticPump(ReagentDispenser):
-    def __init__(self, args):
+    def __init__(self, reagent_dispenser_config: dict):
         """
         Constructor. Initializes the pumps.
         :param args:
@@ -51,9 +21,9 @@ class PeristalticPump(ReagentDispenser):
                 Z
                     mmPerml   Arbitrary scaling factor
         """
-        self.peristalticPumpsConfig = args["peristalticPumpsConfig"]
-        self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
-        grblWrite(self.grblSer, "G91")
+        self.peristalticPumpsConfig = reagent_dispenser_config["peristalticPumpsConfig"]
+        self.grblSer = serial.Serial(reagent_dispenser_config["arduinoPort"], 115200, timeout=1)
+        self.grblWrite(self.grblSer, "G91")
 
     def dispense(self, pumpId, volume, duration=None):
         """
@@ -75,7 +45,7 @@ class PeristalticPump(ReagentDispenser):
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
         command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
         logging.debug("Dispensing with command '{}'".format(command))
-        grblWrite(self.grblSer, command)
+        self.grblWrite(self.grblSer, command)
 
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
         logging.info(

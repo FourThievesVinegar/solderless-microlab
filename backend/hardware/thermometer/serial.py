@@ -7,10 +7,10 @@ from datetime import datetime, timedelta
 
 
 class SerialTempSensor(TempSensor):
-    def __init__(self, args):
+    def __init__(self, thermometer_config: dict):
         """
         Constructor. Initializes the sensor.
-        :param args:
+        :param thermometer_config:
           dict
             serialDevice
               A string with the device read from
@@ -19,11 +19,11 @@ class SerialTempSensor(TempSensor):
         self.nextTempReadingTime = datetime.now()
 
         try:
-            self.tempSer = serial.Serial(args["serialDevice"], timeout=0.5)
+            self.tempSer = serial.Serial(thermometer_config["serialDevice"], timeout=0.5)
         except serial.SerialException as e:
             raise HardwareLoadError(
                 "Thermometer could not be detected at {}, make sure it's plugged in, try another USB port if it is, or change the device name in your lab hardware config file to the correct device name.".format(
-                    args["serialDevice"]
+                    thermometer_config["serialDevice"]
                 )
             ) from e
 

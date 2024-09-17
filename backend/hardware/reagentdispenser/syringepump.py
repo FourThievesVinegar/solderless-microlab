@@ -1,44 +1,14 @@
-import time
-import config
 import serial
 from hardware.reagentdispenser.base import ReagentDispenser
 import logging
 import math
 
 
-def grblWrite(grblSer, command, retries=3):
-    """
-    Writes the given command to grbl.
-
-    :param grblSer:
-    Serial device to write the command to
-
-    :param command:
-    String of grbl command to execute
-
-    :return:
-    None
-    """
-    grblSer.reset_input_buffer()
-    grblSer.write(bytes(command, "utf-8"))
-    # Grbl will execute commands in serial as soon as the previous is completed.
-    # No need to wait until previous commands are complete. Ok only signifies that it
-    # parsed the command
-    response = grblSer.read_until()
-    if "error" in str(response):
-        if retries > 0:
-            grblWrite(grblSer, command, retries - 1)
-        else:
-            raise Exception(
-                "grbl error: {0} for command: {1}".format(response, command)
-            )
-
-
 class SyringePump(ReagentDispenser):
-    def __init__(self, args):
+    def __init__(self, reagent_dispenser_config: dict):
         """
         Constructor. Initializes the pumps.
-        :param args:
+        :param reagent_dispenser_config:
           dict
             arduinoPort
                 string - Serial device for communication with the Arduino
@@ -76,8 +46,8 @@ class SyringePump(ReagentDispenser):
                     mmPerml
                     maxmmPerMin
         """
-        self.syringePumpsConfig = args["syringePumpsConfig"]
-        self.grblSer = serial.Serial(args["arduinoPort"], 115200, timeout=1)
+        self.syringePumpsConfig = reagent_dispenser_config["syringePumpsConfig"]
+        self.grblSer = serial.Serial(reagent_dispenser_config["arduinoPort"], 115200, timeout=1)
         self.axisMinmmPerMin = {}
         for axis, syringeConfig in self.syringePumpsConfig.items():
             stepsPerMM = syringeConfig["stepsPerRev"] / syringeConfig["mmPerRev"]
@@ -88,11 +58,11 @@ class SyringePump(ReagentDispenser):
             }
             self.axisMinmmPerMin[axis] = math.ceil((30 / stepsPerMM) * 120)
             # configure steps/mm
-            grblWrite(
+            self.grblWrite(
                 self.grblSer, "$10{0}={1}\n".format(axisToCNCID[axis], stepsPerMM)
             )
             # configure max mm/min
-            grblWrite(
+            self.grblWrite(
                 self.grblSer,
                 "$11{0}={1}\n".format(axisToCNCID[axis], syringeConfig["maxmmPerMin"]),
             )
@@ -117,7 +87,7 @@ class SyringePump(ReagentDispenser):
         totalmm = volume * mmPerml
         command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
         logging.debug("Dispensing with command '{}'".format(command))
-        grblWrite(self.grblSer, command)
+        self.grblWrite(self.grblSer, command)
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
 
         logging.info(
