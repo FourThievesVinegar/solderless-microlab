@@ -249,6 +249,7 @@ Next, we need to attach the stirring motor mount to the top of the manifold, sec
   - Take care to center it and be aware that the shaft likely has a flat spot that makes it non-symmetrical
 - **Insert motor into mount.** Insert the motor into the hole in the top of the stirring motor mount.
   - You may need to wrap the motor in dense flexible foam and wrap it in electrical tape for it to fit snugly.
+  - This is one place where soldering may come in handy. The motor in the parts list does not have built-in leads. It is possible to add leads using small solid-core wires. You can strip extra length, feed the wires through the contacts on the motor, then use pliers to fold and twist the wires to themselves to maintain contact. In this case, wrapping with electrical tape, hot glue, or heat shrink is advised. You can use a 2x lever connector to attach the motor leads to the barrel plug connector.
 - **Insert stir rod into manifold.** Strip a few mm of PTFE coating from the end of the stirrer's shaft. Then, from the bottom of Reactor Core manifold insert the mixing paddle's shaft through the center.
 - **Connect stir rod to coupler.** Insert the mixing paddle's shaft into the wide end of the coupler.
 - **Be ready to resize.** When fully assembled, the mixing paddle should be suspended in the reaction chamber and should not touch the bottom or sides of the chamber. You will likely need to cut the stirrer's shaft short for this to fit properly. Take your time when cutting the shaft, as cutting it too short will make it impossible to use.
