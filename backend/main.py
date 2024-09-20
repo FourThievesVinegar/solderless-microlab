@@ -7,7 +7,7 @@ Look in api.routes for the actual api code
 
 from multiprocessing import Process, Queue
 from microlab import startMicrolabProcess
-from api import runFlask
+from api.core import runFlask
 import config
 import multiprocessing_logging
 
