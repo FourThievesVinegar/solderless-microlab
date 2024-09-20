@@ -78,7 +78,7 @@
       "failed-no-selected-config": "Failed, no configuration is selected",
       "setting-new-config-waiting-message": "Setting new configuration...",
       "config-changed-successfully": "Controller configuration changed successfully.",
-      "failed-config-change-request": "Configuring controller failed: \"{{data.message}}\"",
+      "failed-config-change-request": "Configuring controller failed: \"{{message}}\"",
       "failed-generic": "Configuring controller failed.",
       "save": "Save",
       "download": "Download"
@@ -100,7 +100,7 @@
       "failed-no-selected-config": "Failed, no configuration is selected",
       "setting-new-config-waiting-message": "Setting new configuration...",
       "config-changed-successfully": "Hardware configuration changed successfully.",
-      "failed-config-change-request": "Configuring hardware failed: \"{{data.message}}\"",
+      "failed-config-change-request": "Configuring hardware failed: \"{{message}}\"",
       "failed-generic": "Configuring hardware failed.",
       "save": "Save",
       "download": "Download"

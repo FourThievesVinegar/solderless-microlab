@@ -78,7 +78,7 @@
       "failed-no-selected-config": "ESFailed, no configuration is selected",
       "setting-new-config-waiting-message": "ESSetting new configuration...",
       "config-changed-successfully": "ESController configuration changed successfully.",
-      "failed-config-change-request": "ESConfiguring controller failed: \"{{data.message}}\"",
+      "failed-config-change-request": "ESConfiguring controller failed: \"{{message}}\"",
       "failed-generic": "ESConfiguring controller failed.",
       "save": "ESSave",
       "download": "ESDownload"
@@ -100,7 +100,7 @@
       "failed-no-selected-config": "ESFailed, no configuration is selected",
       "setting-new-config-waiting-message": "ESSetting new configuration...",
       "config-changed-successfully": "ESHardware configuration changed successfully.",
-      "failed-config-change-request": "ESConfiguring hardware failed: \"{{data.message}}\"",
+      "failed-config-change-request": "ESConfiguring hardware failed: \"{{message}}\"",
       "failed-generic": "ESConfiguring hardware failed.",
       "save": "ESSave",
       "download": "ESDownload"
