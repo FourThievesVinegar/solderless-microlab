@@ -10,16 +10,19 @@ import logging
 
 
 def loadHardwareConfiguration() -> dict:
+    controllerHardware = {"devices": []}
+
     if config.controllerHardware != "custom":
         path = '{0}/{1}.yaml'.format(config.controllerHardwareDirectory, config.controllerHardware)
         if not exists(path):
             raise Exception("No board configuration found for '{0}'".format(config.controllerHardware))
-        controllerHardware = yaml.safe_load(open(path, 'r'))
-    else:
-        controllerHardware = {"devices": []}
+        with open(path) as inf:
+            controllerHardware = yaml.safe_load(inf)
 
-    userHardware = yaml.safe_load(
-        open('{0}/{1}.yaml'.format(config.labHardwareDirectory, config.labHardware), 'r'))
+    userHardware = {"devices": []}
+    lab_hardware_path = '{0}/{1}.yaml'.format(config.labHardwareDirectory, config.labHardware)
+    with open(lab_hardware_path) as inf:
+        userHardware = yaml.safe_load(inf)
 
     return {"devices": controllerHardware["devices"] + userHardware["devices"]}
 
