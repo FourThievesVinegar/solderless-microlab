@@ -43,7 +43,7 @@ export const LabHardwareConfig = (props: { refetch: any }) => {
             setMessage('')
           }, 1000 * 10)
         } else {
-          setMessage(t('failed-config-change-request', { msg: data.message }))
+          setMessage(t('failed-config-change-request', { message: data.message }))
         }
         reloadData()
       })

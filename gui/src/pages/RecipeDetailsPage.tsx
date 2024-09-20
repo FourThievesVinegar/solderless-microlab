@@ -116,7 +116,7 @@ function Steps({ steps }: { steps: RecipeStep[] }) {
 
   return (
     <>
-      <h3>{t('')}</h3>
+      <h3>{t('recipe-steps')}</h3>
       <ol>
         {steps.map((step, index) => (
           <li key={`${step.message}-${index}`}>
