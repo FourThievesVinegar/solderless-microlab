@@ -12,7 +12,7 @@ from os import listdir
 from os.path import isfile, join
 from recipes import state
 from recipes.base import Recipe
-from hardware import microlabHardware, MicroLabHardwareState
+from hardware.core import microlabHardware, MicroLabHardwareState
 from config import microlabConfig as config 
 import logging
 

@@ -83,7 +83,7 @@ plan object
 """
 
 from recipes import tasks
-from hardware import microlabHardware
+from hardware.core import microlabHardware
 from datetime import datetime, timedelta, timezone
 import traceback
 from enum import Enum
