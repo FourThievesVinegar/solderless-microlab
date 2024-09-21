@@ -1,6 +1,6 @@
 import hardware.stirring.core as stirrer
 import hardware.reagentdispenser.core as rd
-import hardware.temperaturecontroller as tc
+import hardware.temperaturecontroller.core as tc
 import hardware.thermometer as thermometer
 import hardware.gpiochip.core as gpiochip
 from config import microlabConfig as config
