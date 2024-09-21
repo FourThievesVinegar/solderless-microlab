@@ -1,8 +1,17 @@
 """
 Contains function for starting up the microlab process
 """
+import logging
+import sys
+import time
 import threading
+import signal
 
+import hardware.devicelist
+import recipes.core
+import recipes.state
+
+from config import microlabConfig as config
 from hardware.core import MicroLabHardware
 
 HALT = threading.Event()
@@ -64,16 +73,6 @@ def startMicrolabProcess(in_queue, out_queue):
                 (False, message) on failure.
             reference "selectOption" in /recipes/__init__.py for more info
     """
-    import logging
-    import sys
-    import time
-
-    import hardware.devicelist
-    import recipes.core
-    import recipes.state
-    import signal
-    from config import microlabConfig as config
-
     microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
 
     def runMicrolab():
