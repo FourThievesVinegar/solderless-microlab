@@ -62,11 +62,12 @@ def startMicrolabProcess(in_queue, out_queue):
     import sys
     import time
     import threading
+    import hardware.devicelist
     import hardware.core
     logging.info("")
     logging.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
     logging.info("Loading microlab hardware configuration.")
-    hardwareConfig = hardware.core.devicelist.loadHardwareConfiguration()
+    hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
     deviceDefinitions = hardwareConfig['devices']
     hardware.core.microlabHardware = hardware.core.MicroLabHardware(deviceDefinitions)
     microlabHardware = hardware.core.microlabHardware
