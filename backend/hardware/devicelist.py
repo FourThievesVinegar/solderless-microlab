@@ -1,4 +1,4 @@
-import hardware.stirring as stirrer
+import hardware.stirring.core as stirrer
 import hardware.reagentdispenser.core as rd
 import hardware.temperaturecontroller as tc
 import hardware.thermometer as thermometer
