@@ -2,7 +2,7 @@ from hardware.thermometer.base import TempSensor
 import serial
 import time
 import logging
-from hardware.util import HardwareLoadError
+from hardware.util.exceptions import HardwareLoadError
 from datetime import datetime, timedelta
 
 
