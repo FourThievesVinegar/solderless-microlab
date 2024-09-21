@@ -1,4 +1,3 @@
-import recipes
 from recipes import tasks
 import pytest
 import yaml

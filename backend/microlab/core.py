@@ -70,7 +70,8 @@ def startMicrolabProcess(in_queue, out_queue):
     deviceDefinitions = hardwareConfig['devices']
     hardware.core.microlabHardware = hardware.core.MicroLabHardware(deviceDefinitions)
     microlabHardware = hardware.core.microlabHardware
-    import recipes
+    import recipes.core
+    import recipes.state
     import signal
     from config import microlabConfig as config
 
@@ -111,10 +112,10 @@ def startMicrolabProcess(in_queue, out_queue):
         return microlabHardware.loadHardware(deviceDefinitions)
 
     commandDict = {
-      "start": recipes.start,
-      "status": recipes.status,
-      "stop": recipes.stop,
-      "selectOption": recipes.selectOption,
+      "start": recipes.core.start,
+      "status": recipes.core.status,
+      "stop": recipes.core.stop,
+      "selectOption": recipes.core.selectOption,
       "reloadConfig": lambda x: config.reloadConfig(),
       "reloadHardware": lambda x: reloadHardware(),
     }

@@ -7,7 +7,7 @@ from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from os.path import join
 import os
-import recipes
+import recipes.core
 import json
 from config import microlabConfig as config
 import glob 
@@ -24,13 +24,13 @@ def listRecipes():
     list
         a list containing the names of the recipes. ex: ['recipe1','recipe2']
     """
-    recipeNames = list(map(lambda recipe: recipe['title'], recipes.getRecipeList()))
+    recipeNames = list(map(lambda recipe: recipe['title'], recipes.core.getRecipeList()))
     return jsonify(recipeNames)
 
 
 @app.route('/recipe/<name>')
 def sendRecipe(name):
-    recipe = recipes.getRecipeByName(name)
+    recipe = recipes.core.getRecipeByName(name)
     return jsonify(recipe)
 
 
@@ -105,7 +105,7 @@ def start(name):
         message
             Only present if response is "error" and there is a message to present to the user.
     """
-    recipe = recipes.getRecipeByName(name)
+    recipe = recipes.core.getRecipeByName(name)
     if recipe == None:
         return jsonify({'response': 'error', 
                         'message': 'Recipe with this name could not be found'}
