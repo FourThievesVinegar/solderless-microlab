@@ -2,6 +2,7 @@
 Contains function for starting up the microlab process
 """
 
+from hardware.core import MicroLabHardware
 
 def startMicrolabProcess(in_queue, out_queue):
     """
@@ -63,18 +64,12 @@ def startMicrolabProcess(in_queue, out_queue):
     import time
     import threading
     import hardware.devicelist
-    import hardware.core
-    logging.info("")
-    logging.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
-    logging.info("Loading microlab hardware configuration.")
-    hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
-    deviceDefinitions = hardwareConfig['devices']
-    hardware.core.microlabHardware = hardware.core.MicroLabHardware(deviceDefinitions)
-    microlabHardware = hardware.core.microlabHardware
     import recipes.core
     import recipes.state
     import signal
     from config import microlabConfig as config
+
+    microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
 
     halt = threading.Event()
     mutex = threading.Lock()
