@@ -1,5 +1,5 @@
 import hardware.stirring as stirrer
-import hardware.reagentdispenser as rd
+import hardware.reagentdispenser.core as rd
 import hardware.temperaturecontroller as tc
 import hardware.thermometer as thermometer
 import hardware.gpiochip.core as gpiochip
