@@ -110,7 +110,7 @@ LAST_STEP = 'done'
 
 class Recipe:
     
-    def __init__(self, plan):
+    def __init__(self, plan, microlabHardware: MicroLabHardware):
         """
         Constructor. Saves the plan.
         :param plan:
@@ -128,7 +128,7 @@ class Recipe:
         if 'title' in plan:
             self.currentRecipe = plan['title']
 
-        self._microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
+        self._microlabHardware = microlabHardware
 
     def start(self):
         """

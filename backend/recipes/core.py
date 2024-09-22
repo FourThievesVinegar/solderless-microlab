@@ -82,7 +82,7 @@ def start(name):
         return False, 'Recipe unknown.'
 
     # Start running the recipe
-    state.currentRecipe = Recipe(recipe)
+    state.currentRecipe = Recipe(recipe, microlabHardware)
 
     state.currentRecipe.start()
 
