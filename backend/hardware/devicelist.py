@@ -1,8 +1,8 @@
-import hardware.stirring as stirrer
-import hardware.reagentdispenser as rd
-import hardware.temperaturecontroller as tc
-import hardware.thermometer as thermometer
-import hardware.gpiochip as gpiochip
+import hardware.stirring.core as stirrer
+import hardware.reagentdispenser.core as rd
+import hardware.temperaturecontroller.core as tc
+import hardware.thermometer.core as thermometer
+import hardware.gpiochip.core as gpiochip
 from config import microlabConfig as config
 import yaml
 from os.path import exists

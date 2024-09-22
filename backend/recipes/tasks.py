@@ -12,7 +12,7 @@ from datetime import datetime
 import logging
 from simple_pid import PID
 
-from hardware import MicroLabHardware
+from hardware.core import MicroLabHardware
 
 
 def heat(microlab: MicroLabHardware, parameters: dict):

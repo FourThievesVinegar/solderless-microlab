@@ -1,8 +1,7 @@
-import recipes
 from recipes import tasks
 import pytest
 import yaml
-import hardware
+import hardware.core
 from unittest.mock import patch, MagicMock
 
 
@@ -145,7 +144,7 @@ def devices(request):
 
 @pytest.fixture
 def microlab(request, devices):
-    return hardware.MicroLabHardware(devices)
+    return hardware.core.MicroLabHardware(devices)
 
 
 # HEATING

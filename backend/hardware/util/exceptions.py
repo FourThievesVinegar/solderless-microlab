@@ -1,0 +1,3 @@
+
+class HardwareLoadError(Exception):
+    pass
