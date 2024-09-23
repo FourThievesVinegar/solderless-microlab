@@ -83,7 +83,7 @@ plan object
 """
 
 from recipes import tasks
-from hardware.core import microlabHardware
+from hardware.core import MicroLabHardware
 from datetime import datetime, timedelta, timezone
 import traceback
 from enum import Enum
@@ -110,7 +110,7 @@ LAST_STEP = 'done'
 
 class Recipe:
     
-    def __init__(self, plan):
+    def __init__(self, plan, microlabHardware: MicroLabHardware):
         """
         Constructor. Saves the plan.
         :param plan:
@@ -127,6 +127,8 @@ class Recipe:
         self.plan = plan
         if 'title' in plan:
             self.currentRecipe = plan['title']
+
+        self._microlabHardware = microlabHardware
 
     def start(self):
         """
@@ -145,8 +147,8 @@ class Recipe:
             self.message = msg
 
     def isRecipeSupported(self, recipe):
-        max = microlabHardware.getMaxTemperature()
-        minTemp = microlabHardware.getMinTemperature()
+        max = self._microlabHardware.getMaxTemperature()
+        minTemp = self._microlabHardware.getMinTemperature()
         for step in recipe[RECIPE_STEPS]:
             if STEP_TASKS in step:
                 for task in step[STEP_TASKS]:
@@ -173,7 +175,7 @@ class Recipe:
         self.options = []
         self.stepCompletionTime = None
         self.stopTasks()
-        microlabHardware.turnOffEverything()
+        self._microlabHardware.turnOffEverything()
 
     def getStatus(self):
         """
@@ -300,7 +302,7 @@ class Recipe:
         if tasksToRun: # Run all tasks for the step
             for task in tasksToRun:
                 if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
-                    self.currentTasks.append(tasks.runTask(microlabHardware, task[TASK_TYPE], task[TASK_PARAMETERS]))
+                    self.currentTasks.append(tasks.runTask(self._microlabHardware, task[TASK_TYPE], task[TASK_PARAMETERS]))
             
             tasksWithDurations = filter(
                 lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), tasksToRun)

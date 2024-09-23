@@ -13,6 +13,8 @@ from hardware import devicelist
 from enum import Enum
 import logging
 
+from hardware.devicelist import loadHardwareConfiguration
+
 
 class MicroLabHardwareState(Enum):
     STARTING = "STARTING"
@@ -21,6 +23,9 @@ class MicroLabHardwareState(Enum):
 
 
 class MicroLabHardware:
+
+    _microlabHardware = None
+
     def __init__(self, deviceDefinition: list[dict]):
         """
         Constructor. Initializes the hardware.
@@ -32,6 +37,19 @@ class MicroLabHardware:
     
         self.startTime = time.monotonic()
         self.loadHardware(deviceDefinition)
+
+    @classmethod
+    def get_microlab_hardware_controller(cls):
+        if not cls._microlabHardware:
+            logging.info("")
+            logging.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
+            logging.info("Loading microlab hardware configuration.")
+
+            hardwareConfig = loadHardwareConfiguration()
+            deviceDefinitions = hardwareConfig['devices']
+            cls._microlabHardware = MicroLabHardware(deviceDefinitions)
+
+        return cls._microlabHardware
 
     def loadHardware(self, deviceDefinition: list[dict]):
         """
@@ -240,6 +258,3 @@ class MicroLabHardware:
                     Maximum speed the pump can dispense in ml/s
         """
         return self.reagentDispenser.getPumpSpeedLimits(pumpId)
-
-
-microlabHardware = None

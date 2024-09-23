@@ -1,6 +1,21 @@
 """
 Contains function for starting up the microlab process
 """
+import logging
+import sys
+import time
+import threading
+import signal
+
+import hardware.devicelist
+import recipes.core
+import recipes.state
+
+from config import microlabConfig as config
+from hardware.core import MicroLabHardware
+
+HALT = threading.Event()
+MUTEX = threading.Lock()
 
 
 def startMicrolabProcess(in_queue, out_queue):
@@ -58,37 +73,18 @@ def startMicrolabProcess(in_queue, out_queue):
                 (False, message) on failure.
             reference "selectOption" in /recipes/__init__.py for more info
     """
-    import logging
-    import sys
-    import time
-    import threading
-    import hardware.devicelist
-    import hardware.core
-    logging.info("")
-    logging.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
-    logging.info("Loading microlab hardware configuration.")
-    hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
-    deviceDefinitions = hardwareConfig['devices']
-    hardware.core.microlabHardware = hardware.core.MicroLabHardware(deviceDefinitions)
-    microlabHardware = hardware.core.microlabHardware
-    import recipes.core
-    import recipes.state
-    import signal
-    from config import microlabConfig as config
-
-    halt = threading.Event()
-    mutex = threading.Lock()
+    microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
 
     def runMicrolab():
         while True:
             time.sleep(0.01)
-            mutex.acquire()
+            MUTEX.acquire()
             if recipes.state.currentRecipe:
                 recipes.state.currentRecipe.tickTasks()
                 recipes.state.currentRecipe.checkStepCompletion()
-            mutex.release()
+            MUTEX.release()
             
-            if halt.is_set():
+            if HALT.is_set():
                 microlabHardware.turnOffEverything()
                 break
 
@@ -98,7 +94,7 @@ def startMicrolabProcess(in_queue, out_queue):
     def handleSignal(_a, _b):
         logging.info("")
         logging.info("Shutting down microlab.")
-        halt.set()
+        HALT.set()
         microlab.join()
         logging.info("Shutdown completed.")
         sys.exit()
@@ -131,8 +127,8 @@ def startMicrolabProcess(in_queue, out_queue):
             if data["command"] == "status":
                 result = commandDict[data["command"]](data["args"])
             else:
-                mutex.acquire()
+                MUTEX.acquire()
                 result = commandDict[data["command"]](data["args"])
-                mutex.release()
+                MUTEX.release()
             if result is not None:
                 out_queue.put(result) # Send data back

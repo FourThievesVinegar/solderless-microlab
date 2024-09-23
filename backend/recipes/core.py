@@ -12,7 +12,7 @@ from os import listdir
 from os.path import isfile, join
 from recipes import state
 from recipes.base import Recipe
-from hardware.core import microlabHardware, MicroLabHardwareState
+from hardware.core import MicroLabHardware, MicroLabHardwareState
 from config import microlabConfig as config 
 import logging
 
@@ -66,6 +66,7 @@ def start(name):
     (False, message) on failure.
     """
     # Validate that the microlab hardware controller has initialized
+    microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
     if microlabHardware.state is not MicroLabHardwareState.INITIALIZED:
         return False, 'MicroLab failed to start. Check Hardware configuration and setup'.format(microlabHardware.error)
 
@@ -81,7 +82,7 @@ def start(name):
         return False, 'Recipe unknown.'
 
     # Start running the recipe
-    state.currentRecipe = Recipe(recipe)
+    state.currentRecipe = Recipe(recipe, microlabHardware)
 
     state.currentRecipe.start()
 
@@ -127,6 +128,7 @@ def status(_):
         'options': [],
         'stepCompletionTime': None
     }
+    microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
     if microlabHardware.state is MicroLabHardwareState.FAILED_TO_START:
         message['status'] = 'error'
         message['message'] = 'MicroLab failed to start. Check hardware and configuration'
