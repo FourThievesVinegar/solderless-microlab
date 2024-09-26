@@ -1,4 +1,4 @@
-from hardware.devicelist import validateConfiguration
+from hardware.devicelist import validateConfiguration, sort_device_configs
 import pytest
 import yaml
 import hardware.core
@@ -87,4 +87,26 @@ def test_detects_missing_dependencies():
     ]
     with pytest.raises(Exception, match='Missing hardware configuration for dependency'):
         res = validateConfiguration(devices)
+
+
+def test_sort_device_configs_sorts_by_dependencies():
+    devices = [
+        {
+            "id": "1",
+            "dependencies": ["2"]
+        },
+        {
+            "id": "2",
+        },
+    ]
+
+    assert sort_device_configs(devices) == [
+        {
+            "id": "2",
+        },
+        {
+            "id": "1",
+            "dependencies": ["2"]
+        },
+    ]
 
