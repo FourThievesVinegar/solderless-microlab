@@ -7,6 +7,22 @@ from config import microlabConfig as config
 import yaml
 from os.path import exists
 import logging
+from functools import cmp_to_key
+
+
+def sort_device_configs(deviceConfigs: list[dict]):
+    def compare_devices(a: dict, b: dict):
+        if b.get('dependencies') and a['id'] in b['dependencies']:
+            return -1
+        if a.get('dependencies') and b['id'] in a['dependencies']:
+            return 1
+        if a['id'] < b['id']:
+            return -1
+        if a['id'] > b['id']:
+            return 1
+        return 0
+
+    return sorted(deviceConfigs, key=cmp_to_key(compare_devices))
 
 
 def loadHardwareConfiguration() -> dict:
@@ -24,7 +40,8 @@ def loadHardwareConfiguration() -> dict:
     with open(lab_hardware_path) as inf:
         userHardware = yaml.safe_load(inf)
 
-    return {"devices": controllerHardware["devices"] + userHardware["devices"]}
+    return {"devices": sort_device_configs(controllerHardware["devices"]) 
+                        + sort_device_configs(userHardware["devices"])}
 
 
 def setupDevices(deviceDefinitions: list[dict]):
@@ -55,11 +72,18 @@ def setupDevices(deviceDefinitions: list[dict]):
 
 def validateConfiguration(deviceConfigs: list[dict]):
     deviceDict = {}
-    for device in deviceConfigs:
-
+    sorted_device_configs = sort_device_configs(deviceConfigs)
+    for device in sorted_device_configs:
         if deviceDict.get(device['id'], None) is None:
             deviceDict[device['id']] = device
         else:
             raise Exception("Duplicate device id {0}".format(device['id']))
+        if device.get('dependencies'):
+            for dependency in device["dependencies"]:
+                # Given that the device list has been sorted by dependencies,
+                # if one of our dependencies is not in the dict of checked
+                # devices, there must be a circular dependency.
+                if deviceDict.get(dependency, None) is None:
+                    raise Exception("Circular dependency detected between devices '{0}' and '{1}'. Device configuration must be acyclic.".format(device['id'], dependency))
     
     return False
