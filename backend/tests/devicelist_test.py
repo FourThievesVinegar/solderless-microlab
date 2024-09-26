@@ -77,3 +77,14 @@ def test_accepts_simple_valid_config():
     res = validateConfiguration(devices)
     assert res is False
 
+
+def test_detects_missing_dependencies():
+    devices = [
+        {
+            "id": "1",
+            "dependencies": ["2"]
+        },
+    ]
+    with pytest.raises(Exception, match='Missing hardware configuration for dependency'):
+        res = validateConfiguration(devices)
+
