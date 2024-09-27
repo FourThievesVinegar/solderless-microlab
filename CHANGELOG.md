@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Extra validation for hardware config files. Hardware components are now automatically sorted by dependencies to prevent them from loading out of order. (#269)
+
 ## [0.6.0]
 
 ### Added
