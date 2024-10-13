@@ -3,6 +3,7 @@ Module defining API.
 """
 
 from api.app import app
+from api.server import APIServer
 from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from os.path import join
@@ -388,3 +389,16 @@ def fetchLogs():
     mostRecent = logFiles[-1]
     data = data + Path(mostRecent).read_text()
     return (jsonify({'logs': data}), 200)
+
+
+@app.route('/shutdown', methods=['PUT'])
+def shutdown_server():
+    """Stops server """
+    # At first read this seems excessive to kill the server however after
+    # digging deeper into it this may be the cleanest way to deal with this.
+    print('Hit shutdown endpoint')
+    try:
+        return (jsonify({'response': 'ok'}), 200)
+    finally:
+        print('Calling server shutdown now')
+        APIServer.shutdown()

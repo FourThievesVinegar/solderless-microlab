@@ -1,3 +1,4 @@
+from queue import Full, Empty
 
 
 class MicrolabInterface:
@@ -28,9 +29,15 @@ class MicrolabInterface:
         (False, message) on failure.
         """
         # Validate that the microlab hardware controller has initialized
-        self.toMicrolab.put({"command": "start", "args": name})
+        print('MicrolabInterface start pre-put:')
+        self.toMicrolab.put({"command": "start", "args": name}, timeout=1)
+        print('MicrolabInterface start post-put:')
 
-        return self.fromMicrolab.get()
+        print('MicrolabInterface start pre-get:')
+        get_val = self.fromMicrolab.get(timeout=1)
+        print('MicrolabInterface start post-get:')
+
+        return get_val
 
     def status(self):
         """
@@ -63,8 +70,33 @@ class MicrolabInterface:
                 An ISO date string for when the current step is expected to be completed,
                 or null if unknown.
         """
-        self.toMicrolab.put({"command": "status", "args": None})
-        res = self.fromMicrolab.get()
+        # self.toMicrolab.put({"command": "status", "args": None})
+        # res = self.fromMicrolab.get()
+        print('MicrolabInterface status pre-put:')
+        try:
+            self.toMicrolab.put({"command": "status", "args": None}, timeout=1)
+        except Full:
+            # Unable to put
+            pass
+
+        except ValueError:
+            # Queue has been closed
+            pass
+        print('MicrolabInterface status post-put:')
+
+        res = 'Unable to get status data'
+        print('MicrolabInterface status pre-get:')
+        try:
+            res = self.fromMicrolab.get(timeout=1)
+        except Empty:
+            # Unable to get
+            pass
+
+        except ValueError:
+            # Queue has been closed
+            pass
+        print('MicrolabInterface status post-get:')
+
         return res
 
     def stop(self):
@@ -74,7 +106,9 @@ class MicrolabInterface:
         :return:
         None ... at least for now.
         """
-        self.toMicrolab.put({"command": "stop", "args": None})
+        print('MicrolabInterface stop pre-put:')
+        self.toMicrolab.put({"command": "stop", "args": None}, timeout=1)
+        print('MicrolabInterface stop post-put:')
 
     def selectOption(self, option):
         """
@@ -88,8 +122,13 @@ class MicrolabInterface:
         (True,'') on success
         (False,message) on failure
         """
-        self.toMicrolab.put({"command": "selectOption", "args": option})
-        res = self.fromMicrolab.get()
+        print('MicrolabInterface selectOption pre-put:')
+        self.toMicrolab.put({"command": "selectOption", "args": option}, timeout=1)
+        print('MicrolabInterface selectOption post-put:')
+
+        print('MicrolabInterface selectOption pre-get:')
+        res = self.fromMicrolab.get(timeout=1)
+        print('MicrolabInterface selectOption post-get:')
         return res
 
     def reloadConfig(self):
@@ -99,7 +138,9 @@ class MicrolabInterface:
         :return:
         None
         """
-        self.toMicrolab.put({"command": "reloadConfig", "args": None})
+        print('MicrolabInterface reloadConfig pre-put:')
+        self.toMicrolab.put({"command": "reloadConfig", "args": None}, timeout=1)
+        print('MicrolabInterface reloadConfig post-put:')
 
     def reloadHardware(self):
         """
@@ -109,6 +150,11 @@ class MicrolabInterface:
         (True, '') on success
         (False, message) on failure
         """
-        self.toMicrolab.put({"command": "reloadHardware", "args": None})
-        res = self.fromMicrolab.get()
+        print('MicrolabInterface reloadHardware pre-put:')
+        self.toMicrolab.put({"command": "reloadHardware", "args": None}, timeout=1)
+        print('MicrolabInterface reloadHardware post-put:')
+
+        print('MicrolabInterface reloadHardware pre-get:')
+        res = self.fromMicrolab.get(timeout=1)
+        print('MicrolabInterface reloadHardware post-get:')
         return res

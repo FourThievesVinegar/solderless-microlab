@@ -51,7 +51,7 @@ class MicroLabHardware:
 
         return cls._microlabHardware
 
-    def loadHardware(self, deviceDefinition: list[dict]):
+    def loadHardware(self, deviceDefinition: list[dict]) -> tuple[bool, str]:
         """
         Loads and initializes the hardware devices
 
