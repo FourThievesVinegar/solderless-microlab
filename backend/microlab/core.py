@@ -25,7 +25,7 @@ from hardware.core import MicroLabHardware
 class MicrolabHardwareManager(Process):
 
     def __init__(
-        self, microlab_hardware: MicroLabHardware, in_queue: Queue, out_queue: Queue, should_run: int,
+        self, microlab_hardware: MicroLabHardware, in_queue: Queue, out_queue: Queue,
         *args, **kwargs
     ):
         super().__init__(*args, **kwargs)
@@ -35,7 +35,7 @@ class MicrolabHardwareManager(Process):
         # should_run is actually a multiprocessing.Value that is an int, if the main thread recieves a signal
         # to exit it will update this shared value. It is typed as an int as opposed to multiprocessing.Value
         # because when typed as a 'Value' (by mypy at least) it shows as an invalid type
-        self._should_run = should_run
+        self._should_run = 1
 
         self._command_dict = {
                 "start": recipes.core.start,
@@ -61,8 +61,10 @@ class MicrolabHardwareManager(Process):
         logging.info("Shutting down microlab.")
         self._microlab_hardware.turnOffEverything()
         logging.info("Shutdown completed.")
-        # import sys
-        # sys.exit()
+        while not self._in_queue.empty():
+            self._in_queue.get()
+        import sys
+        sys.exit()
         # self._out_queue.close()
 
     def _run_command(self, command_string: str, command_args: Optional[str]) -> Optional[str]:

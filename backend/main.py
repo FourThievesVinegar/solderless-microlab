@@ -46,7 +46,7 @@ def setupLogging():
 class BackendManager:
 
     def __init__(self):
-        self._microlab_manager_should_run = Value('i', 1)
+        # self._microlab_manager_should_run = Value('i', 1)
         self._q1 = Queue()
         self._q2 = Queue()
 
@@ -70,8 +70,15 @@ class BackendManager:
 
     def _handle_exit_signals(self, signum, frame):
         print('in _handle_exit_signals')
-        self._microlab_manager_should_run.value = 0
-        self._shutdown_flask()
+        # self._shutdown_flask()
+        print('cleaing q1')
+        while not self._q1.empty():
+            self._q1.get()
+        print('cleaing q2')
+        while not self._q2.empty():
+            self._q2.get()
+        print('cleaing done')
+        # self._microlab_manager_should_run.value = 0
         # print('in _handle_exit_signals closing queue 1')
         # self._q1.close()
         # print('in _handle_exit_signals closing queue 2')
@@ -93,7 +100,7 @@ class BackendManager:
         #     self._microlab_hardware, q1, q2, self._microlab_manager_should_run
         # )
         self._microlab_manager_process = MicrolabHardwareManager(
-            self._microlab_hardware, self._q1, self._q2, self._microlab_manager_should_run
+            self._microlab_hardware, self._q1, self._q2
         )
         print('MAIN before lab start')
         # self._microlab_manager_process = Process(target=self._microlab_manager.run, name="microlab")
