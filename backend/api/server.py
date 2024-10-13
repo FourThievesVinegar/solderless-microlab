@@ -1,9 +1,13 @@
 import logging
+import os
 
 from waitress.server import create_server
 from flask import Flask
 
 from config import microlabConfig as config
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class APIServer:
@@ -18,7 +22,7 @@ class APIServer:
         # ctx.push()
 
     def run(self):
-        logging.info('Starting backend server')
+        LOGGER.info('Starting backend server')
         # self._server.serve_forever()
         self.get_server(self._app).run()
 
@@ -30,6 +34,7 @@ class APIServer:
 
     @classmethod
     def shutdown(cls):
-        logging.info('Shutting down backend server')
+        LOGGER.info('Shutting down backend server')
         cls._server.close()
-        logging.info('Shutting down backend server complete')
+        LOGGER.info('Shutting down backend server complete')
+        os._exit(os.EX_OK)

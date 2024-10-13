@@ -397,8 +397,11 @@ def shutdown_server():
     # At first read this seems excessive to kill the server however after
     # digging deeper into it this may be the cleanest way to deal with this.
     print('Hit shutdown endpoint')
-    try:
-        return (jsonify({'response': 'ok'}), 200)
-    finally:
-        print('Calling server shutdown now')
-        APIServer.shutdown()
+    print('Calling server shutdown now')
+    APIServer.shutdown()
+
+    # try:
+    #     return (jsonify({'response': 'ok'}), 200)
+    # finally:
+    #     print('Calling server shutdown now')
+    #     APIServer.shutdown()

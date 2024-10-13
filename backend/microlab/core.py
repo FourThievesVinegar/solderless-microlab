@@ -5,6 +5,7 @@ import logging
 import time
 import traceback
 import signal
+import os
 
 import hardware.devicelist
 import recipes.core
@@ -20,6 +21,8 @@ from hardware.core import MicroLabHardware
 
 # HALT = Event()
 # MUTEX = Lock()
+
+LOGGER = logging.getLogger(__name__)
 
 
 class MicrolabHardwareManager(Process):
@@ -53,14 +56,15 @@ class MicrolabHardwareManager(Process):
         signal.signal(signal.SIGTERM, self._shutdown)
 
     def _shutdown(self, signum, frame):
-        logging.info('Begining microlab shutdown process.')
+        LOGGER.info('Begining microlab shutdown process.')
         self._should_run = 0
 
     def _cleanup(self):
-        logging.info("")
-        logging.info("Shutting down microlab.")
+        LOGGER.info("")
+        LOGGER.info("Shutting down microlab.")
         self._microlab_hardware.turnOffEverything()
-        logging.info("Shutdown completed.")
+        LOGGER.info("Shutdown completed.")
+        os._exit(os.EX_OK)
         # import sys
         # sys.exit()
         # self._out_queue.close()
@@ -115,7 +119,7 @@ class MicrolabHardwareManager(Process):
         #     break
 
     def _reload_hardware(self):
-        logging.info("Reloading microlab device configuration")
+        LOGGER.info("Reloading microlab device configuration")
         hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
         deviceDefinitions = hardwareConfig['devices']
         return self._microlab_hardware.loadHardware(deviceDefinitions)
@@ -141,8 +145,8 @@ class MicrolabHardwareManager(Process):
                 # print('run loop post _update_microlab')
             except Exception as e:
                 self._execution_exception = e
-                logging.error(f'While running microlab hardware encountered exception: {e}. Shutting down microlab.')
-                logging.debug(traceback.print_exc())
+                LOGGER.error(f'While running microlab hardware encountered exception: {e}. Shutting down microlab.')
+                LOGGER.debug(traceback.print_exc())
                 break
 
         # print('run loop pre _cleanup')
