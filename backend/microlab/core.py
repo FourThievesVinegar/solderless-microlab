@@ -6,6 +6,7 @@ import time
 import traceback
 import signal
 import os
+import sys
 
 import hardware.devicelist
 import recipes.core
@@ -14,6 +15,7 @@ import recipes.state
 # from threading import Thread, Event, Lock
 from multiprocessing import Queue, Process
 from typing import Optional
+from queue import Empty
 
 from config import microlabConfig as config
 from hardware.core import MicroLabHardware
@@ -59,11 +61,32 @@ class MicrolabHardwareManager(Process):
         LOGGER.info('Begining microlab shutdown process.')
         self._should_run = 0
 
+    def _close_out_queue(self):
+        while True:
+            try:
+                self._out_queue.get_nowait()
+            except Empty:
+                self._out_queue.close()
+                break
+
     def _cleanup(self):
         LOGGER.info("")
         LOGGER.info("Shutting down microlab.")
         self._microlab_hardware.turnOffEverything()
         LOGGER.info("Shutdown completed.")
+
+        sys.stdout.write('Begining purge of MicrolabHardwareManager _out_queue\n')
+        sys.stdout.flush()
+        self._close_out_queue()
+        sys.stdout.write('Completed purge of MicrolabHardwareManager _out_queue\n')
+        sys.stdout.flush()
+
+        # sys.stdout.write('Beginning logging shutdown in MicrolabHardwareManager\n')
+        # sys.stdout.flush()
+        # logging.shutdown()
+        # sys.stdout.write('Completed logging shutdown in MicrolabHardwareManager\n')
+        # sys.stdout.flush()
+
         os._exit(os.EX_OK)
         # import sys
         # sys.exit()

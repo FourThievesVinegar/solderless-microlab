@@ -12,7 +12,7 @@ import requests
 
 from multiprocessing import Process, Queue, Value
 from microlab.core import MicrolabHardwareManager
-from api.core import runFlask
+from api.core import run_flask
 import config
 import multiprocessing_logging
 
@@ -60,11 +60,25 @@ class BackendManager:
     def _shutdown_flask(self):
         shutdown_url = f'http://localhost:{config.microlabConfig.apiPort}/shutdown'
         print(f'_shutdown_flask: shutdown_url: {shutdown_url}')
-        try:
-            response = requests.put(shutdown_url, timeout=1)
-            print(f'_shutdown_flask: response code: {response.status_code}')
-        except Exception as e:
-            print(f'Encountered exception {e} when attempting to shtudown Flask server')
+
+        shutdown_request_sent = False
+        for i in range(5):
+            try:
+                response = requests.put(shutdown_url, timeout=1)
+                print(f'_shutdown_flask: response code: {response.status_code}')
+                shutdown_request_sent = True
+                break
+            except Exception as e:
+                print(f'Encountered exception {e} when attempting to shutdown Flask server')
+
+        if not shutdown_request_sent:
+            # We tried being nice, let's be a bit more forceful
+            sys.stdout.write('Attempting to forcefully terminate _flaskProcess\n')
+            sys.stdout.flush()
+            self._flaskProcess.terminate()
+            sys.stdout.write('Completed attempt to forcefully terminate _flaskProcess\n')
+            sys.stdout.flush()
+
         # try:
         # self._flaskProcess.terminate()
         # except ValueError as e:
@@ -93,17 +107,27 @@ class BackendManager:
     def _cleanup_everything(self):
         print('In _cleanup_everything')
 
+        while any([process.is_alive() for process in self._processes]):
+            for proc in self._processes:
+                try:
+                    self._q1.get_nowait()
+                except Exception:
+                    pass
+
+                try:
+                    self._q2.get_nowait()
+                except Exception:
+                    pass
+
+                if proc.is_alive():
+                    print(f'Attempting to join proc: {proc.pid}')
+                    proc.join(timeout=1)
+
         print('MAIN before q1 close')
         self._q1.close()
 
         print('MAIN before q2 close')
         self._q2.close()
-
-        while any([process.is_alive() for process in self._processes]):
-            for proc in self._processes:
-                if proc.is_alive():
-                    print(f'Attempting to join proc: {proc.pid}')
-                    proc.join(timeout=1)
 
         # print('MAIN before q1 close')
         # self._q1.close()
@@ -126,6 +150,7 @@ class BackendManager:
         # We're setting up a shared memory value here so that if the main process recieves a signal to terminate
         # we can update the value to indicate to the process that it needs to terminate
         
+        # TODO Move creation of this into the the HWManager process
         self._microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
         # self._microlab_manager = MicrolabHardwareManager(
         #     self._microlab_hardware, q1, q2, self._microlab_manager_should_run
@@ -139,8 +164,8 @@ class BackendManager:
         self._microlab_manager_process.start()
         print(f'MAIN self._microlab_manager_process pid: {self._microlab_manager_process.pid}')
 
-        self._flaskProcess = Process(target=runFlask, args=(self._q2, self._q1), name="flask", daemon=True)
-        self._processes.append(self._flaskProcess )
+        self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1), name="flask", daemon=True)
+        self._processes.append(self._flaskProcess)
         print('MAIN before flask start')
         self._flaskProcess.start()
 

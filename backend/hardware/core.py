@@ -12,6 +12,7 @@ import config
 from hardware import devicelist
 from enum import Enum
 import logging
+import sys
 
 from hardware.devicelist import loadHardwareConfiguration
 
@@ -79,10 +80,13 @@ class MicroLabHardware:
         :return:
         None
         """
+        sys.stdout.write('start of turnOffEverything\n')
         self.turnHeaterOff()
         self.turnHeaterPumpOff()
         self.turnCoolerOff()
         self.turnStirrerOff()
+        sys.stdout.write('end of turnOffEverything\n')
+        sys.stdout.flush()
 
     def secondSinceStart(self):
         """

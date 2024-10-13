@@ -16,6 +16,23 @@ class MicrolabInterface:
         self.toMicrolab = out_queue
         self.fromMicrolab = in_queue
 
+    def close_to_microlab_queue(self):
+        while True:
+            try:
+                self.toMicrolab.get_nowait()
+            except Empty:
+                self.toMicrolab.close()
+                break
+
+    # Commenting out for now as this shouldn't be used in the context it is available I believe
+    # def close_from_microlab_queue(self):
+    #     while True:
+    #         try:
+    #             self.fromMicrolab.get_nowait()
+    #         except Empty:
+    #             self.fromMicrolab.close()
+    #             break
+
     def start(self, name):
         """
         Start running a recipe.
