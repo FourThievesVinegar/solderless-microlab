@@ -86,6 +86,26 @@ parts:
     type: step
     fileFrom: url
     fileUrl: {{ url }}/control-box/sub-components/stepdown-case-63x27x14mm.step
+  cold-unit-lid:
+    desc: Lid for cooling unit
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/temperature-units/cold-unit-lid-v.1.0.step
+  hot-unit-lid:
+    desc: Lid for heating unit
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/temperature-units/hot-unit-lid-v.1.0.step
+  pumps-box:
+    desc: Pumps box
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/pumps-box/pumps-box-v.1.0.step
+  pumps-box-lid:
+    desc: Lid for pumps box
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/pumps-box/pumps-box-lid-v0.3.step
 
 assemblies:
   microlab:
