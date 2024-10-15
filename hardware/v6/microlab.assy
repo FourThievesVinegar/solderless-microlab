@@ -28,8 +28,8 @@ links:
       # slide: [0, 10, 0]
       # slideSecondary: [0, 0, 50]
 
-
   - part: control-box-lid{{ profile_prefix }}
+    name: lid
     connect:
       withInstance: inner-right
       withParams:
@@ -40,3 +40,21 @@ links:
       # method: slide
       # slide: [0, 30, 0]
       # slideSecondary: [0, 0, 10]
+
+  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
+    # name: right-screw
+    params:
+      size: M3-0.5
+      length: 16
+    connect:
+      toInstance: outer-right
+      name: lid
+        
+  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
+    # name: left-screw
+    params:
+      size: M3-0.5
+      length: 16
+    connect:
+      toInstance: outer-left
+      name: lid
