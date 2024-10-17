@@ -97,6 +97,11 @@ assemblies:
         desc: Profile of the control box
         enum: [regular, flat]
         default: flat
+      screw_type:
+        type: string
+        desc: Type of the screws attaching lid to the control box
+        enum: [raisedcountersunkovalhead-iso7047, raisedcheesehead-iso7045]
+        default: raisedcountersunkovalhead-iso7047
     render:
       svg:
         viewportOrigin: [75, 0, 150]
