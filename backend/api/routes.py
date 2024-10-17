@@ -3,7 +3,9 @@ Module defining API.
 """
 
 # from api.app import get_flask_app
-from api.server import APIServer
+import sys
+
+from api.server import WaitressAPIServer
 from flask import Flask
 from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
@@ -399,19 +401,21 @@ class RouteManager:
         return (jsonify({'logs': data}), 200)
 
     # @app.route('/shutdown', methods=['PUT']) X
-    def _shutdown_server(self):
-        """Stops server """
-        # At first read this seems excessive to kill the server however after
-        # digging deeper into it this may be the cleanest way to deal with this.
-        print('Hit shutdown endpoint')
-        print('Calling server shutdown now')
-        APIServer.shutdown()
+    # def _shutdown_server(self):
+    #     """Stops server """
+    #     # At first read this seems excessive to kill the server however after
+    #     # digging deeper into it this may be the cleanest way to deal with this.
+    #     print('Hit shutdown endpoint')
+    #     # print('Calling server shutdown now')
+    #     # WaitressAPIServer.shutdown()
 
-        # try:
-        #     return (jsonify({'response': 'ok'}), 200)
-        # finally:
-        #     print('Calling server shutdown now')
-        #     APIServer.shutdown()
+    #     try:
+    #         return (jsonify({'response': 'ok'}), 200)
+    #     finally:
+    #         sys.stdout.write('Calling server shutdown now\n')
+    #         sys.stdout.flush()
+
+    #         WaitressAPIServer.shutdown()
 
     def _register_routes(self):
         # def add_api_route(self, rule: str, endpoint_function: Callable, methods: Optional[list[str]] = None):
@@ -444,4 +448,4 @@ class RouteManager:
         # utils
         self._flask_app.add_api_route('/status', self._status)
         self._flask_app.add_api_route('/log', self._fetch_logs)
-        self._flask_app.add_api_route('/shutdown', self._shutdown_server, ['PUT'])
+        # self._flask_app.add_api_route('/shutdown', self._shutdown_server, ['PUT'])

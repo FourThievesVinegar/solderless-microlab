@@ -50,34 +50,34 @@ def setupLogging():
 class BackendManager:
 
     def __init__(self):
-        self._microlab_manager_should_run = Value('i', 1)
+        # self._microlab_manager_should_run = Value('i', 1)
         self._q1 = Queue()
         self._q2 = Queue()
 
         self._processes = []
         self._queues = []
 
-    def _shutdown_flask(self):
-        shutdown_url = f'http://localhost:{config.microlabConfig.apiPort}/shutdown'
-        print(f'_shutdown_flask: shutdown_url: {shutdown_url}')
+    # def _shutdown_flask(self):
+    #     shutdown_url = f'http://localhost:{config.microlabConfig.apiPort}/shutdown'
+    #     print(f'_shutdown_flask: shutdown_url: {shutdown_url}')
 
-        shutdown_request_sent = False
-        for i in range(5):
-            try:
-                response = requests.put(shutdown_url, timeout=1)
-                print(f'_shutdown_flask: response code: {response.status_code}')
-                shutdown_request_sent = True
-                break
-            except Exception as e:
-                print(f'Encountered exception {e} when attempting to shutdown Flask server')
+    #     shutdown_request_sent = False
+    #     for i in range(5):
+    #         try:
+    #             response = requests.put(shutdown_url, timeout=1)
+    #             print(f'_shutdown_flask: response code: {response.status_code}')
+    #             shutdown_request_sent = True
+    #             break
+    #         except Exception as e:
+    #             print(f'Encountered exception {e} when attempting to shutdown Flask server')
 
-        if not shutdown_request_sent:
-            # We tried being nice, let's be a bit more forceful
-            sys.stdout.write('Attempting to forcefully terminate _flaskProcess\n')
-            sys.stdout.flush()
-            self._flaskProcess.terminate()
-            sys.stdout.write('Completed attempt to forcefully terminate _flaskProcess\n')
-            sys.stdout.flush()
+    #     if not shutdown_request_sent:
+    #         # We tried being nice, let's be a bit more forceful
+    #         sys.stdout.write('Attempting to forcefully terminate _flaskProcess\n')
+    #         sys.stdout.flush()
+    #         self._flaskProcess.terminate()
+    #         sys.stdout.write('Completed attempt to forcefully terminate _flaskProcess\n')
+    #         sys.stdout.flush()
 
         # try:
         # self._flaskProcess.terminate()
@@ -94,8 +94,8 @@ class BackendManager:
 
     def _handle_exit_signals(self, signum, frame):
         print('in _handle_exit_signals')
-        self._microlab_manager_should_run.value = 0
-        self._shutdown_flask()
+        # self._microlab_manager_should_run.value = 0
+        # self._shutdown_flask()
         self._cleanup_everything()
 
         # print('in _handle_exit_signals closing queue 1')
@@ -156,7 +156,7 @@ class BackendManager:
         #     self._microlab_hardware, q1, q2, self._microlab_manager_should_run
         # )
         self._microlab_manager_process = MicrolabHardwareManager(
-            self._microlab_hardware, self._q1, self._q2, self._microlab_manager_should_run
+            self._microlab_hardware, self._q1, self._q2
         )
         print('MAIN before lab start')
         self._processes.append(self._microlab_manager_process)

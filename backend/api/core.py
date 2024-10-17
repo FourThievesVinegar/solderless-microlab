@@ -25,7 +25,9 @@ def run_flask(in_queue, out_queue):
     # This handles the routes and registering them to the flask_app instance
     RouteManager(flask_app, microlab_interface)
 
-    WaitressAPIServer(flask_app.get_flask_app(), microlab_interface).run()
+    server = WaitressAPIServer(flask_app.get_flask_app())
+    server.set_microlab_interface(microlab_interface)
+    server.run()
 
     # api.routes.microlabInterface = MicrolabInterface(in_queue, out_queue)
     # WaitressAPIServer(get_flask_app()).run()
