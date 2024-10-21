@@ -5,7 +5,7 @@ import { Button } from 'semantic-ui-react'
 import { RecipeUpload } from '../components/RecipeUpload'
 import SettingsContext from '../contexts/Settings'
 import { SOUNDS, useAudio } from '../hooks/useAudio'
-import { listRecipes } from '../utils'
+import { listRecipes, capitalize } from '../utils'
 import { useTranslation } from 'react-i18next'
 
 export function RecipesPage() {
@@ -16,8 +16,19 @@ export function RecipesPage() {
 
   const [introPlaying, playIntroSound] = useAudio(SOUNDS.INTRO)
 
+  const sortAndSaveRecipes = (recipes: string[]) => {
+    recipes.sort((a, b) => {
+      if (capitalize(a) > capitalize(b)) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+    setRecipes(recipes)
+  }
+
   const reloadRecipes = () => {
-    listRecipes(setRecipes)
+    listRecipes(sortAndSaveRecipes)
   }
 
   useEffect(() => {
