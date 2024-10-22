@@ -1,5 +1,6 @@
 from hardware.temperaturecontroller.base import TempController
 import logging
+import sys
 
 
 def log(message):
@@ -35,6 +36,8 @@ class SimulatedTempController(TempController):
         None
         """
         log('Turning off heat')
+        sys.stdout.write('Turning off heat in SimulatedTempController\n')
+        sys.stdout.flush()
         self.heating = False
 
     def turnHeaterPumpOn(self):
@@ -42,6 +45,8 @@ class SimulatedTempController(TempController):
 
     def turnHeaterPumpOff(self):
         log("heater pump turned off")
+        sys.stdout.write('Turning off heater pump in SimulatedTempController\n')
+        sys.stdout.flush()
 
     def turnCoolerOn(self):
         """
@@ -61,6 +66,8 @@ class SimulatedTempController(TempController):
         None
         """
         log('Turning off cooling')
+        sys.stdout.write('Turning off cooling in SimulatedTempController\n')
+        sys.stdout.flush()
         self.cooling = False
 
     def getTemp(self):
