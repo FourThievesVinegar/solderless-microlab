@@ -25,9 +25,11 @@ export type MicrolabRecipe = {
   materials: RecipeMaterial[]
   steps: RecipeStep[]
 }
+
 export type RecipeMaterial = {
   description: string
 }
+
 export type RecipeStep = {
   parameters: any
   message: string

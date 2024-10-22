@@ -1,0 +1,26 @@
+.page.recipes-page {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  overflow: hidden;
+}
+
+.recipes-left-nav {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 4px;
+
+  button {
+    margin-bottom: 4px !important;
+  }
+}
+
+.recipes-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-left: 8px;
+  padding-right: 8px;
+}
