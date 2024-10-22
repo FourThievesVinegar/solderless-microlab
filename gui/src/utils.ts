@@ -142,3 +142,11 @@ export const getLogs = (callback: (data: { logs: string }) => void) => {
     .then(response => response.json())
     .then(data => callback(data))
 }
+
+/*
+ *   STRING MANIPULATION
+ */
+
+export const capitalize = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
