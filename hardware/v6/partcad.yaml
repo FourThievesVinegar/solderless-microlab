@@ -1,7 +1,7 @@
 name: /pub/medical/laboratory/4tvc-microlab/v6
 desc: The latest version Microlab by Four Thieves Vinegar Collective.
 cover:
-  assembly: microlab
+  assembly: control-unit
 
 docs:
   intro: |
@@ -111,6 +111,9 @@ assemblies:
   microlab:
     type: assy
     path: microlab.assy
+  control-unit:
+    type: assy
+    path: control-unit.assy
     parameters:
       profile:
         type: string
