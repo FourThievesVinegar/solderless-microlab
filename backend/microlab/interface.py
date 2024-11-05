@@ -1,3 +1,9 @@
+import logging
+
+from queue import Empty
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class MicrolabInterface:
@@ -14,6 +20,18 @@ class MicrolabInterface:
     def __init__(self, in_queue, out_queue):
         self.toMicrolab = out_queue
         self.fromMicrolab = in_queue
+
+    def close_to_microlab_queue(self):
+        LOGGER.debug('Begining purge of to microlab queue')
+
+        while True:
+            try:
+                self.toMicrolab.get_nowait()
+            except Empty:
+                self.toMicrolab.close()
+                break
+
+        LOGGER.debug('Completed purge of to microlab queue')
 
     def start(self, name):
         """
