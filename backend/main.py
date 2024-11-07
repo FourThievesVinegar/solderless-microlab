@@ -7,7 +7,7 @@ Look in api.routes for the actual api code
 
 from multiprocessing import Process, Queue
 from microlab.core import startMicrolabProcess
-from api.core import runFlask
+from api.core import run_flask
 import config
 import multiprocessing_logging
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         target=startMicrolabProcess, args=(q1, q2), name="microlab"
     )
     microlabProcess.start()
-    flaskProcess = Process(target=runFlask, args=(q2, q1), name="flask")
+    flaskProcess = Process(target=run_flask, args=(q2, q1), name="flask")
     flaskProcess.start()
 
     microlabProcess.join()
