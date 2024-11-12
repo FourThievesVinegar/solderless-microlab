@@ -10,6 +10,8 @@ For the MicroLab to be accessible to the most people, it was developed as part o
 
 You can find an introduction to the project, what the heck is a CLR, what's in the MicroLab Suite, and why we are doing this at all on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
 
+<IMG ALT="MicroLab roadmap of major features for the next 2 versions. v0.6.1: Open source reagent pumps, Hardened reactor, Simplified heating module, Auxiliary software basic features complete, Hello World recipes complete. v0.6.2: Finalized Printed Parts, Multilingual user interface, International BOMs, Printable / DIY alternatives for all scarce parts, Atmosphere control. v1.0: Raspberry Pi optional, Recipe repo launched, Auxiliary software suite complete and integrated, Optimized off-the-shelf parts list." SRC="https://fourthievesvinegar.org/wp-content/uploads/2024/11/microlab-roadmap.jpg" width="600" />
+
 ## Getting Started Making Your MicroLab
 
 This section is for you if you want to build a MicroLab and start using it. We tried to make building the MicroLab friendly for folks newer to electronics, but you will need some knowledge and skills with electronics (or the patience to learn a few things).
