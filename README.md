@@ -1,4 +1,4 @@
-# Microlab
+# MicroLab
 
 The MicroLab is an open-source, DIY, automated controlled lab reactor (CLR) that people can assemble with parts available online. We hope this will do for chemistry what the 3D printer did for manufacturing: provide a DIY, hackable, low-cost method to design and produce certain needful things that otherwise would be out of reach.
 
