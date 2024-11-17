@@ -9,11 +9,11 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 * [Reactor Unit](/docs/assembly-reactor-unit.md)
 * [Heating Unit](/docs/assembly-temperature-exchangers-unit.md)
 * [Cooling Unit](/docs/assembly-temperature-exchangers-unit.md)
-* [Control Unit](/docs/assembly-control-unit)
-* [MicroLab Cables](/docs/assembly-control-unit#cables)
+* [Control Unit](/docs/assembly-control-unit.md)
+* [MicroLab Cables](/docs/assembly-control-unit.md#cables)
 * Cable - Power cord on submersible heater (TC-SBH)
 * Cable - USB cord on Thermistor (RU-TMP)
-* [MicroLab Tubing](/docs/assembly-temperature-exchangers-unit/#tubing) (6 pieces, four 16" and two 8")
+* [MicroLab Tubing](/docs/assembly-temperature-exchangers-unit.md#tubing) (6 pieces, four 16" and two 8")
 * Power - MicroLab power supply (CU-POW)
 * Power - Switchable power strip or aquarium temperature controller
 * Water or other liquids (TC-LIQ) for the heating unit, cooling unit, and reactor core
