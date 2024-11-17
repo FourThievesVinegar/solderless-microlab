@@ -4,8 +4,6 @@ We'll start by assembling the brains of the operation, the Control Unit. As the 
 
 <IMG ALT="Control Unit" SRC="./media/control-unit/control-unit-complete.jpeg" WIDTH="400" />  
 
-<br />  
-<br />
 
 To wire things up properly we'll tackle different parts of the Control Unit and then put them all together. We've broken it down by these steps:
 
@@ -187,10 +185,6 @@ In order to send 12V out to components the 4-channel relay board, the 8-pin conn
 
 <IMG ALT="8-pin relay sub-assembly parts" SRC="./media/control-unit/relay_8pin.png" WIDTH="400" />
 
-<BR>
-<BR>
-
-
 #### **Wire Order**
 <a name="wireorder"></a>
 Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
@@ -201,8 +195,6 @@ The 8-pin connector passes 12V along to the Accessory port (Acc), Stir rod (Stir
 From inside the case the 8pin connector wiring order will look like this:
 
 <IMG ALT="Cable order" SRC="./media/control-unit/8pin_wire_rev.png" WIDTH="200" />
-
-<br><BR>
 
 #### **Parts**
 
@@ -215,8 +207,6 @@ CU-WCL|Wire Connector  | 1| Called 12V Wire Connector
 CU-JMP|Breadboard Jumper Wires - male-female|5
 SP-CAB|4-wire cable |15ft roll| Used to make short wires
 SP-RBW|2-wire cable, red and black, 18 gauge |40ft roll| Used to make short wires
-
-<BR>
 
 
 #### **Prepare Wires**
@@ -400,7 +390,7 @@ The Raspberry Pi, 4-Channel Relay Board and the Arduino all run using 5V power. 
 
 The Raspberry Pi sends 5V power (and data) out to the Ardunio and the 2 mounted USB ports through USB cables.  
 
-<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/cu_5V_signals.png" WIDTH="600" />
+<IMG ALT="8-pin relay sub-assembly assembled" SRC="./media/control-unit/cu_case_inside_t.png" WIDTH="600" />
 
 #### Relay Board Layout
 
@@ -448,10 +438,7 @@ CU-JMP|Breadboard Jumper Wires - male-female|4| For consistency we used black, g
   - **(IN2) terminal**: attach the the right-angle header pin and then plug in the male end of the red (Cool) jumper wire
   - **(IN3) terminal**: attach the the right-angle header pin and then plug in the green (Stir) jumper wire
   - **(IN4) terminal**: attach the the right-angle header pin and then plug in the black (Accessory) jumper wire
-<BR><BR>
   <IMG ALT="Panel-mounted components" SRC="./media/control-unit/5vrelay_wires.png" width="200" />
-<BR>
-<BR>
 
 - **Relay Board cleanup.** To conserve space and prevent short circuits, we recommend using flush cutters to trim pins sticking out on the underside of the board. Then use electrical tape to cover the bottom of the board.
 - **Relay Board Case**. The prepped Relay Board should fit in the Relay Board Case
@@ -724,18 +711,18 @@ Please read and get comfortable with the wiring order explained on the [MicroLab
 **8-pin cable**.
 
 
-<IMG ALT="Cable order" SRC="./media/control-unit/wire.png" WIDTH="200" />
+<IMG ALT="Cable order" SRC="./media/control-unit/8pin_wire.png" WIDTH="200" />
 
 **12-pin cable**.
 From left to right, repeat this wire order 3 times:
-* Red
 * Blue
+* Red
 * Green
-* black
+* Black
 
-<IMG ALT="Cable order" SRC="./media/control-unit/wire.png" WIDTH="200" />
+Note: This assumes you used the 4-wire cable recommended in the parts list. If you brought your own or are using ethernet cables, just make sure that the wiring is consistent on either end.
 
-<br><BR>
+<IMG ALT="Cable order" SRC="./media/control-unit/12pin_wire.png" WIDTH="200" />
 
 #### **Parts**
 
