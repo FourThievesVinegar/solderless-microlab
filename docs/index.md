@@ -76,6 +76,8 @@ No 3D printer? If you do not have a 3D printer, there are a few options includin
      * [Piece 3: ¢ shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-c.v1.0.stl)
      * [Piece 4: K shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-k.v1.0.stl)
      * [Piece 5: Jar flange shape (2)](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-jar-flange.v0.1.STL)
+  * Syringe Pumps (if not using peristaltic pumps)
+     * [See assembly docs here](https://github.com/FourThievesVinegar/microlab-parts/tree/master/syringe-pump)  
 
 
 ## Building the MicroLab
