@@ -56,8 +56,8 @@ No 3D printer? If you do not have a 3D printer, there are a few options includin
 * Control Unit
   * [Case for the Control Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-flat-v.1.0.stl)
   * [Lid for the Control Unit Case](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-lid-flat-v.1.0.stl)
-  * Internal Subcomponent - [Case for the 4-channel Relay Board](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-flat-v.1.0.stl)
-  * Internal Subcomponent- [Case for the 12V to 5V Converter](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-flat-v.1.0.stl)
+  * Internal Subcomponent - [Case for the 4-channel Relay Board](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/sub-components/relay-board-case-50x73x17mm-no-top.stl)
+  * Internal Subcomponent- [Case for the 12V to 5V Converter](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/sub-components/stepdown-case-63x27x14mm.stl)
 * Cooling Unit
   * [Lid for Cooling Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/temperature-units/cold-unit-lid-v.1.0.stl)
 * Heating Unit
