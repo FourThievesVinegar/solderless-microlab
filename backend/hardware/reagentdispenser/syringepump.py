@@ -58,11 +58,11 @@ class SyringePump(ReagentDispenser):
             self.axisMinmmPerMin[axis] = math.ceil((30 / stepsPerMM) * 120)
             # configure steps/mm
             self.grbl.grblWrite(
-                "$10{0}={1}\n".format(axisToCNCID[axis], stepsPerMM)
+                "$10{0}={1}".format(axisToCNCID[axis], stepsPerMM)
             )
             # configure max mm/min
             self.grbl.grblWrite(
-                "$11{0}={1}\n".format(axisToCNCID[axis], syringeConfig["maxmmPerMin"]),
+                "$11{0}={1}".format(axisToCNCID[axis], syringeConfig["maxmmPerMin"]),
             )
 
     def dispense(self, pumpId, volume, duration=None):
@@ -83,7 +83,7 @@ class SyringePump(ReagentDispenser):
         if duration:
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
         totalmm = volume * mmPerml
-        command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
+        command = "G91 G1 {0}{1} F{2}".format(pumpId, totalmm, dispenseSpeed)
         logging.debug("Dispensing with command '{}'".format(command))
         self.grbl.grblWrite(command)
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)

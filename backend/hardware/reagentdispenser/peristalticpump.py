@@ -42,7 +42,7 @@ class PeristalticPump(ReagentDispenser):
         dispenseSpeed = fValue
         if duration:
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
-        command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
+        command = "G91 G1 {0}{1} F{2}".format(pumpId, totalmm, dispenseSpeed)
         logging.debug("Dispensing with command '{}'".format(command))
         self.grbl.grblWrite(command)
 

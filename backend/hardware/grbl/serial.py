@@ -14,7 +14,7 @@ class GRBLSerial(GRBL):
 
     def grblWrite(self, command, retries=3):
         self.grblSer.reset_input_buffer()
-        self.grblSer.write(bytes(command, "utf-8"))
+        self.grblSer.write(bytes("{}\n".format(command), "utf-8"))
         # Grbl will execute commands in serial as soon as the previous is completed.
         # No need to wait until previous commands are complete. Ok only signifies that it
         # parsed the command

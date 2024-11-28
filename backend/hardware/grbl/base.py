@@ -8,7 +8,7 @@ class GRBL:
         Writes the gcode command to grbl
 
         :param command:
-            The raw gcode command string. Each command must end with a newline character
+            The raw gcode command string.
         :param retries:
             Number of times to retry the command should it fail.
             default is 3

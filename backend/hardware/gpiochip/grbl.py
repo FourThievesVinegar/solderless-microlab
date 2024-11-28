@@ -32,7 +32,7 @@ class GRBLChip(GPIOChip):
           else:
             command = "M64"
 
-          self.grbl.grblWrite("{} P{}\n".format(command, pin))
+          self.grbl.grblWrite("{} P{}".format(command, pin))
 
     def __getPinNumber(self, pin):
         """
