@@ -1,7 +1,7 @@
 devices:
   ## TYPE: GPIOCHIP
   ## Supported implementations:
-  ## gpiod, gpiod_chipset, simulation
+  ## gpiod, gpiod_chipset, grbl, simulation
   - id: "gpiochip-gpiod-example"
     type: "gpiochip"
     # This implementation controls the gpio pins using libgpiod.
@@ -106,6 +106,21 @@ devices:
     # Additional gpiochip device ids to use the aliases of.
     additionalChips: ["gpiochip0"]
     dependencies: ["gpiochip1", "gpiochip0"]
+
+  - id: "gpiochip-grbl-example"
+    type: "gpiochip"
+    # Uses M65 and M64 commands to switch gpio pins through grbl
+    implementation: "grbl"
+    # id of the grbl device to send commands to
+    grblID: "grbl-primary"
+    # Dictionary mapping strings to grbl pin numbers
+    lineAliases:
+      GPIO1: 1
+      GPIO2: 2
+      GPIO3: 3
+      GPIO4: 4
+      GPIO5: 5
+      GPIO6: 6
 
   - id: "gpiochip-simulation-example"
     type: "gpiochip"

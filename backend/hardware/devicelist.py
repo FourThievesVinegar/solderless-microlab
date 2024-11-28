@@ -3,6 +3,7 @@ import hardware.reagentdispenser.core as rd
 import hardware.temperaturecontroller.core as tc
 import hardware.thermometer.core as thermometer
 import hardware.gpiochip.core as gpiochip
+import hardware.grbl.core as grbl
 from config import microlabConfig as config
 import yaml
 from os.path import exists
@@ -65,6 +66,8 @@ def setupDevices(deviceDefinitions: list[dict]):
             devices[deviceID] = thermometer.createThermometer(device, devices)
         elif deviceType == "gpiochip":
             devices[deviceID] = gpiochip.createGPIOChip(device, devices)
+        elif deviceType == "grbl":
+            devices[deviceID] = grbl.createGRBL(device, devices)
         else:
             raise Exception("Unsupported device type '{0}'".format(deviceType))
         logging.info('"{0}" loaded successfully.'.format(device['id']))

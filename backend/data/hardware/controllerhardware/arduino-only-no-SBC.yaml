@@ -1,0 +1,18 @@
+devices:
+  - id: "grbl-primary"
+    type: "grbl"
+    # Which implementation to use for controlling grbl
+    implementation: "serial"
+    grblPort: "/dev/ttyACM0"
+
+  - id: "gpio-primary"
+    type: "gpiochip"
+    implementation: "grbl"
+    grblID: "grbl-primary"
+    # Dictionary mapping strings to gpiod line numbers
+    lineAliases:
+      BCM_16: 1
+      BCM_20: 2
+      BCM_21: 3
+      BCM_26: 4
+    dependencies: ["grbl-primary"]

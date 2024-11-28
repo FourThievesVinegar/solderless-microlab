@@ -1,4 +1,12 @@
 devices:
+  - id: "grbl-primary"
+    type: "grbl"
+    # Which implementation to use for controlling GPIO pins
+    # Supported values: gpiod
+    # gpiod: control using python3-libgpiod
+    implementation: "serial"
+    grblPort: "/dev/ttyACM0"
+    grblID: "grbl-primary"
   - id: "gpio-primary"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins

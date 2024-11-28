@@ -1,17 +1,16 @@
-import serial
 from hardware.reagentdispenser.base import ReagentDispenser
 import logging
 import math
 
 
 class SyringePump(ReagentDispenser):
-    def __init__(self, reagent_dispenser_config: dict):
+    def __init__(self, reagent_dispenser_config: dict, devices: dict):
         """
         Constructor. Initializes the pumps.
         :param reagent_dispenser_config:
           dict
-            arduinoPort
-                string - Serial device for communication with the Arduino
+            grblID
+                string - device id for grbl
             syringePumpsConfig
                 dict - Configuration for the syringe pump motors
 
@@ -46,8 +45,8 @@ class SyringePump(ReagentDispenser):
                     mmPerml
                     maxmmPerMin
         """
+        self.grbl = devices[reagent_dispenser_config["grblID"]]
         self.syringePumpsConfig = reagent_dispenser_config["syringePumpsConfig"]
-        self.grblSer = serial.Serial(reagent_dispenser_config["arduinoPort"], 115200, timeout=1)
         self.axisMinmmPerMin = {}
         for axis, syringeConfig in self.syringePumpsConfig.items():
             stepsPerMM = syringeConfig["stepsPerRev"] / syringeConfig["mmPerRev"]
@@ -58,12 +57,11 @@ class SyringePump(ReagentDispenser):
             }
             self.axisMinmmPerMin[axis] = math.ceil((30 / stepsPerMM) * 120)
             # configure steps/mm
-            self.grblWrite(
-                self.grblSer, "$10{0}={1}\n".format(axisToCNCID[axis], stepsPerMM)
+            self.grbl.grblWrite(
+                "$10{0}={1}\n".format(axisToCNCID[axis], stepsPerMM)
             )
             # configure max mm/min
-            self.grblWrite(
-                self.grblSer,
+            self.grbl.grblWrite(
                 "$11{0}={1}\n".format(axisToCNCID[axis], syringeConfig["maxmmPerMin"]),
             )
 
@@ -87,7 +85,7 @@ class SyringePump(ReagentDispenser):
         totalmm = volume * mmPerml
         command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
         logging.debug("Dispensing with command '{}'".format(command))
-        self.grblWrite(self.grblSer, command)
+        self.grbl.grblWrite(command)
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
 
         logging.info(

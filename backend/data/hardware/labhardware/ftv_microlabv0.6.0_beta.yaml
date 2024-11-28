@@ -38,8 +38,8 @@ devices:
   - id: "reactor-reagent-dispenser"
     type: "reagentDispenser"
     implementation: "peristalticpump"
-    # Serial device for communication with the Arduino
-    arduinoPort: "/dev/ttyACM0"
+    # grbl device id
+    grblID: "grbl-primary"
     # Configuration for the syringe pump motors
     syringePumpsConfig:
       X:

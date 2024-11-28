@@ -63,7 +63,7 @@ def devices(request):
     implementation: "simulation"
     ## syringepump MODE CONFIG
     # Serial device for communication with the Arduino
-    arduinoPort: "/dev/ttyACM0"
+    grbl: "grbl-primary"
     # Configuration for the syringe pump motors
     syringePumpsConfig:
       X:
