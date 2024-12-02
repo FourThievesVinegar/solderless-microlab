@@ -4,7 +4,7 @@ and the individual files for configuration information.
 """
 
 
-def createGRBL(grblConfig: dict, devices: dict):
+def createGRBL(grblConfig: dict, _devices: dict):
     grblType = grblConfig['implementation']
     if grblType == "serial":
         from hardware.grbl.serial import GRBLSerial
