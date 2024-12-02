@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class GRBL:
 
     @abstractmethod
-    def grblWrite(self, command, retries=3):
+    def grblWrite(self, command: str, retries=3):
         """
         Writes the gcode command to grbl
 

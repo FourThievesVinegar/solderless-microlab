@@ -7,5 +7,5 @@ class GRBLSimulation(GRBL):
         """
         pass
 
-    def grblWrite(self, command, retries=3):
+    def grblWrite(self, command: str, retries=3):
         pass

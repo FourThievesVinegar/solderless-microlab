@@ -12,7 +12,7 @@ class GRBLSerial(GRBL):
         """
         self.grblSer = serial.Serial(grbl_config["grblPort"], 115200, timeout=1)
 
-    def grblWrite(self, command, retries=3):
+    def grblWrite(self, command: str, retries=3):
         self.grblSer.reset_input_buffer()
         self.grblSer.write(bytes("{}\n".format(command), "utf-8"))
         # Grbl will execute commands in serial as soon as the previous is completed.

@@ -34,7 +34,7 @@ class GRBLChip(GPIOChip):
 
           self.grbl.grblWrite("{} P{}".format(command, pin))
 
-    def __getPinNumber(self, pin):
+    def __getPinNumber(self, pin: str | int):
         """
         Converts string aliases to the corresponding pin number
         Throws an exception if pin is an alias that does not exist.
@@ -51,7 +51,7 @@ class GRBLChip(GPIOChip):
         else:
             return pin
 
-    def setup(self, pin, pinType=LINE_REQ_DIR_OUT, outputValue=0):
+    def setup(self, pin: str | int, pinType=LINE_REQ_DIR_OUT, outputValue=0):
         """
         Sets up pin for use, currently only output is supported.
 
@@ -71,7 +71,7 @@ class GRBLChip(GPIOChip):
             self.output_values.append(outputValue)
             self.__output()
 
-    def output(self, pin, value):
+    def output(self, pin: str | int, value: int):
         """
         Outputs a new value to specified pin
 
