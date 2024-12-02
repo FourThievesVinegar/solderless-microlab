@@ -2,10 +2,15 @@
 
 ## [Unreleased]
 
+### Added
+
+- Support for controlling gpio pins on the arduino when using custom grbl firmware. (#282)
+
 ### Changed
 
 - Added alphabetical navigation of the recipe list. (#273)
 - Extra validation for hardware config files. Hardware components are now automatically sorted by dependencies to prevent them from loading out of order. (#269)
+- Syringe pump and peristaltic pump implementations no longer directly open a serial connection to grbl, and config instead now references a grbl device. (#282)
 
 ## [0.6.0]
 
