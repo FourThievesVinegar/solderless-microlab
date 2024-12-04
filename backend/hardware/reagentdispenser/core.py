@@ -10,9 +10,9 @@ from hardware.reagentdispenser.simulation import SimulatedReagentDispenser
 def createReagentDispenser(reagentdispenserConfig: dict, devices: dict):
     reagentdispenserType = reagentdispenserConfig['implementation']
     if reagentdispenserType == "syringepump":
-        return SyringePump(reagentdispenserConfig)
+        return SyringePump(reagentdispenserConfig, devices)
     elif reagentdispenserType == "peristalticpump":
-        return PeristalticPump(reagentdispenserConfig)
+        return PeristalticPump(reagentdispenserConfig, devices)
     elif reagentdispenserType == "simulation":
         return SimulatedReagentDispenser(reagentdispenserConfig)
     raise Exception("Unsupported reagentdispenserType")

@@ -15,4 +15,7 @@ def createGPIOChip(gpioConfig: dict, devices: dict):
     if gpioType == "gpiod_chipset":
         from hardware.gpiochip.gpiod_chipset import GPIODChipset
         return GPIODChipset(gpioConfig, devices)
+    if gpioType == "grbl":
+        from hardware.gpiochip.grbl import GRBLChip
+        return GRBLChip(gpioConfig, devices)
     raise Exception("Unsupported gpiochiptype")
