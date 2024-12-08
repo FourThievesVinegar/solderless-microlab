@@ -10,13 +10,7 @@
   "reaction-in-progress": "{{reactionName}} reaction in progress.",
   "resume-reaction": "Resume {{reactionName}} Reaction.",
   "Logs": "Logs",
-  "start-reaction-button-text": "Start A Reaction Using This Recipe",
   "loading-placeholder": "Loading...",
-  "no-materials-needed": "No materials needed",
-  "recipe-materials-needed": "Materials Needed:",
-  "recipe-has-no-steps": "No steps",
-  "recipe-steps": "Steps:",
-  "recipe-time-needed": "Time Needed:",
   "recipe-list": "Recipe list",
   "upload-recipe-button-label": "Upload a Recipe",
   "confirm-stop-recipe": "Are you sure you want to stop?",
@@ -24,7 +18,6 @@
   "finish-reaction-button-text": "Finish Reaction",
   "go-back-button-text": "Go Back",
   "waiting-on-backend": "Waiting on backend...",
-  "recipe-time-needed-for-tasks": "Time needed for automated tasks",
   "locale": "Locale",
   "components": {
     "ControllerConfigUpload": {
@@ -94,6 +87,18 @@
       "sound-requires-user-input-label": "Step Requires User Input",
       "sound-on-recipe-completion-label": "On Recipe Completion",
       "sound-intro-label": "On Recipe List Load (intro)"
+    },
+    "RecipeDetailsPage": {
+      "start-reaction-button-text": "Start A Reaction Using This Recipe",
+      "delete-recipe-button-text": "Delete Recipe",
+      "confirm-delete-recipe": "Are you sure you want to delete this recipe? Deleting recipes is permanent and they cannot be recovered.",
+      "loading-placeholder": "Loading...",
+      "no-materials-needed": "No materials needed",
+      "recipe-materials-needed": "Materials Needed:",
+      "recipe-has-no-steps": "No steps",
+      "recipe-steps": "Steps:",
+      "recipe-time-needed": "Time Needed:",
+      "recipe-time-needed-for-tasks": "Time needed for automated tasks"
     }
   }
 }

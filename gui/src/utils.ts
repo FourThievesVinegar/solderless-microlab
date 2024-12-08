@@ -36,6 +36,12 @@ export const listRecipes = (callback: (data: string[]) => void) => {
     .then(data => callback(data))
 }
 
+export const deleteRecipe = (recipeName: string): Promise<MicrolabRecipe> => {
+  return fetch(apiUrl + 'deleteRecipe/' + recipeName, {
+    method: 'DELETE',
+  }).then(response => response.json())
+}
+
 export const selectOption = (option: string) => {
   fetch(apiUrl + 'select/option/' + option, {
     method: 'POST',
