@@ -5,6 +5,7 @@
 ### Added
 
 - Support for controlling gpio pins on the arduino when using custom grbl firmware. (#282)
+- Ability to delete recipes from the microlab on the recipe details page. (#288)
 
 ### Changed
 
