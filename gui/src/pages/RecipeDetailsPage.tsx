@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 import './RecipeDetailsPage.scss'
 
 export function RecipeDetails() {
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.RecipeDetailsPage' })
   const [recipeDetails, setRecipeDetails] = useState<MicrolabRecipe>()
   const history = useHistory()
   const { recipeName } = useParams<any>()
@@ -68,7 +68,7 @@ export function RecipeDetails() {
 }
 
 function MaterialsNeeded({ materials }: { materials: RecipeMaterial[] }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.RecipeDetailsPage' })
   let body
   if (isArray(materials) && materials.length > 0) {
     body = (
@@ -94,7 +94,7 @@ function MaterialsNeeded({ materials }: { materials: RecipeMaterial[] }) {
  * total time? which steps are time sensitive and how long between them?
  * */
 function TimeNeeded({ steps }: { steps: RecipeStep[] }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.RecipeDetailsPage' })
   if (!isArray(steps) || steps.length < 1) {
     return <></>
   }
@@ -125,7 +125,7 @@ function TimeNeeded({ steps }: { steps: RecipeStep[] }) {
 }
 
 function Steps({ steps }: { steps: RecipeStep[] }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation(undefined, { keyPrefix: 'components.RecipeDetailsPage' })
   if (!isArray(steps) || steps.length < 1) {
     return <span>{t('recipe-has-no-steps')}</span>
   }
