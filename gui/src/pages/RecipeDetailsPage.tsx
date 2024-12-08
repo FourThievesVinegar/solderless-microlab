@@ -3,7 +3,7 @@ import { capitalize, get, isArray, isEmpty, reduce } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import { getRecipe, startRecipe } from '../utils'
+import { deleteRecipe, getRecipe, startRecipe } from '../utils'
 import { MicrolabRecipe, RecipeMaterial, RecipeStep } from '../microlabTypes'
 import { useTranslation } from 'react-i18next'
 
@@ -31,6 +31,19 @@ export function RecipeDetails() {
       </Button>
     )
   }
+  const DeleteRecipeButton = () => {
+    return (
+      <Button
+        color="purple"
+        onClick={() => {
+          if (window.confirm(t('confirm-delete-recipe'))) {
+            deleteRecipe(recipeName).then(data => history.push('/recipes'))
+          }
+        }}>
+        {t('delete-recipe-button-text')}
+      </Button>
+    )
+  }
 
   return (
     <section className="page recipe-details">
@@ -42,11 +55,14 @@ export function RecipeDetails() {
           <MaterialsNeeded materials={recipeDetails.materials} />
           <TimeNeeded steps={recipeDetails.steps} />
           <Steps steps={recipeDetails.steps} />
+          <StartRecipeButton />
+          <br />
+          <br />
+          <DeleteRecipeButton />
         </>
       ) : (
         <p>{t('loading-placeholder')}</p>
       )}
-      <StartRecipeButton />
     </section>
   )
 }

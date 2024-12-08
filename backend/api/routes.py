@@ -194,6 +194,27 @@ class RouteManager:
 
         return jsonify({'response': 'ok'})
 
+    # /deleteRecipe/<name>
+    def _delete_recipe(self, name: str):
+        """
+        Deletes a file in the recipes folder
+
+        :return:
+        object
+            response
+                One of:
+                    ok
+                    error
+            message
+                Only present if response is "error" and there is a message to present to the user.
+        """
+        recipe = recipes.core.getRecipeByName(name)
+        try:
+            os.remove(join(config.recipesDirectory, secure_filename(recipe["fileName"])))
+            return jsonify({'response': 'ok'})
+        except FileNotFoundError:
+            return jsonify({'response': 'error', 'message': "Recipe does not exist."}, 404)
+        
     # /controllerHardware
     def _get_controller_hardware(self):
         """
@@ -400,6 +421,7 @@ class RouteManager:
         self._flask_app.add_api_route('/list', self._list_recipes)
         self._flask_app.add_api_route('/recipe/<name>', self._send_recipe)
         self._flask_app.add_api_route('/uploadRecipe', self._upload_recipe, ['POST'])
+        self._flask_app.add_api_route('/deleteRecipe/<name>', self._delete_recipe, ['DELETE'])
 
         # flow control
         self._flask_app.add_api_route('/start/<name>', self._start, ['POST'])
