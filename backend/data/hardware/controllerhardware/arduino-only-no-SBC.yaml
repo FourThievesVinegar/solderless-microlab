@@ -14,9 +14,13 @@ devices:
       OUTPUT_1: 1
       OUTPUT_2: 2
       OUTPUT_3: 3
+      OUTPUT_4: 4
+      OUTPUT_5: 5
       ENDSTOP_Z: 1
       ENDSTOP_Y: 2
       ENDSTOP_X: 3
+      SPINDLE_ENABLE: 4
+      SPINDLE_DIRECTION: 5
       BCM_16: 1
       BCM_20: 2
       BCM_21: 3
