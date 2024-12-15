@@ -1,5 +1,6 @@
 from hardware.grbl.base import GRBL
 import serial
+import logging
 
 class GRBLSerial(GRBL):
     def __init__(self, grbl_config: dict):
@@ -21,6 +22,8 @@ class GRBLSerial(GRBL):
         response = self.grblSer.read_until()
         if "error" in str(response):
             if retries > 0:
+                logging.warning("grbl error: {0} for command: {1}, retrying"
+                                .format(response, command))
                 self.grblWrite(command, retries - 1)
             else:
                 raise Exception(
