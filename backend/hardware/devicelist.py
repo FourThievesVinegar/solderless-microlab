@@ -6,9 +6,9 @@ import hardware.gpiochip.core as gpiochip
 from config import microlabConfig as config
 import yaml
 from os.path import exists
-import logging
 from functools import cmp_to_key
 from copy import copy
+from util.logger import MultiprocessingLogger
 
 
 def sort_device_configs(deviceConfigs: list[dict]):
@@ -47,12 +47,13 @@ def loadHardwareConfiguration() -> dict:
 
 def setupDevices(deviceDefinitions: list[dict]):
     validateConfiguration(deviceDefinitions)
+    logger = MultiprocessingLogger.get_logger(__name__)
     
     devices = {}
 
     for device in deviceDefinitions:
-        logging.info('Loading device "{0}".'.format(device['id']))
-        logging.debug('{0} configuration: {1}'.format(device['id'], device))
+        logger.info('Loading device "{0}".'.format(device['id']))
+        logger.debug('{0} configuration: {1}'.format(device['id'], device))
         deviceType = device["type"]
         deviceID = device['id']
         if deviceType == "tempController":
@@ -67,7 +68,7 @@ def setupDevices(deviceDefinitions: list[dict]):
             devices[deviceID] = gpiochip.createGPIOChip(device, devices)
         else:
             raise Exception("Unsupported device type '{0}'".format(deviceType))
-        logging.info('"{0}" loaded successfully.'.format(device['id']))
+        logger.info('"{0}" loaded successfully.'.format(device['id']))
     return devices
 
 

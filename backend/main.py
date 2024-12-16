@@ -4,13 +4,7 @@ flask backend API.
 Starts the flask application on the configured port (default 8081)
 Look in api.routes for the actual api code
 """
-import sys
-import time
 import signal
-import logging
-import logging.handlers as handlers
-
-import multiprocessing_logging
 
 import config
 
@@ -18,29 +12,7 @@ from multiprocessing import Process, Queue, set_start_method
 
 from api.core import run_flask
 from microlab.core import startMicrolabProcess
-from util.logFormatter import MultiLineFormatter
-
-LOGGER = logging.getLogger(__name__)
-
-
-def setupLogging():
-    logHandlers = []
-    formatter = MultiLineFormatter(fmt="%(asctime)s [%(levelname)s]: %(message)s")
-
-    fileLogger = handlers.RotatingFileHandler(
-        "{0}/microlab.log".format(config.microlabConfig.logDirectory),
-        maxBytes=config.microlabConfig.logFileMaxBytes,
-        backupCount=config.microlabConfig.logFileBackupCount,
-    )
-    fileLogger.setFormatter(formatter)
-    logHandlers.append(fileLogger)
-    if config.microlabConfig.logToStderr:
-        stderrLogger = logging.StreamHandler(sys.stderr)
-        stderrLogger.setFormatter(formatter)
-        logHandlers.append(stderrLogger)
-
-    logging.basicConfig(handlers=logHandlers, level=config.microlabConfig.logLevel)
-    multiprocessing_logging.install_mp_handler()
+from util.logger import MultiprocessingLogger
 
 
 class BackendManager:
@@ -52,11 +24,21 @@ class BackendManager:
         self._processes = []
         self._queues = []
 
+        # The MultiprocessingLogger.initialize_logger call needs to be out of the global scope
+        # as it seems if anything that is done that creates a process safe object (in this case a Queue)
+        # it seem to 'lock in' the type of process creation and calls to set_start_method('spawn') will
+        # throw an exception
+
+        # Additionally the initialize_logger call without any arguments should only happen in the process that
+        # is creating other processes
+        MultiprocessingLogger.initialize_logger()
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
     def _are_processes_alive(self) -> bool:
         return any([process.is_alive() for process in self._processes])
 
     def _cleanup_queues(self):
-        LOGGER.debug('Cleaning up queues')
+        self._logger.debug('Cleaning up queues')
 
         self._q1.close()
         self._q2.close()
@@ -64,10 +46,10 @@ class BackendManager:
         self._q1.join_thread()
         self._q2.join_thread()
 
-        LOGGER.debug('Completed cleanup up queues')
+        self._logger.debug('Completed cleanup up queues')
 
     def _cleanup_processes(self):
-        LOGGER.debug('Cleaning up processes')
+        self._logger.debug('Cleaning up processes')
 
         while self._are_processes_alive():
             for proc in self._processes:
@@ -82,42 +64,45 @@ class BackendManager:
                     pass
 
                 if proc.is_alive():
-                    LOGGER.debug(f'Attempting to join proc: {proc.pid}')
+                    self._logger.debug(f'Attempting to join proc: {proc.pid}')
                     proc.join(timeout=1)
 
-        LOGGER.debug('Completed cleaning up processes')
+        self._logger.debug('Completed cleaning up processes')
 
     def _cleanup_everything(self):
         self._cleanup_processes()
         self._cleanup_queues()
 
+        MultiprocessingLogger.cleanup_logging()
+        # Add a cleanup_logging here
+
     def _handle_exit_signals(self, signum, frame):
-        LOGGER.debug('Beginning to handle exit signals in BackendManager')
+        self._logger.debug('Beginning to handle exit signals in BackendManager')
         self._cleanup_everything()
-        LOGGER.debug('Completed handling exit signals in BackendManager')
+        self._logger.debug('Completed handling exit signals in BackendManager')
 
     def _start_microlab(self):
         self._microlab_manager_process = Process(
-            target=startMicrolabProcess, args=(self._q1, self._q2), name="microlab"
+            target=startMicrolabProcess, args=(self._q1, self._q2, MultiprocessingLogger.get_logging_queue()), name="microlab"
         )
 
         self._processes.append(self._microlab_manager_process)
 
-        LOGGER.debug('Starting the microlab process')
+        self._logger.debug('Starting the microlab process')
         self._microlab_manager_process.start()
-        LOGGER.debug(f'microlab process pid: {self._microlab_manager_process.pid}')
+        self._logger.debug(f'microlab process pid: {self._microlab_manager_process.pid}')
 
     def _start_server(self):
-        self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1), name="flask", daemon=True)
+        self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1, MultiprocessingLogger.get_logging_queue()), name="flask", daemon=True)
         self._processes.append(self._flaskProcess)
-        LOGGER.debug('Starting the server process')
+        self._logger.debug('Starting the server process')
         self._flaskProcess.start()
         print(f'server process pid: {self._flaskProcess.pid}')
 
     def run(self):
         config.initialSetup()
 
-        LOGGER.info("### STARTING MAIN MICROLAB SERVICE ###")
+        self._logger.info("### STARTING MAIN MICROLAB SERVICE ###")
 
         self._start_microlab()
         self._start_server()
@@ -126,9 +111,9 @@ class BackendManager:
         signal.signal(signal.SIGTERM, self._handle_exit_signals)
 
         while self._are_processes_alive():
-            time.sleep(0.1)
+            MultiprocessingLogger.process_logs()
 
-        LOGGER.debug("### ENDING MICROLAB SERVICE EXECUTION ###")
+        self._logger.debug("### ENDING MICROLAB SERVICE EXECUTION ###")
 
 
 def main():
@@ -138,5 +123,5 @@ def main():
 
 if __name__ == "__main__":
     set_start_method('spawn')
-    setupLogging()
+    # setupLogging()
     main()

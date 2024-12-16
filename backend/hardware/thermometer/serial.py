@@ -1,9 +1,9 @@
 from hardware.thermometer.base import TempSensor
 import serial
 import time
-import logging
 from hardware.util.exceptions import HardwareLoadError
 from datetime import datetime, timedelta
+from util.logger import MultiprocessingLogger
 
 
 class SerialTempSensor(TempSensor):
@@ -15,6 +15,8 @@ class SerialTempSensor(TempSensor):
             serialDevice
               A string with the device read from
         """
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.lastTemp = 0
         self.nextTempReadingTime = datetime.now()
 
@@ -49,11 +51,11 @@ class SerialTempSensor(TempSensor):
             try:
                 line = self.tempSer.readline().decode()
             except Exception as e:
-                logging.error("Error reading from thermometer")
-                logging.exception(str(e))
+                self._logger.error("Error reading from thermometer")
+                self._logger.exception(str(e))
                 continue
             finally:
-                logging.debug("ser read " + str(len(line)) + " " + line)
+                self._logger.debug("ser read " + str(len(line)) + " " + line)
                 time.sleep(0.5)
 
         lastLine = str(line)
@@ -74,7 +76,7 @@ class SerialTempSensor(TempSensor):
         if end == -1:  # Maybe just go to the end?
             end = len(lastLine) - 1
 
-        logging.debug(
+        self._logger.debug(
             "found "
             + str(start)
             + " "
@@ -90,14 +92,14 @@ class SerialTempSensor(TempSensor):
                 self.lastTemp = float(lastLine[start:end])
                 self.nextTempReadingTime = datetime.now() + timedelta(seconds=1)
             except Exception as e:
-                logging.error("Error converting temperature reading")
-                logging.error(lastLine[start:end])
-                logging.exception(str(e))
+                self._logger.error("Error converting temperature reading")
+                self._logger.error(lastLine[start:end])
+                self._logger.exception(str(e))
                 self.lastTemp = "-999"
         else:
             self.lastTemp = "-999"
-            logging.error("erroneous reading: {0}".format(lastLine[start:end]))
-        logging.debug(
+            self._logger.error("erroneous reading: {0}".format(lastLine[start:end]))
+        self._logger.debug(
             "Read temperature " + str(self.lastTemp)
         )  # + ' ' + str(lastLine))
 

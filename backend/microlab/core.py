@@ -13,12 +13,13 @@ import recipes.state
 
 from config import microlabConfig as config
 from hardware.core import MicroLabHardware
+from util.logger import MultiprocessingLogger
 
 HALT = threading.Event()
 MUTEX = threading.Lock()
 
 
-def startMicrolabProcess(in_queue, out_queue):
+def startMicrolabProcess(in_queue, out_queue, logging_queue):
     """
     Starts up the microlab process
 
@@ -27,6 +28,9 @@ def startMicrolabProcess(in_queue, out_queue):
 
     :param out_queue:
         The queue responses will be sent to, when applicable.
+
+    :param logging_queue:
+        The queue logging messages will be sent through.
 
     All commands sent over the queue have the following format:
 
@@ -73,6 +77,9 @@ def startMicrolabProcess(in_queue, out_queue):
                 (False, message) on failure.
             reference "selectOption" in /recipes/__init__.py for more info
     """
+    MultiprocessingLogger.initialize_logger(logging_queue)
+    logger = MultiprocessingLogger.get_logger(__name__)
+
     microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
 
     def runMicrolab():
@@ -92,18 +99,18 @@ def startMicrolabProcess(in_queue, out_queue):
     microlab.start()
 
     def handleSignal(_a, _b):
-        logging.info("")
-        logging.info("Shutting down microlab.")
+        logger.info("")
+        logger.info("Shutting down microlab.")
         HALT.set()
         microlab.join()
-        logging.info("Shutdown completed.")
+        logger.info("Shutdown completed.")
         sys.exit()
 
     signal.signal(signal.SIGINT, handleSignal)
     signal.signal(signal.SIGTERM, handleSignal)
 
     def reloadHardware():
-        logging.info("Reloading microlab device configuration")
+        logger.info("Reloading microlab device configuration")
         hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
         deviceDefinitions = hardwareConfig['devices']
         return microlabHardware.loadHardware(deviceDefinitions)

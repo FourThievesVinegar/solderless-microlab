@@ -1,7 +1,7 @@
 import serial
 from hardware.reagentdispenser.base import ReagentDispenser
-import logging
 import math
+from util.logger import MultiprocessingLogger
 
 
 class SyringePump(ReagentDispenser):
@@ -46,6 +46,8 @@ class SyringePump(ReagentDispenser):
                     mmPerml
                     maxmmPerMin
         """
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.syringePumpsConfig = reagent_dispenser_config["syringePumpsConfig"]
         self.grblSer = serial.Serial(reagent_dispenser_config["arduinoPort"], 115200, timeout=1)
         self.axisMinmmPerMin = {}
@@ -86,11 +88,11 @@ class SyringePump(ReagentDispenser):
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
         totalmm = volume * mmPerml
         command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
-        logging.debug("Dispensing with command '{}'".format(command))
+        self._logger.debug("Dispensing with command '{}'".format(command))
         self.grblWrite(self.grblSer, command)
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
 
-        logging.info(
+        self._logger.info(
             "Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(
                 volume, dispenseSpeed, dispenseTime
             )
