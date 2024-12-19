@@ -1,0 +1,67 @@
+links:
+  - part: pumps-box
+    name: box
+
+  # TODO: attaching female barrel plug connectors to box
+  
+  # Attaching peristaltic pumps to box
+  {% for pump in ['pump-x', 'pump-y', 'pump-z'] %}
+  - part: peristaltic-pump
+    name: {{ pump }}
+    connect:
+      withInstance: lower-left-back
+      toInstance: {{ pump }}-upper-left
+      name: box
+
+  # TODO: add nuts here (now - only screws)
+  {% for corner in ['lower-left-front', 'upper-left-front', 'upper-right-front', 'lower-right-front'] %}
+  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
+    params:
+      size: M3-0.5
+      length: 16
+    connect:
+      toInstance: {{ corner }}
+      name: {{ pump }}
+  {% endfor %}
+  {% endfor %}
+
+  # Attaching circulation pumps to box
+  # TODO: "elaborate" on proper mounting
+  - part: circulation-pump
+    name: cool-pump
+    connect:
+      toInstance: cool-pump-opening
+      withParams:
+        turnZ: 90
+      name: box
+
+  - part: circulation-pump
+    name: heat-pump
+    connect:
+      toInstance: heat-pump-opening
+      withParams:
+        turnZ: 90
+      name: box
+
+  # TODO: attach connectors to lid
+
+  # Attaching lid to box
+  - part: pumps-box-lid
+    name: lid
+    connect:
+      withInstance: upper-left-front
+      toInstance: upper-left
+      withParams:
+        # TODO: drop turnZ when two-port match is supported (???)
+        turnZ: 90      
+      name: box
+  
+  {% for corner in ['lower-left', 'upper-left', 'upper-right', 'lower-right'] %}
+  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
+    params:
+      size: M3-0.5
+      length: 30
+    connect:
+      toInstance: {{ corner }}-back
+      name: lid
+  {% endfor %}

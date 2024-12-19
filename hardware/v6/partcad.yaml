@@ -1,7 +1,7 @@
 name: /pub/medical/laboratory/4tvc-microlab/v6
 desc: The latest version Microlab by Four Thieves Vinegar Collective.
 cover:
-  assembly: control-unit
+  assembly: microlab
 
 docs:
   intro: |
@@ -18,7 +18,13 @@ docs:
 {% from 'urls.j2' import url_prefix %}
 {% set url = url_prefix + '/v6' %}
 
+sketches:
+  m26:
+    type: basic
+    circle: 13 # 13 mm radius equals to 16 mm diameter
+
 parts:
+  # Control Unit
   control-box:
     desc: Regular size control box
     type: step
@@ -55,8 +61,8 @@ parts:
       "/pub/std/metric/m:m3-thru":
         outer-left: [[3, 3, 44], [1, 0, 0], 180]
         outer-right: [[185, 3, 44], [1, 0, 0], 180]
-        inner-left: [[3, 3, 34], [1, 0, 0], 0]
-        inner-right: [[185, 3, 34], [1, 0, 0], 0]
+        inner-left: [[3, 3, 33], [1, 0, 0], 0]
+        inner-right: [[185, 3, 33], [1, 0, 0], 0]
     ports:
       rpi: [[8, 22.5, 20], [-0.71, -0.71, 0], 180]
       uno: [[179.5, 92, 8], [0, 1, 0], 180]
@@ -86,26 +92,89 @@ parts:
     type: step
     fileFrom: url
     fileUrl: {{ url }}/control-box/sub-components/stepdown-case-63x27x14mm.step
+  
+  # Reactor Unit
+  pumps-box:
+    desc: Pumps box
+    type: step
+    # fileFrom: url
+    # fileUrl: {{ url }}/pumps-box/pumps-box-v.1.0.step
+    path: pumps-box-rotated.step
+    implements:
+      "/pub/std/metric/m:m3-thru":
+        upper-left: [[5, 64, 183], [1, 0, 0], 90]
+        # upper-right: [[183, 64, 183], [1, 0, 0], 90]
+        # lower-left: [[5, 64, 5], [1, 0, 0], 90]
+        # lower-right: [[183, 64, 5], [1, 0, 0], 90]
+        pump-x-upper-left: [[12.5, 0, 179], [1, 0, 0], -90]
+        pump-y-upper-left: [[75, 0, 179], [1, 0, 0], -90]
+        pump-z-upper-left: [[137.5, 0, 179], [1, 0, 0], -90]
+      # TODO: simplification here, concrete mounting to be elaborated
+      "/pub/std/metric/m:m24-thru":
+        heat-pump-opening: [[4, 19, 64], [0, 1, 0], 90]
+        cool-pump-opening: [[184, 19, 64], [0, 1, 0], -90]        
+  pumps-box-lid:
+    desc: Lid for pumps box
+    type: step
+    # fileFrom: url
+    # fileUrl: {{ url }}/pumps-box/pumps-box-lid-v0.3.step
+    path: pumps-box-lid-rotated.step
+    implements:
+      "/pub/std/metric/m:m3-thru":
+        upper-left-back: [[5, 4, 183], [1, 0, 0], 90]
+        upper-right-back: [[183, 4, 183], [1, 0, 0], 90]
+        lower-left-back: [[5, 4, 5], [1, 0, 0], 90]
+        lower-right-back: [[183, 4, 5], [1, 0, 0], 90]
+        upper-left-front: [[5, 0, 183], [1, 0, 0], -90]
+        # upper-right-front: [[183, 0, 183], [1, 0, 0], -90]
+        # lower-left-front: [[5, 0, 5], [1, 0, 0], -90]
+        # lower-right-front: [[183, 0, 5], [1, 0, 0], -90]
+  peristaltic-pump:
+    desc: Peristaltic pump (model Intllab DP-520-48S)
+    type: step
+    path: peristaltic-pump.step
+    implements:        
+      "/pub/std/metric/m:m3-thru":
+        upper-left-back: [[-26.75, 20.5, 18.75], [1, 0, 0], 90]
+        upper-right-back: [[27.25, 20.5, 18.75], [1, 0, 0], 90]
+        lower-left-back: [[-26.75, 20.5, -18.75], [1, 0, 0], 90]
+        lower-right-back: [[27.25, 20.5, -18.75], [1, 0, 0], 90]
+        upper-left-front: [[-26.75, 15.5, 18.75], [1, 0, 0], -90]
+        upper-right-front: [[27.25, 15.5, 18.75], [1, 0, 0], -90]
+        lower-left-front: [[-26.75, 15.5, -18.75], [1, 0, 0], -90]
+        lower-right-front: [[27.25, 15.5, -18.75], [1, 0, 0], -90]
+  circulation-pump:
+    desc: Circulation pump (https://www.amazon.com/dp/B09XH1GYYQ)
+    type: step
+    path: circulation-pump.step
+    implements:
+      # TODO: describe proper mounting
+      "/pub/std/metric/m:m24-shaft":
+        mount: [[0, 0, 52], [1, 0, 0], 0]        
+  stand-part-h:
+    desc: Reactor stand "H" part
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-stand/reactor-stand-H.v1.0.step
+
+  # Temperature Exchange Units
+  # straw:
+    # desc: Tube for cooling unit
+    # type: cadquery
   cold-unit-lid:
     desc: Lid for cooling unit
     type: step
     fileFrom: url
     fileUrl: {{ url }}/temperature-units/cold-unit-lid-v.1.0.step
+    implements:
+      "/pub/std/metric/m:m10-thru":
+        left-outer: [[-24, 0, 0], [1, 0, 0], 0]
+        right-outer: [[24, 0, 0], [1, 0, 0], 0]
   hot-unit-lid:
     desc: Lid for heating unit
     type: step
     fileFrom: url
     fileUrl: {{ url }}/temperature-units/hot-unit-lid-v.1.0.step
-  pumps-box:
-    desc: Pumps box
-    type: step
-    fileFrom: url
-    fileUrl: {{ url }}/pumps-box/pumps-box-v.1.0.step
-  pumps-box-lid:
-    desc: Lid for pumps box
-    type: step
-    fileFrom: url
-    fileUrl: {{ url }}/pumps-box/pumps-box-lid-v0.3.step
 
 assemblies:
   microlab:
@@ -128,7 +197,21 @@ assemblies:
     render:
       svg:
         viewportOrigin: [75, 0, 150]
-
+  reactor-unit:
+    type: assy
+    path: reactor-unit.assy
+    parameters:
+      screw_type:
+        type: string
+        desc: Type of the screws attaching lid to the control box
+        enum: [raisedcountersunkovalhead-iso7047, raisedcheesehead-iso7045]
+        default: raisedcountersunkovalhead-iso7047
+  heating-unit:
+    type: assy
+    path: heating-unit.assy
+  cooling-unit:
+    type: assy
+    path: cooling-unit.assy
 
 render:
   svg:
