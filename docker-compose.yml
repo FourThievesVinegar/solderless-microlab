@@ -14,6 +14,10 @@ services:
     #      - /dev/gpiomem:/dev/gpiomem
     #        /dev/ttyUSB0:/dev/ttyUSB0
     #        /dev/ttyUSB1:/dev/ttyUSB1
+    volumes:
+      - ./docker/microlab-docker.ini:/etc/microlab/microlab.ini
+      - ./backend:/app
+      
     networks:
       - backend
 

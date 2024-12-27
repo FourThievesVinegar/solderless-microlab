@@ -1,4 +1,9 @@
 devices:
+
+  - id: "grbl-primary"
+    type: "grbl"
+    implementation: "simulation"
+
   - id: "gpio-primary"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
