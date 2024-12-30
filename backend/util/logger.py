@@ -87,7 +87,15 @@ class MultiprocessingLogger:
     def process_logs(cls):
         try:
             record = cls._logging_queue.get_nowait()
-            logger = cls._get_processing_logger(record.name)
+
+            # We do the record.name against __main__ specifically so we can get the logger from the main thread
+            # and not have it return the QueueHandler which not only causes issues but also means dropped logging
+            # from the main thread
+            if record.name == '__main__':
+                logger = cls._get_processing_logger('main')
+            else:
+                logger = cls._get_processing_logger(record.name)
+
             logger.handle(record)
         except queue.Empty:
             return
