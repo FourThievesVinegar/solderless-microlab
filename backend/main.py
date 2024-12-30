@@ -77,6 +77,7 @@ class BackendManager:
         self._logger.debug('Beginning to handle exit signals in BackendManager')
         self._cleanup_everything()
         self._logger.debug('Completed handling exit signals in BackendManager')
+        self._logger.debug("### ENDING MICROLAB SERVICE EXECUTION ###")
 
     def _start_microlab(self):
         self._microlab_manager_process = Process(
@@ -107,10 +108,10 @@ class BackendManager:
         signal.signal(signal.SIGINT, self._handle_exit_signals)
         signal.signal(signal.SIGTERM, self._handle_exit_signals)
 
+
+
         while self._are_processes_alive() or MultiprocessingLogger.remaining_logs_to_process():
             MultiprocessingLogger.process_logs()
-
-        self._logger.debug("### ENDING MICROLAB SERVICE EXECUTION ###")
 
 
 def main():
