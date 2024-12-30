@@ -73,9 +73,6 @@ class BackendManager:
         self._cleanup_processes()
         self._cleanup_queues()
 
-        MultiprocessingLogger.cleanup_logging()
-        # Add a cleanup_logging here
-
     def _handle_exit_signals(self, signum, frame):
         self._logger.debug('Beginning to handle exit signals in BackendManager')
         self._cleanup_everything()
@@ -110,7 +107,7 @@ class BackendManager:
         signal.signal(signal.SIGINT, self._handle_exit_signals)
         signal.signal(signal.SIGTERM, self._handle_exit_signals)
 
-        while self._are_processes_alive():
+        while self._are_processes_alive() or MultiprocessingLogger.remaining_logs_to_process():
             MultiprocessingLogger.process_logs()
 
         self._logger.debug("### ENDING MICROLAB SERVICE EXECUTION ###")
@@ -123,5 +120,4 @@ def main():
 
 if __name__ == "__main__":
     set_start_method('spawn')
-    # setupLogging()
     main()

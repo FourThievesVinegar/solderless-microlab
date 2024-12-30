@@ -49,15 +49,6 @@ class MultiprocessingLogger:
         return logger
 
     @classmethod
-    def cleanup_logging(cls):
-        # Without the retries check added here I would occasionally see a hang here
-        # on cleanup
-        retries = 0
-        while not cls._logging_queue.empty() and retries < 5:
-            cls.process_logs()
-            retries += 1
-
-    @classmethod
     def _get_processing_logger(cls, logger_name: str) -> logging.Logger:
         if logger_name in cls._configured_loggers:
             return logging.getLogger(logger_name)
@@ -89,8 +80,11 @@ class MultiprocessingLogger:
         return logger
 
     @classmethod
+    def remaining_logs_to_process(cls) -> bool:
+        return cls._logging_queue.empty() == False
+
+    @classmethod
     def process_logs(cls):
-        # print('processing logs')
         try:
             record = cls._logging_queue.get_nowait()
             logger = cls._get_processing_logger(record.name)
