@@ -13,9 +13,6 @@ class SimulatedReagentDispenser(ReagentDispenser):
         if 'maxSpeed' in reagent_dispenser_config:
             self.maxSpeed = reagent_dispenser_config['maxSpeed']
 
-    def log(self, message):
-        self._logger.info('reagentdispenser.simulation - {0}'.format(message))
-
     def dispense(self, pumpId, volume, duration=None):
         """
         Displays pump dispensing message.
@@ -28,11 +25,11 @@ class SimulatedReagentDispenser(ReagentDispenser):
             None
         """
         if pumpId == 'X':
-            self.log('Dispensing {0}ml from pump X'.format(volume))
+            self._logger.info('Dispensing {0}ml from pump X'.format(volume))
         elif pumpId == 'Y':
-            self.log('Dispensing {0}ml from pump Y'.format(volume))
+            self._logger.info('Dispensing {0}ml from pump Y'.format(volume))
         elif pumpId == 'Z':
-            self.log('Dispensing {0}ml from pump Z'.format(volume))
+            self._logger.info('Dispensing {0}ml from pump Z'.format(volume))
         else:
             raise ValueError("Pump '{0}' does not exist.".format(pumpId))
         return abs(volume)

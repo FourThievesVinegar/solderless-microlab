@@ -15,9 +15,6 @@ class SimulatedTempController(TempController):
         if 'temp' in sim_temp_controller_config:
             self.temperature = sim_temp_controller_config['temp']
 
-    def log(self, message):
-        self._logger.info('tempcontroller.simulation - ' + str(message))
-
     def turnHeaterOn(self):
         """
         Sets the heater flag for the simulation.
@@ -25,7 +22,7 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        self.log('Turning on heat')
+        self._logger.info('Turning on heat')
         self.heating = True
 
     def turnHeaterOff(self):
@@ -35,14 +32,14 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        self.log('Turning off heat')
+        self._logger.info('Turning off heat')
         self.heating = False
 
     def turnHeaterPumpOn(self):
-        self.log("heater pump turned on")
+        self._logger.info("heater pump turned on")
 
     def turnHeaterPumpOff(self):
-        self.log("heater pump turned off")
+        self._logger.info("heater pump turned off")
 
     def turnCoolerOn(self):
         """
@@ -51,7 +48,7 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        self.log('Turning on cooling')
+        self._logger.info('Turning on cooling')
         self.cooling = True
 
     def turnCoolerOff(self):
@@ -61,7 +58,7 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        self.log('Turning off cooling')
+        self._logger.info('Turning off cooling')
         self.cooling = False
 
     def getTemp(self):
@@ -86,7 +83,7 @@ class SimulatedTempController(TempController):
                     self.temperature = self.temperature - 0.1
                 elif self.temperature < 24:
                     self.temperature = self.temperature + 0.1
-        self.log('Temperature read as: {0}'.format(self.temperature))
+        self._logger.info('Temperature read as: {0}'.format(self.temperature))
         return self.temperature
 
     def getMaxTemperature(self):
