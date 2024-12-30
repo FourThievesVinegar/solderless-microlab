@@ -18,6 +18,8 @@ class MultiprocessingLogger:
 
     _processing_logger = None
 
+    _is_main_process = False
+
     @classmethod
     def initialize_logger(cls, logging_queue: Union[Queue, None] = None) -> None:
         """ Initialize the logger.
@@ -25,6 +27,7 @@ class MultiprocessingLogger:
         Must be called in the base process that start the other processes without any argument.
         In other process it must be called with a dedicated logging queue."""
         if logging_queue is None:
+            cls._is_main_process = True
             logging_queue = Queue()
 
         cls._logging_queue = logging_queue
@@ -34,7 +37,7 @@ class MultiprocessingLogger:
         return cls._logging_queue
 
     @classmethod
-    def get_logger(cls, logger_name: str) -> logging.Logger:
+    def _get_queue_logger(cls, logger_name: str) -> logging.Logger:
         # We only need to configure once, multiple calls to logging.getLogger(<logger_name>)
         # will return the same configured instance
         if logger_name in cls._configured_loggers:
@@ -47,6 +50,13 @@ class MultiprocessingLogger:
         cls._configured_loggers[logger_name] = logger
 
         return logger
+
+    @classmethod
+    def get_logger(cls, logger_name: str) -> logging.Logger:
+        if cls._is_main_process:
+            return cls._get_processing_logger(logger_name)
+        else:
+            return cls._get_queue_logger(logger_name)
 
     @classmethod
     def _get_processing_logger(cls, logger_name: str) -> logging.Logger:
@@ -93,17 +103,7 @@ class MultiprocessingLogger:
     def process_logs(cls):
         try:
             record = cls._logging_queue.get_nowait()
-
-            record_name = record.name
-
-            if record_name in cls._configured_loggers:
-                if cls._does_logger_have_queue_handler(cls._configured_loggers[record_name]):
-                    # We're mangling the name here so if we're in the main thread and we attempt to process the log
-                    # we don't return the queue handler again causing issues as well as the logs to be dropped.
-                    record_name = f'_{record_name}'
-
-            logger = cls._get_processing_logger(record_name)
-
+            logger = cls._get_processing_logger(record.name)
             logger.handle(record)
         except queue.Empty:
             return
