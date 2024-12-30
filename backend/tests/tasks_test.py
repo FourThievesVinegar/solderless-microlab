@@ -4,6 +4,9 @@ import yaml
 import hardware.core
 from unittest.mock import patch, MagicMock
 
+from util.logger import MultiprocessingLogger
+MultiprocessingLogger._logging_queue = MagicMock()
+
 
 @pytest.fixture
 def devices(request):
