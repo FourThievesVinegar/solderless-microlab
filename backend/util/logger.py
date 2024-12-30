@@ -44,7 +44,7 @@ class MultiprocessingLogger:
         logger.addHandler(logging.handlers.QueueHandler(cls._logging_queue))
         logger.setLevel(config.microlabConfig.logLevel)
 
-        cls._configured_loggers[logger_name] = True
+        cls._configured_loggers[logger_name] = logger
 
         return logger
 
@@ -75,7 +75,7 @@ class MultiprocessingLogger:
         for handler in log_handlers:
             logger.addHandler(handler)
 
-        cls._configured_loggers[logger_name] = True
+        cls._configured_loggers[logger_name] = logger
 
         return logger
 
@@ -84,17 +84,25 @@ class MultiprocessingLogger:
         return cls._logging_queue.empty() == False
 
     @classmethod
+    def _does_logger_have_queue_handler(cls, logger: logging.Logger) -> bool:
+        for handler in logger.handlers:
+            if isinstance(handler, logging.handlers.QueueHandler):
+                return True
+
+    @classmethod
     def process_logs(cls):
         try:
             record = cls._logging_queue.get_nowait()
 
-            # We do the record.name against __main__ specifically so we can get the logger from the main thread
-            # and not have it return the QueueHandler which not only causes issues but also means dropped logging
-            # from the main thread
-            if record.name == '__main__':
-                logger = cls._get_processing_logger('main')
-            else:
-                logger = cls._get_processing_logger(record.name)
+            record_name = record.name
+
+            if record_name in cls._configured_loggers:
+                if cls._does_logger_have_queue_handler(cls._configured_loggers[record_name]):
+                    # We're mangling the name here so if we're in the main thread and we attempt to process the log
+                    # we don't return the queue handler again causing issues as well as the logs to be dropped.
+                    record_name = f'_{record_name}'
+
+            logger = cls._get_processing_logger(record_name)
 
             logger.handle(record)
         except queue.Empty:
