@@ -99,8 +99,8 @@ devices:
   - id: "reagentDispenser-peristalticpump-example"
     type: "reagentDispenser"
     implementation: "peristalticpump"
-    # Serial device for communication with the Arduino
-    arduinoPort: "/dev/ttyACM0"
+    # grbl device id
+    grblID: "grbl-primary"
     # Configuration for the peristaltic pump motors
     peristalticPumpsConfig:
       F: 175
@@ -119,8 +119,8 @@ devices:
     # syringepump: The open source syringe pump referenced in the assembly documentation
     #              Uses grbl and stepper motors to dispense the reagents into the microlab
     implementation: "syringepump"
-    # Serial device for communication with the Arduino
-    arduinoPort: "/dev/ttyACM0"
+    # grbl device id
+    grblID: "grbl-primary"
     # Configuration for the syringe pump motors
     syringePumpsConfig:
       X:
@@ -167,5 +167,20 @@ devices:
 
   - id: "stirrer-simulation-example"
     type: "stirrer"
+    # simulation: Does nothing
+    implementation: "simulation"
+
+  ## TYPE: grbl
+  ## Supported implementations:
+  ## serial, simulation
+  - id: "grbl-serial-example"
+    type: "grbl"
+    # serial: opens a serial device to send commands to grbl
+    implementation: "serial"
+    # device path for opening a serial connection to grbl
+    grblPort: "/dev/ttyACM0"
+
+  - id: "grbl-simulation-example"
+    type: "grbl"
     # simulation: Does nothing
     implementation: "simulation"

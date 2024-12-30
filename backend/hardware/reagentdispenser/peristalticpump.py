@@ -1,15 +1,14 @@
-import serial
 from hardware.reagentdispenser.base import ReagentDispenser
 from util.logger import MultiprocessingLogger
 
 class PeristalticPump(ReagentDispenser):
-    def __init__(self, reagent_dispenser_config: dict):
+    def __init__(self, reagent_dispenser_config: dict, devices: dict):
         """
         Constructor. Initializes the pumps.
         :param args:
           dict
-            arduinoPort
-                string - Serial device for communication with the Arduino
+            grblID
+                string - device id for grbl
             peristalticPumpsConfig
                 dict - Configuration for the peristaltic pump motors
                 F   Flow rate
@@ -21,10 +20,9 @@ class PeristalticPump(ReagentDispenser):
                     mmPerml   Arbitrary scaling factor
         """
         self._logger = MultiprocessingLogger.get_logger(__name__)
-
+        self.grbl = devices[reagent_dispenser_config["grblID"]]
         self.peristalticPumpsConfig = reagent_dispenser_config["peristalticPumpsConfig"]
-        self.grblSer = serial.Serial(reagent_dispenser_config["arduinoPort"], 115200, timeout=1)
-        self.grblWrite(self.grblSer, "G91")
+        self.grbl.grblWrite("G91")
 
     def dispense(self, pumpId, volume, duration=None):
         """
@@ -44,9 +42,9 @@ class PeristalticPump(ReagentDispenser):
         dispenseSpeed = fValue
         if duration:
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
-        command = "G91 G1 {0}{1} F{2}\n".format(pumpId, totalmm, dispenseSpeed)
+        command = "G91 G1 {0}{1} F{2}".format(pumpId, totalmm, dispenseSpeed)
         self._logger.debug("Dispensing with command '{}'".format(command))
-        self.grblWrite(self.grblSer, command)
+        self.grbl.grblWrite(command)
 
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
         self._logger.info(

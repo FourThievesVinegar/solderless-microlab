@@ -1,0 +1,104 @@
+{
+  "Four Thieves Vinegar MicroLab": "Four Thieves Vinegar MicroLab",
+  "backend-down": "Сервис не работает",
+  "waiting-for-backend": "Ожидание контрольного сервиса",
+  "microlab-status-idle-message": "Microlab готов к работе",
+  "microlab-status-running-message": "Microlab готовит рецепт",
+  "go-to-recipe-button-text": "Посмотреть рецепт",
+  "view-logs-button-text": "Посмотреть журнал",
+  "view-recipes-button-text": "Посмотреть рецепты",
+  "reaction-in-progress": "Реакция {{reactionName}} готовится.",
+  "resume-reaction": "Возобновить реакцию {{reactionName}}.",
+  "Logs": "Журнал",
+  "loading-placeholder": "Загрузка...",
+  "recipe-list": "Список рецептов",
+  "upload-recipe-button-label": "Загрузить рецепт",
+  "confirm-stop-recipe": "Вы точно хотите остановиться?",
+  "stop-reaction-button-text": "Остановить реакцию",
+  "finish-reaction-button-text": "Завершить реакцию",
+  "go-back-button-text": "Назад",
+  "waiting-on-backend": "Ожидание бэкенда...",
+  "locale": "Язык",
+  "components": {
+    "ControllerConfigUpload": {
+      "uploading": "Конфигурация загружается...",
+      "upload-failed-no-file": "Ошибка, файл не прикреплён",
+      "upload-success": "Конфигурация удачно загрузилась.",
+      "upload-failed": "Загрузка конфигурации не удалась.",
+      "upload-button-text": "Загрузить новую конфигурацию контроллера"
+    },
+    "ControllerHardwareConfig": {
+      "failed-no-selected-config": "Ошибка, конфигурация не выбрана",
+      "setting-new-config-waiting-message": "Настраивается новая конфигурация...",
+      "config-changed-successfully": "Конфигурация контроллера успешно изменена.",
+      "failed-config-change-request": "Не удалось настроить контроллер: \"{{message}}\"",
+      "failed-generic": "Не удалось настроить контроллер.",
+      "save": "Сохранить",
+      "download": "Скачать"
+    },
+    "Header": {
+      "main-menu": "Меню",
+      "status-button-text": "Microlab Статус",
+      "recipes-button-text": "Рецепты",
+      "settings-button-text": "Настройки",
+      "logs-button-text": "Журнал"
+    },
+    "LabConfigUpload": {
+      "upload-waiting-message": "Загрузка конфигурации...",
+      "upload-successful": "Загрузка конфигурации успешна.",
+      "failed-generic": "Не удалось загрузить конфигурацию.",
+      "upload-button-text": "Загрузить новую лаб. конфигурацию"
+    },
+    "LabHardwareConfig": {
+      "failed-no-selected-config": "Ошибка, не выбран файл конфигурации",
+      "setting-new-config-waiting-message": "Настройка новой конфигурации...",
+      "config-changed-successfully": "Настройка оборудования успешно изменена.",
+      "failed-config-change-request": "Не удалось настроить оборудование: \"{{message}}\"",
+      "failed-generic": "Не удалось настроить оборудование.",
+      "save": "Сохранить",
+      "download": "Скачать"
+    },
+    "RecipeUpload": {
+      "failed-no-recipe-selected": "Ошибка, не выбран рецепт.",
+      "upload-waiting-message": "Загрузка рецепта...",
+      "upload-successful": "Загрузка рецепта успешна.",
+      "upload-failed-generic": "Не удалось загрузить рецепт.",
+      "upload-button-text": "Загрузить"
+    },
+    "ReloadHardware": {
+      "reloading-waiting-for-response-message": "Настройка новой конфигурации...",
+      "reload-successful": "Оборудование успешно перезагрузилось.",
+      "reload-failed-with-message": "Не удалось перезагрузить оборудование: \"{{message}}\"",
+      "reload-failed-generic": "Не удалось перезагрузить оборудование.",
+      "reload-button-text": "Перезагрузить оборудование"
+    },
+    "SettingsPage": {
+      "settings-page-header": "Настройки",
+      "lab-hardware-config-header": "Конфигурация лаб. оборудования",
+      "controller-hardware-config-header": "MicroLab Контроллер",
+      "sound-config-header": "Настройки звука"
+    },
+    "SoundSettings": {
+      "soundscape-label": "Звуковой набор",
+      "select-audio-theme-placeholder": "Выберите ваш звуковой набор",
+      "volume-label": "Громкость",
+      "play-sounds-label": "Проигрывать звуки",
+      "sound-on-error-label": "При ошибке",
+      "sound-requires-user-input-label": "Шаг требует пользовательского ввода",
+      "sound-on-recipe-completion-label": "При завершении рецепта",
+      "sound-intro-label": "При загрузке списка рецептов (интро)"
+    },
+    "RecipeDetailsPage": {
+      "start-reaction-button-text": "Начать реакцию по этому рецепту",
+      "delete-recipe-button-text": "Удалить рецепт",
+      "confirm-delete-recipe": "Вы уверены, что хотите удалить этот рецепт? После удаления рецепты вернуть нельзя.",
+      "loading-placeholder": "Загрузка...",
+      "no-materials-needed": "Материалы не нужны",
+      "recipe-materials-needed": "Необходимые материалы:",
+      "recipe-has-no-steps": "Нет шагов",
+      "recipe-steps": "Шаги:",
+      "recipe-time-needed": "Нужное время:",
+      "recipe-time-needed-for-tasks": "Время, необходимое для автоматизированных задач"
+    }
+  }
+}

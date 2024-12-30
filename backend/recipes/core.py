@@ -32,7 +32,9 @@ def getRecipeList():
         if f.endswith('.json'):
             try:
                 with open(join(path, f)) as inf:
-                    recipeList.append(json.load(inf))
+                    recipeData = json.load(inf)
+                    recipeData["fileName"] = f
+                    recipeList.append(recipeData)
             except json.JSONDecodeError:
                 logger.error("Error loading recipe file: {0}. File is not in proper JSON format".format(f))
         # This doesn't actually work yet because .4tv are not importable as modules

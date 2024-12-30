@@ -1,4 +1,9 @@
 devices:
+  - id: "grbl-primary"
+    type: "grbl"
+    implementation: "serial"
+    grblPort: "/dev/ttyACM0"
+
   - id: "gpio-primary"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
