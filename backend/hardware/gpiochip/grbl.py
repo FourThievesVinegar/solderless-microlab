@@ -1,5 +1,5 @@
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
-import logging
+from util.logger import MultiprocessingLogger
 
 class GRBLChip(GPIOChip):
     def __init__(self, gpio_config: dict, devices: dict):
@@ -13,6 +13,8 @@ class GRBLChip(GPIOChip):
               dictionary mapping strings to pin numbers
               for adding human readable names to GPIO pins
         """
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.grbl = devices[gpio_config["grblID"]]
         self.output_offsets = []
         self.output_values = []
@@ -20,7 +22,7 @@ class GRBLChip(GPIOChip):
         if 'lineAliases' in gpio_config:
             for alias, pin in gpio_config['lineAliases'].items():
                 self.pinAliases[alias] = pin
-        logging.debug(self.pinAliases)
+        self._logger.debug(self.pinAliases)
 
     def __output(self):
         """
