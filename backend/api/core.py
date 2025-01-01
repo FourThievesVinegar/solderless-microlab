@@ -2,8 +2,6 @@
 Module init.
 Contains function for starting up the flask process
 """
-import logging
-
 from api.routes import RouteManager
 from api.server import WaitressAPIServer
 from api.app import FlaskApp

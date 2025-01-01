@@ -13,6 +13,7 @@ from multiprocessing import Process, Queue, set_start_method
 from api.core import run_flask
 from microlab.core import startMicrolabProcess
 from util.logger import MultiprocessingLogger
+from config import microlabConfig
 
 
 class BackendManager:
@@ -99,7 +100,6 @@ class BackendManager:
 
     def run(self):
         config.initialSetup()
-
         self._logger.info("### STARTING MAIN MICROLAB SERVICE ###")
 
         self._start_microlab()
@@ -115,6 +115,7 @@ class BackendManager:
 
 
 def main():
+    microlabConfig.validate_config()
     backend_manager = BackendManager()
     backend_manager.run()
 
