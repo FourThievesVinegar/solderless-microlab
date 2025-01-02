@@ -1,5 +1,5 @@
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
-import logging
+from util.logger import MultiprocessingLogger
 
 
 class GPIODChipset(GPIOChip):
@@ -14,6 +14,8 @@ class GPIODChipset(GPIOChip):
               dictionary mapping strings to line numbers
               for adding human readable names to GPIO lines
         """
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.chips = {
             "defaultChip": devices[gpio_config["defaultChipID"]],
         }
@@ -25,10 +27,10 @@ class GPIODChipset(GPIOChip):
         for chipID, chip in self.chips.items(): 
             for alias, line in chip.lineAliases.items():
                 if alias in self.lineAliases:
-                    logging.warning("GPIO line alias '{0}' has a conflict between chips {1} and {2}. Using {2}.".format(alias, chipID, self.lineAliases[alias]))
+                    self._logger.warning("GPIO line alias '{0}' has a conflict between chips {1} and {2}. Using {2}.".format(alias, chipID, self.lineAliases[alias]))
                     continue
             self.lineAliases[alias] = chipID
-        logging.debug(self.lineAliases)
+        self._logger.debug(self.lineAliases)
 
     def setup(self, pin, pinType=LINE_REQ_DIR_OUT, outputValue=0):
         """

@@ -1,6 +1,6 @@
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 import gpiod
-import logging
+from util.logger import MultiprocessingLogger
 
 
 class GPIODChip(GPIOChip):
@@ -15,6 +15,8 @@ class GPIODChip(GPIOChip):
               dictionary mapping strings to line numbers
               for adding human readable names to GPIO lines
         """
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.output_offsets = []
         self.output_values = []
         self.output_lines = []
@@ -24,7 +26,7 @@ class GPIODChip(GPIOChip):
         if 'lineAliases' in gpio_config:
             for alias, line in gpio_config['lineAliases'].items():
                 self.lineAliases[alias] = line
-        logging.debug(self.lineAliases)
+        self._logger.debug(self.lineAliases)
 
     def __output(self):
         """

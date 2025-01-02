@@ -1,14 +1,11 @@
-import logging
-
 from hardware.reagentdispenser.base import ReagentDispenser
-
-
-def log(message):
-    logging.info('reagentdispenser.simulation - {0}'.format(message))
+from util.logger import MultiprocessingLogger
 
 
 class SimulatedReagentDispenser(ReagentDispenser):
     def __init__(self, reagent_dispenser_config: dict):
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.minSpeed = 0.1
         self.maxSpeed = 10
         if 'minSpeed' in reagent_dispenser_config:
@@ -28,11 +25,11 @@ class SimulatedReagentDispenser(ReagentDispenser):
             None
         """
         if pumpId == 'X':
-            log('Dispensing {0}ml from pump X'.format(volume))
+            self._logger.info('Dispensing {0}ml from pump X'.format(volume))
         elif pumpId == 'Y':
-            log('Dispensing {0}ml from pump Y'.format(volume))
+            self._logger.info('Dispensing {0}ml from pump Y'.format(volume))
         elif pumpId == 'Z':
-            log('Dispensing {0}ml from pump Z'.format(volume))
+            self._logger.info('Dispensing {0}ml from pump Z'.format(volume))
         else:
             raise ValueError("Pump '{0}' does not exist.".format(pumpId))
         return abs(volume)

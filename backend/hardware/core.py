@@ -7,11 +7,12 @@ for the module, as well as adding a call to that for a unique string setting to 
 file.
 """
 
+import logging
 import time
 import config
 from hardware import devicelist
 from enum import Enum
-import logging
+from util.logger import MultiprocessingLogger
 
 from hardware.devicelist import loadHardwareConfiguration
 
@@ -25,11 +26,13 @@ class MicroLabHardwareState(Enum):
 class MicroLabHardware:
 
     _microlabHardware = None
+    _logger = None
 
     def __init__(self, deviceDefinition: list[dict]):
         """
         Constructor. Initializes the hardware.
         """
+
         self.startTime = None
         self.devices = {}
         self.state = MicroLabHardwareState.STARTING
@@ -38,12 +41,22 @@ class MicroLabHardware:
         self.startTime = time.monotonic()
         self.loadHardware(deviceDefinition)
 
+        if self._logger is None:
+            self._logger = self._get_logger()
+
+    @classmethod
+    def _get_logger(cls) -> logging.Logger:
+        return MultiprocessingLogger.get_logger(__name__)
+
     @classmethod
     def get_microlab_hardware_controller(cls):
+        if cls._logger is None:
+            cls._logger = cls._get_logger()
+
         if not cls._microlabHardware:
-            logging.info("")
-            logging.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
-            logging.info("Loading microlab hardware configuration.")
+            cls._logger.info("")
+            cls._logger.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
+            cls._logger.info("Loading microlab hardware configuration.")
 
             hardwareConfig = loadHardwareConfiguration()
             deviceDefinitions = hardwareConfig['devices']
@@ -67,7 +80,7 @@ class MicroLabHardware:
             self.state = MicroLabHardwareState.INITIALIZED
             return True, ''
         except Exception as e:
-            logging.exception(str(e))
+            self._logger.exception(str(e))
             self.state = MicroLabHardwareState.FAILED_TO_START
             self.error = e
             return False, str(e)

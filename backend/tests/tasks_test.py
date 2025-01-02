@@ -1,8 +1,14 @@
+from config import microlabConfig
+microlabConfig.validate_config()
+
 from recipes import tasks
 import pytest
 import yaml
 import hardware.core
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
+
+from util.logger import MultiprocessingLogger
+MultiprocessingLogger._logging_queue = MagicMock()
 
 
 @pytest.fixture

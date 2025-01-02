@@ -1,14 +1,12 @@
 from hardware.temperaturecontroller.base import TempController
-import logging
-
-
-def log(message):
-    logging.info('tempcontroller.simulation - ' + str(message))
+from util.logger import MultiprocessingLogger
 
 
 class SimulatedTempController(TempController):
     def __init__(self, sim_temp_controller_config: dict):
         super().__init__(sim_temp_controller_config, devices=None)
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.maxTemp = sim_temp_controller_config["maxTemp"]
         self.minTemp = sim_temp_controller_config["minTemp"]
         self.heating = False
@@ -24,7 +22,7 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        log('Turning on heat')
+        self._logger.info('Turning on heat')
         self.heating = True
 
     def turnHeaterOff(self):
@@ -34,14 +32,14 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        log('Turning off heat')
+        self._logger.info('Turning off heat')
         self.heating = False
 
     def turnHeaterPumpOn(self):
-        log("heater pump turned on")
+        self._logger.info("heater pump turned on")
 
     def turnHeaterPumpOff(self):
-        log("heater pump turned off")
+        self._logger.info("heater pump turned off")
 
     def turnCoolerOn(self):
         """
@@ -50,7 +48,7 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        log('Turning on cooling')
+        self._logger.info('Turning on cooling')
         self.cooling = True
 
     def turnCoolerOff(self):
@@ -60,7 +58,7 @@ class SimulatedTempController(TempController):
         :return:
         None
         """
-        log('Turning off cooling')
+        self._logger.info('Turning off cooling')
         self.cooling = False
 
     def getTemp(self):
@@ -85,7 +83,7 @@ class SimulatedTempController(TempController):
                     self.temperature = self.temperature - 0.1
                 elif self.temperature < 24:
                     self.temperature = self.temperature + 0.1
-        logging.info('Temperature read as: {0}'.format(self.temperature))
+        self._logger.info('Temperature read as: {0}'.format(self.temperature))
         return self.temperature
 
     def getMaxTemperature(self):

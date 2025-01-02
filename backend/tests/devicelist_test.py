@@ -1,8 +1,8 @@
+from config import microlabConfig
+microlabConfig.validate_config()
+
 from hardware.devicelist import validateConfiguration, sort_device_configs
 import pytest
-import yaml
-import hardware.core
-from unittest.mock import patch, MagicMock
 
 
 def test_detects_deplicate_ids():

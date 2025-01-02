@@ -85,9 +85,8 @@ plan object
 from recipes import tasks
 from hardware.core import MicroLabHardware
 from datetime import datetime, timedelta, timezone
-import traceback
 from enum import Enum
-import logging
+from util.logger import MultiprocessingLogger
 
 
 class RecipeState(str, Enum):
@@ -116,6 +115,8 @@ class Recipe:
         :param plan:
         The recipe plan. See module documentation for object description.
         """
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.step = 0
         self.message = ''
         self.status = RecipeState.IDLE
@@ -138,11 +139,11 @@ class Recipe:
         """
         supported, msg = self.isRecipeSupported(self.plan)
         if supported:
-            logging.info('Starting recipe {0}'.format(self.currentRecipe))
+            self._logger.info('Starting recipe {0}'.format(self.currentRecipe))
             self.step = 0
             self.runStep()
         else:
-            logging.info('Recipe {0} unsupported: {1}'.format(self.currentRecipe, msg))
+            self._logger.info('Recipe {0} unsupported: {1}'.format(self.currentRecipe, msg))
             self.status = RecipeState.RECIPE_UNSUPPORTED
             self.message = msg
 
@@ -167,7 +168,7 @@ class Recipe:
         :return:
         None
         """
-        logging.info('Stopping recipe {0}'.format(self.currentRecipe))
+        self._logger.info('Stopping recipe {0}'.format(self.currentRecipe))
         self.step = -1
         if self.status != RecipeState.ERROR:
             self.status = RecipeState.IDLE
@@ -274,7 +275,7 @@ class Recipe:
             string
                 The message to display to the user in case of failure.
         """
-        logging.info('Running step {0}'.format(self.step))
+        self._logger.info('Running step {0}'.format(self.step))
         step = self.plan[RECIPE_STEPS][self.step]
         self.message = step['message']
         self.stepCompletionTime = None
@@ -347,18 +348,18 @@ class Recipe:
         """
         for task in self.currentTasks:
             if not task["done"] and datetime.now() > task["nextTime"]:
-                logging.debug("task is ready for next iteration")
+                self._logger.debug("task is ready for next iteration")
                 try:
                     res = next(task["fn"])
                     if res == None:
-                        logging.debug("task is done")
+                        self._logger.debug("task is done")
                         task["done"] = True
                     else:
                         duration = timedelta(seconds=res)
-                        logging.debug("task is scheduled for {0}".format(datetime.now() + duration))
+                        self._logger.debug("task is scheduled for {0}".format(datetime.now() + duration))
                         task["nextTime"] = datetime.now() + duration
                 except Exception as e:
-                    logging.exception(str(e))
+                    self._logger.exception(str(e))
                     task["exception"] = e
                     self.status = RecipeState.ERROR
                     self.message = 'Task execution failed.'

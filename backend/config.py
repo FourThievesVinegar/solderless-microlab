@@ -19,24 +19,26 @@ class MicrolabConfig:
     changes from disk.
     """
     def __init__(self):
-        vdt = Validator()
+        config_file_name = '/etc/microlab/microlab.ini'
 
-        configFileName = '/etc/microlab/microlab.ini'
+        makedirs(path.dirname(config_file_name), exist_ok=True)
 
-        makedirs(path.dirname(configFileName), exist_ok=True)
+        self.config = ConfigObj(config_file_name, configspec="defaultconfig.ini")
 
-        self.config = ConfigObj(configFileName, configspec="defaultconfig.ini")
+    def validate_config(self):
 
-        res = self.config.validate(vdt, copy=True, preserve_errors=True)
+        validator = Validator()
+
+        validation_data = self.config.validate(validator, copy=True, preserve_errors=True)
 
         self.config.write()
 
-        for entry in flatten_errors(self.config, res):
+        for entry in flatten_errors(self.config, validation_data):
             section_list, key, error = entry
-            partialKey = self.config
+            partial_key = self.config
             for section in section_list:
-                partialKey = partialKey[section]
-                default = partialKey.restore_default(key)
+                partial_key = partial_key[section]
+                default = partial_key.restore_default(key)
 
                 if key is not None:
                     section_list.append(key)
