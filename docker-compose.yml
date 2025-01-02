@@ -18,6 +18,7 @@ services:
     volumes:
       - ./docker/microlab-docker.ini:/etc/microlab/microlab.ini
       - ./backend:/app
+      - ./docker/data:/var/lib/microlab
       
     networks:
       - backend
