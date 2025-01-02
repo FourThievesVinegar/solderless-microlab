@@ -1,6 +1,6 @@
 from hardware.reagentdispenser.base import ReagentDispenser
-import logging
 import math
+from util.logger import MultiprocessingLogger
 
 
 class SyringePump(ReagentDispenser):
@@ -45,6 +45,7 @@ class SyringePump(ReagentDispenser):
                     mmPerml
                     maxmmPerMin
         """
+        self._logger = MultiprocessingLogger.get_logger(__name__)
         self.grbl = devices[reagent_dispenser_config["grblID"]]
         self.syringePumpsConfig = reagent_dispenser_config["syringePumpsConfig"]
         self.axisMinmmPerMin = {}
@@ -84,11 +85,11 @@ class SyringePump(ReagentDispenser):
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
         totalmm = volume * mmPerml
         command = "G91 G1 {0}{1} F{2}".format(pumpId, totalmm, dispenseSpeed)
-        logging.debug("Dispensing with command '{}'".format(command))
+        self._logger.debug("Dispensing with command '{}'".format(command))
         self.grbl.grblWrite(command)
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
 
-        logging.info(
+        self._logger.info(
             "Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(
                 volume, dispenseSpeed, dispenseTime
             )

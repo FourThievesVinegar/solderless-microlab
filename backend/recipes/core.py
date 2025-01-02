@@ -13,8 +13,8 @@ from os.path import isfile, join
 from recipes import state
 from recipes.base import Recipe
 from hardware.core import MicroLabHardware, MicroLabHardwareState
-from config import microlabConfig as config 
-import logging
+from config import microlabConfig as config
+from util.logger import MultiprocessingLogger
 
 def getRecipeList():
     """
@@ -22,6 +22,8 @@ def getRecipeList():
     A list of modules in the config.recipesPackages.
     It is assumed that these are all recipes.
     """
+    logger = MultiprocessingLogger.get_logger(__name__)
+
     path = config.recipesDirectory
     files = [f for f in listdir(path) if isfile(join(path, f))]
     recipeList = []
@@ -34,7 +36,7 @@ def getRecipeList():
                     recipeData["fileName"] = f
                     recipeList.append(recipeData)
             except json.JSONDecodeError:
-                logging.error("Error loading recipe file: {0}. File is not in proper JSON format".format(f))
+                logger.error("Error loading recipe file: {0}. File is not in proper JSON format".format(f))
         # This doesn't actually work yet because .4tv are not importable as modules
         if f.endswith('.4tv'):
             recipeList.append(f[:-4])

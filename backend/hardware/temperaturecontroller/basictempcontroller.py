@@ -1,5 +1,5 @@
 from hardware.temperaturecontroller.base import TempController
-import logging
+from util.logger import MultiprocessingLogger
 
 
 RELAY_ON = 1
@@ -26,6 +26,8 @@ class BasicTempController(TempController):
               Minimum temperature the hardware will support
         """
         super().__init__(temp_controller_config, devices)
+        self._logger = MultiprocessingLogger.get_logger(__name__)
+
         self.gpio = devices[temp_controller_config["gpioID"]]
         self.heaterPin = temp_controller_config["heaterPin"]
         self.heaterPumpPin = temp_controller_config["heaterPumpPin"]
@@ -50,7 +52,7 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.debug("heater turned on")
+        self._logger.debug("heater turned on")
         self.gpio.output(self.heaterPin, RELAY_ON)
 
     def turnHeaterOff(self):
@@ -60,15 +62,15 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.debug("heater turned off")
+        self._logger.debug("heater turned off")
         self.gpio.output(self.heaterPin, RELAY_OFF)
 
     def turnHeaterPumpOn(self):
-        logging.debug("heater pump turned on")
+        self._logger.debug("heater pump turned on")
         self.gpio.output(self.heaterPumpPin, RELAY_ON)
 
     def turnHeaterPumpOff(self):
-        logging.debug("heater pump turned off")
+        self._logger.debug("heater pump turned off")
         self.gpio.output(self.heaterPumpPin, RELAY_OFF)
 
     def turnCoolerOn(self):
@@ -78,7 +80,7 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.debug("cooler turned on")
+        self._logger.debug("cooler turned on")
         self.gpio.output(self.coolerPin, RELAY_ON)
 
     def turnCoolerOff(self):
@@ -88,7 +90,7 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        logging.debug("cooler turned off")
+        self._logger.debug("cooler turned off")
         self.gpio.output(self.coolerPin, RELAY_OFF)
 
     def getTemp(self):
