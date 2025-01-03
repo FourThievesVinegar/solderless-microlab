@@ -72,6 +72,10 @@ class MicrolabRecipeStep(BaseModel):
         pump
         stir
     """
+    parameters: Optional[dict] = None
+    """
+    Parameters for the baseTask defined in the setep
+    """
     options: Optional[list[MicrolabRecipeOption]] = None
     """
     List of selectable options presented to the user for this step
