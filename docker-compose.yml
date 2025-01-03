@@ -11,9 +11,15 @@ services:
     # Uncomment the following lines if running against actual hardware
     #      HARDWARE_PACKAGE: real
     #    devices:
-    #      - /dev/gpiomem:/dev/gpiomem
-    #        /dev/ttyUSB0:/dev/ttyUSB0
-    #        /dev/ttyUSB1:/dev/ttyUSB1
+    #      -  /dev/gpiomem:/dev/gpiomem
+    #      -  /dev/ttyUSB0:/dev/ttyUSB0
+    #      -  /dev/ttyUSB1:/dev/ttyUSB1
+    #      -  /dev/ttyACM0:/dev/ttyACM0
+    volumes:
+      - ./docker/microlab-docker.ini:/etc/microlab/microlab.ini
+      - ./backend:/app
+      - ./docker/data:/var/lib/microlab
+      
     networks:
       - backend
 
