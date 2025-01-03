@@ -84,6 +84,16 @@ class MicrolabRecipeStep(BaseModel):
     """
     Is true when this step is the final step of this recipe
     """
+    @model_validator(mode='after')
+    def step_has_one_of_next_or_options(self):
+        if self.done:
+            return self
+        if (not self.next) and (not self.options or len(self.options) == 0):
+            raise ValueError(f'Step must have a valid value for either "next" or "options".')
+        if (self.next) and (self.options and len(self.options) > 0):
+            raise ValueError(f'Step cannot have both "next" and "options" configured.')
+        return self
+
 
 class MicrolabRecipeMaterial(BaseModel):
     description: str
