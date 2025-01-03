@@ -1,4 +1,3 @@
-
 # MicroLab Reactor Unit Assembly
 
 The Reactor Unit is where the action happens, it is made up of the pumps, pump case, reactor core and reactor unit stand.
@@ -19,32 +18,32 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 
 **Printer parts info.** Parts listed as printed, like "CU-CB Control Case (Printed)", are 3D printed, check the [3D Printed Parts section ](docs/index.md#3d) of the "How to build the MicroLab" page.
 
-| Part ID      | Part Name     | Count | Notes |
-| ------------- | ------------- |------| ----|  
-|||
-RU-SRM|	Stir rod motor|	1
-RU-STR|	Stir rod |	1
-RU-SRC|	Stir rod coupling|
-RU-LID|	Reactor manifold core and lid (Printed)|	1
-RU-SRM|	Stir rod mount (Printed)|	1
-RU-RJF|	Jar Flanges (Printed)|	2
-RU-COR|	6 oz mason jar for core chamber|	1
-RU-OUT|	32oz wide mouth mason jar for outer jacket|	1
-RU-SDH|	Reactor stand - H  (Printed)|	1
-RU-SDH|	Reactor stand - A  (Printed)|	1
-RU-SDH|	Reactor stand - ¢  (Printed)|	1
-RU-SDH|	Reactor stand - K  (Printed)|	1
-RU-TMP|	Thermistor|	1
-RU-PPM|	Peristaltic pumps with stepper motors|	3 | [Or printable syringe pumps](https://github.com/FourThievesVinegar/microlab-parts/tree/master/syringe-pump)
-SP-SMC|	Stepper motor cables | 3 | 6-pin end for motors
-RU-SYR|	Syringes|	3
-RU-PUB|	Pumps box (Printed)|	1
-RU-PUL|	Pumps lid (Printed)|	1
-RU-SUP|	Pumps lid (Printed)|	1
-TC-PMP|	Circulating pump| 2
-SP-PC12| 12-pin connector, panel-mount screw terminal| 1
-SP-PC8|	8-pin connector, panel-mount screw terminal| 1
-CU-PLG|	Barrel plug connectors, 5.5mm x 2.1mm| 2 |female
+| Part ID | Part Name                                    | Count | Notes                                                                                                     |
+| ------- | -------------------------------------------- | ----- | --------------------------------------------------------------------------------------------------------- |
+|         |                                              |
+| RU-SRM  | Stir rod motor                               | 1     |
+| RU-STR  | Stir rod                                     | 1     |
+| RU-SRC  | Stir rod coupling                            |
+| RU-LID  | Reactor manifold core and lid (Printed)      | 1     |
+| RU-SRM  | Stir rod mount (Printed)                     | 1     |
+| RU-RJF  | Jar Flanges (Printed)                        | 2     |
+| RU-COR  | 6 oz mason jar for core chamber              | 1     |
+| RU-OUT  | 32oz wide mouth mason jar for outer jacket   | 1     |
+| RU-SDH  | Reactor stand - H (Printed)                  | 1     |
+| RU-SDH  | Reactor stand - A (Printed)                  | 1     |
+| RU-SDH  | Reactor stand - ¢ (Printed)                  | 1     |
+| RU-SDH  | Reactor stand - K (Printed)                  | 1     |
+| RU-TMP  | Thermistor                                   | 1     |
+| RU-PPM  | Peristaltic pumps with stepper motors        | 3     | [Or printable syringe pumps](https://github.com/FourThievesVinegar/microlab-parts/tree/main/syringe-pump) |
+| SP-SMC  | Stepper motor cables                         | 3     | 6-pin end for motors                                                                                      |
+| RU-SYR  | Syringes                                     | 3     |
+| RU-PUB  | Pumps box (Printed)                          | 1     |
+| RU-PUL  | Pumps lid (Printed)                          | 1     |
+| RU-SUP  | Pumps lid (Printed)                          | 1     |
+| TC-PMP  | Circulating pump                             | 2     |
+| SP-PC12 | 12-pin connector, panel-mount screw terminal | 1     |
+| SP-PC8  | 8-pin connector, panel-mount screw terminal  | 1     |
+| CU-PLG  | Barrel plug connectors, 5.5mm x 2.1mm        | 2     | female                                                                                                    |
 
 ## Assembling the Pumps Box
 
@@ -102,42 +101,43 @@ Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the 
 - Cut and strip the wires on the pumps and barrel plug connectors.
 
 ### **Wire Order**
+
 <a name="wireorder"></a>
 The connectors need to be wired the same as the ones in the Control Unit. The wiring order is further explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
 <br>
 
-
   <IMG ALT="Pump lid fully assembled" SRC="./media/pumps-unit/pumps-unit-lid-assembled.jpg" WIDTH="400" />
-
 
 ### 8-pin wiring
 
 The 8-pin connector is connected to the positive and negative power wires for the accessory port, the stir rod, the cooling unit pump and then heating unit pump.
 
- - **Find the wires.** We describe the location of components as seen from the back on the box where you currently working.
-  - The top barrel connection is for the stir rod
-  - The bottom barrel connection is for the accessory port
-  - The left pump is for the Cooling Pump Unit
-  - The right pump is for the Heating Pump Unit
+- **Find the wires.** We describe the location of components as seen from the back on the box where you currently working.
+- The top barrel connection is for the stir rod
+- The bottom barrel connection is for the accessory port
+- The left pump is for the Cooling Pump Unit
+- The right pump is for the Heating Pump Unit
 
   <IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pump_box_label.png" WIDTH="300" />
 
-  - **Wire the 8-pin connector.** On the back on the  8-pin connector, from the left, insert and then screw down the power cables:
-    - accessory positive (red)
-    - accessory negative (black)
-    - stir positive (red)
-    - stir negative (black)
-    - cooling pump positive (red)
-    - cooling pump negative (black)
-    - heating pump positive (red)
-    - heating pump negative (black)
+- **Wire the 8-pin connector.** On the back on the 8-pin connector, from the left, insert and then screw down the power cables:
 
-    <IMG ALT="Cable order" SRC="./media/reactor-unit/ru_reverse_wire.png" WIDTH="200" />
+  - accessory positive (red)
+  - accessory negative (black)
+  - stir positive (red)
+  - stir negative (black)
+  - cooling pump positive (red)
+  - cooling pump negative (black)
+  - heating pump positive (red)
+  - heating pump negative (black)
+
+  <IMG ALT="Cable order" SRC="./media/reactor-unit/ru_reverse_wire.png" WIDTH="200" />
 
 ### 12-pin wiring
 
 - **Wire the pumps.** Attach each of the connector ends of the stepper motor cables to one of the peristaltic pumps.
 - **Wire the 12-pin connector.** Insert the stripped wire ends of the stepper motor cables into the back 12-pin connector socket. From left to right insert and then screw down the wires for the X and then Y and then Z cables.
+
   - Wire order. Each of the X, Y, and Z cables has 4 wires. From the left connect the wires in this order:
     - black
     - green
@@ -163,7 +163,6 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 
 (Sorry if it was. We're trying to be encouraging here, not snarky.)
 
-
 ## Reactor Core Assembly
 
 <a name="core"></a>
@@ -174,28 +173,28 @@ The Reactor Core houses the reaction chamber, which is where the SCIENCE happens
 
 ### Parts
 
-| Part ID      | Part Name     | Count | Notes |
-| ------------- | ------------- |------| ----|  
-|||
-RU-SRM|	Stir rod motor|	1
-RU-STR|	Stir rod | 1
-RU-SRC|	Stir rod coupler| 1
-RU-COR|	Reactor manifold core (Printed)| 1
-RU-LID|	Reactor manifold lid (Printed)| 1
-RU-SRM|	Stir rod mount (Printed)|	1
-RU-RJF|	Jar Flanges (Printed)|	2
-RU-COR|	6 oz regular mouth mason jar for core chamber|	1
-RU-OUT|	32oz wide mouth mason jar for outer jacket|	1
-RU-SDH|	Reactor stand - H  (Printed)|	1
-RU-SDH|	Reactor stand - A  (Printed)|	1
-RU-SDH|	Reactor stand - ¢  (Printed)|	1
-RU-SDH|	Reactor stand - K  (Printed)|	1
-RU-TMP|	Thermistor|	1
-RU-SYR|	Syringes|	3
-CU-PLG|	Barrel plug connectors, 5.5mm x 2.1mm| 2 |female
-SP-M3S-12| 12mm M3 screws with nuts | 3
-SP-M3S-20| 20mm M3 screws with nuts | 3
-SP-STB|Silicone tubing 8mm OD x 5mm ID|1
+| Part ID   | Part Name                                     | Count | Notes  |
+| --------- | --------------------------------------------- | ----- | ------ |
+|           |                                               |
+| RU-SRM    | Stir rod motor                                | 1     |
+| RU-STR    | Stir rod                                      | 1     |
+| RU-SRC    | Stir rod coupler                              | 1     |
+| RU-COR    | Reactor manifold core (Printed)               | 1     |
+| RU-LID    | Reactor manifold lid (Printed)                | 1     |
+| RU-SRM    | Stir rod mount (Printed)                      | 1     |
+| RU-RJF    | Jar Flanges (Printed)                         | 2     |
+| RU-COR    | 6 oz regular mouth mason jar for core chamber | 1     |
+| RU-OUT    | 32oz wide mouth mason jar for outer jacket    | 1     |
+| RU-SDH    | Reactor stand - H (Printed)                   | 1     |
+| RU-SDH    | Reactor stand - A (Printed)                   | 1     |
+| RU-SDH    | Reactor stand - ¢ (Printed)                   | 1     |
+| RU-SDH    | Reactor stand - K (Printed)                   | 1     |
+| RU-TMP    | Thermistor                                    | 1     |
+| RU-SYR    | Syringes                                      | 3     |
+| CU-PLG    | Barrel plug connectors, 5.5mm x 2.1mm         | 2     | female |
+| SP-M3S-12 | 12mm M3 screws with nuts                      | 3     |
+| SP-M3S-20 | 20mm M3 screws with nuts                      | 3     |
+| SP-STB    | Silicone tubing 8mm OD x 5mm ID               | 1     |
 
 ### Tools
 
@@ -290,10 +289,10 @@ These instructions assume you have already assembled the Pumps Box and the React
 
 - 6 oz mason jar for core chamber| (RU-COR)
 - 32oz wide mouth mason jar for outer jacket (RU-OUT)
-- Reactor stand - H  (Printed) (RU-SDH)
-- Reactor stand - A  (Printed) (RU-SDA)
-- Reactor stand - ¢  (Printed) (RU-SDC)
-- Reactor stand - K  (Printed) (RU-SDK)
+- Reactor stand - H (Printed) (RU-SDH)
+- Reactor stand - A (Printed) (RU-SDA)
+- Reactor stand - ¢ (Printed) (RU-SDC)
+- Reactor stand - K (Printed) (RU-SDK)
 
 <IMG ALT="Reactor stand parts" SRC="./media/reactor-unit/reactor-stand-parts.jpg" WIDTH="400"/>
 
@@ -305,23 +304,27 @@ These instructions assume you have already assembled the Pumps Box and the React
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/ru_stand.png" WIDTH="300" />
 
 - Use the M3 screws to assemble the Reactor Stand pieces in the following way:
+
   - **Connect H and A**
+
     - Place the H on the left, tilted up in its left side, the top "arms" of the H at the back should have 2 slots.
     - Place the A at the back tilted on its left side so the "feet" of the A line up with the top of the H.
-    <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_h.png" WIDTH="200"/>
+      <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_h.png" WIDTH="200"/>
       <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_a.png" WIDTH="190"/>
     - Slide the hooks on the A into the slots on H
 
   - **Connect the A and K**
+
     - A is already positioned
     - Place the K on the right, tilt it up on its left side so A can hook into the two slots on the K.
 
       <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_k.png" WIDTH="200"/>
 
   - **Connect the ¢ to the H and K**
-      - Position the ¢ between the H and K with the empty space of the C opening at the front. The ¢ is attached at the top, the two hooks on either end of the ¢ will line up with the 2 slots on the H and an on the K.  
 
-          <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_c.png" WIDTH="200"/>
+    - Position the ¢ between the H and K with the empty space of the C opening at the front. The ¢ is attached at the top, the two hooks on either end of the ¢ will line up with the 2 slots on the H and an on the K.
+
+        <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_c.png" WIDTH="200"/>
 
   <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand.png" WIDTH="200"/>
 
@@ -344,6 +347,7 @@ You've already built the core and the pump. All that's left to do is connect it 
 <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_stand_assembled.png" WIDTH="200"/>
 
 - **Attach the Reactor Core**
+
   - Place the Reactor Core in the center of the ¢.
   - Add the jar flanges (C shaped pieces) as shims in between the top of the ¢ part and the Reactor Core's outer jar. Two flanges should keep it snugly in place. If not, consider using another shim. (See picture below for reference, the jar flanges are orange and the ¢ piece is yellow.)
 

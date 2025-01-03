@@ -20,7 +20,7 @@ You may want to remove wifi networks you have logged into. Check `/etc/wpa_suppl
 
 ## Doing the Release
 
-- Make a stable branch off of `master`, cherry-pick to it if you make last-minute changes. Use a name like v0.6.0. Use semantic versioning.
+- Make a stable branch off of `main`, cherry-pick to it if you make last-minute changes. Use a name like v0.6.0. Use semantic versioning.
 - Update version numbers in files as appropriate and update the CHANGELOG document as well.
 - Once deployed to units and confirmed working, make disk images and post them somewhere they can be torrented.
 - Make a release tag for your branch on GitHub.
