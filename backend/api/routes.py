@@ -32,13 +32,13 @@ class RouteManager:
         list
             a list containing the names of the recipes. ex: ['recipe1','recipe2']
         """
-        recipeNames = list(map(lambda recipe: recipe['title'], recipes.core.getRecipeList()))
+        recipeNames = list(map(lambda recipe: recipe.title, recipes.core.getRecipeList()))
         return jsonify(recipeNames)
 
     # /recipe/<name>
     def _send_recipe(self, name):
         recipe = recipes.core.getRecipeByName(name)
-        return jsonify(recipe)
+        return jsonify(recipe.model_dump())
 
     # /status
     def _status(self):
@@ -210,7 +210,7 @@ class RouteManager:
         """
         recipe = recipes.core.getRecipeByName(name)
         try:
-            os.remove(join(config.recipesDirectory, secure_filename(recipe["fileName"])))
+            os.remove(join(config.recipesDirectory, secure_filename(recipe.fileName)))
             return jsonify({'response': 'ok'})
         except FileNotFoundError:
             return jsonify({'response': 'error', 'message': "Recipe does not exist."}, 404)

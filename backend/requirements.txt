@@ -8,3 +8,4 @@ pyyaml==6.0.1
 configobj==5.0.8
 simple-pid==2.0.0
 waitress==3.0.0
+pydantic==2.10.4
