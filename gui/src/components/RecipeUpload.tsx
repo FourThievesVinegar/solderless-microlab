@@ -22,9 +22,13 @@ export const RecipeUpload = ({ onUpload }: { onUpload?: () => void }) => {
     }
     setMessage(t('upload-waiting-message'))
     uploadRecipe(file)
-      .then(() => {
-        setMessage(t('upload-successful'))
-        onUpload?.()
+      .then(response => {
+        if (response.response === 'ok') {
+          setMessage(t('upload-successful'))
+          onUpload?.()
+        } else if (response.response === 'error') {
+          setMessage(response.message ?? t('upload-failed-generic'))
+        }
       })
       .catch(() => {
         setMessage(t('upload-failed-generic'))
@@ -33,7 +37,7 @@ export const RecipeUpload = ({ onUpload }: { onUpload?: () => void }) => {
 
   return (
     <Form onSubmit={handleFileUpload} encType="multipart/form-data">
-      {message}
+      <p style={{ whiteSpace: 'pre-wrap' }}>{message}</p>
       <Input type="file" id="File" onChange={fileChange} />
       <Button color="purple" type="submit">
         {t('upload-button-text')}

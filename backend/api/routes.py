@@ -12,6 +12,8 @@ import json
 from config import microlabConfig as config
 import glob 
 from pathlib import Path
+from recipes.model import MicrolabRecipe
+from pydantic_core import ValidationError
 
 from microlab.interface import MicrolabInterface
 
@@ -32,13 +34,13 @@ class RouteManager:
         list
             a list containing the names of the recipes. ex: ['recipe1','recipe2']
         """
-        recipeNames = list(map(lambda recipe: recipe['title'], recipes.core.getRecipeList()))
+        recipeNames = list(map(lambda recipe: recipe.title, recipes.core.getRecipeList()))
         return jsonify(recipeNames)
 
     # /recipe/<name>
     def _send_recipe(self, name):
         recipe = recipes.core.getRecipeByName(name)
-        return jsonify(recipe)
+        return jsonify(recipe.model_dump())
 
     # /status
     def _status(self):
@@ -184,7 +186,14 @@ class RouteManager:
         if f.mimetype != 'application/json':
             return jsonify({'response': 'error', 'message': "Recipe is not a json file."}), 400
         try:
-            json.load(f.stream)
+            recipeData = json.load(f.stream)
+            recipeData["fileName"] = f.filename
+            MicrolabRecipe.model_validate(recipeData)
+        except ValidationError as err:
+            return jsonify({
+                'response': 'error',
+                'message': "Error with recipe: {1}".format(f, str(err))
+                }), 400
         except Exception:
             return jsonify({'response': 'error', 'message': "File does not contain valid JSON."}), 400
 
@@ -210,7 +219,7 @@ class RouteManager:
         """
         recipe = recipes.core.getRecipeByName(name)
         try:
-            os.remove(join(config.recipesDirectory, secure_filename(recipe["fileName"])))
+            os.remove(join(config.recipesDirectory, secure_filename(recipe.fileName)))
             return jsonify({'response': 'ok'})
         except FileNotFoundError:
             return jsonify({'response': 'error', 'message': "Recipe does not exist."}, 404)

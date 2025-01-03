@@ -83,6 +83,7 @@ plan object
 """
 
 from recipes import tasks
+from recipes.model import MicrolabRecipe, MicrolabRecipeTask
 from hardware.core import MicroLabHardware
 from datetime import datetime, timedelta, timezone
 from enum import Enum
@@ -97,23 +98,13 @@ class RecipeState(str, Enum):
     USER_INPUT = 'user_input'
     COMPLETE = 'complete'
 
-
-RECIPE_STEPS = 'steps'
-STEP_TASKS = 'tasks'
-TASK_TYPE = 'baseTask'
-TASK_PARAMETERS = 'parameters'
-NEXT_STEP = 'next'
-STEP_USER_OPTIONS = 'options'
-LAST_STEP = 'done'
-
-
-class Recipe:
+class RunningRecipe:
     
-    def __init__(self, plan, microlabHardware: MicroLabHardware):
+    def __init__(self, recipe: MicrolabRecipe, microlabHardware: MicroLabHardware):
         """
-        Constructor. Saves the plan.
-        :param plan:
-        The recipe plan. See module documentation for object description.
+        Constructor. Saves the recipe.
+        :param recipe:
+        The recipe. See module documentation for object description.
         """
         self._logger = MultiprocessingLogger.get_logger(__name__)
 
@@ -123,11 +114,11 @@ class Recipe:
         self.options = []
         self.icon = ''
         self.stepCompletionTime = None
-        self.currentRecipe = None
+        self.title = ""
         self.currentTasks = []
-        self.plan = plan
-        if 'title' in plan:
-            self.currentRecipe = plan['title']
+        self.recipe = recipe
+        if recipe.title:
+            self.title = recipe.title
 
         self._microlabHardware = microlabHardware
 
@@ -137,28 +128,27 @@ class Recipe:
         :return:
         None
         """
-        supported, msg = self.isRecipeSupported(self.plan)
+        supported, msg = self.isRecipeSupported(self.recipe)
         if supported:
-            self._logger.info('Starting recipe {0}'.format(self.currentRecipe))
+            self._logger.info('Starting recipe {0}'.format(self.title))
             self.step = 0
             self.runStep()
         else:
-            self._logger.info('Recipe {0} unsupported: {1}'.format(self.currentRecipe, msg))
+            self._logger.info('Recipe {0} unsupported: {1}'.format(self.title, msg))
             self.status = RecipeState.RECIPE_UNSUPPORTED
             self.message = msg
 
-    def isRecipeSupported(self, recipe):
+    def isRecipeSupported(self, recipe: MicrolabRecipe):
         max = self._microlabHardware.getMaxTemperature()
         minTemp = self._microlabHardware.getMinTemperature()
-        for step in recipe[RECIPE_STEPS]:
-            if STEP_TASKS in step:
-                for task in step[STEP_TASKS]:
-                    if "temp" in task[TASK_PARAMETERS]:
-                        temp = task[TASK_PARAMETERS]["temp"]
-                        if temp > max:
-                            return False, "Recipe requires temperature of {0}C, which is higher than your current hardware supports ({1}C).".format(temp, max)
-                        if temp < minTemp:
-                            return False, "Recipe requires temperature of {0}C, which is lower than your current hardware supports ({1}C).".format(temp, minTemp)
+        for step in recipe.steps:
+            for task in step.tasks:
+                if "temp" in task.parameters:
+                    temp = task.parameters["temp"]
+                    if temp > max:
+                        return False, "Recipe requires temperature of {0}C, which is higher than your current hardware supports ({1}C).".format(temp, max)
+                    if temp < minTemp:
+                        return False, "Recipe requires temperature of {0}C, which is lower than your current hardware supports ({1}C).".format(temp, minTemp)
         return True, ''
 
     def stop(self):
@@ -168,7 +158,7 @@ class Recipe:
         :return:
         None
         """
-        self._logger.info('Stopping recipe {0}'.format(self.currentRecipe))
+        self._logger.info('Stopping recipe {0}'.format(self.title))
         self.step = -1
         if self.status != RecipeState.ERROR:
             self.status = RecipeState.IDLE
@@ -226,13 +216,12 @@ class Recipe:
         """
         if self.status == RecipeState.RUNNING:
             if self.areTasksComplete():
-                currentStep = self.plan[RECIPE_STEPS][self.step]
-                if (LAST_STEP in currentStep) and (currentStep[LAST_STEP] == True):
+                currentStep = self.recipe.getStep(self.step)
+                if currentStep.done:
                     self.stop()
-                else:
-                    if NEXT_STEP in currentStep:
-                        self.step = currentStep[NEXT_STEP]
-                        self.runStep()
+                elif currentStep.next:
+                    self.step = currentStep.next
+                    self.runStep()
 
     def selectOption(self, optionValue):
         """
@@ -250,10 +239,11 @@ class Recipe:
                 The message to display to the user in case of failure.
         """
         found = False
-        if STEP_USER_OPTIONS in self.plan[RECIPE_STEPS][self.step]:
-            for option in self.plan[RECIPE_STEPS][self.step][STEP_USER_OPTIONS]:
-                if option['text'] == optionValue:
-                    self.step = option[NEXT_STEP]
+        stepOptions = self.recipe.getStep(self.step).options
+        if stepOptions:
+            for option in stepOptions:
+                if option.text == optionValue:
+                    self.step = option.next
                     found = True
 
         if not found:
@@ -276,45 +266,46 @@ class Recipe:
                 The message to display to the user in case of failure.
         """
         self._logger.info('Running step {0}'.format(self.step))
-        step = self.plan[RECIPE_STEPS][self.step]
-        self.message = step['message']
+        step = self.recipe.getStep(self.step)
+        self._logger.info('Running step {0}'.format(step))
+        self.message = step.message
         self.stepCompletionTime = None
         self.currentTasks = []
-        options = []
+        options: list[str] = []
         tasksToRun = []
 
-        if STEP_USER_OPTIONS in step:
-            for option in step[STEP_USER_OPTIONS]:
-                options.append(option['text'])
+        if step.options:
+            for option in step.options:
+                options.append(option.text)
             if len(options) > 0:
                 self.status = RecipeState.USER_INPUT
 
         self.options = options
 
-        if ('icon' in step):
-            self.icon = step['icon']
+        if (step.icon):
+            self.icon = step.icon
 
-        if TASK_TYPE in step and step[TASK_TYPE] != 'humanTask': # There are tasks to perform
+        if step.baseTask and step.baseTask != 'humanTask': # There are tasks to perform
             # Add the base task
-            tasksToRun = [{TASK_TYPE: step[TASK_TYPE], TASK_PARAMETERS: step[TASK_PARAMETERS]}]
-        if STEP_TASKS in step: # We have other tasks, let's append the base task and those other tasks
-            tasksToRun = tasksToRun + step[STEP_TASKS]
+            tasksToRun = [MicrolabRecipeTask(baseTask=step.baseTask,parameters=step.parameters)]
+        if step.tasks: # We have other tasks, let's append the base task and those other tasks
+            tasksToRun = tasksToRun + step.tasks
 
         if tasksToRun: # Run all tasks for the step
             for task in tasksToRun:
-                if TASK_TYPE in task and task[TASK_TYPE] != 'humanTask':
-                    self.currentTasks.append(tasks.runTask(self._microlabHardware, task[TASK_TYPE], task[TASK_PARAMETERS]))
+                if task.baseTask and task.baseTask != 'humanTask':
+                    self.currentTasks.append(tasks.runTask(self._microlabHardware, task.baseTask, task.parameters))
             
             tasksWithDurations = filter(
-                lambda task: (TASK_PARAMETERS in task) and ('time' in task[TASK_PARAMETERS]), tasksToRun)
-            taskDurations = list(map(lambda task: task[TASK_PARAMETERS]['time'], tasksWithDurations))
+                lambda task: task.parameters and ('time' in task.parameters), tasksToRun)
+            taskDurations = list(map(lambda task: task.parameters['time'], tasksWithDurations))
             if len(taskDurations) > 0:
                 duration = timedelta(seconds=max(taskDurations))
                 self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
                 
             self.status = RecipeState.RUNNING
 
-        if step.get(LAST_STEP, False) == True:
+        if step.done == True:
             self.status = RecipeState.COMPLETE
 
         return True

@@ -11,12 +11,15 @@ import json
 from os import listdir
 from os.path import isfile, join
 from recipes import state
-from recipes.base import Recipe
+from recipes.base import RunningRecipe
+from recipes.model import MicrolabRecipe
 from hardware.core import MicroLabHardware, MicroLabHardwareState
 from config import microlabConfig as config
 from util.logger import MultiprocessingLogger
+from pydantic_core import ValidationError
+from typing import Optional
 
-def getRecipeList():
+def getRecipeList() -> list[MicrolabRecipe]: 
     """
     :return:
     A list of modules in the config.recipesPackages.
@@ -34,16 +37,18 @@ def getRecipeList():
                 with open(join(path, f)) as inf:
                     recipeData = json.load(inf)
                     recipeData["fileName"] = f
-                    recipeList.append(recipeData)
+                    recipeList.append(MicrolabRecipe.model_validate(recipeData))
+            except ValidationError as err:
+                logger.error("Error loading recipe file '{0}': {1}".format(f, str(err)))
             except json.JSONDecodeError:
-                logger.error("Error loading recipe file: {0}. File is not in proper JSON format".format(f))
+                logger.error("Error loading recipe file '{0}': File is not in proper JSON format".format(f))
         # This doesn't actually work yet because .4tv are not importable as modules
         if f.endswith('.4tv'):
             recipeList.append(f[:-4])
 
     return recipeList
 
-def getRecipeByName(name):
+def getRecipeByName(name) -> Optional[MicrolabRecipe]:
     """
     Gets the full recipe object from its name.
     :param name:
@@ -53,7 +58,7 @@ def getRecipeByName(name):
     """
     recipeList = getRecipeList()
 
-    recipe = next(filter(lambda recipe: recipe['title'] == name, recipeList), None)
+    recipe = next(filter(lambda recipe: recipe.title == name, recipeList), None)
 
     return recipe
 
@@ -78,7 +83,7 @@ def start(name):
     if not (state.currentRecipe is None):
         recipeMessage = state.currentRecipe.getStatus()
         if not recipeMessage['status'] == 'complete':
-            return False, 'Recipe {0} is running. Stop it first.'.format(state.currentRecipe.plan['title'])
+            return False, 'Recipe {0} is running. Stop it first.'.format(state.currentRecipe.title)
 
     # Check that it's a valid recipe.
     recipe = getRecipeByName(name)
@@ -86,7 +91,7 @@ def start(name):
         return False, 'Recipe unknown.'
 
     # Start running the recipe
-    state.currentRecipe = Recipe(recipe, microlabHardware)
+    state.currentRecipe = RunningRecipe(recipe, microlabHardware)
 
     state.currentRecipe.start()
 
@@ -145,7 +150,7 @@ def status(_):
     recipeMessage = state.currentRecipe.getStatus()
     message['status'] = recipeMessage['status']
     message['step'] = recipeMessage['step']
-    message['recipe'] = state.currentRecipe.plan['title']
+    message['recipe'] = state.currentRecipe.title
     message['message'] = recipeMessage['message']
     message['options'] = recipeMessage['options']
     message['icon'] = recipeMessage['icon']

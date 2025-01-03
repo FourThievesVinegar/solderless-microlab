@@ -66,15 +66,13 @@ export const startRecipe = (name: string) => {
     .then(data => console.log(data))
 }
 
-export const uploadRecipe = (file: string | Blob | File) => {
+export const uploadRecipe = (file: string | Blob | File): Promise<{ response: 'ok' | 'error'; message?: string }> => {
   const formData = new FormData()
   formData.append('File', file)
   return fetch(apiUrl + 'uploadRecipe', {
     method: 'POST',
     body: formData,
-  })
-    .then(response => response.json())
-    .then(data => console.log(data))
+  }).then(response => response.json())
 }
 
 export const getControllerHardware = (): Promise<{ controllerHardware: string }> => {
