@@ -12,6 +12,8 @@ import json
 from config import microlabConfig as config
 import glob 
 from pathlib import Path
+from recipes.model import MicrolabRecipe
+from pydantic_core import ValidationError
 
 from microlab.interface import MicrolabInterface
 
@@ -184,7 +186,14 @@ class RouteManager:
         if f.mimetype != 'application/json':
             return jsonify({'response': 'error', 'message': "Recipe is not a json file."}), 400
         try:
-            json.load(f.stream)
+            recipeData = json.load(f.stream)
+            recipeData["fileName"] = f.filename
+            MicrolabRecipe.model_validate(recipeData)
+        except ValidationError as err:
+            return jsonify({
+                'response': 'error',
+                'message': "Error with recipe: {1}".format(f, str(err))
+                }), 400
         except Exception:
             return jsonify({'response': 'error', 'message': "File does not contain valid JSON."}), 400
 
