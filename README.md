@@ -57,6 +57,11 @@ docker-compose up --build api
 
 If you're running docker with a hardware setup you'll need to edit docker-compose.yml and uncomment the lines specified in the file.
 
+Docker-compose mounts `docker/microlab-docker.ini` local file as `/etc/microlab/microlab.ini` in the container. To modify microlab config
+just edit `docker/microlab-docker.ini` file and restart the container in docker-compose.
+
+For making local development simpler - `backend/` directory is also mounted as container's `/app` directory. Any local file change is automatically reflected in the container but in most cases you would also need to restart container anyway so the python processes load from updated files.
+
 ## Dev Environment Option 2: Laptop Setup
 
 Clone the repo:
