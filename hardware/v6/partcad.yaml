@@ -103,6 +103,7 @@ parts:
     implements:
       "/pub/std/metric/m:m3-thru":
         upper-left: [[5, 64, 183], [1, 0, 0], 90]
+        # TODO: commented out as not used so far, but may be needed later, or deleted
         # upper-right: [[183, 64, 183], [1, 0, 0], 90]
         # lower-left: [[5, 64, 5], [1, 0, 0], 90]
         # lower-right: [[183, 64, 5], [1, 0, 0], 90]
@@ -126,6 +127,7 @@ parts:
         lower-left-back: [[5, 4, 5], [1, 0, 0], 90]
         lower-right-back: [[183, 4, 5], [1, 0, 0], 90]
         upper-left-front: [[5, 0, 183], [1, 0, 0], -90]
+        # TODO: commented out as not used so far, but may be needed later, or deleted
         # upper-right-front: [[183, 0, 183], [1, 0, 0], -90]
         # lower-left-front: [[5, 0, 5], [1, 0, 0], -90]
         # lower-right-front: [[183, 0, 5], [1, 0, 0], -90]
