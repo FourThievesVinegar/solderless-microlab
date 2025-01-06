@@ -21,7 +21,7 @@ docs:
 sketches:
   m26:
     type: basic
-    circle: 13 # 13 mm radius equals to 16 mm diameter
+    circle: 13 # 13 mm radius equals to 26 mm diameter
 
 parts:
   # Control Unit
@@ -97,9 +97,8 @@ parts:
   pumps-box:
     desc: Pumps box
     type: step
-    # fileFrom: url
-    # fileUrl: {{ url }}/pumps-box/pumps-box-v.1.0.step
-    path: pumps-box-rotated.step
+    fileFrom: url
+    fileUrl: {{ url }}/pumps-box/pumps-box-v.1.0-rotated.step
     implements:
       "/pub/std/metric/m:m3-thru":
         upper-left: [[5, 64, 183], [1, 0, 0], 90]
@@ -117,9 +116,8 @@ parts:
   pumps-box-lid:
     desc: Lid for pumps box
     type: step
-    # fileFrom: url
-    # fileUrl: {{ url }}/pumps-box/pumps-box-lid-v0.3.step
-    path: pumps-box-lid-rotated.step
+    fileFrom: url
+    fileUrl: {{ url }}/pumps-box/pumps-box-lid-v0.3-rotated.step
     implements:
       "/pub/std/metric/m:m3-thru":
         upper-left-back: [[5, 4, 183], [1, 0, 0], 90]
@@ -134,7 +132,8 @@ parts:
   peristaltic-pump:
     desc: Peristaltic pump (model Intllab DP-520-48S)
     type: step
-    path: peristaltic-pump.step
+    fileFrom: url
+    fileUrl: {{ url }}/pumps-box/peristaltic-pump.step
     implements:        
       "/pub/std/metric/m:m3-thru":
         upper-left-back: [[-26.75, 20.5, 18.75], [1, 0, 0], 90]
@@ -148,7 +147,8 @@ parts:
   circulation-pump:
     desc: Circulation pump (https://www.amazon.com/dp/B09XH1GYYQ)
     type: step
-    path: circulation-pump.step
+    fileFrom: url
+    fileUrl: {{ url }}/pumps-box/circulation-pump.step
     implements:
       # TODO: describe proper mounting
       "/pub/std/metric/m:m24-shaft":
