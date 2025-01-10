@@ -5,7 +5,7 @@ requests==2.32.0
 pyserial==3.5
 w1thermsensor==2.0.0
 pyyaml==6.0.1
-configobj==5.0.8
+configobj==5.0.9
 multiprocessing-logging==0.3.4
 simple-pid==2.0.0
 waitress==3.0.2
