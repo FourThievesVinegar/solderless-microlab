@@ -84,6 +84,8 @@ sudo apt update
 sudo apt install python3 python3-pip python-virtualenv python3-virtualenv
 ```
 
+The backend is tested against CPython 3.9 to 3.13.
+
 Note: some versions of Linux have dropped support for Python2 and `python-virtualenv`.
 
 (for macOS)
