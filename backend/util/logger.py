@@ -1,5 +1,6 @@
 import logging
 import logging.handlers
+import os
 import queue
 import sys
 import traceback
@@ -66,6 +67,10 @@ class MultiprocessingLogger:
         formatter = MultiLineFormatter(fmt="%(asctime)s %(name)-10s [%(levelname)s]: %(message)s")
 
         log_handlers = []
+        
+        log_directory = config.microlabConfig.logDirectory        
+        if not os.path.exists(log_directory):
+            os.makedirs(log_directory)
 
         rotating_file_handler = logging.handlers.RotatingFileHandler(
                 "{0}/microlab.log".format(config.microlabConfig.logDirectory),
