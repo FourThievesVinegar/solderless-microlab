@@ -73,7 +73,7 @@ class MultiprocessingLogger:
             os.makedirs(log_directory)
 
         rotating_file_handler = logging.handlers.RotatingFileHandler(
-                "{0}/microlab.log".format(config.microlabConfig.logDirectory),
+                "{0}/microlab.log".format(log_directory),
                 maxBytes=config.microlabConfig.logFileMaxBytes,
                 backupCount=config.microlabConfig.logFileBackupCount,
             )
