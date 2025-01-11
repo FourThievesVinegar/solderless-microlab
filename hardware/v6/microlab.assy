@@ -5,56 +5,19 @@
 {% endif %}
 
 links:
-  - part: control-box{{ profile_prefix }}
-    name: box
-
-  - part: /pub/electronics/sbcs/raspberrypi:rpi4b
-    name: rpi
-    connectPorts:
-      with: corner-bottom-front-left
-      name: box
-      to: rpi
-      # method: slide
-      # slide: [10, 0, 0]
-      # slideSecondary: [0, 0, 50]
-
-  - part: /pub/electronics/sbcs/arduino:unoR3
-    name: unoR3
-    connectPorts:
-      with: corner-bottom-back-left
-      name: box
-      to: uno
-      # method: slide
-      # slide: [0, 10, 0]
-      # slideSecondary: [0, 0, 50]
-
-  - part: control-box-lid{{ profile_prefix }}
-    name: lid
-    connect:
-      withInstance: inner-right
-      withParams:
-        # TODO(clairbee): drop tunrZ when two-port match is supported
-        turnZ: 90
-      toInstance: outer-right
-      name: box
-      # method: slide
-      # slide: [0, 30, 0]
-      # slideSecondary: [0, 0, 10]
-
-  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
-    # name: right-screw
-    params:
-      size: M3-0.5
-      length: 16
-    connect:
-      toInstance: outer-right
-      name: lid
-        
-  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
-    # name: left-screw
-    params:
-      size: M3-0.5
-      length: 16
-    connect:
-      toInstance: outer-left
-      name: lid
+  - assembly: control-unit
+    name: control-unit
+  - assembly: heating-unit
+    name: heating-unit
+    location: [[500, -100, 0], [1, 0, 0], 0]
+  - assembly: cooling-unit
+    name: cooling-unit
+    location: [[300, -100, 165], [0, 1, 0], 180]
+  - assembly: reactor-unit-reactor-stand
+    name: reactor-unit-reactor-stand
+    location: [[300, 100, 0], [1, 0, 0], 0]
+  - assembly: reactor-unit-pumps-box
+    name: reactor-unit-pumps-box
+    # TODO: Attention, minor vertical discrepancy 
+    # with -reactor-stand mounts
+    location: [[304, 196, 132.5], [1, 0, 0], 0]
