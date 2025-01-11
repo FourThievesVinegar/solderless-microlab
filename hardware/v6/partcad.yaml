@@ -22,6 +22,51 @@ sketches:
   m26:
     type: basic
     circle: 13 # 13 mm radius equals to 26 mm diameter
+  m74:
+    type: basic
+    circle: 37 # 37 mm radius equals to 74 mm diameter
+  ring-5-3:
+    desc: Ring with 5 mm outer radius and 3 mm inner radius
+    type: basic
+    circle: 5
+    inner:
+      circle: 3
+  
+interfaces:
+  m74:
+    desc: Abstract 74 mm circular interface
+    abstract: True
+    ports:
+      m74:
+        location: [[0, 0, 0], [0, 0, 1], 0] # redandant, for demonstration
+        sketch: m74
+    parameters:
+      turnZ:
+        min: 0
+        max: 360
+        default: 0
+      moveX: {}  # Hotizontal offset for openings of different sizes
+      moveY: {}  # Hotizontal offset for openings of different sizes
+      moveZ: {}  # Offset along the alignment axis  m74-jar-mouth:
+  m74-opening:
+    desc: Abstract 74 mm circular opening
+    inherits:
+      m74: opening
+  m74-jar-mouth:
+    desc: Jar mouth (inner opening) with 74 mm diameter
+    inherits: 
+      m74-opening: jar-mouth
+  m74-shaft:
+    desc: Abstract 74 mm shaft
+    inherits:
+      m74: shaft
+    mates:
+      - m74-opening
+  m74-jar-closing:
+    inherits: 
+      m74-shaft: jar-closing
+    mates:
+      - m74-jar-mouth  
 
 parts:
   # Control Unit
@@ -93,7 +138,9 @@ parts:
     fileFrom: url
     fileUrl: {{ url }}/control-box/sub-components/stepdown-case-63x27x14mm.step
   
-  # Reactor Unit
+  # -------- Reactor Unit --------
+
+  # Pumps box
   pumps-box:
     desc: Pumps box
     type: step
@@ -152,17 +199,70 @@ parts:
     implements:
       # TODO: describe proper mounting
       "/pub/std/metric/m:m24-shaft":
-        mount: [[0, 0, 52], [1, 0, 0], 0]        
+        mount: [[0, 0, 52], [1, 0, 0], 0]
+
+  # Reactor stand
   stand-part-h:
     desc: Reactor stand "H" part
     type: step
     fileFrom: url
-    fileUrl: {{ url }}/reactor-stand/reactor-stand-H.v1.0.step
+    fileUrl: {{ url }}/reactor-stand/reactor-stand-H.v1.0-rotated.step
+    implements:
+      # TODO: there might be more fitting interface
+      "/pub/std/metric/m:m10-thru":
+        eye-back-upper: [[13, 175, 134], [1, 1, 0], 180]
+        eye-back-lower: [[13, 175, 10], [1, 1, 0], 180]
+        eye-front-1: [[13, 10, 151.5], [1, 1, 0], 180]
+        eye-front-2: [[13, 38.5, 151.5], [1, 1, 0], 180]
+  stand-part-a:
+    desc: Reactor stand "A" part
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-stand/reactor-stand-A.v1.0.step
+    implements:
+      # TODO: there might be more fitting interface
+      "/pub/std/metric/m:m10-shaft":
+        hook-left-upper: [[57, 9, 54], [0, 0, 1], 180]
+        hook-left-lower: [[57, 9, -70], [0, 0, 1], 180]
+        hook-right-upper: [[-113.5, 9, -44], [0, 0, 1], 0]
+        hook-right-lower: [[-113.5, 9, -70], [0, 0, 1], 0]
+  stand-part-c:
+    desc: Reactor stand "¢" part
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-stand/reactor-stand-c.v1.0.step
+    implements:
+      # TODO: there might be more fitting interface
+      "/pub/std/metric/m:m10-shaft":
+        hook-back-right: [[-113.5, 145.5, 72], [0, 0, 1], 180]
+        hook-front-right: [[-113.5, 174, 72], [0, 0, 1], 180]
+        hook-back-left: [[57, 145.5, 72], [0, 0, 1], 180]
+        hook-front-left: [[57, 174, 72], [0, 0, 1], 180]
+  stand-part-k:
+    desc: Reactor stand "k" part
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-stand/reactor-stand-k.v1.0.step
+    implements:
+      # TODO: there might be more fitting interface
+      "/pub/std/metric/m:m10-thru":
+        eye-back-upper: [[-113.5, 9, -44], [1, 1, 0], 180]
+        eye-back-lower: [[-113.5, 9, -70], [1, 1, 0], 180]
+        eye-front-1: [[-113.5, 145.5, 71.5], [1, 1, 0], 180]
+        eye-front-2: [[-113.5, 174, 71.5], [1, 1, 0], 180]
 
   # Temperature Exchange Units
-  # straw:
-    # desc: Tube for cooling unit
-    # type: cadquery
+  cold-unit-jar:
+    desc: Jar for cooling unit
+    type: cadquery
+    path: parts/mason-jar-32oz-wide-mouth.py
+    implements:
+      "m74-jar-mouth":
+        mouth: [[0, 0, 165], [1, 0, 0], 180]
+  cold-unit-jar-band:
+    desc: Jar band for cooling unit
+    type: cadquery
+    path: parts/mason-jar-band-wide-mouth.py
   cold-unit-lid:
     desc: Lid for cooling unit
     type: step
@@ -172,6 +272,14 @@ parts:
       "/pub/std/metric/m:m10-thru":
         left-outer: [[-24, 0, 0], [1, 0, 0], 0]
         right-outer: [[24, 0, 0], [1, 0, 0], 0]
+      "m74-jar-closing":
+        bottom: [[0, 0, 4], [1, 0, 0], 180]
+  # TODO: uncomment and use when sweep is generally available
+  # cold-unit-tube:
+    # desc: Spiral tube for cooling unit
+    # type: sweep
+    # sketch: ring-5-3
+    # axis: [[0, 0, 20], [0, 0, 20], [20, 0, 0], [20, 20, 0], [0, 20, 0]]  
   hot-unit-lid:
     desc: Lid for heating unit
     type: step
@@ -199,15 +307,18 @@ assemblies:
     render:
       svg:
         viewportOrigin: [75, 0, 150]
-  reactor-unit:
+  reactor-unit-pumps-box:
     type: assy
-    path: reactor-unit.assy
+    path: reactor-unit-pumps-box.assy
     parameters:
       screw_type:
         type: string
         desc: Type of the screws attaching lid to the control box
         enum: [raisedcountersunkovalhead-iso7047, raisedcheesehead-iso7045]
         default: raisedcountersunkovalhead-iso7047
+  reactor-unit-reactor-stand:
+    type: assy
+    path: reactor-unit-reactor-stand.assy
   heating-unit:
     type: assy
     path: heating-unit.assy
