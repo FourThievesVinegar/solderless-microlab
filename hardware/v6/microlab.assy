@@ -1,9 +1,3 @@
-{% if param_profile == 'flat' %}
-{%   set profile_prefix = "-flat" %}
-{% else %}
-{%   set profile_prefix = "" %}
-{% endif %}
-
 links:
   - assembly: control-unit
     name: control-unit

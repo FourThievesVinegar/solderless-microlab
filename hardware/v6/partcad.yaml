@@ -69,6 +69,7 @@ interfaces:
       - m74-jar-mouth  
 
 parts:
+  # Control Unit
   control-box:
     desc: Regular size control box
     type: step
@@ -105,8 +106,8 @@ parts:
       "/pub/std/metric/m:m3-thru":
         outer-left: [[3, 3, 44], [1, 0, 0], 180]
         outer-right: [[185, 3, 44], [1, 0, 0], 180]
-        inner-left: [[3, 3, 34], [1, 0, 0], 0]
-        inner-right: [[185, 3, 34], [1, 0, 0], 0]
+        inner-left: [[3, 3, 33], [1, 0, 0], 0]
+        inner-right: [[185, 3, 33], [1, 0, 0], 0]
     ports:
       rpi: [[8, 22.5, 20], [-0.71, -0.71, 0], 180]
       uno: [[179.5, 92, 8], [0, 1, 0], 180]
