@@ -257,9 +257,8 @@ parts:
   stand-jar-flange:
     desc: Jar flange holding reactor core on stand
     type: step
-    # fileFrom: url
-    # fileUrl: {{ url }}/reactor-stand/reactor-stand-jar-flange.v0.1.step
-    path: reactor-stand-jar-flange.v0.1.step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-stand/reactor-stand-jar-flange.v0.1.step
     implements:
       "m80-opening":
         base: [[0, 1.5, 0], [1, 0, 0], 90]
@@ -318,6 +317,8 @@ parts:
       "m74-opening":
         lid-place: [[0, 0, 2], [1, 0, 0], 180]
       # "m60-jar-threaded-lid":
+      # TODO: potential bug - if above line is uncommented,
+      # we need to clarify this later, but port is used
         bottom: [[0, 0, 5], [1, 0, 0], 0]
   reactor-core-inner-jar:
     desc: Smaller/inner jar of Reactor core
@@ -335,6 +336,8 @@ parts:
       "m60-opening":
         lid-place: [[0, 0, 2], [1, 0, 0], 180]
       # "m60-jar-threaded-lid":
+      # TODO: potential bug - if above line is uncommented,
+      # we need to clarify this later, but port is used
         bottom: [[0, 0, 5], [1, 0, 0], 0]
   reactor-core-stir-rod-mount:
     desc: Mount for stirring rod
