@@ -1,0 +1,86 @@
+links:
+  - part: reactor-core-inner-jar-band
+    name: inner-jar-band
+
+  - part: reactor-core-manifold-core
+    name: manifold-core
+    connect:
+      withInstance: base
+      toInstance: lid-place
+      name: inner-jar-band
+        
+  - part: reactor-core-manifold-lid
+    name: manifold-lid
+    connect:
+      # TODO: attention, there is a gap between parts for other 2 holes,
+      # we might need to properly take this into account
+      withInstance: back-inner
+      toInstance: side-back
+      name: manifold-core
+  
+  {% for side in ['back', 'left', 'right'] %}
+    # TODO: parameterize screw type
+  - part: /pub/std/metric/cqwarehouse:fastener/raisedcheesehead-iso7045
+    name: {{ side }}-screw-manifold-lid
+    params:
+      size: M3-0.5
+      length: 12
+    connect:
+      toInstance: {{ side }}-outer
+      name: manifold-lid
+  {% endfor %}
+
+  - part: reactor-core-stir-rod-mount
+    name: stir-rod-mount
+    connect:
+      # TODO: there is a small offset (see bottom view),
+      # this needs to be handled
+      withInstance: bottom-back
+      toInstance: top-back
+      name: manifold-core
+  
+  {% for side in ['back', 'left', 'right'] %}
+    # TODO: parameterize screw type
+  - part: /pub/std/metric/cqwarehouse:fastener/raisedcheesehead-iso7045
+    name: {{ side }}-screw-stir-rod-mount
+    params:
+      size: M3-0.5
+      length: 20
+    connect:
+      toInstance: upper-{{ side }}
+      name: stir-rod-mount
+  {% endfor %}
+
+  # TODO: motor, coupler, stirring rod (most probably another assembly)
+
+  - part: reactor-core-inner-jar
+    name: inner-jar
+    connect:
+      toInstance: bottom
+      name: inner-jar-band
+
+  - part: reactor-core-outer-jar-band
+    name: outer-jar-band
+    connect:
+      withInstance: lid-place
+      toInstance: top
+      name: manifold-lid
+
+  - part: reactor-core-outer-jar
+    name: outer-jar
+    connect:
+      withInstance: top
+      toInstance: bottom
+      name: outer-jar-band
+
+  - part: stand-jar-flange
+    name: lower-jar-flange
+    connect:
+      toInstance: neck-lower
+      name: outer-jar
+  
+  - part: stand-jar-flange
+    name: upper-jar-flange
+    connect:
+      toInstance: neck-upper
+      name: outer-jar

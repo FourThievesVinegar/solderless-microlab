@@ -1,14 +1,13 @@
 import cadquery as cq
 
-outer_diameter = 84.0
-inner_diameter = 65.0
-mason_thread_od = 79
-thread_pitch = 6.5
-thread_h = thread_pitch*2.5
+outer_diameter = 67.0
+inner_diameter = 52.0
+mason_thread_od = 61.0
+thread_pitch = 3.5
+thread_h = thread_pitch * 2.5
 lid_h = thread_h + 2
-wall_thickness = 2
+wall_thickness = 1
 thread_contour_diam = 2.1
-thread_contour_h = 2.2
 
 thread_r = mason_thread_od/2 + thread_contour_diam 
 

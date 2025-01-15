@@ -18,55 +18,59 @@ docs:
 {% from 'urls.j2' import url_prefix %}
 {% set url = url_prefix + '/v6' %}
 
+{% set sizes = [46, 60, 74, 80] %} 
 sketches:
-  m26:
+  {% for size in sizes %}
+  m{{ size }}:
     type: basic
-    circle: 13 # 13 mm radius equals to 26 mm diameter
-  m74:
-    type: basic
-    circle: 37 # 37 mm radius equals to 74 mm diameter
+    circle: {{ size / 2.0 }}  # radius
+  {% endfor %}
   ring-5-3:
     desc: Ring with 5 mm outer radius and 3 mm inner radius
     type: basic
     circle: 5
     inner:
       circle: 3
-  
+
 interfaces:
-  m74:
-    desc: Abstract 74 mm circular interface
+  {% for size in sizes %}
+  m{{ size }}:
+    desc: Abstract {{ size }} mm circular interface
     abstract: True
     ports:
-      m74:
-        location: [[0, 0, 0], [0, 0, 1], 0] # redandant, for demonstration
-        sketch: m74
-    parameters:
-      turnZ:
-        min: 0
-        max: 360
-        default: 0
-      moveX: {}  # Hotizontal offset for openings of different sizes
-      moveY: {}  # Hotizontal offset for openings of different sizes
-      moveZ: {}  # Offset along the alignment axis  m74-jar-mouth:
-  m74-opening:
-    desc: Abstract 74 mm circular opening
+      m{{ size }}:
+        location: [[0, 0, 0], [0, 0, 1], 0] # redundant, for demonstration
+        sketch: m{{ size }}
+  m{{ size }}-opening:
+    desc: Abstract {{ size }} mm circular opening
     inherits:
-      m74: opening
-  m74-jar-mouth:
-    desc: Jar mouth (inner opening) with 74 mm diameter
+      m{{ size }}: opening
+  m{{ size }}-jar-mouth:
+    desc: Jar mouth (inner opening) with {{ size }} mm diameter
     inherits: 
-      m74-opening: jar-mouth
-  m74-shaft:
-    desc: Abstract 74 mm shaft
+      m{{ size }}-opening: jar-mouth
+  m{{ size }}-jar-threaded-lid:
+    desc: Threaded jar lid with {{ size }} mm inner diameter
+    inherits: 
+      m{{ size }}-opening: jar-threaded-lid
+  m{{ size }}-shaft:
+    desc: Abstract {{ size }} mm shaft
     inherits:
-      m74: shaft
+      m{{ size }}: shaft
     mates:
-      - m74-opening
-  m74-jar-closing:
+      - m{{ size }}-opening
+  m{{ size }}-jar-closing:
     inherits: 
-      m74-shaft: jar-closing
+      m{{ size }}-shaft: jar-closing
     mates:
-      - m74-jar-mouth  
+      - m{{ size }}-jar-mouth  
+  m{{ size }}-jar-threaded-top:
+    desc: Threaded top of a cylindric jar with {{ size }} mm outer diameter
+    inherits: 
+      m{{ size }}-shaft: jar-threaded-top
+    mates:
+      - m{{ size }}-jar-threaded-lid
+  {% endfor %}
 
 parts:
   # Control Unit
@@ -250,7 +254,102 @@ parts:
         eye-back-lower: [[-113.5, 9, -70], [1, 1, 0], 180]
         eye-front-1: [[-113.5, 145.5, 71.5], [1, 1, 0], 180]
         eye-front-2: [[-113.5, 174, 71.5], [1, 1, 0], 180]
+  stand-jar-flange:
+    desc: Jar flange holding reactor core on stand
+    type: step
+    # fileFrom: url
+    # fileUrl: {{ url }}/reactor-stand/reactor-stand-jar-flange.v0.1.step
+    path: reactor-stand-jar-flange.v0.1.step
+    implements:
+      "m80-opening":
+        base: [[0, 1.5, 0], [1, 0, 0], 90]
 
+  # Reactor core
+  reactor-core-manifold-core:
+    desc: Reactor core manifold - core part
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-manifold/reactor-manifold-core-v0.1.step
+    implements:
+      # TODO: a different interface most probably
+      "m60-jar-closing":
+        base: [[0, 0, -54], [1, 0, 0], 180]
+      # TODO: check this and next interface, do the holes have thread
+      "/pub/std/metric/m:m3-hole-10":
+        side-back: [[0, 21.5, -12], [1, 0, 0], -90]
+        side-left: [[-18.6, -10.7, -12], [-0.5, 0.866, 0], -90]
+        side-right: [[18.6, -10.7, -12], [0.5, 0.866, 0], 90]
+      # "/pub/std/metric/m:m3-hole-20":
+        top-back: [[0, 13, 0], [1, 0, 0], 180]
+        top-left: [[-11.25, -6.5, 0], [1, 0, 0], 180]
+        top-right: [[11.25, -6.5, 0], [1, 0, 0], 180]
+  reactor-core-manifold-lid:
+    desc: Reactor core manifold - lid part
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-manifold/reactor-manifold-lid-v0.1.step
+    implements:
+      "m74-jar-closing":
+        top: [[0, 0, 0], [1, 0, 0], 0]
+      "/pub/std/metric/m:m3-thru":
+        back-inner: [[-21.5, 0, 12], [0.7071, 0, 0.7071], 180]
+        # TODO: add other 2 inner interfaces when needed
+        back-outer: [[-26.5, 0, 12], [0, 1, 0], 90]
+        left-outer: [[13.25, 23, 12], [-0.866, 0.5, 0], -90]
+        right-outer: [[13.25, -23, 12], [0.866, 0.5, 0], -90]
+  reactor-core-outer-jar:
+    desc: Bigger/outer jar of Reactor core
+    type: cadquery
+    path: parts/mason-jar-32oz-wide-mouth.py
+    implements:
+      "m74-jar-threaded-top":
+        top: [[0, 0, 165], [1, 0, 0], 0]
+      # TODO: most probably this should be a new "shimmed" interface
+      # together with 2 flanges
+      "m80-shaft":
+        neck-lower: [[0, 0, 140], [0, 0, 1], 180]
+        neck-upper: [[0, 0, 150.5], [0, 0, 1], 180]  
+  reactor-core-outer-jar-band:
+    desc: Band for bigger/outer jar of Reactor core
+    type: cadquery
+    path: parts/mason-jar-band-wide-mouth.py
+    implements:
+      # TODO: a different interface most probably
+      "m74-opening":
+        lid-place: [[0, 0, 2], [1, 0, 0], 180]
+      # "m60-jar-threaded-lid":
+        bottom: [[0, 0, 5], [1, 0, 0], 0]
+  reactor-core-inner-jar:
+    desc: Smaller/inner jar of Reactor core
+    type: cadquery
+    path: parts/mason-jar-6oz-regular-mouth.py
+    implements:
+      "m60-jar-threaded-top":
+        top: [[0, 0, 81], [1, 0, 0], 0]
+  reactor-core-inner-jar-band:
+    desc: Band for smaller/inner jar of Reactor core
+    type: cadquery
+    path: parts/mason-jar-band-regular-mouth.py
+    implements:
+      # TODO: a different interface most probably
+      "m60-opening":
+        lid-place: [[0, 0, 2], [1, 0, 0], 180]
+      # "m60-jar-threaded-lid":
+        bottom: [[0, 0, 5], [1, 0, 0], 0]
+  reactor-core-stir-rod-mount:
+    desc: Mount for stirring rod
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/reactor-manifold/stirring-mount-v0.1.step
+    implements:
+      "/pub/std/metric/m:m3-thru":
+        upper-back: [[67.85, 116.85, 469], [1, 0, 0], 180]
+        upper-left: [[86.7, 128, 469], [1, 0, 0], 180]
+        upper-right: [[86.95, 106.15, 469], [1, 0, 0], 180]
+        bottom-back: [[67.85, 116.85, 459], [1, 0, 0], 0]
+        bottom-left: [[86.7, 128, 459], [1, 0, 0], 0]
+        bottom-right: [[86.95, 106.15, 459], [1, 0, 0], 0]
+                
   # Temperature Exchange Units
   cold-unit-jar:
     desc: Jar for cooling unit
@@ -313,12 +412,24 @@ assemblies:
     parameters:
       screw_type:
         type: string
-        desc: Type of the screws attaching lid to the control box
+        desc: Type of the screws attaching lid to the pumps box
         enum: [raisedcountersunkovalhead-iso7047, raisedcheesehead-iso7045]
         default: raisedcountersunkovalhead-iso7047
   reactor-unit-reactor-stand:
     type: assy
     path: reactor-unit-reactor-stand.assy
+    implements:
+      "m80-opening":
+        core-holder: [[98, 22, 155.5], [1, 0, 0], 0]
+  reactor-unit-reactor-core:
+    type: assy
+    path: reactor-unit-reactor-core.assy
+    implements:
+      "m80-shaft":
+        stand-neck: [[0, 0, -29], [1, 0, 0], 0]
+  reactor-unit:
+    type: assy
+    path: reactor-unit.assy
   heating-unit:
     type: assy
     path: heating-unit.assy
