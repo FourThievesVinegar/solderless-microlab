@@ -7,11 +7,6 @@ links:
   - assembly: cooling-unit
     name: cooling-unit
     location: [[300, -100, 165], [0, 1, 0], 180]
-  - assembly: reactor-unit-reactor-stand
-    name: reactor-unit-reactor-stand
+  - assembly: reactor-unit
+    name: reactor-unit
     location: [[300, 100, 0], [1, 0, 0], 0]
-  - assembly: reactor-unit-pumps-box
-    name: reactor-unit-pumps-box
-    # TODO: Attention, minor vertical discrepancy 
-    # with -reactor-stand mounts
-    location: [[304, 196, 132.5], [1, 0, 0], 0]
