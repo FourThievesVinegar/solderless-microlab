@@ -1,0 +1,10 @@
+links:
+  - part: cold-unit-lid
+    name: lid
+  
+  - part: cold-unit-jar
+    name: jar
+    connect:
+      withInstance: mouth
+      toInstance: bottom
+      name: lid
