@@ -56,7 +56,6 @@ links:
   - part: reactor-core-inner-jar
     name: inner-jar
     connect:
-      toInstance: bottom
       name: inner-jar-band
 
   - part: reactor-core-outer-jar-band
@@ -69,8 +68,6 @@ links:
   - part: reactor-core-outer-jar
     name: outer-jar
     connect:
-      withInstance: top
-      toInstance: bottom
       name: outer-jar-band
 
   - part: stand-jar-flange

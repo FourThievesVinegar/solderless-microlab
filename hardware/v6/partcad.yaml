@@ -41,35 +41,53 @@ interfaces:
       m{{ size }}:
         location: [[0, 0, 0], [0, 0, 1], 0] # redundant, for demonstration
         sketch: m{{ size }}
+
   m{{ size }}-opening:
     desc: Abstract {{ size }} mm circular opening
     inherits:
       m{{ size }}: opening
+
   m{{ size }}-jar-mouth:
     desc: Jar mouth (inner opening) with {{ size }} mm diameter
     inherits: 
       m{{ size }}-opening: jar-mouth
+
+  m{{ size }}-threaded-opening:
+    # TODO: desc: ...
+    ports:
+      m{{ size }}-threaded:
+        location: [[0, 0, 0], [0, 0, 1], 0] # redundant, for demonstration
+        sketch: m{{ size - 1}}
+
   m{{ size }}-jar-threaded-lid:
-    desc: Threaded jar lid with {{ size }} mm inner diameter
+    # TODO: desc: ...
     inherits: 
-      m{{ size }}-opening: jar-threaded-lid
+      m{{ size }}-threaded-opening: jar-lid
+  
   m{{ size }}-shaft:
     desc: Abstract {{ size }} mm shaft
     inherits:
       m{{ size }}: shaft
     mates:
       - m{{ size }}-opening
+  
   m{{ size }}-jar-closing:
     inherits: 
       m{{ size }}-shaft: jar-closing
     mates:
       - m{{ size }}-jar-mouth  
+  
+  m{{ size }}-threaded-shaft:
+    desc: Threaded shaft with {{ size }} mm outer diameter
+    inherits:
+      m{{ size }}-shaft: threaded
+    mates:
+      - m{{ size }}-threaded-opening
+  
   m{{ size }}-jar-threaded-top:
     desc: Threaded top of a cylindric jar with {{ size }} mm outer diameter
     inherits: 
-      m{{ size }}-shaft: jar-threaded-top
-    mates:
-      - m{{ size }}-jar-threaded-lid
+      m{{ size }}-threaded-shaft: jar-top
   {% endfor %}
 
 parts:
@@ -301,8 +319,7 @@ parts:
     type: cadquery
     path: parts/mason-jar-32oz-wide-mouth.py
     implements:
-      "m74-jar-threaded-top":
-        top: [[0, 0, 165], [1, 0, 0], 0]
+      "m74-jar-threaded-top": [[0, 0, 165], [1, 0, 0], 180]
       # TODO: most probably this should be a new "shimmed" interface
       # together with 2 flanges
       "m80-shaft":
@@ -316,10 +333,7 @@ parts:
       # TODO: a different interface most probably
       "m74-opening":
         lid-place: [[0, 0, 2], [1, 0, 0], 180]
-      # "m60-jar-threaded-lid":
-      # TODO: potential bug - if above line is uncommented,
-      # we need to clarify this later, but port is used
-        bottom: [[0, 0, 5], [1, 0, 0], 0]
+      "m74-jar-threaded-lid": [[0, 0, 5], [1, 0, 0], 180]
   reactor-core-inner-jar:
     desc: Smaller/inner jar of Reactor core
     type: cadquery
@@ -335,10 +349,7 @@ parts:
       # TODO: a different interface most probably
       "m60-opening":
         lid-place: [[0, 0, 2], [1, 0, 0], 180]
-      # "m60-jar-threaded-lid":
-      # TODO: potential bug - if above line is uncommented,
-      # we need to clarify this later, but port is used
-        bottom: [[0, 0, 5], [1, 0, 0], 0]
+      "m60-jar-threaded-lid": [[0, 0, 5], [1, 0, 0], 0]
   reactor-core-stir-rod-mount:
     desc: Mount for stirring rod
     type: step
