@@ -1,0 +1,50 @@
+Table 1
+pic label	ID code	Name	count	Primary Link	Second link	Model / Part # (mcmaster carr)	Description / notes	Price Aug/Sep 2022	From		
+01	MC-WNT	wire nuts	2	link		8904T3	"Lever connectors are better, orange wire nuts (video) will also work"	$7.10	McMasterCarr		
+02	SP-TB4	"4mm x 6mm vinyl tubing (1/8"")"		link			or 1/8 inch	$5.49	amazon		
+03	RX-PMP	circulating pump	2	link	link2		"Mini pump (first link) may not withstand being sumberged in 100C water. The 5A pump in link 2 is almost certainly overkill, but should withstand high heat and is self-priming. Power supply connector here. Power supply here. We may want smaller pumps that can run at fewer amps (screw terminals seem to max out at 12v 5A, which is only half of what two of the larger pumps require."	$25.90	lightobject	$47.98	amazon
+04	RX-TMP	thermistor	1	link				$7.36	aliexpress		
+05	RX-TMPD	USB dongle for thermistor	1	link					same link as thermistor		
+06	SP-SLD	syringe slides	4	link				$9.99	amazon	right item?	
+06A	SP-DRV	M5 threaded drive rod	2	link			"appropedia calls for 200mm, thread pitch not specified"	$8.99	amazon		
+07	RX-MXM	mixing motor	1	 							
+08	RX-PDL	mixing paddle	1	link1	link2		Mixing paddle needs to be coated. Stainless steel may react.	$25.99	amazon	not available	amazon
+09	RX-TB5	"tubing 5-6mm x 8mm (1/4"")"	1	link			pump outlet	$5.99	amazon		
+09B	RX-TB8	tubing 8mm x 12mm		link'			pump inlet	$13.99	amazon		
+09C	RX-RED	Reducing fitting					might be needed				
+10	RX-TEE	barbed tee fittings for 6mm tubing	2	link		2429K55		$3.82	McMaster Carr		
+11	MC-SCR	touch screen	1	link			screen is to a raspberry pi 4	$36.99	amazon		
+12	MC-RLY	relay hat	1	link				$10.91	aliexpress		
+13	MC-RPI	raspberry pi	1	link			Primary link is to a 4 - 3b+'s seem hard to come by	not available	amazon	~$12.00	
+14	MC-SD32	"micro SD card, 32GB"	1	link			32GB	$13.25	amazon		
+15	MC-MDR	motor drivers for CNC hat	4	link			Link includes UNO and 4988	$64.08	aliexpress		
+16	MC-CNC	arduino CNC hat	1	link					same link as motor drivers for CNC hat		
+17	MC-UNO	arduino UNO	1	link				$26.79	amazon		
+18	SP-TAB	plunger holder tab (Linear Actuator V0 7)	2	link					print instuctions not a thing to buy		
+19	SP-BDY	body holder (Linear Actuator V0 5)	2	link					print instuctions not a thing to buy		
+20	SP-PGR	plunger holder base (Linear Actuator V0 7)	2	link					print instuctions not a thing to buy		
+21	SP-END	motor end (Linear Actuator V0 1)	2	link					print instuctions not a thing to buy		
+22	SP-CAR	carriage (Linear Actuator V0 4)	2	link					print instuctions not a thing to buy		
+23	SP-IDL	idler end (Linear Actuator V0 2)	2	link					print instuctions not a thing to buy		
+24	RX-LID	reactor manifold assembly	1	printed					no print instructions		
+25	SP-MTR	stepper motors	2	link	link	6627T91		$13.70	aliexpress	14	amazon
+26	SP-M310	M3x10mm screw		link			Amazon assortment contains all needed sizes and wrench	not available 	amazon	~$25	
+	SP-M320	M3x20mm screw									
+	SP-M340	M3x40mm screw									
+	SP-M3N	M3 nut									
+26A	SP-M5B	625Z Ball Bearing (5mm x 16mm x 5mm)	2	link		6153K15		$11.98	amazon		
+27	RX-COR	4/6 oz mason jar for core chamber	1	link	6oz link			$7.63	amazon	20	amazon
+28	MC-A2B	USB A/B cable for rPi to Arduino	1	link					same link as motor drivers for CNC hat		
+29	SP-SYR	syringes	2	link			"25mL luer slip tip in video, 20 or 30mL are standard sizes. luer lock will also work"	$1.18	CA Vet Supply		
+30		"hex wrench for syringe pump, M3"	1								
+31	RX-OUT	1qt wide mouth mason jar for outer jacket	1	link				$9.35	amazon		
+	MC-GFCI	15 Amp GFCI Outlet Adapter		link			Safety precaution since relays have 120v mains	$16.99	amazon		
+	MC-WIRE	18 gauge wire for power supply	1	link				$8.99	amazon		
+								$336.46			
+								$37.00	item n/a from amazon estimated for substitutes		
+								$3.90	shipping	lightobject	
+									shipping	McMaster Carr- won't say without progressing order	
+						based on my zip code		$4.00	shipping	aliexpress	
+								$9.85	shipping	CA Vet Supply	cheapest option
+								free if slow shipping	shipping	amazon	
+								$391.21			
