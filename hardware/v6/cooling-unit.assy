@@ -1,6 +1,13 @@
 links:
   - part: cold-unit-lid
     name: lid
+
+  - part: cold-unit-tube
+    name: tube
+    connect:
+      withInstance: left
+      toInstance: left-outer
+      name: lid
   
   - part: cold-unit-jar
     name: jar
@@ -8,3 +15,8 @@ links:
       withInstance: mouth
       toInstance: bottom
       name: lid
+  
+  - part: cold-unit-jar-band
+    name: jar-band
+    connect:
+      name: jar

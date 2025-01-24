@@ -18,9 +18,11 @@ docs:
 {% from 'urls.j2' import url_prefix %}
 {% set url = url_prefix + '/v6' %}
 
-{% set sizes = [46, 60, 74, 80] %} 
+{% set sizes = [46, 60, 74, 80] %}
+{% set sketch_sizes = [45, 46, 59, 60, 73, 74, 79, 80] %}
+
 sketches:
-  {% for size in sizes %}
+  {% for size in sketch_sizes %}
   m{{ size }}:
     type: basic
     circle: {{ size / 2.0 }}  # radius
@@ -291,13 +293,12 @@ parts:
       # TODO: a different interface most probably
       "m60-jar-closing":
         base: [[0, 0, -54], [1, 0, 0], 180]
-      # TODO: check this and next interface, do the holes have thread
+      # TODO: check this and next interface - do the holes have thread
       "/pub/std/metric/m:m3-hole-10":
         side-back: [[0, 21.5, -12], [1, 0, 0], -90]
         side-left: [[-18.6, -10.7, -12], [-0.5, 0.866, 0], -90]
         side-right: [[18.6, -10.7, -12], [0.5, 0.866, 0], 90]
-      # TODO: fix this with more careful connections handling
-      # "/pub/std/metric/m:m3-hole-20":
+      "/pub/std/metric/m:m3-hole-20":
         top-back: [[0, 13, 0], [1, 0, 0], 180]
         top-left: [[-11.25, -6.5, 0], [1, 0, 0], 180]
         top-right: [[11.25, -6.5, 0], [1, 0, 0], 180]
@@ -357,7 +358,7 @@ parts:
     fileFrom: url
     fileUrl: {{ url }}/reactor-manifold/stirring-mount-v0.1.step
     implements:
-      "/pub/std/metric/m:m3-thru":
+      "/pub/std/metric/m:m3-hole-20":
         upper-back: [[67.85, 116.85, 469], [1, 0, 0], 180]
         upper-left: [[86.7, 128, 469], [1, 0, 0], 180]
         upper-right: [[86.95, 106.15, 469], [1, 0, 0], 180]
@@ -377,6 +378,8 @@ parts:
     desc: Jar band for cooling unit
     type: cadquery
     path: parts/mason-jar-band-wide-mouth.py
+    implements:
+      "m74-jar-threaded-lid": [[0, 0, 5], [1, 0, 0], 180]
   cold-unit-lid:
     desc: Lid for cooling unit
     type: step
@@ -388,12 +391,15 @@ parts:
         right-outer: [[24, 0, 0], [1, 0, 0], 0]
       "m74-jar-closing":
         bottom: [[0, 0, 4], [1, 0, 0], 180]
-  # TODO: uncomment and use when sweep is generally available
-  # cold-unit-tube:
-    # desc: Spiral tube for cooling unit
-    # type: sweep
-    # sketch: ring-5-3
-    # axis: [[0, 0, 20], [0, 0, 20], [20, 0, 0], [20, 20, 0], [0, 20, 0]]  
+  cold-unit-tube:
+    desc: Spiral tube for cooling unit
+    type: step
+    fileFrom: url
+    fileUrl: {{ url }}/temperature-units/cold-unit-tube-v.0.3.step
+    implements:
+      "/pub/std/metric/m:m10-shaft":
+        right: [[-15, 28, 160], [1, 0, 0], 0]
+        left: [[-15, -20, 160], [1, 0, 0], 0]
   hot-unit-lid:
     desc: Lid for heating unit
     type: step
