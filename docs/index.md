@@ -25,6 +25,8 @@ The MicroLab is made up of:
   - [Using the MicroLab](#use)
   - [Resources](#resources)
 
+Please note that as of v0.6.0, the MicroLab still has limits to its temperature ranges and the solvents that can be used. For more detailed requirements, see our [Development Wiki](https://github.com/FourThievesVinegar/solderless-microlab/wiki)
+
 ## Parts
 
 ### Purchased Parts
