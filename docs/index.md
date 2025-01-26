@@ -17,8 +17,8 @@ The MicroLab is made up of:
 
 ## Index
 
-- [About the MicroLab and MicroLab Suite](docs/motivation.md)
-- [Welcome to the MicroLab](docs/index.md) <-- You are Here
+- [About the MicroLab and MicroLab Suite](/docs/motivation.md)
+- [Welcome to the MicroLab](/docs/index.md) <-- You are Here
   - [Purchased Parts](#purchased_parts)
   - [Printed Parts](#3d)
   - [Building the MicroLab](#build)
