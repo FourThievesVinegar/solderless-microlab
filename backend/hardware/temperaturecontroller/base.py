@@ -36,7 +36,7 @@ class TempController(ABC):
             self.pidConfig = None
 
     @abstractmethod
-    def turnHeaterOn():
+    def turnHeaterOn(self):
         """
         Turns the heater on.
 
@@ -46,7 +46,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterOff():
+    def turnHeaterOff(self):
         """
         Turns the heater off.
 
@@ -56,7 +56,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterPumpOn():
+    def turnHeaterPumpOn(self):
         """
         Turns the heater pump on.
 
@@ -66,7 +66,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterPumpOff():
+    def turnHeaterPumpOff(self):
         """
         Turns the heater pump off.
 
@@ -76,7 +76,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnCoolerOn():
+    def turnCoolerOn(self):
         """
         Turns the cooler on.
 
@@ -86,7 +86,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnCoolerOff():
+    def turnCoolerOff(self):
         """
         Turns the cooler off.
 
@@ -96,7 +96,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getTemp():
+    def getTemp(self):
         """
         Reads the temperature of the microlab
 
@@ -105,7 +105,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getMaxTemperature():
+    def getMaxTemperature(self):
         """
         Read the max allowed temperature of the microlab in celsius
 
@@ -114,7 +114,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getMinTemperature():
+    def getMinTemperature(self):
         """
         Read the minimum allowed temperature of the microlab in celsius
 
@@ -123,7 +123,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getPIDConfig():
+    def getPIDConfig(self):
         """
         Read the temperature controller PID configuration
 

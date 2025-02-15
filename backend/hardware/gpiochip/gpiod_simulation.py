@@ -2,7 +2,7 @@ from hardware.gpiochip.base import LINE_REQ_DIR_OUT
 from util.logger import MultiprocessingLogger
 
 
-class GPIODChipSimulation():
+class GPIODChipSimulation:
     def __init__(self, gpio_config: dict):
         """
         Constructor. Initializes the GPIO chip.
