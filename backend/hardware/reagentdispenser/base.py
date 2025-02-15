@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class ReagentDispenser(ABC):
     @abstractmethod
-    def dispense(pumpId, volume, duration=None):
+    def dispense(self, pumpId, volume, duration=None):
         """
         Dispense reagent.
 
@@ -19,7 +19,7 @@ class ReagentDispenser(ABC):
         pass
 
     @abstractmethod
-    def getPumpSpeedLimits(pumpId):
+    def getPumpSpeedLimits(self, pumpId):
         """
         Get maximum and minimum speed of specified pump.
 
