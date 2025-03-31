@@ -1,0 +1,105 @@
+{
+  "Four Thieves Vinegar MicroLab": "Four Thieves Vinegar MicroLab",
+  "backend-down": "Servizio non disponibile",
+  "waiting-for-backend": "Aspettando il dispositivo di controllo",
+  "microlab-status-idle-message": "Il Microlab è in attesa.",
+  "microlab-status-running-message": "Il Microlab sta eseguendo una ricetta.",
+  "go-to-recipe-button-text": "Vai alle Ricette",
+  "view-logs-button-text": "Vedi i Log",
+  "view-recipes-button-text": "Vedi le Ricette",
+  "reaction-in-progress": "La reazione {{reactionName}} è in atto.",
+  "resume-reaction": "Riprendi la reazione {{reactionName}}.",
+  "Logs": "Log",
+  "loading-placeholder": "Caricamento...",
+  "recipe-list": "Lista delle Ricette",
+  "upload-recipe-button-label": "Carica una ricetta",
+  "confirm-stop-recipe": "Sei sicuro di voler fermare?",
+  "stop-reaction-button-text": "Ferma la reazione",
+  "finish-reaction-button-text": "Finish Reaction",
+  "go-back-button-text": "Torna Indietro",
+  "waiting-on-backend": "Aspettando il backend...",
+  "locale": "Locale",
+  "components": {
+    "ControllerConfigUpload": {
+      "uploading": "Caricamento della configurazione...",
+      "upload-failed-no-file": "Fallimento, nessun file allegato.",
+      "upload-success": "La configurazione è stata caricata con successo.",
+      "upload-failed": "Il caricamento della configuarazione è fallito.",
+      "upload-button-text": "Carica una nuova configurazione di controllo"
+    },
+    "ControllerHardwareConfig": {
+      "failed-no-selected-config": "Fallimento, nessuna configurazione è stata selezionata",
+      "setting-new-config-waiting-message": "Impostando una nuova configurazione...",
+      "config-changed-successfully": "La configurazione di controllo è stata cambiata con successo.",
+      "failed-config-change-request": "La configurazione di controllo è fallita: \"{{message}}\"",
+      "failed-generic": "La configurazione di controllo è fallita.",
+      "save": "Salva",
+      "download": "Scarica"
+    },
+    "Header": {
+      "main-menu": "Menu principale",
+      "status-button-text": "Status del Microlab",
+      "recipes-button-text": "Ricette",
+      "settings-button-text": "Impostazioni",
+      "logs-button-text": "Vedi i Log"
+    },
+    "LabConfigUpload": {
+      "upload-waiting-message": "Caricamento della configurazione...",
+      "upload-successful": "La configurazione è stata caricata con successo.",
+      "failed-generic": "Il caricamento della configurazione è fallito.",
+      "upload-button-text": "Carica una nuova configurazione del Lab"
+    },
+    "LabHardwareConfig": {
+      "failed-no-selected-config": "Fallimento, nessuna configurazione è stata selezionata",
+      "setting-new-config-waiting-message": "Imposta la nuova configurazione...",
+      "config-changed-successfully": "La configurazione dell'hardware è stata cambiata con successo.",
+      "failed-config-change-request": "La configurazione dell'hardware è fallita: \"{{message}}\"",
+      "failed-generic": "La configurazione dell'hardware è fallita.",
+      "save": "Salva",
+      "download": "Scarica"
+    },
+    "RecipeUpload": {
+      "failed-no-recipe-selected": "Fallimento, nessuna ricetta selezionata per essere caricata.",
+      "upload-waiting-message": "Caricamento ricetta...",
+      "upload-successful": "Caricamento della ricetta avvenuto con successo.",
+      "upload-failed-generic": "Caricamento della ricetta fallito.",
+      "upload-button-text": "Carica"
+    },
+    "ReloadHardware": {
+      "reloading-waiting-for-response-message": "Impostando la nuova configurazione...",
+      "reload-successful": "l'hardware è stato caricato con successo.",
+      "reload-failed-with-message": "Il caricamento dell'hardware è fallito: \"{{message}}\"",
+      "reload-failed-generic": "Il caricamento dell'hardware è fallito.",
+      "reload-button-text": "Ricarica l'Hardware"
+    },
+    "SettingsPage": {
+      "settings-page-header": "Impostazioni",
+      "lab-hardware-config-header": "Configurazione dell'Hardware del Lab",
+      "controller-hardware-config-header": "Controllo del MicroLab",
+      "sound-config-header": "Impostazioni del suono"
+    },
+    "SoundSettings": {
+      "soundscape-label": "Soundscape",
+      "select-audio-theme-placeholder": "Seleziona il tuo tema audio",
+      "volume-label": "Volume",
+      "play-sounds-label": "Suono di Avvio",
+      "sound-on-error-label": "Errore",
+      "sound-requires-user-input-label": "Input dell'Utente Necessario",
+      "sound-on-recipe-completion-label": "Completamento della Ricetta",
+      "sound-intro-label": "Caricamento della Lista di Ricette (intro)"
+    },
+    "RecipeDetailsPage": {
+      "start-reaction-button-text": "Avvia una Reazione Usando Questa Ricetta",
+      "delete-recipe-button-text": "Elimina Ricetta",
+      "confirm-delete-recipe": "Sei sicuro di voler eliminare questa ricetta? L'eliminazione è permanente è la ricetta non potrà essere recuperata.",
+      "loading-placeholder": "Caricamento...",
+      "no-materials-needed": "Nessun materiale richiesto",
+      "recipe-materials-needed": "Materiali Richiesti:",
+      "recipe-has-no-steps": "Nessun passaggio",
+      "recipe-steps": "Passaggi:",
+      "recipe-time-needed": "Tempo Richiesto:",
+      "recipe-time-needed-for-tasks": "Tempo necessario per i processi automatici"
+    }
+  }
+}
+
