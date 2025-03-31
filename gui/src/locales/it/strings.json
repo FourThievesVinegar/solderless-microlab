@@ -5,13 +5,13 @@
   "microlab-status-idle-message": "Il Microlab è in attesa.",
   "microlab-status-running-message": "Il Microlab sta eseguendo una ricetta.",
   "go-to-recipe-button-text": "Vai alle Ricette",
-  "view-logs-button-text": "Vedi i Log",
+  "view-logs-button-text": "Apri il Registro",
   "view-recipes-button-text": "Vedi le Ricette",
   "reaction-in-progress": "La reazione {{reactionName}} è in atto.",
   "resume-reaction": "Riprendi la reazione {{reactionName}}.",
-  "Logs": "Log",
+  "Logs": "Registro",
   "loading-placeholder": "Caricamento...",
-  "recipe-list": "Lista delle Ricette",
+  "recipe-list": "Lista Ricette",
   "upload-recipe-button-label": "Carica una ricetta",
   "confirm-stop-recipe": "Sei sicuro di voler fermare?",
   "stop-reaction-button-text": "Ferma la reazione",
@@ -22,13 +22,13 @@
   "components": {
     "ControllerConfigUpload": {
       "uploading": "Caricamento della configurazione...",
-      "upload-failed-no-file": "Fallimento, nessun file allegato.",
+      "upload-failed-no-file": "Errore, nessun file allegato.",
       "upload-success": "La configurazione è stata caricata con successo.",
       "upload-failed": "Il caricamento della configuarazione è fallito.",
       "upload-button-text": "Carica una nuova configurazione di controllo"
     },
     "ControllerHardwareConfig": {
-      "failed-no-selected-config": "Fallimento, nessuna configurazione è stata selezionata",
+      "failed-no-selected-config": "Errore, nessuna configurazione è stata selezionata",
       "setting-new-config-waiting-message": "Impostando una nuova configurazione...",
       "config-changed-successfully": "La configurazione di controllo è stata cambiata con successo.",
       "failed-config-change-request": "La configurazione di controllo è fallita: \"{{message}}\"",
@@ -41,7 +41,7 @@
       "status-button-text": "Status del Microlab",
       "recipes-button-text": "Ricette",
       "settings-button-text": "Impostazioni",
-      "logs-button-text": "Vedi i Log"
+      "logs-button-text": "Registro"
     },
     "LabConfigUpload": {
       "upload-waiting-message": "Caricamento della configurazione...",
@@ -67,26 +67,26 @@
     },
     "ReloadHardware": {
       "reloading-waiting-for-response-message": "Impostando la nuova configurazione...",
-      "reload-successful": "l'hardware è stato caricato con successo.",
+      "reload-successful": "l'hardware è stato ricaricato con successo.",
       "reload-failed-with-message": "Il caricamento dell'hardware è fallito: \"{{message}}\"",
       "reload-failed-generic": "Il caricamento dell'hardware è fallito.",
       "reload-button-text": "Ricarica l'Hardware"
     },
     "SettingsPage": {
       "settings-page-header": "Impostazioni",
-      "lab-hardware-config-header": "Configurazione dell'Hardware del Lab",
-      "controller-hardware-config-header": "Controllo del MicroLab",
-      "sound-config-header": "Impostazioni del suono"
+      "lab-hardware-config-header": "Configurazione Hardware",
+      "controller-hardware-config-header": "Controllo MicroLab",
+      "sound-config-header": "Impostazioni sonore"
     },
     "SoundSettings": {
       "soundscape-label": "Soundscape",
       "select-audio-theme-placeholder": "Seleziona il tuo tema audio",
       "volume-label": "Volume",
-      "play-sounds-label": "Suono di Avvio",
+      "play-sounds-label": "Avvia il suono in caso di",
       "sound-on-error-label": "Errore",
-      "sound-requires-user-input-label": "Input dell'Utente Necessario",
-      "sound-on-recipe-completion-label": "Completamento della Ricetta",
-      "sound-intro-label": "Caricamento della Lista di Ricette (intro)"
+      "sound-requires-user-input-label": "Richiesta Input Utente",
+      "sound-on-recipe-completion-label": "Completamento Della Ricetta",
+      "sound-intro-label": "Caricamento Lista Ricette (intro)"
     },
     "RecipeDetailsPage": {
       "start-reaction-button-text": "Avvia una Reazione Usando Questa Ricetta",
@@ -102,4 +102,3 @@
     }
   }
 }
-
