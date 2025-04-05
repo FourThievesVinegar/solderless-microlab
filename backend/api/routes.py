@@ -1,8 +1,6 @@
 """
 Module defining API.
 """
-
-from flask import Flask
 from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from os.path import join
@@ -14,13 +12,14 @@ import glob
 from pathlib import Path
 from recipes.model import MicrolabRecipe
 from pydantic_core import ValidationError
+from api.app import FlaskApp
 
 from microlab.interface import MicrolabInterface
 
 
 class RouteManager:
 
-    def __init__(self, flask_app: Flask, microlab_interface: MicrolabInterface):
+    def __init__(self, flask_app: FlaskApp, microlab_interface: MicrolabInterface):
         self._flask_app = flask_app
         self._microlab_interface = microlab_interface
         self._register_routes()
