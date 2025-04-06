@@ -1,0 +1,11 @@
+{
+  "starting-main-service": "### STARTING MAIN MICROLAB SERVICE ###",
+  "cleaning-queues": "Cleaning up queues",
+  "cleaned-queues": "Completed cleanup up queues",
+  "cleaning-processes": "Cleaning up processes",
+  "cleaned-processes": "Completed cleaning up processes",
+  "begin-exit": "Beginning to handle exit signals in BackendManager",
+  "completed-exit": "Completed handling exit signals in BackendManager",
+  "end-exit": "### ENDING MICROLAB SERVICE EXECUTION ###",
+  "starting-microlab-process": "Starting the microlab process"
+}

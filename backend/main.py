@@ -15,6 +15,8 @@ from microlab.core import startMicrolabProcess
 from util.logger import MultiprocessingLogger
 from config import microlabConfig
 
+from localization import load_translation
+
 
 class BackendManager:
 
@@ -39,7 +41,9 @@ class BackendManager:
         return any([process.is_alive() for process in self._processes])
 
     def _cleanup_queues(self):
-        self._logger.debug('Cleaning up queues')
+        t = load_translation('en')
+        
+        self._logger.debug(t['cleaning-queues'])
 
         self._q1.close()
         self._q2.close()
@@ -47,10 +51,12 @@ class BackendManager:
         self._q1.join_thread()
         self._q2.join_thread()
 
-        self._logger.debug('Completed cleanup up queues')
+        self._logger.debug(t['cleaned-queues'])
 
     def _cleanup_processes(self):
-        self._logger.debug('Cleaning up processes')
+        t = load_translation('en')
+        
+        self._logger.debug(t['cleaning-process'])
 
         while self._are_processes_alive():
             for proc in self._processes:
@@ -68,30 +74,36 @@ class BackendManager:
                     self._logger.debug(f'Attempting to join proc: {proc.pid}')
                     proc.join(timeout=1)
 
-        self._logger.debug('Completed cleaning up processes')
+        self._logger.debug(t['cleaned-processes'])
 
     def _cleanup_everything(self):
         self._cleanup_processes()
         self._cleanup_queues()
 
     def _handle_exit_signals(self, signum, frame):
-        self._logger.debug('Beginning to handle exit signals in BackendManager')
+        t = load_translation('en')
+        
+        self._logger.debug(t['begin-exit'])
         self._cleanup_everything()
-        self._logger.debug('Completed handling exit signals in BackendManager')
-        self._logger.debug("### ENDING MICROLAB SERVICE EXECUTION ###")
+        self._logger.debug(t['completed-exit'])
+        self._logger.debug(t['end-exit'])
 
     def _start_microlab(self):
+        t = load_translation('en')
+        
         self._microlab_manager_process = Process(
             target=startMicrolabProcess, args=(self._q1, self._q2, MultiprocessingLogger.get_logging_queue()), name="microlab"
         )
 
         self._processes.append(self._microlab_manager_process)
 
-        self._logger.debug('Starting the microlab process')
+        self._logger.debug(t['starting-microlab-process'])
         self._microlab_manager_process.start()
         self._logger.debug(f'microlab process pid: {self._microlab_manager_process.pid}')
 
     def _start_server(self):
+        t = load_translation('en')
+        
         self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1, MultiprocessingLogger.get_logging_queue()), name="flask", daemon=True)
         self._processes.append(self._flaskProcess)
         self._logger.debug('Starting the server process')
@@ -99,8 +111,11 @@ class BackendManager:
         print(f'server process pid: {self._flaskProcess.pid}')
 
     def run(self):
+        t = load_translation('en')
+        
         config.initialSetup()
-        self._logger.info("### STARTING MAIN MICROLAB SERVICE ###")
+        
+        self._logger.info(t['starting-main-service'])
 
         self._start_microlab()
         self._start_server()
