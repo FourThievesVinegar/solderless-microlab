@@ -7,5 +7,16 @@
   "begin-exit": "Beginning to handle exit signals in BackendManager",
   "completed-exit": "Completed handling exit signals in BackendManager",
   "end-exit": "### ENDING MICROLAB SERVICE EXECUTION ###",
-  "starting-microlab-process": "Starting the microlab process"
+  "starting-microlab-process": "Starting the microlab process",
+  
+  "starting-api": "### STARTING API ###",
+  
+  "starting-waitress": "Starting backend waitress server",
+  "shutting-waitress": "Shutting down waitress server",
+  "shutted-waitress": "Completed shut down of waitress server",
+  
+  "recipe-not-found": "Recipe with this name could not be found",
+  "recipe-error": "Error with recipe: {1}",
+  "json-error": "File does not contain valid JSON.",
+  "recipe-not-exist": "Recipe does not exist."
 }

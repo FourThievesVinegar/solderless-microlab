@@ -17,6 +17,7 @@ from pydantic_core import ValidationError
 
 from microlab.interface import MicrolabInterface
 
+from localization import load_translation
 
 class RouteManager:
 
@@ -112,11 +113,12 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
+        t = load_translation()
         recipe = recipes.core.getRecipeByName(name)
         if recipe is None:
             return jsonify(
                 {
-                    'response': 'error', 'message': 'Recipe with this name could not be found'
+                    'response': 'error', 'message': t['recipe-not-found']
                 }
             ), 404
                             
@@ -182,6 +184,7 @@ class RouteManager:
                 Only present if response is "error" and there is a message to present to the user.
         """
         
+        t = load_translation()
         f = request.files['File']
         if f.mimetype != 'application/json':
             return jsonify({'response': 'error', 'message': "Recipe is not a json file."}), 400
@@ -195,7 +198,7 @@ class RouteManager:
                 'message': "Error with recipe: {1}".format(f, str(err))
                 }), 400
         except Exception:
-            return jsonify({'response': 'error', 'message': "File does not contain valid JSON."}), 400
+            return jsonify({'response': 'error', 'message': t['json-error']}), 400
 
         # reading the stream above sets the stream position to EOF, need to go back to start
         f.stream.seek(0)
@@ -217,12 +220,14 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
+        
+        t = load_translation()
         recipe = recipes.core.getRecipeByName(name)
         try:
             os.remove(join(config.recipesDirectory, secure_filename(recipe.fileName)))
             return jsonify({'response': 'ok'})
         except FileNotFoundError:
-            return jsonify({'response': 'error', 'message': "Recipe does not exist."}, 404)
+            return jsonify({'response': 'error', 'message': t['recipe-not-exist']}, 404)
         
     # /controllerHardware
     def _get_controller_hardware(self):
