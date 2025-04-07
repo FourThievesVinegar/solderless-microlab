@@ -41,7 +41,7 @@ class BackendManager:
         return any([process.is_alive() for process in self._processes])
 
     def _cleanup_queues(self):
-        t = load_translation('en')
+        t = load_translation()
         
         self._logger.debug(t['cleaning-queues'])
 
@@ -54,7 +54,7 @@ class BackendManager:
         self._logger.debug(t['cleaned-queues'])
 
     def _cleanup_processes(self):
-        t = load_translation('en')
+        t = load_translation()
         
         self._logger.debug(t['cleaning-process'])
 
@@ -81,7 +81,7 @@ class BackendManager:
         self._cleanup_queues()
 
     def _handle_exit_signals(self, signum, frame):
-        t = load_translation('en')
+        t = load_translation()
         
         self._logger.debug(t['begin-exit'])
         self._cleanup_everything()
@@ -89,7 +89,7 @@ class BackendManager:
         self._logger.debug(t['end-exit'])
 
     def _start_microlab(self):
-        t = load_translation('en')
+        t = load_translation()
         
         self._microlab_manager_process = Process(
             target=startMicrolabProcess, args=(self._q1, self._q2, MultiprocessingLogger.get_logging_queue()), name="microlab"
@@ -102,7 +102,7 @@ class BackendManager:
         self._logger.debug(f'microlab process pid: {self._microlab_manager_process.pid}')
 
     def _start_server(self):
-        t = load_translation('en')
+        t = load_translation()
         
         self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1, MultiprocessingLogger.get_logging_queue()), name="flask", daemon=True)
         self._processes.append(self._flaskProcess)
@@ -111,7 +111,7 @@ class BackendManager:
         print(f'server process pid: {self._flaskProcess.pid}')
 
     def run(self):
-        t = load_translation('en')
+        t = load_translation()
         
         config.initialSetup()
         
