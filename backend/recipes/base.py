@@ -89,6 +89,8 @@ from datetime import datetime, timedelta, timezone
 from enum import Enum
 from util.logger import MultiprocessingLogger
 
+from localization import load_translation
+
 
 class RecipeState(str, Enum):
     IDLE = "idle"
@@ -128,17 +130,21 @@ class RunningRecipe:
         :return:
         None
         """
+        t=load_translation()
+        
         supported, msg = self.isRecipeSupported(self.recipe)
         if supported:
-            self._logger.info('Starting recipe {0}'.format(self.title))
+            self._logger.info(t['starting-recipe'].format(self.title))
             self.step = 0
             self.runStep()
         else:
-            self._logger.info('Recipe {0} unsupported: {1}'.format(self.title, msg))
+            self._logger.info(t['recipe-unsupported'].format(self.title, msg))
             self.status = RecipeState.RECIPE_UNSUPPORTED
             self.message = msg
 
     def isRecipeSupported(self, recipe: MicrolabRecipe):
+        t=load_translation()
+      
         max = self._microlabHardware.getMaxTemperature()
         minTemp = self._microlabHardware.getMinTemperature()
         for step in recipe.steps:
@@ -146,9 +152,9 @@ class RunningRecipe:
                 if "temp" in task.parameters:
                     temp = task.parameters["temp"]
                     if temp > max:
-                        return False, "Recipe requires temperature of {0}C, which is higher than your current hardware supports ({1}C).".format(temp, max)
+                        return False, t['requires-more-temp'].format(temp, max)
                     if temp < minTemp:
-                        return False, "Recipe requires temperature of {0}C, which is lower than your current hardware supports ({1}C).".format(temp, minTemp)
+                        return False, t['requires-less-temp'].format(temp, minTemp)
         return True, ''
 
     def stop(self):
@@ -158,7 +164,9 @@ class RunningRecipe:
         :return:
         None
         """
-        self._logger.info('Stopping recipe {0}'.format(self.title))
+        t=load_translation()
+        
+        self._logger.info(t['stopping-recipe'].format(self.title))
         self.step = -1
         if self.status != RecipeState.ERROR:
             self.status = RecipeState.IDLE
@@ -238,6 +246,8 @@ class RunningRecipe:
             string
                 The message to display to the user in case of failure.
         """
+        t=load_translation()
+        
         found = False
         stepOptions = self.recipe.getStep(self.step).options
         if stepOptions:
@@ -247,7 +257,7 @@ class RunningRecipe:
                     found = True
 
         if not found:
-            return False, 'Invalid option {0}'.format(optionValue)
+            return False, t['invalid-option'].format(optionValue)
 
         ret = self.runStep()
         return ret, self.message
@@ -265,9 +275,11 @@ class RunningRecipe:
             string
                 The message to display to the user in case of failure.
         """
-        self._logger.info('Running step {0}'.format(self.step))
+        t=load_translation()
+        
+        self._logger.info(t['running-step'].format(self.step))
         step = self.recipe.getStep(self.step)
-        self._logger.info('Running step {0}'.format(step))
+        self._logger.info(t['running-step'].format(step))
         self.message = step.message
         self.stepCompletionTime = None
         self.currentTasks = []
@@ -337,6 +349,8 @@ class RunningRecipe:
         :return:
             None
         """
+        t=load_translation()
+        
         for task in self.currentTasks:
             if not task["done"] and datetime.now() > task["nextTime"]:
                 self._logger.debug("task is ready for next iteration")
@@ -347,11 +361,11 @@ class RunningRecipe:
                         task["done"] = True
                     else:
                         duration = timedelta(seconds=res)
-                        self._logger.debug("task is scheduled for {0}".format(datetime.now() + duration))
+                        self._logger.debug(t['task-scheduled'].format(datetime.now() + duration))
                         task["nextTime"] = datetime.now() + duration
                 except Exception as e:
                     self._logger.exception(str(e))
                     task["exception"] = e
                     self.status = RecipeState.ERROR
-                    self.message = 'Task execution failed.'
+                    self.message = t['task-failed']
                     self.stop()
