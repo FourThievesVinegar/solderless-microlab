@@ -47,8 +47,8 @@
   "no-running-recipe": "No recipe running.",
   "need-value-next-options": "Step must have a valid value for either \"next\" or \"options\".",
   "error-next-options-configuration": "Step cannot have both \"next\" and \"options\" configured.",
-  "error-step-outside-range": "The configured next step \"{step_next}\" after step {index} is outside the range of possible steps.",
-  "error-step-option-outside-range": "The configured next step \"{option_next}\" for option \"{option_text}\" in step {index} is outside the range of possible steps.",
+  "error-step-outside-range": "The configured next step \"{0}\" after step {1} is outside the range of possible steps.",
+  "error-step-option-outside-range": "The configured next step \"{0}\" for option \"{1}\" in step {2} is outside the range of possible steps.",
   "error-cant-reach-final-step": "The recipe is not valid as step {index} cannot reach a final step.",
   "heating-water": "heating water to {0}...",
   "cooling-water": "cooling water to {0}...",
@@ -59,5 +59,6 @@
   "dispensing": "Dispensing {0}ml from pump {1}",
   "dispensing-max-speed": "Pump {0} cannot operate fast enough. Dispensing at maximum speed.",
   "dispensing-time": "dispense exeuction time: {0}",
+  "error-maintaining-temperature": "Error in maintainSimple. currentTemp: {0}, targetTemp: {1}. Exception: {2}",
   "stirring": "Stirring for {0} seconds"
 }

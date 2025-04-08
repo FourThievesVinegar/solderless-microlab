@@ -130,7 +130,7 @@ class MicrolabRecipe(BaseModel):
         length = len(self.steps)
         for index, step in enumerate(self.steps):
             if step.next and (step.next < 0 or step.next >= length):
-                raise ValueError(t['error-step-outside-range'].format(step_next=step.next, index=index))
+                raise ValueError(t['error-step-outside-range'].format(step.next, index))
         return self
 
     @model_validator(mode='after')
@@ -141,7 +141,7 @@ class MicrolabRecipe(BaseModel):
             if step.options:
                 for option in step.options:
                     if (option.next < 0 or option.next >= length):
-                        raise ValueError(t['error-step-option-outside-range'].format(option_next=option.next, option_text=option.text, index=index))
+                        raise ValueError(t['error-step-option-outside-range'].format(option.next, option.text, index))
         return self
 
     @model_validator(mode='after')

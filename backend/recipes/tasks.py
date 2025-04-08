@@ -199,7 +199,7 @@ def maintainSimple(microlab: MicroLabHardware, parameters: dict):
 
         except Exception as e:
             logger.error(
-                "Error in maintainSimple. currentTemp: {0}, targetTemp: {1}. Exception: {2}".format(
+                t['error-maintaining-temperature'].format(
                     currentTemp, targetTemp, e
                 )
             )
