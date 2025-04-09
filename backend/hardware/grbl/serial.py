@@ -1,6 +1,7 @@
 from hardware.grbl.base import GRBL
 import serial
 from util.logger import MultiprocessingLogger
+from localization import load_translation
 
 class GRBLSerial(GRBL):
     def __init__(self, grbl_config: dict):
@@ -16,6 +17,8 @@ class GRBLSerial(GRBL):
         self.grblSer = serial.Serial(grbl_config["grblPort"], 115200, timeout=1)
 
     def grblWrite(self, command: str, retries=3):
+        t=load_translation()
+        
         self.grblSer.reset_input_buffer()
         self.grblSer.write(bytes("{}\n".format(command), "utf-8"))
         # Grbl will execute commands in serial as soon as the previous is completed.
@@ -24,10 +27,10 @@ class GRBLSerial(GRBL):
         response = self.grblSer.read_until()
         if "error" in str(response):
             if retries > 0:
-                self._logger.warning("grbl error: {0} for command: {1}, retrying"
-                                .format(response, command))
+                self._logger.warning(
+                                t['grbl-error-retrying'].format(response, command))
                 self.grblWrite(command, retries - 1)
             else:
                 raise Exception(
-                    "grbl error: {0} for command: {1}".format(response, command)
+                    t['grlb-error'].format(response, command)
                 )

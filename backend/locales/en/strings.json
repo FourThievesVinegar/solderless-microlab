@@ -65,5 +65,29 @@
   "stirring": "Stirring for {0} seconds",
   
   "error-value":"Value error: {0}",
-  "log-exception": "Encountered exception: {0} while attempting to process logs. Traceback:\n"
+  "log-exception": "Encountered exception: {0} while attempting to process logs. Traceback:\n",
+  
+  "starting-hardware-controller": "### STARTING MICROLAB HARDWARE CONTROLLER ###",
+  "loading-hardware-configuration": "Loading microlab hardware configuration.",
+  
+  "no-board-config": "No board configuration found for '{0}'",
+  "loading-config": "Loading device \"{0}\".",
+  "config": "{0} configuration: {1}",
+  "unsupported-device-type": "Unsupported device type '{0}'",
+  "loaded-config": "\"{0}\" loaded successfully.",
+  "missing-config": "Missing hardware configuration for dependency '{0}'",
+  "circular-dependency-device-error": "Circular dependency detected between devices '{0}' and '{1}'. Device configuration must be acyclic.",
+  "duplicate-device-id": "Duplicate device id {0}",
+  
+  "unsupported-grbl-type": "Unsupported grblType",
+  "grbl-error-retrying": "grbl error: {0} for command: {1}, retrying",
+  "grlb-error": "grbl error: {0} for command: {1}",
+  
+  "dispensing-command": "Dispensing with command '{0}'",
+  "dispensing-specific": "Dispensing {0}ml with motor speed of {1}mm/min over {2} seconds",
+  "unsupported-reagent-dispenser-type": "Unsupported reagentdispenserType",
+  "dispensing-x": "Dispensing {0}ml from pump X",
+  "dispensing-y": "Dispensing {0}ml from pump Y",
+  "dispensing-z": "Dispensing {0}ml from pump Z",
+  "pump-doesnt-exist": "Pump '{0}' does not exist."
 }

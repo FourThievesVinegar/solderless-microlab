@@ -10,7 +10,7 @@ from os.path import exists
 from functools import cmp_to_key
 from copy import copy
 from util.logger import MultiprocessingLogger
-
+from localization import load_translation
 
 def sort_device_configs(deviceConfigs: list[dict]):
     def compare_devices(a: dict, b: dict):
@@ -28,12 +28,14 @@ def sort_device_configs(deviceConfigs: list[dict]):
 
 
 def loadHardwareConfiguration() -> dict:
+    t=load_translation()
+  
     controllerHardware = {"devices": []}
 
     if config.controllerHardware != "custom":
         path = '{0}/{1}.yaml'.format(config.controllerHardwareDirectory, config.controllerHardware)
         if not exists(path):
-            raise Exception("No board configuration found for '{0}'".format(config.controllerHardware))
+            raise Exception(t['no-board-config'].format(config.controllerHardware))
         with open(path) as inf:
             controllerHardware = yaml.safe_load(inf)
 
@@ -47,14 +49,16 @@ def loadHardwareConfiguration() -> dict:
 
 
 def setupDevices(deviceDefinitions: list[dict]):
+    t=load_translation()
+  
     validateConfiguration(deviceDefinitions)
     logger = MultiprocessingLogger.get_logger(__name__)
     
     devices = {}
 
     for device in deviceDefinitions:
-        logger.info('Loading device "{0}".'.format(device['id']))
-        logger.debug('{0} configuration: {1}'.format(device['id'], device))
+        logger.info(t['loading-config'].format(device['id']))
+        logger.debug(t['config'].format(device['id'], device))
         deviceType = device["type"]
         deviceID = device['id']
         if deviceType == "tempController":
@@ -70,24 +74,28 @@ def setupDevices(deviceDefinitions: list[dict]):
         elif deviceType == "grbl":
             devices[deviceID] = grbl.createGRBL(device, devices)
         else:
-            raise Exception("Unsupported device type '{0}'".format(deviceType))
-        logger.info('"{0}" loaded successfully.'.format(device['id']))
+            raise Exception(t['unsupported-device-type'].format(deviceType))
+        logger.info(t['loaded-config'].format(device['id']))
     return devices
 
 
 def _checkForMissingDependency(current_device_config: dict, allDeviceData: dict):
+    t=load_translation()
+    
     dependencies = current_device_config.get('dependencies', [])
     for dependency in dependencies:
         if dependency not in allDeviceData:
-            raise Exception("Missing hardware configuration for dependency '{}'".format(dependency))
+            raise Exception(t['missing-config'].format(dependency))
 
 
 def _checkForCyclicalDependency(current_device_id: str, current_device_config: dict, allDeviceData: dict):
     # We're making a copy as we're going to be altering 'dependencies' to walk the dependency tree
+    t=load_translation()
+    
     dependencies = copy(current_device_config.get('dependencies', []))
     for dependency in dependencies:
         if dependency == current_device_id:
-            raise Exception("Circular dependency detected between devices '{0}' and '{1}'. Device configuration must be acyclic.".format(current_device_id, dependency))
+            raise Exception(t['circular-dependency-device-error'].format(current_device_id, dependency))
         child_dependencies = allDeviceData[dependency].get('dependencies', [])
         for child_dependency in child_dependencies:
             if child_dependency not in dependencies:
@@ -103,12 +111,14 @@ def _checkForMissingAndCircularHardwareDeps(deviceData: dict):
 
 
 def validateConfiguration(deviceConfigs: list[dict]):
+    t=load_translation()
+  
     deviceDict = {}
     for device in deviceConfigs:
         if deviceDict.get(device['id'], None) is None:
             deviceDict[device['id']] = device
         else:
-            raise Exception("Duplicate device id {0}".format(device['id']))
+            raise Exception(t['duplicate-device-id'].format(device['id']))
     _checkForMissingAndCircularHardwareDeps(deviceDict)
     
     return False
