@@ -11,12 +11,14 @@
   
   "starting-api": "### STARTING API ###",
   
+  "server-type": "server type: {0}",
   "starting-waitress": "Starting backend waitress server",
   "shutting-waitress": "Shutting down waitress server",
   "shutted-waitress": "Completed shut down of waitress server",
   
   "recipe-not-found": "Recipe with this name could not be found",
   "recipe-error": "Error with recipe: {1}",
+  "recipe-not-json": "Recipe is not a json file."},
   "json-error": "File does not contain valid JSON.",
   "recipe-not-exist": "Recipe does not exist.",
   
@@ -60,5 +62,8 @@
   "dispensing-max-speed": "Pump {0} cannot operate fast enough. Dispensing at maximum speed.",
   "dispensing-time": "dispense exeuction time: {0}",
   "error-maintaining-temperature": "Error in maintainSimple. currentTemp: {0}, targetTemp: {1}. Exception: {2}",
-  "stirring": "Stirring for {0} seconds"
+  "stirring": "Stirring for {0} seconds",
+  
+  "error-value":"Value error: {0}",
+  "log-exception": "Encountered exception: {0} while attempting to process logs. Traceback:\n"
 }

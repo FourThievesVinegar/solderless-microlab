@@ -11,6 +11,7 @@ from typing import Union
 from multiprocessing import Queue
 from util.logFormatter import MultiLineFormatter
 
+from localization import load_translation
 
 class MultiprocessingLogger:
 
@@ -106,6 +107,8 @@ class MultiprocessingLogger:
 
     @classmethod
     def process_logs(cls):
+        t=load_translation()
+        
         try:
             record = cls._logging_queue.get_nowait()
             logger = cls._get_processing_logger(record.name)
@@ -113,10 +116,8 @@ class MultiprocessingLogger:
         except queue.Empty:
             return
         except ValueError as e:
-            print(f'Value error: {e}')
+            print(t['error-value'].format(e))
             return
         except Exception as e:
-            sys.stderr.write(f'Encountered exception: {e} while attempting to process logs. Traceback:\n')
+            sys.stderr.write(t['log-exception'].format(e))
             sys.stderr.write(traceback.format_exc())
-
-

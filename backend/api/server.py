@@ -44,9 +44,10 @@ class WaitressAPIServer:
 
     @classmethod
     def _get_server(cls, app: Flask):
+        t=load_translation()
         if cls._server is None:
             cls._server = create_server(app, host='0.0.0.0', port=config.apiPort)
-            print(f'server type: {type(cls._server).__name__}')
+            print(t['server-type'].format(type(cls._server).__name__))
         return cls._server
 
     @classmethod

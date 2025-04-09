@@ -187,7 +187,7 @@ class RouteManager:
         t = load_translation()
         f = request.files['File']
         if f.mimetype != 'application/json':
-            return jsonify({'response': 'error', 'message': "Recipe is not a json file."}), 400
+            return jsonify({'response': 'error', 'message': t['recipe-not-json']), 400
         try:
             recipeData = json.load(f.stream)
             recipeData["fileName"] = f.filename
@@ -195,7 +195,7 @@ class RouteManager:
         except ValidationError as err:
             return jsonify({
                 'response': 'error',
-                'message': "Error with recipe: {1}".format(f, str(err))
+                'message': t['recipe-error'].format(f, str(err))
                 }), 400
         except Exception:
             return jsonify({'response': 'error', 'message': t['json-error']}), 400
