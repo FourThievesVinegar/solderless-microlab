@@ -183,11 +183,11 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
-        
         t = load_translation()
+        
         f = request.files['File']
         if f.mimetype != 'application/json':
-            return jsonify({'response': 'error', 'message': t['recipe-not-json']), 400
+            return jsonify({'response': 'error', 'message': t['recipe-not-json']}), 400
         try:
             recipeData = json.load(f.stream)
             recipeData["fileName"] = f.filename

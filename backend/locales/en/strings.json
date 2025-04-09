@@ -18,9 +18,9 @@
   
   "recipe-not-found": "Recipe with this name could not be found",
   "recipe-error": "Error with recipe: {1}",
-  "recipe-not-json": "Recipe is not a json file."},
   "json-error": "File does not contain valid JSON.",
   "recipe-not-exist": "Recipe does not exist.",
+  "recipe-not-json": "Recipe is not a json file.",
   
   "shutting-microlab": "Shutting down microlab.",
   "shutted-microlab": "Shutdown completed.",
