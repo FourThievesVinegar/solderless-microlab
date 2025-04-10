@@ -1,5 +1,6 @@
 from hardware.temperaturecontroller.base import TempController
 from util.logger import MultiprocessingLogger
+from localization import load_translation
 
 
 RELAY_ON = 1
@@ -52,7 +53,9 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        self._logger.debug("heater turned on")
+        t=load_translation()
+        
+        self._logger.debug(t['turned-on-heat'])
         self.gpio.output(self.heaterPin, RELAY_ON)
 
     def turnHeaterOff(self):
@@ -62,15 +65,21 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        self._logger.debug("heater turned off")
+        t=load_translation()
+        
+        self._logger.debug(t['turned-off-heat'])
         self.gpio.output(self.heaterPin, RELAY_OFF)
 
     def turnHeaterPumpOn(self):
-        self._logger.debug("heater pump turned on")
+        t=load_translation()
+        
+        self._logger.debug(t['heat-pump-on'])
         self.gpio.output(self.heaterPumpPin, RELAY_ON)
 
     def turnHeaterPumpOff(self):
-        self._logger.debug("heater pump turned off")
+        t=load_translation()
+        
+        self._logger.debug(t['heat-pump-off'])
         self.gpio.output(self.heaterPumpPin, RELAY_OFF)
 
     def turnCoolerOn(self):
@@ -80,7 +89,9 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        self._logger.debug("cooler turned on")
+        t=load_translation()
+        
+        self._logger.debug(t['turned-on-cool'])
         self.gpio.output(self.coolerPin, RELAY_ON)
 
     def turnCoolerOff(self):
@@ -90,7 +101,9 @@ class BasicTempController(TempController):
         :return:
         None
         """
-        self._logger.debug("cooler turned off")
+        t=load_translation()
+        
+        self._logger.debug(t['turned-off-cool'])
         self.gpio.output(self.coolerPin, RELAY_OFF)
 
     def getTemp(self):

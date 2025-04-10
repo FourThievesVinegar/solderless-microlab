@@ -5,12 +5,14 @@ and either the individual files or backend/config.py for configuration informati
 
 from hardware.temperaturecontroller.basictempcontroller import BasicTempController
 from hardware.temperaturecontroller.simulation import SimulatedTempController
-
+from localization import load_translation
 
 def createTemperatureController(tempControllerConfig: dict, devices: dict):
+    t=load_translation()
+    
     tempControllerType = tempControllerConfig['implementation']
     if tempControllerType == "basic":
         return BasicTempController(tempControllerConfig, devices)
     elif tempControllerType == "simulation":
         return SimulatedTempController(tempControllerConfig)
-    raise Exception("Unsupported tempControllerType")
+    raise Exception(t['unsupported-temp-control'])

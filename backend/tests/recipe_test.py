@@ -2,6 +2,8 @@ from recipes.model import MicrolabRecipe
 import pytest
 from pydantic import ValidationError
 
+from localization import load_translation
+
 @pytest.fixture
 def basic_recipe():
     return {
@@ -148,32 +150,44 @@ def test_works_with_valid_recipe_data(basic_recipe):
     MicrolabRecipe.model_validate(basic_recipe)
 
 def test_raises_when_invalid_next_step_in_step(basic_recipe):
+    t=load_translation()
+    
     basic_recipe["steps"][3]["next"] = -2
-    with pytest.raises(ValidationError, match='is outside the range of possible steps'):
+    with pytest.raises(ValidationError, match=t['outside-range-possible-steps']):
       MicrolabRecipe.model_validate(basic_recipe)
 
 def test_raises_when_invalid_next_step_in_options(basic_recipe):
+    t=load_translation()
+    
     basic_recipe["steps"][2]["options"] = [{"next": -2, "text": "test"}]
-    with pytest.raises(ValidationError, match='is outside the range of possible steps'):
+    with pytest.raises(ValidationError, match=t['outside-range-possible-steps']):
       MicrolabRecipe.model_validate(basic_recipe)
 
 def test_raises_when_simple_infinite_loop(basic_recipe):
+    t=load_translation()
+    
     basic_recipe["steps"][2]["next"] = 1
     basic_recipe["steps"][2]["options"] = None
-    with pytest.raises(ValidationError, match='cannot reach a final step'):
+    with pytest.raises(ValidationError, match=t['cannot-reach-final-step']):
       MicrolabRecipe.model_validate(basic_recipe)
 
 def test_raises_when_last_step_is_unreachable(basic_recipe):
+    t=load_translation()
+    
     basic_recipe["steps"][13]["next"] = 2
-    with pytest.raises(ValidationError, match='cannot reach a final step'):
+    with pytest.raises(ValidationError, match=t['cannot-reach-final-step']):
       MicrolabRecipe.model_validate(basic_recipe)
 
 def test_raises_when_step_has_both_options_and_next(basic_recipe):
+    t=load_translation()
+    
     basic_recipe["steps"][1]["next"] = 3
-    with pytest.raises(ValidationError, match='Step cannot have both "next" and "options" configured'):
+    with pytest.raises(ValidationError, match=t['error-next-options-configuration']):
       MicrolabRecipe.model_validate(basic_recipe)
 
 def test_raises_when_last_step_has_neither_options_or_next(basic_recipe):
+    t=load_translation()
+    
     basic_recipe["steps"][1]["options"] = []
-    with pytest.raises(ValidationError, match='Step must have a valid value for either "next" or "options"'):
+    with pytest.raises(ValidationError, match=t['need-value-next-options']):
       MicrolabRecipe.model_validate(basic_recipe)

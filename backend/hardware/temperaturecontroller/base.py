@@ -1,24 +1,27 @@
 from abc import ABC,abstractmethod
+from localization import load_translation
 
 
 class TempController(ABC):
 
     @abstractmethod
     def __init__(self, args, devices):
+        t=load_translation()
+        
         if "maxTemp" not in args:
-            raise KeyError("Device '{0}' missing required parameter maxTemp".format(args['id']))
+            raise KeyError(t['device-miss-max-temp'].format(args['id']))
         if "minTemp" not in args:
-            raise KeyError("Device '{0}' missing required parameter minTemp".format(args['id']))
+            raise KeyError(t['device-miss-min-temp'].format(args['id']))
         if "pidConfig" in args:
             pidConfig = args["pidConfig"]
             if not isinstance(pidConfig, dict):
-                raise TypeError("Device '{0}' parameter pidConfig has invalid type, must be a dictionary containing numeric values for 'P','I', and 'D'.".format(args['id']))
+                raise TypeError(t['pid-config-error'].format(args['id']))
             if "P" not in pidConfig:
-                raise KeyError("Device '{0}' missing required parameter 'P' in pidConfig".format(args['id']))
+                raise KeyError(t['pid-config-miss-p'].format(args['id']))
             if "I" not in pidConfig:
-                raise KeyError("Device '{0}' missing required parameter 'I' in pidConfig".format(args['id']))
+                raise KeyError(t['pid-config-miss-i'].format(args['id']))
             if "D" not in pidConfig:
-                raise KeyError("Device '{0}' missing required parameter 'D' in pidConfig".format(args['id']))
+                raise KeyError(t['pid-config-miss-d'].format(args['id']))
             
             if "proportionalOnMeasurement" not in pidConfig:
                 pidConfig["proportionalOnMeasurement"] = False
