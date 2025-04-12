@@ -2,12 +2,9 @@
 This module contains the implementations for gpio control. See base.py for the abstract class used
 and the individual files for configuration information.
 """
-from localization import load_translation
 
 
 def createGPIOChip(gpioConfig: dict, devices: dict):
-    t=load_translation()
-    
     gpioType = gpioConfig['implementation']
     if gpioType == "gpiod":
         from hardware.gpiochip.gpiod import GPIODChip
@@ -21,4 +18,4 @@ def createGPIOChip(gpioConfig: dict, devices: dict):
     if gpioType == "grbl":
         from hardware.gpiochip.grbl import GRBLChip
         return GRBLChip(gpioConfig, devices)
-    raise Exception(t['unsupported-gpio'])
+    raise Exception("Unsupported gpiochiptype")

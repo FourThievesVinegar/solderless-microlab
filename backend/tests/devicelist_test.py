@@ -4,12 +4,8 @@ microlabConfig.validate_config()
 from hardware.devicelist import validateConfiguration, sort_device_configs
 import pytest
 
-from localization import load_translation
-
 
 def test_detects_deplicate_ids():
-    t=load_translation()
-    
     devices = [
         {
             "id": "1"
@@ -18,13 +14,11 @@ def test_detects_deplicate_ids():
             "id": "1"
         },
     ]
-    with pytest.raises(Exception, match=t['duplicate-device-id-wo-format']):
+    with pytest.raises(Exception, match='Duplicate device id'):
         res = validateConfiguration(devices)
 
 
 def test_detects_simple_circular_dependencies():
-    t=load_translation()
-  
     devices = [
         {
             "id": "1",
@@ -35,13 +29,11 @@ def test_detects_simple_circular_dependencies():
             "dependencies": ["1"]
         },
     ]
-    with pytest.raises(Exception, match=t['circular-dependency']):
+    with pytest.raises(Exception, match='Circular dependency'):
         res = validateConfiguration(devices)
 
 
 def test_detects_complex_circular_dependencies():
-    t=load_translation()
-    
     devices = [
         {
             "id": "4",
@@ -60,7 +52,7 @@ def test_detects_complex_circular_dependencies():
             "dependencies": ["4"]
         },
     ]
-    with pytest.raises(Exception, match=t['circular-dependency']):
+    with pytest.raises(Exception, match='Circular dependency'):
         res = validateConfiguration(devices)
 
 
@@ -87,15 +79,13 @@ def test_accepts_simple_valid_config():
 
 
 def test_detects_missing_dependencies():
-    t=load-translation()
-    
     devices = [
         {
             "id": "1",
             "dependencies": ["2"]
         },
     ]
-    with pytest.raises(Exception, match=t['missing-config-wo-format']):
+    with pytest.raises(Exception, match='Missing hardware configuration for dependency'):
         res = validateConfiguration(devices)
 
 
@@ -119,4 +109,3 @@ def test_sort_device_configs_sorts_by_dependencies():
             "dependencies": ["2"]
         },
     ]
-
