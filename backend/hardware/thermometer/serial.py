@@ -26,7 +26,7 @@ class SerialTempSensor(TempSensor):
             self.tempSer = serial.Serial(thermometer_config["serialDevice"], timeout=0.5)
         except serial.SerialException as e:
             raise HardwareLoadError(
-                t['thermometer-not-detected'].format(
+                "Thermometer could not be detected at {}, make sure it's plugged in, try another USB port if it is, or change the device name in your lab hardware config file to the correct device name.".format(
                     thermometer_config["serialDevice"]
                 )
             ) from e
