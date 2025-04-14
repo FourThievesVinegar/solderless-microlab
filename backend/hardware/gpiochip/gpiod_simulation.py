@@ -1,6 +1,5 @@
 from hardware.gpiochip.base import LINE_REQ_DIR_OUT
 from util.logger import MultiprocessingLogger
-from localization import load_translation
 
 
 class GPIODChipSimulation():
@@ -41,13 +40,11 @@ class GPIODChipSimulation():
         :return:
             The line number for that pin
         """
-        t=load_translation()
-        
         if isinstance(pin, str):
             if self.lineAliases[pin]:
                 return self.lineAliases[pin]
             else:
-                raise Exception(t['invalid-gpio-pin'].format(pin))
+                raise Exception("Invalid GPIO pin {0}".format(pin))
         else:
             return pin
 

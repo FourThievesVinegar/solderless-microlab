@@ -1,7 +1,5 @@
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 from util.logger import MultiprocessingLogger
-from localization import load_translation
-
 
 class GRBLChip(GPIOChip):
     def __init__(self, gpio_config: dict, devices: dict):
@@ -47,13 +45,11 @@ class GRBLChip(GPIOChip):
         :return:
             The pin number for that pin
         """
-        t=load_translation()
-        
         if isinstance(pin, str):
             if self.pinAliases[pin]:
                 return self.pinAliases[pin]
             else:
-                raise Exception(t['invalid-gpio-pin'].format(pin))
+                raise Exception("Invalid GPIO pin {0}".format(pin))
         else:
             return pin
 
