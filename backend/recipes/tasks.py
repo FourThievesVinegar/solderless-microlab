@@ -227,7 +227,7 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
     :return:
         None
     """
-    t=load_translation()
+    translated=load_translation() #not 't' for avoiding ambiguity with already present t variable
     
     logger = MultiprocessingLogger.get_logger(__name__)
 
@@ -244,11 +244,11 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
     start = microlab.secondSinceStart()
 
     logger.info(
-        t['maintaining-specific-temperature'].format(
+        translated['maintaining-specific-temperature'].format(
             targetTemp, duration, tolerance
         )
     )
-    logger.debug(t['maintaning-PID-temperature'])
+    logger.debug(translated['maintaning-PID-temperature'])
 
     pidConfig = microlab.getPIDConfig()
     pid = PID(pidConfig["P"], pidConfig["I"], pidConfig["D"], setpoint=targetTemp)
@@ -270,7 +270,7 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
         control = pid(currentTemp)
         p, i, d = pid.components
         logger.info(
-            t['heater-PID-values'].format(currentTemp, control, p, i, d)
+            translated['heater-PID-values'].format(currentTemp, control, p, i, d)
         )
 
         # We split the duty cycle length up into 1 second boxes,
@@ -295,7 +295,7 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
             t = microlab.getTemp()
             a = pid(t)
             p, i, d = pid.components
-            logger.debug(t['heater-PID-values'].format(t, a, p, i, d))
+            logger.debug(translated['heater-PID-values'].format(t, a, p, i, d))
 
         if (microlab.secondSinceStart() - start) >= duration:
             microlab.turnHeaterOff()
