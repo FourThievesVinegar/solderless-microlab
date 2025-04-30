@@ -96,7 +96,6 @@
   "pump-doesnt-exist": "Pump '{0}' does not exist.",
   
   "unsupported-thermometer": "Unsupported thermometer type",
-  "thermometer-not-detected": "Thermometer could not be detected at {0}, make sure it's plugged in, try another USB port if it is, or change the device name in your lab hardware config file to the correct device name.",
   "error-reading-thermometer": "Error reading from thermometer",
   "ser-read": "ser read {0} {1}",
   "temperature-conversion-error": "Error converting temperature reading",
@@ -116,15 +115,8 @@
   "turned-off-heat": "heater turned off",
   "turned-on-cool": "cooler turned on",
   "turned-off-cool": "cooler turned off",
-  "device-miss-max-temp": "Device '{0}' missing required parameter maxTemp",
-  "device-miss-min-temp": "Device '{0}' missing required parameter minTemp",
-  "pid-config-error": "Device '{0}' parameter pidConfig has invalid type, must be a dictionary containing numeric values for 'P','I', and 'D'.",
-  "pid-config-miss-p": "Device '{0}' missing required parameter 'P' in pidConfig",
-  "pid-config-miss-i": "Device '{0}' missing required parameter 'I' in pidConfig",
-  "pid-config-miss-d": "Device '{0}' missing required parameter 'D' in pidConfig",
   
   "unsupported-gpio": "Unsupported gpiochiptype",
-  "invalid-gpio-pin": "Invalid GPIO pin {0}",
   "chip-conflict": "GPIO line alias '{0}' has a conflict between chips {1} and {2}. Using {2}.",
   "circular-dependency": "Circular dependency"
 }

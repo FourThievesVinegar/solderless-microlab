@@ -32,7 +32,7 @@ class MicrolabInterface:
                 self.toMicrolab.close()
                 break
 
-        self._logger.debug('purged-queue')
+        self._logger.debug(t['purged-queue'])
 
     def start(self, name):
         """
