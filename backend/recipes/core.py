@@ -18,6 +18,7 @@ from config import microlabConfig as config
 from util.logger import MultiprocessingLogger
 from pydantic_core import ValidationError
 from typing import Optional
+from localization import load_translation
 
 def getRecipeList() -> list[MicrolabRecipe]: 
     """
@@ -25,6 +26,8 @@ def getRecipeList() -> list[MicrolabRecipe]:
     A list of modules in the config.recipesPackages.
     It is assumed that these are all recipes.
     """
+    t=load_translation()
+    
     logger = MultiprocessingLogger.get_logger(__name__)
 
     path = config.recipesDirectory
@@ -39,9 +42,9 @@ def getRecipeList() -> list[MicrolabRecipe]:
                     recipeData["fileName"] = f
                     recipeList.append(MicrolabRecipe.model_validate(recipeData))
             except ValidationError as err:
-                logger.error("Error loading recipe file '{0}': {1}".format(f, str(err)))
+                logger.error(t['error-recipe-file'].format(f, str(err)))
             except json.JSONDecodeError:
-                logger.error("Error loading recipe file '{0}': File is not in proper JSON format".format(f))
+                logger.error(t['error-json-recipe-file'].format(f))
         # This doesn't actually work yet because .4tv are not importable as modules
         if f.endswith('.4tv'):
             recipeList.append(f[:-4])
@@ -74,21 +77,23 @@ def start(name):
     (True, '') on success.
     (False, message) on failure.
     """
+    t=load_translation()
+    
     # Validate that the microlab hardware controller has initialized
     microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
     if microlabHardware.state is not MicroLabHardwareState.INITIALIZED:
-        return False, 'MicroLab failed to start. Check Hardware configuration and setup'.format(microlabHardware.error)
+        return False, t['microlab-failed-start'].format(microlabHardware.error)
 
     # If we are currently running a recipe, check if it is complete.
     if not (state.currentRecipe is None):
         recipeMessage = state.currentRecipe.getStatus()
         if not recipeMessage['status'] == 'complete':
-            return False, 'Recipe {0} is running. Stop it first.'.format(state.currentRecipe.title)
+            return False, t['stop-recipe-running'].format(state.currentRecipe.title)
 
     # Check that it's a valid recipe.
     recipe = getRecipeByName(name)
     if recipe is None:
-        return False, 'Recipe unknown.'
+        return False, t['recipe-unknown']
 
     # Start running the recipe
     state.currentRecipe = RunningRecipe(recipe, microlabHardware)
@@ -129,6 +134,8 @@ def status(_):
             An ISO date string for when the current step is expected to be completed,
             or null if unknown. 
     """
+    t=load_translation()
+    
     message = {
         'status': 'idle',
         'recipe': None,
@@ -139,8 +146,8 @@ def status(_):
     }
     microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
     if microlabHardware.state is MicroLabHardwareState.FAILED_TO_START:
-        message['status'] = 'error'
-        message['message'] = 'MicroLab failed to start. Check hardware and configuration'
+        message['status'] = t['error']
+        message['message'] = t['microlab-failed-to-start']
         message['hardwareError'] = str(microlabHardware.error)
         return message
 
@@ -185,6 +192,8 @@ def selectOption(option):
     (True, '') on success
     (False, message) on failure
     """
+    t=load_translation()
+    
     if not state.currentRecipe is None:
         return state.currentRecipe.selectOption(option)
-    return False, 'No recipe running.'
+    return False, t['no-running-recipe']

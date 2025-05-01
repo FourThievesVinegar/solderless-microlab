@@ -1,5 +1,6 @@
 from hardware.reagentdispenser.base import ReagentDispenser
 from util.logger import MultiprocessingLogger
+from localization import load_translation
 
 
 class SimulatedReagentDispenser(ReagentDispenser):
@@ -24,14 +25,16 @@ class SimulatedReagentDispenser(ReagentDispenser):
         :return:
             None
         """
+        t=load_translation()
+        
         if pumpId == 'X':
-            self._logger.info('Dispensing {0}ml from pump X'.format(volume))
+            self._logger.info(t['dispensing-x'].format(volume))
         elif pumpId == 'Y':
-            self._logger.info('Dispensing {0}ml from pump Y'.format(volume))
+            self._logger.info(t['dispensing-y'].format(volume))
         elif pumpId == 'Z':
-            self._logger.info('Dispensing {0}ml from pump Z'.format(volume))
+            self._logger.info(t['dispensing-z'].format(volume))
         else:
-            raise ValueError("Pump '{0}' does not exist.".format(pumpId))
+            raise ValueError(t['pump-doesnt-exist'].format(pumpId))
         return abs(volume)
 
     def getPumpSpeedLimits(self, pumpId):

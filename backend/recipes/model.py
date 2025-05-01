@@ -1,7 +1,7 @@
 from pydantic import BaseModel, AfterValidator, ValidationError, model_validator
 from typing import Union, Optional
 from pydantic.dataclasses import dataclass
-
+from localization import load_translation
 
 class MicrolabRecipeOption(BaseModel):
     text: str
@@ -90,12 +90,13 @@ class MicrolabRecipeStep(BaseModel):
     """
     @model_validator(mode='after')
     def step_has_one_of_next_or_options(self):
+        t=load_translation()
         if self.done:
             return self
         if (not self.next) and (not self.options or len(self.options) == 0):
-            raise ValueError(f'Step must have a valid value for either "next" or "options".')
+            raise ValueError(t['need-value-next-options'])
         if (self.next) and (self.options and len(self.options) > 0):
-            raise ValueError(f'Step cannot have both "next" and "options" configured.')
+            raise ValueError(t['error-next-options-configuration'])
         return self
 
 
@@ -125,20 +126,22 @@ class MicrolabRecipe(BaseModel):
     
     @model_validator(mode='after')
     def recipe_steps_within_range(self):
+        t=load_translation()
         length = len(self.steps)
         for index, step in enumerate(self.steps):
             if step.next and (step.next < 0 or step.next >= length):
-                raise ValueError(f'The configured next step "{step.next}" after step {index} is outside the range of possible steps.')
+                raise ValueError(t['error-step-outside-range'].format(step.next, index))
         return self
 
     @model_validator(mode='after')
     def recipe_options_within_range(self):
+        t=load_translation()
         length = len(self.steps)
         for index, step in enumerate(self.steps):
             if step.options:
                 for option in step.options:
                     if (option.next < 0 or option.next >= length):
-                        raise ValueError(f'The configured next step "{option.next}" for option "{option.text}" in step {index} is outside the range of possible steps.')
+                        raise ValueError(t['error-step-option-outside-range'].format(option.next, option.text, index))
         return self
 
     @model_validator(mode='after')
@@ -147,6 +150,7 @@ class MicrolabRecipe(BaseModel):
         Validate that every step has a possible path to 
         reaching a step that is marked as 'done'
         """
+        t=load_translation() 
         length = len(self.steps)
         finishible_steps = []
         for index, step in enumerate(self.steps):
@@ -168,7 +172,7 @@ class MicrolabRecipe(BaseModel):
                     unchecked_next_options = filter(lambda x: (x not in seen_steps) and (x not in unchecked_steps), next_options)
                     unchecked_steps += list(unchecked_next_options)
             if index not in finishible_steps:
-                raise ValueError(f'The recipe is not valid as step {index} cannot reach a final step.')
+                raise ValueError(t['error-cant-reach-final-step'].format(index=index))
    
         return self
 

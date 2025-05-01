@@ -1,6 +1,7 @@
 from hardware.reagentdispenser.base import ReagentDispenser
 import math
 from util.logger import MultiprocessingLogger
+from localization import load_translation
 
 
 class SyringePump(ReagentDispenser):
@@ -77,6 +78,7 @@ class SyringePump(ReagentDispenser):
         :return:
             None
         """
+        t=load_translation()
 
         maxmmPerMin = self.syringePumpsConfig[pumpId]["maxmmPerMin"]
         mmPerml = self.syringePumpsConfig[pumpId]["mmPerml"]
@@ -85,18 +87,20 @@ class SyringePump(ReagentDispenser):
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
         totalmm = volume * mmPerml
         command = "G91 G1 {0}{1} F{2}".format(pumpId, totalmm, dispenseSpeed)
-        self._logger.debug("Dispensing with command '{}'".format(command))
+        self._logger.debug(t['dispensing-command'].format(command))
         self.grbl.grblWrite(command)
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
 
         self._logger.info(
-            "Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(
+            t['dispensing-specific'].format(
                 volume, dispenseSpeed, dispenseTime
             )
         )
         return dispenseTime
 
     def getPumpSpeedLimits(self, pumpId):
+        t=load_translation()
+        
         maxSpeed = (
             self.syringePumpsConfig[pumpId]["maxmmPerMin"]
             / self.syringePumpsConfig[pumpId]["mmPerml"]

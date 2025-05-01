@@ -7,7 +7,7 @@ from api.server import WaitressAPIServer
 from api.app import FlaskApp
 from microlab.interface import MicrolabInterface
 from util.logger import MultiprocessingLogger
-
+from localization import load_translation
 
 def run_flask(in_queue, out_queue, logging_queue):
 
@@ -17,7 +17,9 @@ def run_flask(in_queue, out_queue, logging_queue):
     MultiprocessingLogger.initialize_logger(logging_queue)
 
     logger = MultiprocessingLogger.get_logger(__name__)
-    logger.info("### STARTING API ###")
+    
+    t = load_translation()
+    logger.info(t['starting-api'])
 
     microlab_interface = MicrolabInterface(in_queue, out_queue)
 

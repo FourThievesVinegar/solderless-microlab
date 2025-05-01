@@ -109,4 +109,3 @@ def test_sort_device_configs_sorts_by_dependencies():
             "dependencies": ["2"]
         },
     ]
-

@@ -1,5 +1,6 @@
 from hardware.reagentdispenser.base import ReagentDispenser
 from util.logger import MultiprocessingLogger
+from localization import load_translation
 
 class PeristalticPump(ReagentDispenser):
     def __init__(self, reagent_dispenser_config: dict, devices: dict):
@@ -35,6 +36,8 @@ class PeristalticPump(ReagentDispenser):
         :return:
             None
         """
+        t=load_translation()
+        
         fValue = self.peristalticPumpsConfig["F"]
         mmPerml = self.peristalticPumpsConfig[pumpId]["mmPerml"]
         totalmm = volume * mmPerml
@@ -43,12 +46,12 @@ class PeristalticPump(ReagentDispenser):
         if duration:
             dispenseSpeed = min((volume / duration) * 60 * mmPerml, dispenseSpeed)
         command = "G91 G1 {0}{1} F{2}".format(pumpId, totalmm, dispenseSpeed)
-        self._logger.debug("Dispensing with command '{}'".format(command))
+        self._logger.debug(t['dispensing-command'].format(command))
         self.grbl.grblWrite(command)
 
         dispenseTime = abs(totalmm) / (dispenseSpeed / 60)
         self._logger.info(
-            "Dispensing {}ml with motor speed of {}mm/min over {} seconds".format(
+            t['dispensing-specific'].format(
                 volume, dispenseSpeed, dispenseTime
             )
         )

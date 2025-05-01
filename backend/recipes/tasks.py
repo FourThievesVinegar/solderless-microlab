@@ -14,6 +14,7 @@ from simple_pid import PID
 from hardware.core import MicroLabHardware
 from util.logger import MultiprocessingLogger
 
+from localization import load_translation
 
 def heat(microlab: MicroLabHardware, parameters: dict):
     """
@@ -25,10 +26,12 @@ def heat(microlab: MicroLabHardware, parameters: dict):
     :return:
         None
     """
+    t=load_translation()
+    
     logger = MultiprocessingLogger.get_logger(__name__)
 
     targetTemp = parameters["temp"]
-    logger.info("heating water to {0}...".format(targetTemp))
+    logger.info(t['heating-water'].format(targetTemp))
     microlab.turnHeaterOn()
     microlab.turnHeaterPumpOn()
     while True:
@@ -49,10 +52,12 @@ def cool(microlab: MicroLabHardware, parameters: dict):
     :return:
         None
     """
+    t=load_translation()
+    
     logger = MultiprocessingLogger.get_logger(__name__)
 
     targetTemp = parameters["temp"]
-    logger.info("cooling water to {0}...".format(targetTemp))
+    logger.info(t['cooling-water'].format(targetTemp))
     microlab.turnCoolerOn()
     while True:
         if microlab.getTemp() <= targetTemp:
@@ -143,6 +148,8 @@ def maintainSimple(microlab: MicroLabHardware, parameters: dict):
     :return:
         None
     """
+    t=load_translation()
+    
     logger = MultiprocessingLogger.get_logger(__name__)
 
     duration = parameters["time"]
@@ -159,12 +166,12 @@ def maintainSimple(microlab: MicroLabHardware, parameters: dict):
     start = microlab.secondSinceStart()
 
     logger.info(
-        "Maintaining {0}C for {1} seconds with {2}C tolerance".format(
+        t['maintaining-specific-temperature'].format(
             targetTemp, duration, tolerance
         )
     )
     # default temp control
-    logger.debug("Maintaining with default temperature control")
+    logger.debug(t['maintaining-default-temperature'])
 
     while True:
         try:
@@ -192,7 +199,7 @@ def maintainSimple(microlab: MicroLabHardware, parameters: dict):
 
         except Exception as e:
             logger.error(
-                "Error in maintainSimple. currentTemp: {0}, targetTemp: {1}. Exception: {2}".format(
+                t['error-maintaining-temperature'].format(
                     currentTemp, targetTemp, e
                 )
             )
@@ -220,6 +227,8 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
     :return:
         None
     """
+    translated=load_translation() #not 't' for avoiding ambiguity with already present t variable
+    
     logger = MultiprocessingLogger.get_logger(__name__)
 
     duration = parameters["time"]
@@ -235,11 +244,11 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
     start = microlab.secondSinceStart()
 
     logger.info(
-        "Maintaining {0}C for {1} seconds with {2}C tolerance".format(
+        translated['maintaining-specific-temperature'].format(
             targetTemp, duration, tolerance
         )
     )
-    logger.debug("Maintaining with PID temperature control")
+    logger.debug(translated['maintaning-PID-temperature'])
 
     pidConfig = microlab.getPIDConfig()
     pid = PID(pidConfig["P"], pidConfig["I"], pidConfig["D"], setpoint=targetTemp)
@@ -261,7 +270,7 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
         control = pid(currentTemp)
         p, i, d = pid.components
         logger.info(
-            "Heater PID values: {} {} {} {} {}".format(currentTemp, control, p, i, d)
+            translated['heater-PID-values'].format(currentTemp, control, p, i, d)
         )
 
         # We split the duty cycle length up into 1 second boxes,
@@ -286,7 +295,7 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
             t = microlab.getTemp()
             a = pid(t)
             p, i, d = pid.components
-            logger.debug("Heater PID values: {} {} {} {} {}".format(t, a, p, i, d))
+            logger.debug(translated['heater-PID-values'].format(t, a, p, i, d))
 
         if (microlab.secondSinceStart() - start) >= duration:
             microlab.turnHeaterOff()
@@ -308,12 +317,14 @@ def pump(microlab: MicroLabHardware, parameters: dict):
     :return:
         None
     """
+    t=load_translation()
+    
     logger = MultiprocessingLogger.get_logger(__name__)
 
     pump = parameters["pump"]
     volume = parameters["volume"]
     duration = parameters.get("time", None)
-    logger.info("Dispensing {0}ml from pump {1}".format(volume, pump))
+    logger.info(t['dispensing'].format(volume, pump))
     pumpSpeedLimits = microlab.getPumpSpeedLimits(pump)
     minSpeed = pumpSpeedLimits["minSpeed"]
     maxSpeed = pumpSpeedLimits["maxSpeed"]
@@ -323,7 +334,7 @@ def pump(microlab: MicroLabHardware, parameters: dict):
 
     if mlPerSecond > maxSpeed:
         logger.info(
-            "Pump {0} cannot operate fast enough. Dispensing at maximum speed.".format(
+            t['dispensing-max-speed'].format(
                 pump
             )
         )
@@ -349,7 +360,7 @@ def pump(microlab: MicroLabHardware, parameters: dict):
             # helps keep the actual task completion time more accurate
             # to desired duration
             executionTime = microlab.secondSinceStart() - startTime
-            logger.debug("dispense exeuction time: {0}".format(executionTime))
+            logger.debug(t['dispensing-time'].format(executionTime))
             yield 1 / onTime - executionTime
         # dispense remaining volume
         remaining = volume - volumeDispensed
@@ -370,10 +381,12 @@ def stir(microlab: MicroLabHardware, parameters: dict):
     :return:
         None
     """
+    t=load_translation()
+    
     logger = MultiprocessingLogger.get_logger(__name__)
 
     duration = parameters["time"]
-    logger.info("Stirring for {0} seconds".format(duration))
+    logger.info(t['stirring'].format(duration))
     start = microlab.secondSinceStart()
     microlab.turnStirrerOn()
     while True:

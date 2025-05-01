@@ -1,6 +1,7 @@
 from queue import Empty
 from util.logger import MultiprocessingLogger
 
+from localization import load_translation
 
 class MicrolabInterface:
     """
@@ -20,7 +21,9 @@ class MicrolabInterface:
         self._logger = MultiprocessingLogger.get_logger(__name__)
 
     def close_to_microlab_queue(self):
-        self._logger.debug('Beginning purge of to microlab queue')
+        t=load_translation()
+        
+        self._logger.debug(t['purging-queue'])
 
         while True:
             try:
@@ -29,7 +32,7 @@ class MicrolabInterface:
                 self.toMicrolab.close()
                 break
 
-        self._logger.debug('Completed purge of to microlab queue')
+        self._logger.debug(t['purged-queue'])
 
     def start(self, name):
         """

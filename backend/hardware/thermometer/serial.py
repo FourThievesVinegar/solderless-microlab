@@ -4,7 +4,7 @@ import time
 from hardware.util.exceptions import HardwareLoadError
 from datetime import datetime, timedelta
 from util.logger import MultiprocessingLogger
-
+from localization import load_translation
 
 class SerialTempSensor(TempSensor):
     def __init__(self, thermometer_config: dict):
@@ -15,6 +15,8 @@ class SerialTempSensor(TempSensor):
             serialDevice
               A string with the device read from
         """
+        t=load_translation()
+        
         self._logger = MultiprocessingLogger.get_logger(__name__)
 
         self.lastTemp = 0
@@ -41,6 +43,8 @@ class SerialTempSensor(TempSensor):
         :return:
             Temperature in Celsius
         """
+        t=load_translation()
+        
         if datetime.now() < self.nextTempReadingTime:
             return self.lastTemp
 
@@ -51,11 +55,11 @@ class SerialTempSensor(TempSensor):
             try:
                 line = self.tempSer.readline().decode()
             except Exception as e:
-                self._logger.error("Error reading from thermometer")
+                self._logger.error(t['error-reading-thermometer'])
                 self._logger.exception(str(e))
                 continue
             finally:
-                self._logger.debug("ser read " + str(len(line)) + " " + line)
+                self._logger.debug(t['ser-read'].format(str(len(line)), line))
                 time.sleep(0.5)
 
         lastLine = str(line)
@@ -77,14 +81,7 @@ class SerialTempSensor(TempSensor):
             end = len(lastLine) - 1
 
         self._logger.debug(
-            "found "
-            + str(start)
-            + " "
-            + str(end)
-            + " "
-            + lastLine
-            + " "
-            + lastLine[start:end]
+            t['thermometer-found'].format(str(start), str(end), lastLine, lastLine[start:end])
         )
         # Make sure that we have a start and an end and that there is something between them
         if start > -1 and end > -1 and end - start > 2:
@@ -92,15 +89,15 @@ class SerialTempSensor(TempSensor):
                 self.lastTemp = float(lastLine[start:end])
                 self.nextTempReadingTime = datetime.now() + timedelta(seconds=1)
             except Exception as e:
-                self._logger.error("Error converting temperature reading")
+                self._logger.error(t['temperature-conversion-error'])
                 self._logger.error(lastLine[start:end])
                 self._logger.exception(str(e))
                 self.lastTemp = "-999"
         else:
             self.lastTemp = "-999"
-            self._logger.error("erroneous reading: {0}".format(lastLine[start:end]))
+            self._logger.error(t['error-reading-thermometer-specific'].format(lastLine[start:end]))
         self._logger.debug(
-            "Read temperature " + str(self.lastTemp)
+            t['temperature-read'].format(str(self.lastTemp))
         )  # + ' ' + str(lastLine))
 
         return self.lastTemp

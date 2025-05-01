@@ -16,6 +16,7 @@ from util.logger import MultiprocessingLogger
 
 from hardware.devicelist import loadHardwareConfiguration
 
+from localization import load_translation
 
 class MicroLabHardwareState(Enum):
     STARTING = "STARTING"
@@ -50,13 +51,15 @@ class MicroLabHardware:
 
     @classmethod
     def get_microlab_hardware_controller(cls):
+        t=load_translation()
+      
         if cls._logger is None:
             cls._logger = cls._get_logger()
 
         if not cls._microlabHardware:
             cls._logger.info("")
-            cls._logger.info("### STARTING MICROLAB HARDWARE CONTROLLER ###")
-            cls._logger.info("Loading microlab hardware configuration.")
+            cls._logger.info(t['starting-hardware-controller'])
+            cls._logger.info(t['loading-hardware-configuration'])
 
             hardwareConfig = loadHardwareConfiguration()
             deviceDefinitions = hardwareConfig['devices']

@@ -15,6 +15,8 @@ from config import microlabConfig as config
 from hardware.core import MicroLabHardware
 from util.logger import MultiprocessingLogger
 
+from localization import load_translation
+
 HALT = threading.Event()
 MUTEX = threading.Lock()
 
@@ -99,18 +101,22 @@ def startMicrolabProcess(in_queue, out_queue, logging_queue):
     microlab.start()
 
     def handleSignal(_a, _b):
+        t=load_translation()
+        
         logger.info("")
-        logger.info("Shutting down microlab.")
+        logger.info(t['shutting-microlab'])
         HALT.set()
         microlab.join()
-        logger.info("Shutdown completed.")
+        logger.info(t['shutted-microlab'])
         sys.exit()
 
     signal.signal(signal.SIGINT, handleSignal)
     signal.signal(signal.SIGTERM, handleSignal)
 
     def reloadHardware():
-        logger.info("Reloading microlab device configuration")
+        t=load_translation()
+        
+        logger.info(t['reload-device-config'])
         hardwareConfig = hardware.devicelist.loadHardwareConfiguration()
         deviceDefinitions = hardwareConfig['devices']
         return microlabHardware.loadHardware(deviceDefinitions)
