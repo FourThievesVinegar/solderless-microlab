@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class Stirrer(ABC):
     @abstractmethod
-    def turnStirrerOn():
+    def turnStirrerOn(self):
         """
         Start stirrer.
 
@@ -13,7 +13,7 @@ class Stirrer(ABC):
         pass
 
     @abstractmethod
-    def turnStirrerOff():
+    def turnStirrerOff(self):
         """
         Stop stirrer.
 
