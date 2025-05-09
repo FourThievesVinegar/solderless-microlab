@@ -10,8 +10,8 @@ body {
 
 .lcd-wrapper {
   position: relative;
-  width: 480px;
-  height: 320px;
+  width: 800px;
+  height: 480px;
   margin: 0 auto;
   background: white;
   overflow: hidden;
@@ -19,7 +19,7 @@ body {
 
 .page {
   padding: 0.5rem 1rem;
-  height: 260px;
+  height: 432px;
   overflow-y: auto;
 }
 
