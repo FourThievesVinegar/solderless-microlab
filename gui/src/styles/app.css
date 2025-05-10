@@ -11,7 +11,7 @@ body {
 .lcd-wrapper {
   position: relative;
   width: 480px;   /* 800px for 800x480 display */
-  height: 320px;  /* 480 for 800x480 display */
+  height: 320px;  /* 480px for 800x480 display */
   margin: 0 auto;
   background: white;
   overflow: hidden;
@@ -19,7 +19,7 @@ body {
 
 .page {
   padding: 0.5rem 1rem;
-  height: 260px;  /* 432 for 800x480 display */
+  height: 260px;  /* 432px for 800x480 display */
   overflow-y: auto;
 }
 
