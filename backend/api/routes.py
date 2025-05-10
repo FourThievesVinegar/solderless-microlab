@@ -2,13 +2,14 @@
 Module defining API.
 """
 
-from flask import Flask
-from flask import jsonify, request, send_file
+from flask import jsonify, request, send_file, Response
 from werkzeug.utils import secure_filename
 from os.path import join
 import os
 import recipes.core
 import json
+
+from api.app import FlaskApp
 from config import microlabConfig as config
 import glob 
 from pathlib import Path
@@ -21,13 +22,13 @@ from localization import load_translation
 
 class RouteManager:
 
-    def __init__(self, flask_app: Flask, microlab_interface: MicrolabInterface):
+    def __init__(self, flask_app: FlaskApp, microlab_interface: MicrolabInterface):
         self._flask_app = flask_app
         self._microlab_interface = microlab_interface
         self._register_routes()
 
     # /list
-    def _list_recipes(self):
+    def _list_recipes(self) -> Response:
         """
         List all available recipes
 
@@ -39,12 +40,12 @@ class RouteManager:
         return jsonify(recipeNames)
 
     # /recipe/<name>
-    def _send_recipe(self, name):
+    def _send_recipe(self, name) -> Response:
         recipe = recipes.core.getRecipeByName(name)
         return jsonify(recipe.model_dump())
 
     # /status
-    def _status(self):
+    def _status(self) -> Response:
         """
         Get the status of the app.
 
@@ -98,7 +99,7 @@ class RouteManager:
         return jsonify(self._microlab_interface.status())
 
     # /start/<name>
-    def _start(self, name):
+    def _start(self, name) -> tuple[Response, int]:
         """
         Start running a recipe.
 
@@ -124,12 +125,12 @@ class RouteManager:
                             
         (state, msg) = self._microlab_interface.start(name)
         if state:
-            return jsonify({'response': 'ok'})
+            return jsonify({'response': 'ok'}), 200
         else:
             return jsonify({'response': 'error', 'message': msg}), 500
 
     # /stop
-    def _stop(self):
+    def _stop(self) -> Response:
         """
         Stop the currently running recipe.
 
@@ -146,7 +147,7 @@ class RouteManager:
         return jsonify({'response': 'ok'})
 
     # /select/option/<name>
-    def _select_option(self, name):
+    def _select_option(self, name) -> tuple[Response, int]:
         """
         Provide user selected input.
 
@@ -165,12 +166,12 @@ class RouteManager:
         """
         (state, msg) = self._microlab_interface.selectOption(name)
         if state:
-            return jsonify({'response': 'ok'})
+            return jsonify({'response': 'ok'}), 200
         else:
             return jsonify({'response': 'error', 'message': msg}), 400
 
     # /uploadRecipe
-    def _upload_recipe(self):
+    def _upload_recipe(self) -> tuple[Response, int]:
         """
         Uploads a file to the recipes folder, file must be valid JSON.
 
@@ -204,10 +205,10 @@ class RouteManager:
         f.stream.seek(0)
         f.save(join(config.recipesDirectory, secure_filename(f.filename)))
 
-        return jsonify({'response': 'ok'})
+        return jsonify({'response': 'ok'}), 200
 
     # /deleteRecipe/<name>
-    def _delete_recipe(self, name: str):
+    def _delete_recipe(self, name: str) -> tuple[Response, int]:
         """
         Deletes a file in the recipes folder
 
@@ -225,12 +226,12 @@ class RouteManager:
         recipe = recipes.core.getRecipeByName(name)
         try:
             os.remove(join(config.recipesDirectory, secure_filename(recipe.fileName)))
-            return jsonify({'response': 'ok'})
+            return jsonify({'response': 'ok'}), 200
         except FileNotFoundError:
-            return jsonify({'response': 'error', 'message': t['recipe-not-exist']}, 404)
+            return jsonify({'response': 'error', 'message': t['recipe-not-exist']}), 404
         
     # /controllerHardware
-    def _get_controller_hardware(self):
+    def _get_controller_hardware(self) -> tuple[Response, int]:
         """
         Gets the current controller hardware setting
 
@@ -239,10 +240,10 @@ class RouteManager:
             controllerHardware
                 A string with the current controller hardware setting
         """
-        return (jsonify({'controllerHardware': config.controllerHardware}), 200)
+        return jsonify({'controllerHardware': config.controllerHardware}), 200
 
     # /controllerHardware/list
-    def _list_controller_hardware(self):
+    def _list_controller_hardware(self) -> Response:
         """
         Gets a list of valid controller hardware settings
 
@@ -256,7 +257,7 @@ class RouteManager:
         return jsonify(configs)
 
     # /controllerHardware/<name>
-    def _select_controller_hardware(self, name):
+    def _select_controller_hardware(self, name) -> tuple[Response, int]:
         """
         Sets a new controller hardware setting, and reloads the hardware
         controller to use this
@@ -274,12 +275,12 @@ class RouteManager:
         self._microlab_interface.reloadConfig()
         (success, msg) = self._microlab_interface.reloadHardware()
         if success:
-            return (jsonify({'response': 'ok'}), 200)
+            return jsonify({'response': 'ok'}), 200
         else:
             return jsonify({'response': 'error', 'message': msg}), 400
 
     # /uploadControllerConfig
-    def _upload_controller_config(self):
+    def _upload_controller_config(self) -> Response:
         """
         Uploads a controller hardware configuration file
 
@@ -298,7 +299,7 @@ class RouteManager:
         return jsonify({'response': 'ok'})
 
     # /downloadControllerConfig/<name>
-    def _download_controller_config(self, name):
+    def _download_controller_config(self, name) -> Response:
         """
         Downloads a controller hardware configuration file
 
@@ -309,7 +310,7 @@ class RouteManager:
         return send_file(join(config.controllerHardwareDirectory, fileName), name, as_attachment=True)
 
     # /labHardware
-    def _get_lab_hardware(self):
+    def _get_lab_hardware(self) -> tuple[Response, int]:
         """
         Gets the current lab hardware setting
 
@@ -318,10 +319,10 @@ class RouteManager:
             labHardware
                 A string with the current lab hardware setting
         """
-        return (jsonify({'labHardware': config.labHardware}), 200)
+        return jsonify({'labHardware': config.labHardware}), 200
 
     # /labHardware/list
-    def _list_lab_hardware(self):
+    def _list_lab_hardware(self) -> Response:
         """
         Gets a list of valid lab hardware settings
 
@@ -335,7 +336,7 @@ class RouteManager:
         return jsonify(configs)
 
     # /labHardware/<name>
-    def _select_lab_hardware(self, name):
+    def _select_lab_hardware(self, name) -> tuple[Response, int]:
         """
         Sets a new lab hardware setting, and reloads the hardware
         controller to use this
@@ -353,12 +354,12 @@ class RouteManager:
         self._microlab_interface.reloadConfig()
         (success, msg) = self._microlab_interface.reloadHardware()
         if success:
-            return (jsonify({'response': 'ok'}), 200)
+            return jsonify({'response': 'ok'}), 200
         else:
             return jsonify({'response': 'error', 'message': msg}), 400
 
     # /uploadLabConfig
-    def _upload_lab_config(self):
+    def _upload_lab_config(self) -> Response:
         """
         Uploads a lab hardware configuration file
 
@@ -377,7 +378,7 @@ class RouteManager:
         return jsonify({'response': 'ok'})
 
     # /downloadLabConfig/<name>
-    def _download_lab_config(self, name):
+    def _download_lab_config(self, name) -> Response:
         """
         Downloads a lab hardware configuration file
 
@@ -388,7 +389,7 @@ class RouteManager:
         return send_file(join(config.labHardwareDirectory, fileName), name, as_attachment=True)
 
     # /reloadHardware
-    def _reload_hardware(self):
+    def _reload_hardware(self) -> tuple[Response, int]:
         """
         Reloads the hardware controller
 
@@ -404,12 +405,12 @@ class RouteManager:
         self._microlab_interface.reloadConfig()
         (success, msg) = self._microlab_interface.reloadHardware()
         if success:
-            return (jsonify({'response': 'ok'}), 200)
+            return jsonify({'response': 'ok'}), 200
         else:
             return jsonify({'response': 'error', 'message': msg}), 400
 
     # /log
-    def _fetch_logs(self):
+    def _fetch_logs(self) -> tuple[Response, int]:
         """
         Fetches and concatenates the two most recent microlab log files
 
@@ -427,7 +428,7 @@ class RouteManager:
             data = Path(logFiles[-2]).read_text()
         mostRecent = logFiles[-1]
         data = data + Path(mostRecent).read_text()
-        return (jsonify({'logs': data}), 200)
+        return jsonify({'logs': data}), 200
 
     def _register_routes(self):
 

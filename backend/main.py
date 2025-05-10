@@ -40,7 +40,7 @@ class BackendManager:
     def _are_processes_alive(self) -> bool:
         return any([process.is_alive() for process in self._processes])
 
-    def _cleanup_queues(self):
+    def _cleanup_queues(self) -> None:
         t = load_translation()
         
         self._logger.debug(t['cleaning-queues'])
@@ -53,7 +53,7 @@ class BackendManager:
 
         self._logger.debug(t['cleaned-queues'])
 
-    def _cleanup_processes(self):
+    def _cleanup_processes(self) -> None:
         t = load_translation()
         
         self._logger.debug(t['cleaning-process'])
@@ -76,11 +76,11 @@ class BackendManager:
 
         self._logger.debug(t['cleaned-processes'])
 
-    def _cleanup_everything(self):
+    def _cleanup_everything(self) -> None:
         self._cleanup_processes()
         self._cleanup_queues()
 
-    def _handle_exit_signals(self, signum, frame):
+    def _handle_exit_signals(self, signum, frame) -> None:
         t = load_translation()
         
         self._logger.debug(t['begin-exit'])
@@ -88,7 +88,7 @@ class BackendManager:
         self._logger.debug(t['completed-exit'])
         self._logger.debug(t['end-exit'])
 
-    def _start_microlab(self):
+    def _start_microlab(self) -> None:
         t = load_translation()
         
         self._microlab_manager_process = Process(
@@ -101,7 +101,7 @@ class BackendManager:
         self._microlab_manager_process.start()
         self._logger.debug(f'microlab process pid: {self._microlab_manager_process.pid}')
 
-    def _start_server(self):
+    def _start_server(self) -> None:
         t = load_translation()
         
         self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1, MultiprocessingLogger.get_logging_queue()), name="flask", daemon=True)
@@ -110,7 +110,7 @@ class BackendManager:
         self._flaskProcess.start()
         print(f'server process pid: {self._flaskProcess.pid}')
 
-    def run(self):
+    def run(self) -> None:
         t = load_translation()
         
         config.initialSetup()
@@ -123,13 +123,11 @@ class BackendManager:
         signal.signal(signal.SIGINT, self._handle_exit_signals)
         signal.signal(signal.SIGTERM, self._handle_exit_signals)
 
-
-
         while self._are_processes_alive() or MultiprocessingLogger.remaining_logs_to_process():
             MultiprocessingLogger.process_logs()
 
 
-def main():
+def main() -> None:
     microlabConfig.validate_config()
     backend_manager = BackendManager()
     backend_manager.run()

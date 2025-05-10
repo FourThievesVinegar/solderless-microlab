@@ -25,7 +25,7 @@ class MicrolabConfig:
 
         self.config = ConfigObj(config_file_name, configspec="defaultconfig.ini")
 
-    def validate_config(self):
+    def validate_config(self) -> None:
 
         validator = Validator()
 
@@ -45,13 +45,13 @@ class MicrolabConfig:
                 else:
                     section_list.append('[missing section]')
                 section_string = '.'.join(section_list)
-                if error == False:
+                if error is False:
                     error = 'Missing value or section.'
                 logging.warning(
                     "Configuration error at {0}: '{1}', falling back to default value '{2}'."
                     .format(section_string, error, default))
 
-    def reloadConfig(self):
+    def reloadConfig(self) -> None:
         """
         Reloads microlab configuration from disk.
         """
@@ -59,71 +59,71 @@ class MicrolabConfig:
 
     ## GENERAL CONFIGURATION ##
     @property
-    def dataDirectory(self):
+    def dataDirectory(self) -> str:
         return self.config["GENERAL"]["dataDirectory"]
 
     @property
-    def recipesDirectory(self):
+    def recipesDirectory(self) -> str:
         return '{0}/recipes/'.format(self.dataDirectory)
 
     @property
-    def logDirectory(self):
+    def logDirectory(self) -> str:
         return self.config["GENERAL"]["logDirectory"]
         
     @property
-    def logFileMaxBytes(self):
+    def logFileMaxBytes(self) -> int:
         return self.config["GENERAL"]["logFileMaxBytes"]
 
     @property
-    def logFileBackupCount(self):
+    def logFileBackupCount(self) -> int:
         return self.config["GENERAL"]["logFileBackupCount"]
 
     @property
-    def logToStderr(self):
+    def logToStderr(self) -> bool:
         return self.config["GENERAL"]["logToStderr"]
 
     @property
-    def logLevel(self):
+    def logLevel(self) -> str:
         return self.config["GENERAL"]["logLevel"]
 
     ## FLASK CONFIGURATION ##
     @property
-    def apiPort(self):
+    def apiPort(self) -> str:
         return environ.get("API_PORT", self.config["FLASK"]["apiPort"])  
 
     ## HARDWARE CONFIGURATION ##
     @property
-    def hardwareSpeedup(self):
+    def hardwareSpeedup(self) -> int:
         # Speeds up every task for testing hardware. Should be set to 1 for actual use
-        return environ.get("HARDWARE_SPEEDUP", 1)  
+        return int(environ.get("HARDWARE_SPEEDUP", "1"))
 
     @property
-    def controllerHardware(self):
+    def controllerHardware(self) -> str:
         return self.config["HARDWARE"]["controllerHardware"]
 
     @controllerHardware.setter
-    def controllerHardware(self, value):
+    def controllerHardware(self, value) -> None:
         self.config["HARDWARE"]["controllerHardware"] = value
         self.config.write()
 
     @property
-    def hardwareDirectory(self):
+    def hardwareDirectory(self) -> str:
         return '{0}/hardware/'.format(self.dataDirectory)
 
     @property
-    def controllerHardwareDirectory(self):
+    def controllerHardwareDirectory(self) -> str:
         return '{0}/controllerhardware/'.format(self.hardwareDirectory)
 
     @property
-    def labHardwareDirectory(self):
+    def labHardwareDirectory(self) -> str:
         return '{0}/labhardware/'.format(self.hardwareDirectory)
 
     @property
-    def labHardware(self):
+    def labHardware(self) -> str:
         return self.config["HARDWARE"]["labHardware"]
 
     @labHardware.setter
-    def labHardware(self, value):
+    def labHardware(self, value) -> None:
         self.config["HARDWARE"]["labHardware"] = value
         self.config.write()
 
@@ -131,7 +131,7 @@ class MicrolabConfig:
 microlabConfig = MicrolabConfig()
 
 
-def initialSetup():
+def initialSetup() -> None:
     dataDirectory = microlabConfig.dataDirectory
     recipesDirectory = microlabConfig.recipesDirectory
     hardwareDirectory = microlabConfig.hardwareDirectory
