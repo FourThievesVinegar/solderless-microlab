@@ -25,7 +25,7 @@ class PeristalticPump(ReagentDispenser):
         self.peristalticPumpsConfig = reagent_dispenser_config["peristalticPumpsConfig"]
         self.grbl.grblWrite("G91")
 
-    def dispense(self, pumpId, volume, duration=None):
+    def dispense(self, pumpId, volume, duration=None) -> float:
         """
         Dispense reagent from a peristaltic pump
 
@@ -57,7 +57,7 @@ class PeristalticPump(ReagentDispenser):
         )
         return dispenseTime
 
-    def getPumpSpeedLimits(self, pumpId):
+    def getPumpSpeedLimits(self, pumpId) -> dict:
         mmPerSecond = 30 / 250
         return {
             "minSpeed": mmPerSecond / self.peristalticPumpsConfig[pumpId]["mmPerml"],

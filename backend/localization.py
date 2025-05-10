@@ -4,7 +4,7 @@ import os
 BASE_PATH = os.path.join(os.path.dirname(__file__), "locales")
 DEFAULT_LANG = "en"
 
-def load_translation():
+def load_translation() -> dict:
     lang_code="en"
     lang_path = os.path.join(BASE_PATH, lang_code, "strings.json")
     fallback_path = os.path.join(BASE_PATH, DEFAULT_LANG, "strings.json")

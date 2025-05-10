@@ -1,10 +1,12 @@
-from hardware.thermometer.base import TempSensor
-from w1thermsensor import W1ThermSensor, SensorNotReadyError
 from datetime import datetime, timedelta
+
+from w1thermsensor import W1ThermSensor, SensorNotReadyError
+
+from hardware.thermometer.base import TempSensor
 
 
 class W1TempSensor(TempSensor):
-    
+
     def __init__(self):
         """
         Constructor. Initializes the sensor.
@@ -13,7 +15,7 @@ class W1TempSensor(TempSensor):
         self.sensor = W1ThermSensor()
         self.nextTempReadingTime = datetime.now()
 
-    def getTemp(self):
+    def getTemp(self) -> float:
         """
         Get the temperature of the sensor in celsius.
         :return:

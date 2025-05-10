@@ -14,7 +14,7 @@ class SerialTempSensorSimulation(TempSensor):
         if 'temp' in thermometer_config:
             self.temp = thermometer_config['temp']
 
-    def getTemp(self):
+    def getTemp(self) -> float:
         """
         Get the temperature of the sensor in celsius.
         Recommended sensor: DS18B20

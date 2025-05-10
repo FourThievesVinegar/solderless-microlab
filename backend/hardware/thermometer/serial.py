@@ -1,10 +1,13 @@
-from hardware.thermometer.base import TempSensor
-import serial
 import time
-from hardware.util.exceptions import HardwareLoadError
 from datetime import datetime, timedelta
-from util.logger import MultiprocessingLogger
+
+import serial
+
+from hardware.thermometer.base import TempSensor
+from hardware.util.exceptions import HardwareLoadError
 from localization import load_translation
+from util.logger import MultiprocessingLogger
+
 
 class SerialTempSensor(TempSensor):
     def __init__(self, thermometer_config: dict):
@@ -15,8 +18,8 @@ class SerialTempSensor(TempSensor):
             serialDevice
               A string with the device read from
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger = MultiprocessingLogger.get_logger(__name__)
 
         self.lastTemp = 0
@@ -31,7 +34,7 @@ class SerialTempSensor(TempSensor):
                 )
             ) from e
 
-    def getTemp(self):
+    def getTemp(self) -> float:
         """
         Get the temperature of the sensor in celsius.
         Recommended sensor: DS18B20
@@ -43,8 +46,8 @@ class SerialTempSensor(TempSensor):
         :return:
             Temperature in Celsius
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         if datetime.now() < self.nextTempReadingTime:
             return self.lastTemp
 

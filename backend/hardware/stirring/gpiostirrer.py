@@ -22,7 +22,7 @@ class GPIOStirrer(Stirrer):
         self.gpio.setup(self.stirrerPin)
         self.gpio.output(self.stirrerPin, RELAY_OFF)
 
-    def turnStirrerOn(self):
+    def turnStirrerOn(self) -> None:
         """
         Turns the stirrer on.
 
@@ -31,7 +31,7 @@ class GPIOStirrer(Stirrer):
         """
         self.gpio.output(self.stirrerPin, RELAY_ON)
 
-    def turnStirrerOff(self):
+    def turnStirrerOff(self) -> None:
         """
         Turns the stirrer off.
 
