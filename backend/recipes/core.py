@@ -17,7 +17,7 @@ from hardware.core import MicroLabHardware, MicroLabHardwareState
 from config import microlabConfig as config
 from util.logger import MultiprocessingLogger
 from pydantic_core import ValidationError
-from typing import Optional
+from typing import Optional, Any
 from localization import load_translation
 
 def getRecipeList() -> list[MicrolabRecipe]: 
@@ -65,7 +65,7 @@ def getRecipeByName(name) -> Optional[MicrolabRecipe]:
 
     return recipe
 
-def start(name):
+def start(name) -> tuple[bool, str]:
     """
     Start running a recipe.
 
@@ -103,7 +103,7 @@ def start(name):
     return True, ''
 
 
-def status(_):
+def status(_) -> dict[str, Any]:
     """
     Get the status of the machine.
     :return:
@@ -167,7 +167,7 @@ def status(_):
     return message
 
 
-def stop(_):
+def stop(_) -> None:
     """
     Stop the currently running recipe.
 
@@ -180,7 +180,7 @@ def stop(_):
         state.currentRecipe = None
 
 
-def selectOption(option):
+def selectOption(option) -> tuple[bool, str]:
     """
     Pass in the user selected option from a recipe step.
 

@@ -1,4 +1,7 @@
+from multiprocessing import Queue
 from queue import Empty
+from typing import Any
+
 from util.logger import MultiprocessingLogger
 
 from localization import load_translation
@@ -14,13 +17,13 @@ class MicrolabInterface:
     for info on implementing commands.
     """
 
-    def __init__(self, in_queue, out_queue):
+    def __init__(self, in_queue: Queue, out_queue: Queue):
         self.toMicrolab = out_queue
         self.fromMicrolab = in_queue
 
         self._logger = MultiprocessingLogger.get_logger(__name__)
 
-    def close_to_microlab_queue(self):
+    def close_to_microlab_queue(self) -> None:
         t=load_translation()
         
         self._logger.debug(t['purging-queue'])
@@ -34,7 +37,7 @@ class MicrolabInterface:
 
         self._logger.debug(t['purged-queue'])
 
-    def start(self, name):
+    def start(self, name) -> tuple[bool, str]:
         """
         Start running a recipe.
 
@@ -51,7 +54,7 @@ class MicrolabInterface:
 
         return self.fromMicrolab.get()
 
-    def status(self):
+    def status(self) -> Any:
         """
         Get the status of the machine.
         :return:
@@ -86,7 +89,7 @@ class MicrolabInterface:
         res = self.fromMicrolab.get()
         return res
 
-    def stop(self):
+    def stop(self) -> None:
         """
         Stop the currently running recipe.
 
@@ -95,7 +98,7 @@ class MicrolabInterface:
         """
         self.toMicrolab.put({"command": "stop", "args": None})
 
-    def selectOption(self, option):
+    def selectOption(self, option) -> tuple[bool, str]:
         """
         Pass in the user selected option from a recipe step.
 
@@ -111,7 +114,7 @@ class MicrolabInterface:
         res = self.fromMicrolab.get()
         return res
 
-    def reloadConfig(self):
+    def reloadConfig(self) -> None:
         """
         Tell the microlab process to reload configuration from disk.
         Should be called anytime the user modifies config through the API.
@@ -120,7 +123,7 @@ class MicrolabInterface:
         """
         self.toMicrolab.put({"command": "reloadConfig", "args": None})
 
-    def reloadHardware(self):
+    def reloadHardware(self) -> tuple[bool, str]:
         """
         Tell the microlab process to reload hardware configuration from disk.
         Should be called anytime the user modifies hardware config through the API.

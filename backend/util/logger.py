@@ -104,6 +104,7 @@ class MultiprocessingLogger:
         for handler in logger.handlers:
             if isinstance(handler, logging.handlers.QueueHandler):
                 return True
+        return False
 
     @classmethod
     def process_logs(cls):

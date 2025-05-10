@@ -19,7 +19,7 @@ class FlaskApp:
 
         return self._flask_app
 
-    def add_api_route(self, rule: str, endpoint_function: Callable, methods: Optional[list[str]] = None):
+    def add_api_route(self, rule: str, endpoint_function: Callable, methods: Optional[list[str]] = None) -> None:
         flask_app = self.get_flask_app()
 
         if methods:

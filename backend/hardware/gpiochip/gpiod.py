@@ -83,7 +83,7 @@ class GPIODChip(GPIOChip):
 
         :param pin:
             The pin to output on. Either a defined alias or the line number for the pin
-        :param outputValue:
+        :param value:
             Either 0 or 1, the value to output on the pin
         :return:
             None

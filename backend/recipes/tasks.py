@@ -9,6 +9,8 @@ a number in seconds (decimals are allowed) for when to next execute the task.
 """
 
 from datetime import datetime
+from typing import Optional, Any, Generator, Union
+
 from simple_pid import PID
 
 from hardware.core import MicroLabHardware
@@ -16,7 +18,7 @@ from util.logger import MultiprocessingLogger
 
 from localization import load_translation
 
-def heat(microlab: MicroLabHardware, parameters: dict):
+def heat(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[int], Any, Any]:
     """
     Turn on the heater and reach a target temperature.
 
@@ -42,7 +44,7 @@ def heat(microlab: MicroLabHardware, parameters: dict):
         yield 1
 
 
-def cool(microlab: MicroLabHardware, parameters: dict):
+def cool(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[int], Any, Any]:
     """
     Turn on the cooler and reach a target temperature.
 
@@ -66,7 +68,7 @@ def cool(microlab: MicroLabHardware, parameters: dict):
         yield 1
 
 
-def maintainCool(microlab: MicroLabHardware, parameters: dict):
+def maintainCool(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the cooler for a specified amount of time.
 
@@ -83,7 +85,7 @@ def maintainCool(microlab: MicroLabHardware, parameters: dict):
     return maintain(microlab, parameters)
 
 
-def maintainHeat(microlab: MicroLabHardware, parameters: dict):
+def maintainHeat(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the heater for a specified amount of time.
 
@@ -100,7 +102,7 @@ def maintainHeat(microlab: MicroLabHardware, parameters: dict):
     return maintain(microlab, parameters)
 
 
-def maintain(microlab: MicroLabHardware, parameters: dict):
+def maintain(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
 
@@ -127,7 +129,7 @@ def maintain(microlab: MicroLabHardware, parameters: dict):
         return maintainPID(microlab, parameters)
 
 
-def maintainSimple(microlab: MicroLabHardware, parameters: dict):
+def maintainSimple(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
 
@@ -174,6 +176,7 @@ def maintainSimple(microlab: MicroLabHardware, parameters: dict):
     logger.debug(t['maintaining-default-temperature'])
 
     while True:
+        currentTemp = -9999.9999
         try:
             currentTemp = microlab.getTemp()
             logger.debug("temperature @ {0}".format(currentTemp))
@@ -205,7 +208,7 @@ def maintainSimple(microlab: MicroLabHardware, parameters: dict):
             )
 
 
-def maintainPID(microlab: MicroLabHardware, parameters: dict):
+def maintainPID(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[int], Any, Any]:
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
     Uses a PID control loop.
@@ -305,7 +308,7 @@ def maintainPID(microlab: MicroLabHardware, parameters: dict):
         yield 1
 
 
-def pump(microlab: MicroLabHardware, parameters: dict):
+def pump(microlab: MicroLabHardware, parameters: dict) ->  Generator[Optional[float], Any, Any]:
     """
     Dispense a certain amount of liquid from a pump.
 
@@ -341,7 +344,7 @@ def pump(microlab: MicroLabHardware, parameters: dict):
         dispenseTime = microlab.pumpDispense(pump, volume, None)
         yield dispenseTime
         yield None
-    elif mlPerSecond >= minSpeed and mlPerSecond <= maxSpeed:
+    elif minSpeed <= mlPerSecond <= maxSpeed:
         dispenseTime = microlab.pumpDispense(pump, volume, duration)
         yield dispenseTime
         yield None
@@ -371,7 +374,7 @@ def pump(microlab: MicroLabHardware, parameters: dict):
     yield None
 
 
-def stir(microlab: MicroLabHardware, parameters: dict):
+def stir(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[int], Any, Any]:
     """
     Turn on the stirrer for a predefined amount of time.
 
@@ -407,7 +410,7 @@ tasks = {
 }
 
 
-def runTask(microlab: MicroLabHardware, task: str, parameters: dict):
+def runTask(microlab: MicroLabHardware, task: str, parameters: dict) -> dict[str, Any]:
     """
     Create an iterator for running a task.
 

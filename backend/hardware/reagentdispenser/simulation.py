@@ -14,7 +14,7 @@ class SimulatedReagentDispenser(ReagentDispenser):
         if 'maxSpeed' in reagent_dispenser_config:
             self.maxSpeed = reagent_dispenser_config['maxSpeed']
 
-    def dispense(self, pumpId, volume, duration=None):
+    def dispense(self, pumpId: str, volume: int, duration: int = None) -> float:
         """
         Displays pump dispensing message.
 
@@ -37,7 +37,7 @@ class SimulatedReagentDispenser(ReagentDispenser):
             raise ValueError(t['pump-doesnt-exist'].format(pumpId))
         return abs(volume)
 
-    def getPumpSpeedLimits(self, pumpId):
+    def getPumpSpeedLimits(self, pumpId: str) -> dict:
         return {
             "minSpeed": self.minSpeed,
             "maxSpeed": self.maxSpeed

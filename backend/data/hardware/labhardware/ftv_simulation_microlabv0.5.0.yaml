@@ -5,11 +5,11 @@ devices:
     implementation: "simulation"
     # device ID of the thermometer to use for detecting reactor temperature
     thermometerID: "reactor-thermometer"
-    # Maximum and minimum temperature in celsius that the hardware can support
+    # Maximum and minimum temperature in Celsius that the hardware can support
     # This simulation uses the same values as real hardware
     maxTemp: 85
     minTemp: -20
-    # Optional. Starting temperature in celsius, defaults to 24 if not set
+    # Optional. Starting temperature in Celsius, defaults to 24 if not set
     temp: 24
 
   - id: "reactor-reagent-dispenser"

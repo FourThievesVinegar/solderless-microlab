@@ -2,7 +2,6 @@ from hardware.temperaturecontroller.base import TempController
 from util.logger import MultiprocessingLogger
 from localization import load_translation
 
-
 RELAY_ON = 1
 RELAY_OFF = 0
 
@@ -46,67 +45,67 @@ class BasicTempController(TempController):
 
         self.thermometer = devices[temp_controller_config["thermometerID"]]
 
-    def turnHeaterOn(self):
+    def turnHeaterOn(self) -> None:
         """
         Turns heater on.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.debug(t['turned-on-heat'])
         self.gpio.output(self.heaterPin, RELAY_ON)
 
-    def turnHeaterOff(self):
+    def turnHeaterOff(self) -> None:
         """
         Turns heater off.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.debug(t['turned-off-heat'])
         self.gpio.output(self.heaterPin, RELAY_OFF)
 
-    def turnHeaterPumpOn(self):
-        t=load_translation()
-        
+    def turnHeaterPumpOn(self) -> None:
+        t = load_translation()
+
         self._logger.debug(t['heat-pump-on'])
         self.gpio.output(self.heaterPumpPin, RELAY_ON)
 
-    def turnHeaterPumpOff(self):
-        t=load_translation()
-        
+    def turnHeaterPumpOff(self) -> None:
+        t = load_translation()
+
         self._logger.debug(t['heat-pump-off'])
         self.gpio.output(self.heaterPumpPin, RELAY_OFF)
 
-    def turnCoolerOn(self):
+    def turnCoolerOn(self) -> None:
         """
         Turn cooler on.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.debug(t['turned-on-cool'])
         self.gpio.output(self.coolerPin, RELAY_ON)
 
-    def turnCoolerOff(self):
+    def turnCoolerOff(self) -> None:
         """
         Turn cooler off.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.debug(t['turned-off-cool'])
         self.gpio.output(self.coolerPin, RELAY_OFF)
 
-    def getTemp(self):
+    def getTemp(self) -> float:
         """
         Read the temperature from the temperature sensor.
         :return:
@@ -114,11 +113,11 @@ class BasicTempController(TempController):
         """
         return self.thermometer.getTemp()
 
-    def getMaxTemperature(self):
+    def getMaxTemperature(self) -> float:
         return self.maxTemp
 
-    def getMinTemperature(self):
+    def getMinTemperature(self) -> float:
         return self.minTemp
 
-    def getPIDConfig(self):
+    def getPIDConfig(self) -> dict:
         return self.pidConfig

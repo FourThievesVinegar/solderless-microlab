@@ -67,7 +67,7 @@ class SyringePump(ReagentDispenser):
                 "$11{0}={1}".format(axisToCNCID[axis], syringeConfig["maxmmPerMin"]),
             )
 
-    def dispense(self, pumpId, volume, duration=None):
+    def dispense(self, pumpId: str, volume: int, duration: int = None) -> float:
         """
         Dispense reagent from a syringe
 
@@ -76,9 +76,9 @@ class SyringePump(ReagentDispenser):
         :param volume:
             The number of ml to dispense
         :return:
-            None
+            duration of the dispensation in seconds
         """
-        t=load_translation()
+        t = load_translation()
 
         maxmmPerMin = self.syringePumpsConfig[pumpId]["maxmmPerMin"]
         mmPerml = self.syringePumpsConfig[pumpId]["mmPerml"]
@@ -98,9 +98,9 @@ class SyringePump(ReagentDispenser):
         )
         return dispenseTime
 
-    def getPumpSpeedLimits(self, pumpId):
-        t=load_translation()
-        
+    def getPumpSpeedLimits(self, pumpId: str) -> dict:
+        t = load_translation()
+
         maxSpeed = (
             self.syringePumpsConfig[pumpId]["maxmmPerMin"]
             / self.syringePumpsConfig[pumpId]["mmPerml"]

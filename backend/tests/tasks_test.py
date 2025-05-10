@@ -40,7 +40,7 @@ def devices(request):
     implementation: "simulation"
     # device ID of the thermometer to use for detecting reactor temperature
     thermometerID: "reactor-thermometer"
-    # Maximum and minimum temperature in celsius that the hardware can support
+    # Maximum and minimum temperature in Celsius that the hardware can support
     # The microlab v0.5 makes use of 3d printed parts made of PLA, PLA can only reach
     # ~60C before it begins to mechanically fail. If you print with a different material,
     # this may be increased, search for the glass transition temperature for your material.

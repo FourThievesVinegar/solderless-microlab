@@ -1,11 +1,11 @@
 """
 Contains function for starting up the microlab process
 """
-import logging
 import sys
 import time
 import threading
 import signal
+from multiprocessing import Queue
 
 import hardware.devicelist
 import recipes.core
@@ -21,7 +21,7 @@ HALT = threading.Event()
 MUTEX = threading.Lock()
 
 
-def startMicrolabProcess(in_queue, out_queue, logging_queue):
+def startMicrolabProcess(in_queue: Queue, out_queue: Queue, logging_queue: Queue) -> None:
     """
     Starts up the microlab process
 

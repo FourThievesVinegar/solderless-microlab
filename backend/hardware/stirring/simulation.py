@@ -2,7 +2,7 @@ from hardware.stirring.base import Stirrer
 
 
 class SimulatedStirrer(Stirrer):
-    def turnStirrerOn(self):
+    def turnStirrerOn(self) -> None:
         """
         Start stirrer.
 
@@ -11,7 +11,7 @@ class SimulatedStirrer(Stirrer):
         """
         return None
 
-    def turnStirrerOff(self):
+    def turnStirrerOff(self) -> None:
         """
         Stop stirrer.
 

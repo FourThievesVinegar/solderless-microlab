@@ -10,3 +10,4 @@ multiprocessing-logging==0.3.4
 simple-pid==2.0.0
 pydantic==2.10.4
 waitress==3.0.2
+gpiod

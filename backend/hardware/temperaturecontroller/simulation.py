@@ -16,65 +16,65 @@ class SimulatedTempController(TempController):
         if 'temp' in sim_temp_controller_config:
             self.temperature = sim_temp_controller_config['temp']
 
-    def turnHeaterOn(self):
+    def turnHeaterOn(self) -> None:
         """
         Sets the heater flag for the simulation.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.info(t['turning-on-heat'])
         self.heating = True
 
-    def turnHeaterOff(self):
+    def turnHeaterOff(self) -> None:
         """
         Un-sets the heater flag for the simulation.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.info(t['turning-off-heat'])
         self.heating = False
 
-    def turnHeaterPumpOn(self):
-        t=load_translation()
-        
+    def turnHeaterPumpOn(self) -> None:
+        t = load_translation()
+
         self._logger.info(t['heat-pump-on'])
 
-    def turnHeaterPumpOff(self):
-        t=load_translation()
-        
+    def turnHeaterPumpOff(self) -> None:
+        t = load_translation()
+
         self._logger.info(t['heat-pump-off'])
 
-    def turnCoolerOn(self):
+    def turnCoolerOn(self) -> None:
         """
         Sets the cooler flag for the simulation.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.info(t['turning-on-cool'])
         self.cooling = True
 
-    def turnCoolerOff(self):
+    def turnCoolerOff(self) -> None:
         """
         Un-sets the cooler flag for the simulation.
 
         :return:
         None
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         self._logger.info(t['turning-off-cool'])
         self.cooling = False
 
-    def getTemp(self):
+    def getTemp(self) -> float:
         """
         Simulates and returns temperature.
 
@@ -84,8 +84,8 @@ class SimulatedTempController(TempController):
             cooler and heater flag off: -0.1C
         :return:
         """
-        t=load_translation()
-        
+        t = load_translation()
+
         if self.temperature == -1:
             self.temperature = 24
         else:
@@ -101,13 +101,13 @@ class SimulatedTempController(TempController):
         self._logger.info(t['temperature-read-as'].format(self.temperature))
         return self.temperature
 
-    def getMaxTemperature(self):
+    def getMaxTemperature(self) -> float:
         return self.maxTemp
 
-    def getMinTemperature(self):
+    def getMinTemperature(self) -> float:
         return self.minTemp
 
-    def getPIDConfig(self):
+    def getPIDConfig(self) -> dict:
         """
         Read the temperature controller PID configuration
 
