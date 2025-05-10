@@ -107,7 +107,7 @@ class TempController(ABC):
     @abstractmethod
     def getMaxTemperature(self) -> float:
         """
-        Read the max allowed temperature of the microlab in celsius
+        Read the max allowed temperature of the microlab in Celsius
 
         :return:
         """
@@ -116,7 +116,7 @@ class TempController(ABC):
     @abstractmethod
     def getMinTemperature(self) -> float:
         """
-        Read the minimum allowed temperature of the microlab in celsius
+        Read the minimum allowed temperature of the microlab in Celsius
 
         :return:
         """

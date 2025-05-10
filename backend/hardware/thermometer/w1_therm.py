@@ -17,7 +17,7 @@ class W1TempSensor(TempSensor):
 
     def getTemp(self) -> float:
         """
-        Get the temperature of the sensor in celsius.
+        Get the temperature of the sensor in Celsius.
         :return:
             Temperature in Celsius
         """

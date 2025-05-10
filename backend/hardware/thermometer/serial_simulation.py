@@ -16,7 +16,7 @@ class SerialTempSensorSimulation(TempSensor):
 
     def getTemp(self) -> float:
         """
-        Get the temperature of the sensor in celsius.
+        Get the temperature of the sensor in Celsius.
         Recommended sensor: DS18B20
 
         A successful read looks something like this: b"t1=+29.06\n"
@@ -27,8 +27,7 @@ class SerialTempSensorSimulation(TempSensor):
         """
         if self.temp:
             return self.temp
-        line = "12345678901"
-        lastLine = "+29.06"
+        lastLine = '+29.06'
 
         # Commenting the below line out for the time being, no 'start' or 'end' variables are defined so this will throw
         # an exception. Replacing it with just returning a float cast of 'lastLine' as that looks like a valid value

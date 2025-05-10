@@ -141,14 +141,14 @@ class MicroLabHardware:
     def getMaxTemperature(self) -> float:
         """
         :return:
-        The max allowed temperature of the microlab in celsius as a number
+        The max allowed temperature of the microlab in Celsius as a number
         """
         return self.tempController.getMaxTemperature()
 
     def getMinTemperature(self) -> float:
         """
         :return:
-        The minimum allowed temperature of the microlab in celsius as a number
+        The minimum allowed temperature of the microlab in Celsius as a number
         """
         return self.tempController.getMinTemperature()
 
