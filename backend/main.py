@@ -56,7 +56,7 @@ class BackendManager:
     def _cleanup_processes(self) -> None:
         t = load_translation()
         
-        self._logger.debug(t['cleaning-process'])
+        self._logger.debug(t['cleaning-processes'])
 
         while self._are_processes_alive():
             for proc in self._processes:
