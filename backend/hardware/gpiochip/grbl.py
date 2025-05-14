@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 from util.logger import MultiprocessingLogger
 
@@ -79,7 +81,7 @@ class GRBLChip(GPIOChip):
 
         :param pin:
             The pin to output on. Either a defined alias or the pin number for the pin
-        :param outputValue:
+        :param value:
             Either 0 or 1, the value to output on the pin
         :return:
             None

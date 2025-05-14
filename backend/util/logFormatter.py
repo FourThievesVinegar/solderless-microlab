@@ -5,7 +5,7 @@ import io
 
 class MultiLineFormatter(logging.Formatter):
     """Multi-line formatter."""
-    def get_header_length(self, record):
+    def get_header_length(self, record) -> int:
         """Get the header length of a given record."""
         return len(super().format(logging.LogRecord(
             name=record.name,
@@ -15,7 +15,7 @@ class MultiLineFormatter(logging.Formatter):
             msg='', args=(), exc_info=None
         )))
 
-    def format(self, record):
+    def format(self, record) -> str:
         """Format a record with added indentation."""
         indent = ' ' * self.get_header_length(record)
         head, *trailing = super().format(record).splitlines(True)

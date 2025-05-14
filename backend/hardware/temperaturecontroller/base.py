@@ -36,7 +36,7 @@ class TempController(ABC):
             self.pidConfig = None
 
     @abstractmethod
-    def turnHeaterOn():
+    def turnHeaterOn(self) -> None:
         """
         Turns the heater on.
 
@@ -46,7 +46,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterOff():
+    def turnHeaterOff(self) -> None:
         """
         Turns the heater off.
 
@@ -56,7 +56,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterPumpOn():
+    def turnHeaterPumpOn(self) -> None:
         """
         Turns the heater pump on.
 
@@ -66,7 +66,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterPumpOff():
+    def turnHeaterPumpOff(self) -> None:
         """
         Turns the heater pump off.
 
@@ -76,7 +76,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnCoolerOn():
+    def turnCoolerOn(self) -> None:
         """
         Turns the cooler on.
 
@@ -86,7 +86,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnCoolerOff():
+    def turnCoolerOff(self) -> None:
         """
         Turns the cooler off.
 
@@ -96,7 +96,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getTemp():
+    def getTemp(self) -> float:
         """
         Reads the temperature of the microlab
 
@@ -105,25 +105,25 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getMaxTemperature():
+    def getMaxTemperature(self) -> float:
         """
-        Read the max allowed temperature of the microlab in celsius
+        Read the max allowed temperature of the microlab in Celsius
 
         :return:
         """
         pass
 
     @abstractmethod
-    def getMinTemperature():
+    def getMinTemperature(self) -> float:
         """
-        Read the minimum allowed temperature of the microlab in celsius
+        Read the minimum allowed temperature of the microlab in Celsius
 
         :return:
         """
         pass
 
     @abstractmethod
-    def getPIDConfig():
+    def getPIDConfig(self) -> dict:
         """
         Read the temperature controller PID configuration
 

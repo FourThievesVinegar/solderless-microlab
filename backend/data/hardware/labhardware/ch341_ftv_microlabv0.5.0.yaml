@@ -3,7 +3,7 @@ devices:
     type: "thermometer"
     implementation: "serial"
     # Which device to read data from.
-    serialDevice: "/dev/ttyUSB0"
+    serialDevice: "/dev/thermometer_usb"
 
   - id: "reactor-temperature-controller"
     type: "tempController"
@@ -26,12 +26,6 @@ devices:
     heaterPumpPin: BCM_20
     # GPIO pin for activating the cooler pump(s)
     coolerPin: BCM_21
-    #
-    pidConfig:
-      P: 1
-      I: 0.5
-      D: 5
-
     # list of device IDs that must be setup before this device
     dependencies: ["reactor-thermometer"]
 

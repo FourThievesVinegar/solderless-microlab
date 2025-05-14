@@ -140,7 +140,7 @@ class MicrolabRecipe(BaseModel):
         for index, step in enumerate(self.steps):
             if step.options:
                 for option in step.options:
-                    if (option.next < 0 or option.next >= length):
+                    if option.next < 0 or option.next >= length:
                         raise ValueError(t['error-step-option-outside-range'].format(option.next, option.text, index))
         return self
 

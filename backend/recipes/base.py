@@ -81,6 +81,7 @@ plan object
                     Always set to true and signals that the recipe was
                     successfully completed.
 """
+from typing import Any
 
 from recipes import tasks
 from recipes.model import MicrolabRecipe, MicrolabRecipeTask
@@ -124,7 +125,7 @@ class RunningRecipe:
 
         self._microlabHardware = microlabHardware
 
-    def start(self):
+    def start(self) -> None:
         """
         Start running the recipe. Start from the first step.
         :return:
@@ -142,7 +143,7 @@ class RunningRecipe:
             self.status = RecipeState.RECIPE_UNSUPPORTED
             self.message = msg
 
-    def isRecipeSupported(self, recipe: MicrolabRecipe):
+    def isRecipeSupported(self, recipe: MicrolabRecipe) -> tuple[bool, str]:
         t=load_translation()
       
         max = self._microlabHardware.getMaxTemperature()
@@ -157,7 +158,7 @@ class RunningRecipe:
                         return False, t['requires-less-temp'].format(temp, minTemp)
         return True, ''
 
-    def stop(self):
+    def stop(self) -> None:
         """
         Stop running the recipe.
 
@@ -176,7 +177,7 @@ class RunningRecipe:
         self.stopTasks()
         self._microlabHardware.turnOffEverything()
 
-    def getStatus(self):
+    def getStatus(self) -> dict[str, Any]:
         """
         Get the current status of the recipe. This would be updated after
         each step is run.
@@ -214,7 +215,7 @@ class RunningRecipe:
         }
         return ret
 
-    def checkStepCompletion(self):
+    def checkStepCompletion(self) -> None:
         """
         Checks if the current step has finished executing, 
         and go to the next if so. If final step is completed, stops
@@ -231,7 +232,7 @@ class RunningRecipe:
                     self.step = currentStep.next
                     self.runStep()
 
-    def selectOption(self, optionValue):
+    def selectOption(self, optionValue) -> tuple[bool, str]:
         """
         Provide user selected input for the current recipe step.
 
@@ -240,7 +241,7 @@ class RunningRecipe:
         "options" list in the getStatus() call.
 
         :return:
-        list
+        tuple
             boolean
                 Whether or not the selection succeeded.
             string
@@ -262,7 +263,7 @@ class RunningRecipe:
         ret = self.runStep()
         return ret, self.message
 
-    def runStep(self):
+    def runStep(self) -> bool:
         """
         Run the current step of the recipe. The actual step advancement management is left
         to the other methods. If you call this method twice for the same step, that step
@@ -309,7 +310,8 @@ class RunningRecipe:
                     self.currentTasks.append(tasks.runTask(self._microlabHardware, task.baseTask, task.parameters))
             
             tasksWithDurations = filter(
-                lambda task: task.parameters and ('time' in task.parameters), tasksToRun)
+                lambda task: task.parameters and ('time' in task.parameters), tasksToRun
+            )
             taskDurations = list(map(lambda task: task.parameters['time'], tasksWithDurations))
             if len(taskDurations) > 0:
                 duration = timedelta(seconds=max(taskDurations))
@@ -317,12 +319,12 @@ class RunningRecipe:
                 
             self.status = RecipeState.RUNNING
 
-        if step.done == True:
+        if step.done is True:
             self.status = RecipeState.COMPLETE
 
         return True
 
-    def areTasksComplete(self):
+    def areTasksComplete(self) -> bool:
         """
         Check if all currently running tasks have completed.
         :return:
@@ -333,7 +335,7 @@ class RunningRecipe:
         """
         return all(task["done"] for task in self.currentTasks)
 
-    def stopTasks(self):
+    def stopTasks(self) -> None:
         """
         Stop the currently running tasks.
         :return:
@@ -343,7 +345,7 @@ class RunningRecipe:
         #     task.cancel()
         self.currentTasks = []
 
-    def tickTasks(self):
+    def tickTasks(self) -> None:
         """
         Executes one iteration of the current tasks that are scheduled to run.
         :return:

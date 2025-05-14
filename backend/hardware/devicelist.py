@@ -1,3 +1,5 @@
+from typing import Any
+
 import hardware.stirring.core as stirrer
 import hardware.reagentdispenser.core as rd
 import hardware.temperaturecontroller.core as tc
@@ -12,7 +14,8 @@ from copy import copy
 from util.logger import MultiprocessingLogger
 from localization import load_translation
 
-def sort_device_configs(deviceConfigs: list[dict]):
+
+def sort_device_configs(deviceConfigs: list[dict]) -> list[dict]:
     def compare_devices(a: dict, b: dict):
         if b.get('dependencies') and a['id'] in b['dependencies']:
             return -1
@@ -28,8 +31,8 @@ def sort_device_configs(deviceConfigs: list[dict]):
 
 
 def loadHardwareConfiguration() -> dict:
-    t=load_translation()
-  
+    t = load_translation()
+
     controllerHardware = {"devices": []}
 
     if config.controllerHardware != "custom":
@@ -44,17 +47,19 @@ def loadHardwareConfiguration() -> dict:
     with open(lab_hardware_path) as inf:
         userHardware = yaml.safe_load(inf)
 
-    return {"devices": sort_device_configs(controllerHardware["devices"]) 
-                        + sort_device_configs(userHardware["devices"])}
+    return {
+        "devices": sort_device_configs(controllerHardware["devices"])
+                   + sort_device_configs(userHardware["devices"])
+    }
 
 
-def setupDevices(deviceDefinitions: list[dict]):
-    t=load_translation()
-  
+def setupDevices(deviceDefinitions: list[dict]) -> dict:
+    t = load_translation()
+
     validateConfiguration(deviceDefinitions)
     logger = MultiprocessingLogger.get_logger(__name__)
-    
-    devices = {}
+
+    devices: dict[str, Any] = {}
 
     for device in deviceDefinitions:
         logger.info(t['loading-config'].format(device['id']))
@@ -79,19 +84,19 @@ def setupDevices(deviceDefinitions: list[dict]):
     return devices
 
 
-def _checkForMissingDependency(current_device_config: dict, allDeviceData: dict):
-    t=load_translation()
-    
+def _checkForMissingDependency(current_device_config: dict, allDeviceData: dict) -> None:
+    t = load_translation()
+
     dependencies = current_device_config.get('dependencies', [])
     for dependency in dependencies:
         if dependency not in allDeviceData:
             raise Exception(t['missing-config'].format(dependency))
 
 
-def _checkForCyclicalDependency(current_device_id: str, current_device_config: dict, allDeviceData: dict):
+def _checkForCyclicalDependency(current_device_id: str, current_device_config: dict, allDeviceData: dict) -> None:
     # We're making a copy as we're going to be altering 'dependencies' to walk the dependency tree
-    t=load_translation()
-    
+    t = load_translation()
+
     dependencies = copy(current_device_config.get('dependencies', []))
     for dependency in dependencies:
         if dependency == current_device_id:
@@ -102,7 +107,7 @@ def _checkForCyclicalDependency(current_device_id: str, current_device_config: d
                 dependencies.append(child_dependency)
 
 
-def _checkForMissingAndCircularHardwareDeps(deviceData: dict):
+def _checkForMissingAndCircularHardwareDeps(deviceData: dict) -> None:
     for device_id, device_config in deviceData.items():
         # We only care about checking deps if they are present
         if device_config.get('dependencies'):
@@ -110,9 +115,9 @@ def _checkForMissingAndCircularHardwareDeps(deviceData: dict):
             _checkForCyclicalDependency(device_id, device_config, deviceData)
 
 
-def validateConfiguration(deviceConfigs: list[dict]):
-    t=load_translation()
-  
+def validateConfiguration(deviceConfigs: list[dict]) -> bool:
+    t = load_translation()
+
     deviceDict = {}
     for device in deviceConfigs:
         if deviceDict.get(device['id'], None) is None:
@@ -120,5 +125,5 @@ def validateConfiguration(deviceConfigs: list[dict]):
         else:
             raise Exception(t['duplicate-device-id'].format(device['id']))
     _checkForMissingAndCircularHardwareDeps(deviceDict)
-    
+
     return False
