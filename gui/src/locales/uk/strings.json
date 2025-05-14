@@ -1,0 +1,104 @@
+{
+  "Four Thieves Vinegar MicroLab": "Four Thieves Vinegar MicroLab",
+  "backend-down": "Сервіс недоступний",
+  "waiting-for-backend": "Очікування сервісу керування",
+  "microlab-status-idle-message": "MicroLab простоює.",
+  "microlab-status-running-message": "MicroLab виконує рецепт.",
+  "go-to-recipe-button-text": "Перейти до рецепту",
+  "view-logs-button-text": "Переглянути журнали",
+  "view-recipes-button-text": "Переглянути рецепти",
+  "reaction-in-progress": "Реакція '{{reactionName}}' в процесі.",
+  "resume-reaction": "Продовжити реакцію '{{reactionName}}'.",
+  "Logs": "Журнали",
+  "loading-placeholder": "Завантаження...",
+  "recipe-list": "Список рецептів",
+  "upload-recipe-button-label": "Завантажити рецепт",
+  "confirm-stop-recipe": "Ви впевнені, що хочете зупинити?",
+  "stop-reaction-button-text": "Зупинити реакцію",
+  "finish-reaction-button-text": "Завершити реакцію",
+  "go-back-button-text": "Повернутися назад",
+  "waiting-on-backend": "Очікування відповіді від сервера...",
+  "locale": "Локалізація",
+  "components": {
+    "ControllerConfigUpload": {
+      "uploading": "Завантаження конфігурації...",
+      "upload-failed-no-file": "Не вдалося завантажити, файл не додано.",
+      "upload-success": "Конфігурацію успішно завантажено.",
+      "upload-failed": "Не вдалося завантажити конфігурацію.",
+      "upload-button-text": "Завантажити нову конфігурацію контролера"
+    },
+    "ControllerHardwareConfig": {
+      "failed-no-selected-config": "Не вдалося, конфігурація не вибрана.",
+      "setting-new-config-waiting-message": "Застосування нової конфігурації...",
+      "config-changed-successfully": "Конфігурацію контролера успішно змінено.",
+      "failed-config-change-request": "Не вдалося налаштувати контролер: '{{message}}'",
+      "failed-generic": "Не вдалося налаштувати контролер.",
+      "save": "Зберегти",
+      "download": "Завантажити"
+    },
+    "Header": {
+      "main-menu": "Головне меню",
+      "status-button-text": "Статус MicroLab",
+      "recipes-button-text": "Рецепти",
+      "settings-button-text": "Налаштування",
+      "logs-button-text": "Переглянути журнали"
+    },
+    "LabConfigUpload": {
+      "upload-waiting-message": "Завантаження конфігурації...",
+      "upload-successful": "Конфігурацію успішно завантажено.",
+      "failed-generic": "Не вдалося завантажити конфігурацію.",
+      "upload-button-text": "Завантажити нову конфігурацію лабораторії"
+    },
+    "LabHardwareConfig": {
+      "failed-no-selected-config": "Не вдалося, конфігурація не вибрана.",
+      "setting-new-config-waiting-message": "Застосування нової конфігурації...",
+      "config-changed-successfully": "Конфігурацію обладнання успішно змінено.",
+      "failed-config-change-request": "Не вдалося налаштувати обладнання: '{{message}}'",
+      "failed-generic": "Не вдалося налаштувати обладнання.",
+      "save": "Зберегти",
+      "download": "Завантажити"
+    },
+    "RecipeUpload": {
+      "failed-no-recipe-selected": "Не вдалося, рецепт не вибрано для завантаження.",
+      "upload-waiting-message": "Завантаження рецепту...",
+      "upload-successful": "Рецепт успішно завантажено.",
+      "upload-failed-generic": "Не вдалося завантажити рецепт.",
+      "upload-button-text": "Завантажити"
+    },
+    "ReloadHardware": {
+      "reloading-waiting-for-response-message": "Застосування нової конфігурації...",
+      "reload-successful": "Обладнання успішно завантажено.",
+      "reload-failed-with-message": "Не вдалося завантажити обладнання: '{{message}}'",
+      "reload-failed-generic": "Не вдалося завантажити обладнання.",
+      "reload-button-text": "Перезавантажити обладнання"
+    },
+    "SettingsPage": {
+      "settings-page-header": "Налаштування",
+      "lab-hardware-config-header": "Конфігурація лабораторного обладнання",
+      "controller-hardware-config-header": "Контролер MicroLab",
+      "sound-config-header": "Налаштування звуку"
+    },
+    "SoundSettings": {
+      "soundscape-label": "Звукова атмосфера",
+      "select-audio-theme-placeholder": "Оберіть аудіотему",
+      "volume-label": "Гучність",
+      "play-sounds-label": "Відтворювати звуки",
+      "sound-on-error-label": "При помилці",
+      "sound-requires-user-input-label": "Крок потребує вводу користувача",
+      "sound-on-recipe-completion-label": "При завершенні рецепту",
+      "sound-intro-label": "При завантаженні списку рецептів (вступ)"
+    },
+    "RecipeDetailsPage": {
+      "start-reaction-button-text": "Почати реакцію за цим рецептом",
+      "delete-recipe-button-text": "Видалити рецепт",
+      "confirm-delete-recipe": "Ви впевнені, що хочете видалити цей рецепт? Видалення є остаточним і відновленню не підлягає.",
+      "loading-placeholder": "Завантаження...",
+      "no-materials-needed": "Матеріали не потрібні",
+      "recipe-materials-needed": "Необхідні матеріали:",
+      "recipe-has-no-steps": "Немає кроків",
+      "recipe-steps": "Кроки:",
+      "recipe-time-needed": "Необхідний час:",
+      "recipe-time-needed-for-tasks": "Час, необхідний для автоматизованих завдань"
+    }
+  }
+}
