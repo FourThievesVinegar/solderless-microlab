@@ -6,16 +6,16 @@ and the individual files for configuration information.
 
 def createGPIOChip(gpioConfig: dict, devices: dict):
     gpioType = gpioConfig['implementation']
-    if gpioType == "gpiod":
-        from hardware.gpiochip.gpiod import GPIODChip
+    if gpioType == 'gpiod':
+        from hardware.gpiochip.gpiod_chip import GPIODChip
         return GPIODChip(gpioConfig)
-    if gpioType == "simulation":
+    if gpioType == 'simulation':
         from hardware.gpiochip.gpiod_simulation import GPIODChipSimulation
         return GPIODChipSimulation(gpioConfig)
-    if gpioType == "gpiod_chipset":
+    if gpioType == 'gpiod_chipset':
         from hardware.gpiochip.gpiod_chipset import GPIODChipset
         return GPIODChipset(gpioConfig, devices)
-    if gpioType == "grbl":
+    if gpioType == 'grbl':
         from hardware.gpiochip.grbl import GRBLChip
         return GRBLChip(gpioConfig, devices)
-    raise Exception("Unsupported gpiochiptype")
+    raise Exception('Unsupported gpiochiptype')

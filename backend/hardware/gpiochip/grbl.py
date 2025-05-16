@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
-from util.logger import MultiprocessingLogger
+
 
 class GRBLChip(GPIOChip):
     def __init__(self, gpio_config: dict, devices: dict):
@@ -15,18 +17,18 @@ class GRBLChip(GPIOChip):
               dictionary mapping strings to pin numbers
               for adding human readable names to GPIO pins
         """
-        self._logger = MultiprocessingLogger.get_logger(__name__)
-
-        self.grbl = devices[gpio_config["grblID"]]
         self.output_offsets = []
         self.output_values = []
-        self.pinAliases = {}
-        if 'lineAliases' in gpio_config:
-            for alias, pin in gpio_config['lineAliases'].items():
-                self.pinAliases[alias] = pin
-        self._logger.debug(self.pinAliases)
 
-    def __output(self):
+        chip_name = devices[gpio_config['id']]
+        self.chip = devices[gpio_config['grblID']]
+
+        # copy any provided aliases, or use empty dict
+        pin_aliases = dict(gpio_config.get('lineAliases', {}))
+        super().__init__(__name__, chip_name, pin_aliases)
+        self.logger.debug(f'Configured lineAliases: {pin_aliases!r}')
+
+    def __output(self) -> None:
         """
         Outputs values on every pin that has been setup
         """
@@ -38,24 +40,7 @@ class GRBLChip(GPIOChip):
 
           self.grbl.grblWrite("{} P{}".format(command, pin))
 
-    def __getPinNumber(self, pin: str | int):
-        """
-        Converts string aliases to the corresponding pin number
-        Throws an exception if pin is an alias that does not exist.
-        :param pin:
-            The pin to get the pin number of.
-        :return:
-            The pin number for that pin
-        """
-        if isinstance(pin, str):
-            if self.pinAliases[pin]:
-                return self.pinAliases[pin]
-            else:
-                raise Exception("Invalid GPIO pin {0}".format(pin))
-        else:
-            return pin
-
-    def setup(self, pin: str | int, pinType=LINE_REQ_DIR_OUT, outputValue=0):
+    def setup(self, pin: str | int, pinType: Literal['input', 'output'], value: int) -> None:
         """
         Sets up pin for use, currently only output is supported.
 
@@ -63,19 +48,19 @@ class GRBLChip(GPIOChip):
             The pin to setup. Either a defined alias or the pin number for the pin
         :param pinType:
             One of "output" or "input". Currently only "output" is supported
-        :param outputValue:
+        :param value:
             Either 0 or 1, the value to output on the pin
         :return:
             None
         """
-        pinNumber = self.__getPinNumber(pin)
+        pin_number = self._get_pin(pin)
         
         if pinType == LINE_REQ_DIR_OUT:
-            self.output_offsets.append(pinNumber)
-            self.output_values.append(outputValue)
+            self.output_offsets.append(pin_number)
+            self.output_values.append(value)
             self.__output()
 
-    def output(self, pin: str | int, value: int):
+    def output(self, pin: str | int, value: int) -> None:
         """
         Outputs a new value to specified pin
 
@@ -86,7 +71,7 @@ class GRBLChip(GPIOChip):
         :return:
             None
         """
-        pinNumber = self.__getPinNumber(pin)
-        index = self.output_offsets.index(pinNumber)
+        pin_number = self._get_pin(pin)
+        index = self.output_offsets.index(pin_number)
         self.output_values[index] = value
         self.__output()

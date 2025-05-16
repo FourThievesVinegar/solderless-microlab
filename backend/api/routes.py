@@ -40,7 +40,7 @@ class RouteManager:
         return jsonify(recipeNames)
 
     # /recipe/<name>
-    def _send_recipe(self, name) -> Response:
+    def _send_recipe(self, name: str) -> Response:
         recipe = recipes.core.getRecipeByName(name)
         return jsonify(recipe.model_dump())
 
@@ -99,7 +99,7 @@ class RouteManager:
         return jsonify(self._microlab_interface.status())
 
     # /start/<name>
-    def _start(self, name) -> tuple[Response, int]:
+    def _start(self, name: str) -> tuple[Response, int]:
         """
         Start running a recipe.
 
@@ -117,11 +117,7 @@ class RouteManager:
         t = load_translation()
         recipe = recipes.core.getRecipeByName(name)
         if recipe is None:
-            return jsonify(
-                {
-                    'response': 'error', 'message': t['recipe-not-found']
-                }
-            ), 404
+            return jsonify({'response': 'error', 'message': t['recipe-not-found']}), 404
                             
         (state, msg) = self._microlab_interface.start(name)
         if state:
@@ -147,7 +143,7 @@ class RouteManager:
         return jsonify({'response': 'ok'})
 
     # /select/option/<name>
-    def _select_option(self, name) -> tuple[Response, int]:
+    def _select_option(self, name: str) -> tuple[Response, int]:
         """
         Provide user selected input.
 
@@ -257,7 +253,7 @@ class RouteManager:
         return jsonify(configs)
 
     # /controllerHardware/<name>
-    def _select_controller_hardware(self, name) -> tuple[Response, int]:
+    def _select_controller_hardware(self, name: str) -> tuple[Response, int]:
         """
         Sets a new controller hardware setting, and reloads the hardware
         controller to use this
@@ -299,7 +295,7 @@ class RouteManager:
         return jsonify({'response': 'ok'})
 
     # /downloadControllerConfig/<name>
-    def _download_controller_config(self, name) -> Response:
+    def _download_controller_config(self, name: str) -> Response:
         """
         Downloads a controller hardware configuration file
 
@@ -336,7 +332,7 @@ class RouteManager:
         return jsonify(configs)
 
     # /labHardware/<name>
-    def _select_lab_hardware(self, name) -> tuple[Response, int]:
+    def _select_lab_hardware(self, name: str) -> tuple[Response, int]:
         """
         Sets a new lab hardware setting, and reloads the hardware
         controller to use this
@@ -378,7 +374,7 @@ class RouteManager:
         return jsonify({'response': 'ok'})
 
     # /downloadLabConfig/<name>
-    def _download_lab_config(self, name) -> Response:
+    def _download_lab_config(self, name: str) -> Response:
         """
         Downloads a lab hardware configuration file
 

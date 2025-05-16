@@ -1,54 +1,36 @@
-from hardware.gpiochip.base import LINE_REQ_DIR_OUT
-from util.logger import MultiprocessingLogger
+from __future__ import annotations
+
+from hardware.gpiochip.base import LINE_REQ_DIR_OUT, GPIOChip
 
 
-class GPIODChipSimulation():
+class GPIODChipSimulation(GPIOChip):
     def __init__(self, gpio_config: dict):
         """
-        Constructor. Initializes the GPIO chip.
-        :param gpio_config:
-          dict
-            chipName
-              Name of the chip according to gpiod
-            lineAliases
-              dictionary mapping strings to line numbers
-              for adding human readable names to GPIO lines
+         :param gpio_config: {
+            "chipName":    # name of the chip according to gpiod
+            "lineAliases": {alias_str: line_number, …}  # optional
+        }
         """
-        self._logger = MultiprocessingLogger.get_logger(__name__)
-
         self.output_offsets = []
         self.output_values = []
         self.output_lines = []
+
+        # no real chip in simulation
+        chip_name = 'simulation'
         self.chip = None
-        self.lineAliases = {}
-        if 'lineAliases' in gpio_config:
-            for alias, line in gpio_config['lineAliases'].items():
-                self.lineAliases[alias] = line
-        self._logger.debug(self.lineAliases)
+
+        # copy any provided aliases, or use empty dict
+        pin_aliases = dict(gpio_config.get('lineAliases', {}))
+        super().__init__(__name__, chip_name, pin_aliases)
+        self.logger.debug(f'Configured lineAliases: {pin_aliases!r}')
 
     def __output(self):
         """
         Outputs values on every line that has been setup
         """
+        pass
 
-    def __getLineNumber(self, pin):
-        """
-        Converts string aliases to the corresponding line number
-        Throws an exception if pin is an alias that does not exist.
-        :param pin:
-            The pin to get the line number of.
-        :return:
-            The line number for that pin
-        """
-        if isinstance(pin, str):
-            if self.lineAliases[pin]:
-                return self.lineAliases[pin]
-            else:
-                raise Exception("Invalid GPIO pin {0}".format(pin))
-        else:
-            return pin
-
-    def setup(self, pin, pinType=LINE_REQ_DIR_OUT, outputValue=0):
+    def setup(self, pin: str | int, pinType: str = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """
         Sets up pin for use, currently only output is supported.
 
@@ -56,32 +38,31 @@ class GPIODChipSimulation():
             The pin to setup. Either a defined alias or the line number for the pin
         :param pinType:
             One of "output" or "input". Currently only "output" is supported
-        :param outputValue:
+        :param value:
             Either 0 or 1, the value to output on the pin
         :return:
             None
         """
-        lineNumber = self.__getLineNumber(pin)
-        
-        # add better simulation
+        pin_number = self._get_pin(pin)
 
+        # TODO: add better simulation
         if pinType == LINE_REQ_DIR_OUT:
-            self.output_offsets.append(lineNumber)
-            self.output_values.append(outputValue)
+            self.output_offsets.append(pin_number)
+            self.output_values.append(value)
             self.__output()
 
-    def output(self, pin, value):
+    def output(self, pin: str | int, value: int) -> None:
         """
         Outputs a new value to specified pin
 
         :param pin:
             The pin to output on. Either a defined alias or the line number for the pin
-        :param outputValue:
+        :param value:
             Either 0 or 1, the value to output on the pin
         :return:
             None
         """
-        lineNumber = self.__getLineNumber(pin)
-        index = self.output_offsets.index(lineNumber)
+        pin_number = self._get_pin(pin)
+        index = self.output_offsets.index(pin_number)
         self.output_values[index] = value
         self.__output()
