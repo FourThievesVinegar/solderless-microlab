@@ -5,7 +5,6 @@ from typing import Literal
 from hardware.gpiochip.base import GPIOChip
 from hardware.gpiochip.gpiod_chip import GPIODChip
 from localization import load_translation
-from util.logger import MultiprocessingLogger
 
 
 class GPIODChipset(GPIOChip):
@@ -21,7 +20,7 @@ class GPIODChipset(GPIOChip):
         t = load_translation()
 
         chipset_name = gpio_config['id']
-        super().__init__(__name__, chipset_name, {})
+        super().__init__(chipset_name, {})
 
         # build chips dict in one go
         default_id = gpio_config['defaultChipID']
@@ -41,6 +40,12 @@ class GPIODChipset(GPIOChip):
 
         self.logger.debug(f'Resolved line aliases: {self.line_alias_to_chip!r}')
 
+    def _get_chip_id(self, pin: str | int) -> str:
+        if isinstance(pin, int):
+            raise ValueError(f"{self.__class__.__name__}.setup 'pin' argument must must be a string Pin Alias")
+        chip_id = self.line_alias_to_chip.get(pin) or 'defaultChip'
+        return chip_id
+
     def setup(self, pin: str, pinType: Literal['input', 'output'], value: int) -> None:
         """
         Sets up pin for use, currently only output is supported.
@@ -54,9 +59,7 @@ class GPIODChipset(GPIOChip):
         :return:
             None
         """
-        if isinstance(pin, int):
-            raise ValueError(f"{self.__class__.__name__}.setup 'pin' argument must must be a string Pin Alias")
-        chip_id = self.line_alias_to_chip.get(pin) or 'defaultChip'
+        chip_id = self._get_chip_id(pin)
         return self.chips[chip_id].setup(pin, pinType, value)
 
     def output(self, pin: str, value: int) -> None:
@@ -70,7 +73,5 @@ class GPIODChipset(GPIOChip):
         :return:
             None
         """
-        if isinstance(pin, int):
-            raise ValueError(f"{self.__class__.__name__}.output 'pin' argument must must be a string Pin Alias")
-        chip_id = self.line_alias_to_chip.get(pin) or 'defaultChip'
+        chip_id = self._get_chip_id(pin)
         return self.chips[chip_id].output(pin, value)
