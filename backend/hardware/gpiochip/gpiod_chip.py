@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import Literal
 
 import gpiod
-from gpiod.line import LineSettings, Direction, Value
+from gpiod.line import Direction, Value
+from gpiod.line_settings import LineSettings
 
 from hardware.gpiochip.base import GPIOChip
 
