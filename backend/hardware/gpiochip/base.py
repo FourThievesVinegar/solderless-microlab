@@ -2,9 +2,7 @@ from __future__ import annotations
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Optional
-
-from jinja2.nodes import Literal
+from typing import Optional, Literal
 
 from util.logger import MultiprocessingLogger
 
