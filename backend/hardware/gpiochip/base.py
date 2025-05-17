@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import logging
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from jinja2.nodes import Literal
 
@@ -12,12 +14,12 @@ LINE_REQ_DIR_IN = 'input'
 
 class GPIOChip(ABC):
     def __init__(self, chip_name: str, pin_aliases: dict[str, int]):
-        self._logger = None
+        self._logger: Optional[logging.Logger] = None
         self.chip_name = chip_name
         self.pin_aliases = pin_aliases
 
     @property
-    def logger(self):
+    def logger(self) -> logging.Logger:
         if not self._logger:
             self._logger = MultiprocessingLogger.get_logger(type(self).__name__)
         return self._logger

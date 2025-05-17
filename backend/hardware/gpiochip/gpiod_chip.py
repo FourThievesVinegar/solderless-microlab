@@ -31,7 +31,7 @@ class GPIODChip(GPIOChip):
 
     def __output(self):
         """
-        Outputs values on every line that has been setup
+        Outputs values on every line that has been set up
         """
         lines = self.chip.get_lines(self.output_offsets)
         lines.request(consumer='microlab', type=gpiod.LINE_REQ_DIR_OUT)
@@ -45,9 +45,9 @@ class GPIODChip(GPIOChip):
         if pinType == LINE_REQ_DIR_OUT:
             # line = self.chip.get_line(pin_number)
             # line.request(consumer="microlab", type=gpiod.LINE_REQ_DIR_OUT)
+            # self.output_lines.append(line)
             self.output_offsets.append(pin_number)
             self.output_values.append(value)
-            # self.output_lines.append(line)
             self.__output()
 
     def output(self, pin: str | int, value: int) -> None:

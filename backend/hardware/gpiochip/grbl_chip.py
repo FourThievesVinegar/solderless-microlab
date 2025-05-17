@@ -17,14 +17,14 @@ class GRBLChip(GPIOChip):
               dictionary mapping strings to pin numbers
               for adding human readable names to GPIO pins
         """
-        chip_name = devices[gpio_config['id']]
+        chip_name = gpio_config['id']
         pin_aliases = dict(gpio_config.get('lineAliases', {}))
         super().__init__(chip_name, pin_aliases)
         self.logger.debug(f'Configured lineAliases: {pin_aliases!r}')
 
         self.output_offsets = []
         self.output_values = []
-        self.chip = devices[gpio_config['grblID']]
+        self.chip: 'hardware.grbl.base.GRBL' = devices[gpio_config['grblID']]
 
     def __output(self) -> None:
         """
@@ -36,7 +36,7 @@ class GRBLChip(GPIOChip):
             else:
                 command = "M64"
 
-            self.grbl.grblWrite("{} P{}".format(command, pin))
+            self.chip.grblWrite("{} P{}".format(command, pin))
 
     def setup(self, pin: str | int, pinType: Literal['input', 'output'], value: int) -> None:
         """ :inheritdoc: """
