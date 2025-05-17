@@ -12,7 +12,7 @@ devices:
     # gpiod: control using python3-libgpiod
     implementation: "gpiod"
     # name of the chip according to gpiod
-    chipName: "gpiochip0"
+    chipName: "/dev/gpiochip0"
     # Dictionary mapping strings to gpiod line numbers
     lineAliases:
       ID_SDA: 0

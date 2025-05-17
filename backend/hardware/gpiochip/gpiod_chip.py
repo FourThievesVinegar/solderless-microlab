@@ -29,6 +29,7 @@ class GPIODChip(GPIOChip):
         self.output_values: dict[int, Value] = {}
 
         # create a persistent Chip/LineRequest
+        self.logger.info(f'Instantiating gpiod.Chip: {self.chip_name}')
         self.chip = gpiod.Chip(self.chip_name)
         self.request = None  # type: ignore[assignment]
 
