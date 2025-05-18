@@ -33,6 +33,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
+      - name: Create SUDO paths
+        run: |
+          sudo mkdir -p -m 777 /etc/microlab
+          sudo mkdir -p -m 777 /var/lib/microlab
+          sudo mkdir -p -m 777 /var/log/microlab
+          
       - name: Run tests
         run: |
           # Verify we’re using the right Python interpreter
