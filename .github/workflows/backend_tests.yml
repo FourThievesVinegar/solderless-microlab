@@ -45,4 +45,4 @@ jobs:
           which python
           python --version
           
-          python -m pytest --maxfail=10
+          python -m pytest
