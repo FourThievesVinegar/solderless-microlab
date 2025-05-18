@@ -375,7 +375,7 @@ def test_maintain_PID_heat_needed(microlab):
     assert res is not None
 
 
-@pytest.skip(reason="temporary bypass to restore GitHub build workflow")
+@pytest.mark.skip(reason="temporary bypass to restore GitHub build workflow")
 @pytest.mark.microlab_data(
     {
         "reactor-temperature-controller": {
