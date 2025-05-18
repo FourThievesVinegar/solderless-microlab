@@ -41,8 +41,8 @@ jobs:
           
       - name: Run tests
         run: |
-          # Verify we’re using the right Python interpreter
+          # Verify we are using the right Python interpreter
           which python
           python --version
           
-          python -m pytest
+          python -m pytest --maxfail=10
