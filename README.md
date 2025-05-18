@@ -111,7 +111,7 @@ source env/bin/activate
 (on the Pi)
 
 ```bash
-sudo apt -y install screen git python3-flask python3-pip python3-serial python3-libgpiod
+sudo apt -y install screen git python3-flask python3-pip python3-serial
 
 ```
 
@@ -168,4 +168,5 @@ To run the software without a functioning hardware environment, go to the settin
 If you have a MicroLab to run the software on, you may want to enable SSH on the Pi. This makes remote development easier. Instructions for doing so can be found here: https://itsfoss.com/ssh-into-raspberry/
 
 ## Start Developing
+
 Once your environment is setup, head on over to the [Backend README](/backend)
