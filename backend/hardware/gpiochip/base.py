@@ -37,7 +37,7 @@ class GPIOChip(ABC):
         return pin
 
     @abstractmethod
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'], value: int) -> None:
+    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """
         Sets up pin for use, currently only output is supported.
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from hardware.gpiochip.base import GPIOChip
+from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 from hardware.gpiochip.gpiod_chip import GPIODChip
 from localization import load_translation
 
@@ -46,7 +46,7 @@ class GPIODChipset(GPIOChip):
         chip_id = self.line_alias_to_chip.get(pin) or 'defaultChip'
         return chip_id
 
-    def setup(self, pin: str, pinType: Literal['input', 'output'], value: int) -> None:
+    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """
         Sets up pin for use, currently only output is supported.
 

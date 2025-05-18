@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import Literal, Optional
 
 import gpiod
 from gpiod.line import Direction, Value
 from gpiod.line_settings import LineSettings
+from gpiod.line_request import LineRequest
 
-from hardware.gpiochip.base import GPIOChip
+from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 
 
 class GPIODChip(GPIOChip):
@@ -29,11 +30,28 @@ class GPIODChip(GPIOChip):
         self.output_values: dict[int, Value] = {}
 
         # create a persistent Chip/LineRequest
-        self.logger.info(f'Instantiating gpiod.Chip: {self.chip_name}')
         self.chip = gpiod.Chip(self.chip_name)
-        self.request = None  # type: ignore[assignment]
+        self.request: Optional[LineRequest] = None
 
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = 'output', value: int = 0):
+    def close(self) -> None:
+        """ Explicitly release the LineRequest if it exists. """
+        if getattr(self, 'request', None):
+            try:
+                self.request.release()
+            except Exception as e:
+                self.logger.warning(f'Error releasing GPIO lines: {e!r}')
+            finally:
+                self.request = None
+
+    def __del__(self):
+        # Python may call this at interpreter shutdown, so keep it defensive.
+        try:
+            self.close()
+        except Exception:
+            pass
+
+    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+        """ :inheritdoc: """
         offset = self._get_pin(pin)
 
         if pinType == 'output':
@@ -59,6 +77,7 @@ class GPIODChip(GPIOChip):
             )
 
     def output(self, pin: str | int, value: int):
+        """ :inheritdoc: """
         offset = self._get_pin(pin)
         if offset not in self.output_offsets:
             raise ValueError(f'Pin {pin!r} not set up for output')
