@@ -7,7 +7,6 @@ class GPIODChipSimulation(GPIOChip):
     def __init__(self, gpio_config: dict):
         """
          :param gpio_config: {
-            "chipName":    # name of the chip according to gpiod
             "lineAliases": {alias_str: line_number, …}  # optional
         }
         """
