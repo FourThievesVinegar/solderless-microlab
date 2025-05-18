@@ -6,8 +6,8 @@ devices:
     type: "gpiochip"
     # This implementation controls the gpio pins using libgpiod.
     implementation: "gpiod"
-    # name of the chip according to gpiod
-    chipName: "gpiochip1"
+    # path to the chip for gpiod to use
+    chipName: "/dev/gpiochip1"
     # Dictionary mapping strings to gpiod line numbers
     # Aliases taken from running gpioinfo on the device, or can be found in
     # the documentation for the board itself.
@@ -126,8 +126,6 @@ devices:
     type: "gpiochip"
     # This does nothing but provides dummy code to emulate the gpiod interface.
     implementation: "simulation"
-    # name of the chip according to gpiod, can be anything for simulation
-    chipName: "gpiochip0"
     # Dictionary mapping strings to gpiod line numbers
     lineAliases:
       ID_SDA: 0

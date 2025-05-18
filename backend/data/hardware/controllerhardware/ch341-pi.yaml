@@ -1,5 +1,4 @@
 devices:
-
   - id: "grbl-primary"
     type: "grbl"
     implementation: "serial"
@@ -11,7 +10,7 @@ devices:
     # Supported values: gpiod
     # gpiod: control using python3 "gpiod" library
     implementation: "gpiod"
-    # name of the chip according to gpiod
+    # path to the chip for gpiod to use
     chipName: "/dev/gpiochip0"
     # Dictionary mapping strings to gpiod line numbers
     lineAliases:
