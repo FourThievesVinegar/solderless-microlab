@@ -9,7 +9,7 @@ devices:
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
     # Supported values: gpiod
-    # gpiod: control using python3-libgpiod
+    # gpiod: control using python3 "gpiod" library
     implementation: "gpiod"
     # name of the chip according to gpiod
     chipName: "/dev/gpiochip0"

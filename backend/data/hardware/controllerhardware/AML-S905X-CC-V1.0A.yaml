@@ -3,14 +3,15 @@ devices:
     type: "grbl"
     implementation: "serial"
     grblPort: "/dev/ttyACM0"
+
   - id: "gpiochip1"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
     # Supported values: gpiod
-    # gpiod: control using python3-libgpiod
+    # gpiod: control using python3 "gpiod" library
     implementation: "gpiod"
     # name of the chip according to gpiod
-    chipName: "gpiochip1"
+    chipName: "/dev/gpiochip1"
     # Dictionary mapping strings to gpiod line numbers
     # Aliases taken from running gpioinfo on the device
     # BCM_ Aliases map line numbers from the pi BCM line number to the corresponding line
@@ -91,14 +92,15 @@ devices:
       BCM_24: 94
       BCM_25: 79
       BCM_26: 84
+
   - id: "gpiochip0"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
     # Supported values: gpiod
-    # gpiod: control using python3-libgpiod
+    # gpiod: control using python3 "gpiod" library
     implementation: "gpiod"
     # name of the chip according to gpiod
-    chipName: "gpiochip0"
+    chipName: "/dev/gpiochip0"
     # Dictionary mapping strings to gpiod line numbers
     # Aliases taken from running gpioinfo on the device
     # BCM_ Aliases map line numbers from the pi BCM line number to the corresponding line
@@ -121,11 +123,12 @@ devices:
       BCM_27: 9
       BCM_22: 10
       BCM_18: 6
+
   - id: "gpio-primary"
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
     # Supported values: gpiod
-    # gpiod: control using python3-libgpiod
+    # gpiod: control using python3 "gpiod" library
     implementation: "gpiod_chipset"
     # device id of the default chip, this is where line requests not matching
     # any alias will be sent to
