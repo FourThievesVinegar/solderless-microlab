@@ -20,6 +20,6 @@ def createGPIOChip(gpio_config: dict, devices: dict) -> GPIOChip:
         from hardware.gpiochip.grbl_chip import GRBLChip
         return GRBLChip(gpio_config, devices)
     raise ValueError(
-        'Unsupported chip: id={config[id]} '
+        'Unsupported device: id={config[id]} '
         'type={config[type]} implementation={config[implementation]}'.format(config=gpio_config)
     )

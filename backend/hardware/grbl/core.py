@@ -14,6 +14,6 @@ def createGRBL(grbl_config: dict, devices: dict) -> GRBL:
         from hardware.grbl.simulation import GRBLSimulation
         return GRBLSimulation(grbl_config)
     raise ValueError(
-        'Unsupported chip: id={config[id]} '
+        'Unsupported device: id={config[id]} '
         'type={config[type]} implementation={config[implementation]}'.format(config=grbl_config)
     )
