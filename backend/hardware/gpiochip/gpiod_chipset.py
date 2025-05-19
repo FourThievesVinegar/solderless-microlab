@@ -1,71 +1,77 @@
+from __future__ import annotations
+
+from typing import Literal
+
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
-from util.logger import MultiprocessingLogger
+from hardware.gpiochip.gpiod_chip import GPIODChip
 from localization import load_translation
+
 
 class GPIODChipset(GPIOChip):
     def __init__(self, gpio_config: dict, devices: dict):
         """
-        Constructor. Initializes the GPIO chip.
-        :param gpio_config:
-          dict
-            chipName
-              Name of the chip according to gpiod
-            lineAliases
-              dictionary mapping strings to line numbers
-              for adding human readable names to GPIO lines
-        """
-        t=load_translation()
-        
-        self._logger = MultiprocessingLogger.get_logger(__name__)
-
-        self.chips = {
-            "defaultChip": devices[gpio_config["defaultChipID"]],
+        :param gpio_config: {
+            "chipName":    # name of the chip in gpiod
+            "defaultChipID":
+            "additionalChips": [...],
         }
-        for chipID in gpio_config['additionalChips']:
-            self.chips[chipID] = devices[chipID]
-        
-        self.lineAliases = {}
+        :param devices: mapping chip_id -> device instance
+        """
+        t = load_translation()
 
-        for chipID, chip in self.chips.items(): 
-            for alias, line in chip.lineAliases.items():
-                if alias in self.lineAliases:
-                    self._logger.warning(t['chip-conflict'].format(alias, chipID, self.lineAliases[alias]))
-                    continue
-            self.lineAliases[alias] = chipID
-        self._logger.debug(self.lineAliases)
+        chipset_name = gpio_config['id']
+        super().__init__(chipset_name, {})
 
-    def setup(self, pin, pinType=LINE_REQ_DIR_OUT, outputValue=0):
+        # build chips dict in one go
+        default_id = gpio_config['defaultChipID']
+        additional = gpio_config.get('additionalChips', [])
+        self.chips: dict[str, GPIODChip] = (
+            {default_id: devices[default_id]}
+            | {cid: devices[cid] for cid in additional}
+        )
+
+        self.line_alias_to_chip: dict[str, str] = dict()
+        for chip_id, chip in self.chips.items():
+            for alias, line in chip.pin_aliases.items():
+                if alias not in self.line_alias_to_chip:
+                    self.line_alias_to_chip[alias] = chip_id
+                else:
+                    self.logger.warning(t['chip-conflict'].format(alias, chip_id, self.line_alias_to_chip[alias]))
+
+        self.logger.debug(f'Resolved line aliases: {self.line_alias_to_chip!r}')
+
+    def _get_chip_id(self, pin: str | int) -> str:
+        if isinstance(pin, int):
+            raise ValueError(f"{self.__class__.__name__}.setup 'pin' argument must must be a string Pin Alias")
+        chip_id = self.line_alias_to_chip.get(pin) or 'defaultChip'
+        return chip_id
+
+    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """
         Sets up pin for use, currently only output is supported.
 
         :param pin:
-            The pin to setup. Either a defined alias or the line number for the pin
+            The pin to output on. Must be a line alias.
         :param pinType:
             One of "output" or "input". Currently only "output" is supported
-        :param outputValue:
-            Either 0 or 1, the value to output on the pin
-        :return:
-            None
-        """
-        chipID = self.lineAliases[pin]
-        if chipID:
-            return self.chips[chipID].setup(pin, pinType, outputValue)
-        else:
-            return self.chips["defaultChip"].setup(pin, pinType, outputValue)
-
-    def output(self, pin, value):
-        """
-        Outputs a new value to specified pin
-
-        :param pin:
-            The pin to output on. Either a defined alias or the line number for the pin
         :param value:
             Either 0 or 1, the value to output on the pin
         :return:
             None
         """
-        chipID = self.lineAliases[pin]
-        if chipID:
-            return self.chips[chipID].output(pin, value)
-        else:
-            return self.chips["defaultChip"].output(pin, value)
+        chip_id = self._get_chip_id(pin)
+        return self.chips[chip_id].setup(pin, pinType, value)
+
+    def output(self, pin: str, value: int) -> None:
+        """
+        Outputs a new value to specified pin
+
+        :param pin:
+            The pin to output on. Must be a line alias.
+        :param value:
+            Either 0 or 1, the value to output on the pin
+        :return:
+            None
+        """
+        chip_id = self._get_chip_id(pin)
+        return self.chips[chip_id].output(pin, value)

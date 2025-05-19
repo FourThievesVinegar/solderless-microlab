@@ -1,5 +1,4 @@
 devices:
-
   - id: "grbl-primary"
     type: "grbl"
     implementation: "simulation"
@@ -8,10 +7,8 @@ devices:
     type: "gpiochip"
     # Which implementation to use for controlling GPIO pins
     # Supported values: gpiod
-    # gpiod: control using python3-libgpiod
+    # gpiod: control using python3 "gpiod" library
     implementation: "simulation"
-    # name of the chip according to gpiod
-    chipName: "gpiochip0"
     # Dictionary mapping strings to gpiod line numbers
     lineAliases:
       ID_SDA: 0

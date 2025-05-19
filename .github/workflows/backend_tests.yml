@@ -28,10 +28,21 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install python dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          sudo pip install -r requirements.txt
+          python -m pip install -r requirements.txt
 
+      - name: Create SUDO paths
+        run: |
+          sudo mkdir -p -m 777 /etc/microlab
+          sudo mkdir -p -m 777 /var/lib/microlab
+          sudo mkdir -p -m 777 /var/log/microlab
+          
       - name: Run tests
-        run: sudo pytest
+        run: |
+          # Verify we are using the right Python interpreter
+          which python
+          python --version
+          
+          python -m pytest

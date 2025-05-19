@@ -3,9 +3,10 @@ from hardware.grbl.base import GRBL
 class GRBLSimulation(GRBL):
     def __init__(self, grbl_config: dict):
         """
-        Constructor. GRBLSimulation does nothing so needs no configuration.
+        Constructor. GRBLSimulation does nothing so need no configuration.
         """
-        pass
+        super().__init__('simulation')
 
-    def grblWrite(self, command: str, retries=3):
+    def grblWrite(self, command: str, retries: int = 3) -> None:
+        """ :inheritdoc: """
         pass
