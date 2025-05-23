@@ -29,6 +29,7 @@ class SimulatedReagentDispenser(ReagentDispenser):
         return abs(volume)
 
     def getPumpSpeedLimits(self, pump_id: str) -> dict[str, float]:
+        """ :inheritdoc: """
         return {
             "minSpeed": self.min_speed,
             "maxSpeed": self.max_speed
