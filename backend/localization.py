@@ -1,10 +1,10 @@
 import json
 import os
 
-BASE_PATH = os.path.join(os.path.dirname(__file__), "locales")
-DEFAULT_LANG = "en"
+BASE_PATH = os.path.join(os.path.dirname(__file__), 'locales')
+DEFAULT_LANG = 'en'
 
-def load_translation(lang_code: str = DEFAULT_LANG, reload: bool = False) -> dict:
+def load_translation(lang_code: str = DEFAULT_LANG, reload: bool = False) -> dict[str, str]:
     """
     Load and cache translation JSON for a given language.
 
@@ -19,7 +19,7 @@ def load_translation(lang_code: str = DEFAULT_LANG, reload: bool = False) -> dic
         FileNotFoundError: if neither lang_code nor DEFAULT_LANG file exists.
     """
     # init cache dict on function
-    cache = getattr(load_translation, "_cache", {})
+    cache = getattr(load_translation, '_cache', {})
 
     # if not reloading and we already have it, return cached
     if not reload and lang_code in cache:
@@ -27,8 +27,8 @@ def load_translation(lang_code: str = DEFAULT_LANG, reload: bool = False) -> dic
 
     # build candidate file paths: preferred then fallback
     candidates = [
-        os.path.join(BASE_PATH, lang_code, "strings.json"),
-        os.path.join(BASE_PATH, DEFAULT_LANG, "strings.json"),
+        os.path.join(BASE_PATH, lang_code, 'strings.json'),
+        os.path.join(BASE_PATH, DEFAULT_LANG, 'strings.json'),
     ]
 
     for path in candidates:
