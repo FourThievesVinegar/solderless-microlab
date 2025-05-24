@@ -25,19 +25,22 @@ def load_translation(lang_code: str = DEFAULT_LANG, reload: bool = False) -> dic
     if not reload and lang_code in cache:
         return cache[lang_code]
 
-    # build candidate file paths: preferred then fallback
+    # build candidate file paths: default language, followed by a preferred language
     candidates = [
-        os.path.join(BASE_PATH, lang_code, 'strings.json'),
         os.path.join(BASE_PATH, DEFAULT_LANG, 'strings.json'),
+        os.path.join(BASE_PATH, lang_code, 'strings.json'),
     ]
 
+    cache[lang_code] = {}
     for path in candidates:
         if os.path.isfile(path):
             with open(path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-            cache[lang_code] = data
-            load_translation._cache = cache
-            return data
+                cache[lang_code].update(data)
 
-    # none found
-    raise FileNotFoundError(f"No translation file for '{lang_code}', and fallback '{DEFAULT_LANG}' not found.")
+    if cache[lang_code]:
+        load_translation._cache = cache
+        return cache[lang_code]
+    else:
+        # none found
+        raise FileNotFoundError(f"No translation file for '{lang_code}', and fallback '{DEFAULT_LANG}' not found.")
