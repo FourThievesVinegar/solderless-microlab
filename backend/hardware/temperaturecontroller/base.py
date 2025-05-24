@@ -1,39 +1,59 @@
+import logging
 from abc import ABC,abstractmethod
+from typing import Any, Optional
+
+from localization import load_translation
+from util.logger import MultiprocessingLogger
 
 
 class TempController(ABC):
+    def __init__(self, config: dict[str, Any], devices: dict[str, Any]):
+        self._logger: Optional[logging.Logger] = None
+        self.device_name = config['id']
+        self.t = load_translation()
 
-    @abstractmethod
-    def __init__(self, args, devices):
-        if "maxTemp" not in args:
-            raise KeyError("Device '{0}' missing required parameter maxTemp".format(args['id']))
-        if "minTemp" not in args:
-            raise KeyError("Device '{0}' missing required parameter minTemp".format(args['id']))
-        if "pidConfig" in args:
-            pidConfig = args["pidConfig"]
-            if not isinstance(pidConfig, dict):
-                raise TypeError("Device '{0}' parameter pidConfig has invalid type, must be a dictionary containing numeric values for 'P','I', and 'D'.".format(args['id']))
-            if "P" not in pidConfig:
-                raise KeyError("Device '{0}' missing required parameter 'P' in pidConfig".format(args['id']))
-            if "I" not in pidConfig:
-                raise KeyError("Device '{0}' missing required parameter 'I' in pidConfig".format(args['id']))
-            if "D" not in pidConfig:
-                raise KeyError("Device '{0}' missing required parameter 'D' in pidConfig".format(args['id']))
-            
-            if "proportionalOnMeasurement" not in pidConfig:
-                pidConfig["proportionalOnMeasurement"] = False
-            if "differentialOnMeasurement" not in pidConfig:
-                pidConfig["differentialOnMeasurement"] = True
-            if "minOutput" not in pidConfig:
-                pidConfig["minOutput"] = -100
-            if "maxOutput" not in pidConfig:
-                pidConfig["maxOutput"] = 100
-            if "dutyCycleLength" not in pidConfig:
-                pidConfig["dutyCycleLength"] = 10
+        # ensure top-level required params
+        missing = [k for k in ('maxTemp', 'minTemp') if k not in config]
+        if missing:
+            raise KeyError(f"Device '{self.device_name}' missing required parameter(s): {', '.join(missing)}")
 
-            self.pidConfig = args["pidConfig"]
-        else:
+        # handle optional pidConfig
+        pid = config.get('pidConfig')
+        if pid is None:
             self.pidConfig = None
+        else:
+            if not isinstance(pid, dict):
+                raise TypeError(
+                    f"Device '{self.device_name}' parameter pidConfig has invalid type, "
+                    "must be a dict with numeric 'P','I','D'"
+                )
+    
+            # required PID keys
+            required_pid = [k for k in ('P', 'I', 'D') if k not in pid]
+            if required_pid:
+                raise KeyError(
+                    f"Device '{self.device_name}' missing required parameter(s) in pidConfig: "
+                    f"{', '.join(required_pid)}"
+                )
+    
+            # defaults for the rest
+            defaults = {
+                'proportionalOnMeasurement': False,
+                'differentialOnMeasurement': True,
+                'minOutput': -100,
+                'maxOutput': 100,
+                'dutyCycleLength': 10,
+            }
+            for key, default in defaults.items():
+                pid.setdefault(key, default)
+    
+            self.pidConfig = pid
+
+    @property
+    def logger(self) -> logging.Logger:
+        if not self._logger:
+            self._logger = MultiprocessingLogger.get_logger(type(self).__name__)
+        return self._logger
 
     @abstractmethod
     def turnHeaterOn(self) -> None:
@@ -123,7 +143,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getPIDConfig(self) -> dict:
+    def getPIDConfig(self) -> dict[str, Any]:
         """
         Read the temperature controller PID configuration
 
