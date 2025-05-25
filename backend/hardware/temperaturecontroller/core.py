@@ -9,8 +9,11 @@ from hardware.temperaturecontroller.simulation import SimulatedTempController
 
 def createTemperatureController(tempControllerConfig: dict, devices: dict) -> TempController:
     tempControllerType = tempControllerConfig['implementation']
-    if tempControllerType == "basic":
+    if tempControllerType == 'basic':
         return BasicTempController(tempControllerConfig, devices)
-    elif tempControllerType == "simulation":
+    elif tempControllerType == 'simulation':
         return SimulatedTempController(tempControllerConfig)
-    raise Exception("Unsupported tempControllerType")
+    raise ValueError(
+        'Unsupported device: id={config[id]} '
+        'type={config[type]} implementation={config[implementation]}'.format(config=tempControllerConfig)
+    )

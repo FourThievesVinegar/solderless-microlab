@@ -1,3 +1,5 @@
+from typing import Optional
+
 from hardware.thermometer.base import TempSensor
 
 
@@ -10,9 +12,8 @@ class SerialTempSensorSimulation(TempSensor):
             serialDevice
               A string with the device read from
         """
-        self.tempSer = 0
-        if 'temp' in thermometer_config:
-            self.temp = thermometer_config['temp']
+        super().__init__(thermometer_config['id'])
+        self.temp: Optional[float] = thermometer_config.get('temp')
 
     def getTemp(self) -> float:
         """
@@ -25,13 +26,5 @@ class SerialTempSensorSimulation(TempSensor):
         :return:
             Temperature in Celsius
         """
-        if self.temp:
-            return self.temp
-        lastLine = '+29.06'
-
-        # Commenting the below line out for the time being, no 'start' or 'end' variables are defined so this will throw
-        # an exception. Replacing it with just returning a float cast of 'lastLine' as that looks like a valid value
-        # temperature = float(lastLine[start:end])
-
-        temperature = float(lastLine[1:])  # Trimming off the '+' before casting
-        return temperature
+        reading = self.temp if self.temp is not None else +29.06
+        return float(reading)

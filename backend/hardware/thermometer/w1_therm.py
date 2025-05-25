@@ -9,9 +9,11 @@ class W1TempSensor(TempSensor):
 
     def __init__(self):
         """
-        Constructor. Initializes the sensor.
+        Initializes the W1ThermSensor.
         """
-        self.lastTemp = 0
+        super().__init__('W1ThermSensor')
+
+        self.lastTemp: float = 0.0
         self.sensor = W1ThermSensor()
         self.nextTempReadingTime = datetime.now()
 
@@ -28,6 +30,6 @@ class W1TempSensor(TempSensor):
             try:
                 self.lastTemp = self.sensor.get_temperature()
                 self.nextTempReadingTime = datetime.now() + timedelta(seconds=1)
-            except SensorNotReadyError:
-                pass
+            except SensorNotReadyError as e:
+                self.logger.debug(f'SensorNotReadyError for {self.device_name}: ', e)
         return self.lastTemp
