@@ -103,16 +103,17 @@ devices:
     grblID: "grbl-primary"
     # Configuration for the peristaltic pump motors
     peristalticPumpsConfig:
+      # F: max feed rate in mm/min
       F: 175
       X:
         # scaling factor based on initial calibration
-        mmPerml: 0.5555555
+        mmPerMl: 0.5555555
       Y:
         # scaling factor based on initial calibration
-        mmPerml: 0.5555555
+        mmPerMl: 0.5555555
       Z:
         # scaling factor based on initial calibration
-        mmPerml: 0.5555555
+        mmPerMl: 0.5555555
 
   - id: "reagentDispenser-syringepump-example"
     type: "reagentDispenser"
@@ -131,21 +132,21 @@ devices:
         stepsPerRev: 200
         # Number of mm of movement needed to dispense 1 ml of fluid,
         # this is the length of the syringe divided by its fluid capacity
-        mmPerml: 3.5
+        mmPerMl: 3.5
         # Maximum speed the motor should run in mm/min
-        maxmmPerMin: 240
+        maxMmPerMin: 240
       Y:
         # These are all the same as documented above but for the Y axis
         mmPerRev: 0.8
         stepsPerRev: 200
-        mmPerml: 3.5
-        maxmmPerMin: 240
+        mmPerMl: 3.5
+        maxMmPerMin: 240
       Z:
         # These are all the same as documented above but for the Z axis
         mmPerRev: 0.8
         stepsPerRev: 200
-        mmPerml: 3.5
-        maxmmPerMin: 240
+        mmPerMl: 3.5
+        maxMmPerMin: 240
 
   - id: "reagentDispenser-simulation-example"
     type: "reagentDispenser"

@@ -20,9 +20,8 @@ class GPIODChip(GPIOChip):
             - lineAliases: optional dict mapping alias strings to line numbers
               for adding human-readable names to GPIO lines
         """
-        chip_name = gpio_config['chipName']
         pin_aliases = dict(gpio_config.get('lineAliases', {}))
-        super().__init__(chip_name, pin_aliases)
+        super().__init__(gpio_config['chipName'], pin_aliases)
         self.logger.debug(f'Configured lineAliases: {pin_aliases!r}')
 
         # track requested offsets and initial values
@@ -30,7 +29,7 @@ class GPIODChip(GPIOChip):
         self.output_values: dict[int, Value] = {}
 
         # create a persistent Chip/LineRequest
-        self.chip = gpiod.Chip(self.chip_name)
+        self.device = gpiod.Chip(self.device_name)
         self.request: Optional[LineRequest] = None
 
     def close(self) -> None:
@@ -71,7 +70,7 @@ class GPIODChip(GPIOChip):
             # replace (or create) the LineRequest
             if self.request:
                 self.request.release()
-            self.request = self.chip.request_lines(
+            self.request = self.device.request_lines(
                 config=settings,
                 consumer='microlab'
             )

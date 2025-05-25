@@ -2,20 +2,13 @@ from hardware.stirring.base import Stirrer
 
 
 class SimulatedStirrer(Stirrer):
-    def turnStirrerOn(self) -> None:
-        """
-        Start stirrer.
+    def __init__(self) -> None:
+        super().__init__('simulation')
 
-        :return:
-            None
-        """
+    def turnStirrerOn(self) -> None:
+        """ :inheritdoc: """
         return None
 
     def turnStirrerOff(self) -> None:
-        """
-        Stop stirrer.
-
-        :return:
-            None
-        """
+        """ :inheritdoc: """
         return None

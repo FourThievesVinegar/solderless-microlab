@@ -9,8 +9,11 @@ from hardware.stirring.simulation import SimulatedStirrer
 
 def createStirrer(stirrerConfig: dict, devices: dict) -> Stirrer:
     stirrerType = stirrerConfig['implementation']
-    if stirrerType == "gpio_stirrer":
+    if stirrerType == 'gpio_stirrer':
         return GPIOStirrer(stirrerConfig, devices)
-    elif stirrerType == "simulation":
+    elif stirrerType == 'simulation':
         return SimulatedStirrer()
-    raise Exception("Unsupported stirrerType")
+    raise ValueError(
+        'Unsupported device: id={config[id]} '
+        'type={config[type]} implementation={config[implementation]}'.format(config=stirrerConfig)
+    )

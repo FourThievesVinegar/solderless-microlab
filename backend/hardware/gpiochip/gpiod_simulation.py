@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from hardware.gpiochip.base import LINE_REQ_DIR_OUT, GPIOChip
 
 
@@ -10,15 +12,14 @@ class GPIODChipSimulation(GPIOChip):
             "lineAliases": {alias_str: line_number, …}  # optional
         }
         """
-        chip_name = 'simulation'
         pin_aliases = dict(gpio_config.get('lineAliases', {}))
-        super().__init__(chip_name, pin_aliases)
+        super().__init__('simulation', pin_aliases)
         self.logger.debug(f'Configured lineAliases: {pin_aliases!r}')
 
         self.output_offsets = []
         self.output_values = []
         # self.output_lines = []
-        self.chip = None  # no real chip in simulation
+        self.device = None  # no real chip in simulation
 
     def __output(self):
         """
@@ -26,7 +27,7 @@ class GPIODChipSimulation(GPIOChip):
         """
         pass
 
-    def setup(self, pin: str | int, pinType: str = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """ :inheritdoc: """
         pin_number = self._get_pin(pin)
 
