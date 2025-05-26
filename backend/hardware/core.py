@@ -33,12 +33,10 @@ class MicroLabHardware:
         Constructor. Initializes the hardware.
         """
 
-        self.startTime = None
+        self.startTime: float = time.monotonic()
         self.devices = {}
         self.state = MicroLabHardwareState.STARTING
         self.error = None
-
-        self.startTime = time.monotonic()
         self.loadHardware(deviceDefinition)
 
         if self._logger is None:
@@ -56,7 +54,7 @@ class MicroLabHardware:
             cls._logger = cls._get_logger()
 
         if not cls._microlabHardware:
-            cls._logger.info("")
+            cls._logger.info('')
             cls._logger.info(t['starting-hardware-controller'])
             cls._logger.info(t['loading-hardware-configuration'])
 
@@ -108,7 +106,7 @@ class MicroLabHardware:
         :return:
         The number of seconds since this package was started multiplied by config.hardwareSpeedup.
         """
-        elapsed = time.monotonic() - self.startTime
+        elapsed: float = time.monotonic() - self.startTime
         if hasattr(config, 'hardwareSpeedup'):
             speed = config.hardwareSpeedup
             if speed is not None:
@@ -253,9 +251,9 @@ class MicroLabHardware:
         :param volume:
             The number ml to dispense
         :param duration:
-            optional - How long the dispense should take in seconds
+            optional - How long the dispensation should last in seconds
         :return:
-            Number indicating how long the dispense should take to complete
+            a Float Number indicating duration of the dispensation
         """
         return self.reagentDispenser.dispense(pumpId, volume, duration)
 
