@@ -1,35 +1,43 @@
+import logging
 from abc import ABC, abstractmethod
+from typing import Literal, Optional
+
+from localization import load_translation
+from util.logger import MultiprocessingLogger
 
 
 class ReagentDispenser(ABC):
+    def __init__(self, device_name: str) -> None:
+        self._logger: Optional[logging.Logger] = None
+        self.device_name = device_name
+        self.t = load_translation()
+
+    @property
+    def logger(self) -> logging.Logger:
+        if not self._logger:
+            self._logger = MultiprocessingLogger.get_logger(type(self).__name__)
+        return self._logger
+
     @abstractmethod
-    def dispense(self, pumpId: str, volume: int, duration: int = None) -> float:
+    def dispense(
+        self, pump_id: Literal['X', 'Y', 'Z'], volume: float, duration: Optional[float] = None
+    ) -> float:
         """
         Dispense reagent.
 
-        :param pumpId:
-            The pump id. One of 'X' or 'Y' or 'Z'
-        :param volume:
-            The number ml to dispense
-        :param duration:
-            optional - How long the dispense should take in seconds
-        :return:
-            Number indicating how long the dispense should take to complete
+        :param pump_id: The pump id. One of 'X', 'Y', or 'Z'.
+        :param volume: The number of ml to dispense.
+        :param duration: Optional - Desired dispense duration in seconds.
+        :return: Actual dispense duration in seconds.
         """
         pass
 
     @abstractmethod
-    def getPumpSpeedLimits(self, pumpId: str) -> dict:
+    def getPumpSpeedLimits(self, pump_id: Literal['X', 'Y', 'Z']) -> dict[str, float]:
         """
-        Get maximum and minimum speed of specified pump.
+        Get speed limits for the specified pump.
 
-        :param pumpId:
-            The pump id. One of 'X' or 'Y' or 'Z'
-        :return:
-            dict
-                minSpeed
-                    Minimum speed the pump can dispense in ml/s
-                maxSpeed
-                    Maximum speed the pump can dispense in ml/s
+        :param pump_id: The pump id. One of 'X', 'Y', or 'Z'.
+        :return: dict with 'minSpeed' and 'maxSpeed' in ml/s.
         """
         pass

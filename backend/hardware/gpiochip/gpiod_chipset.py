@@ -4,7 +4,6 @@ from typing import Literal
 
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 from hardware.gpiochip.gpiod_chip import GPIODChip
-from localization import load_translation
 
 
 class GPIODChipset(GPIOChip):
@@ -17,10 +16,7 @@ class GPIODChipset(GPIOChip):
         }
         :param devices: mapping chip_id -> device instance
         """
-        t = load_translation()
-
-        chipset_name = gpio_config['id']
-        super().__init__(chipset_name, {})
+        super().__init__(gpio_config['id'], {})
 
         # build chips dict in one go
         default_id = gpio_config['defaultChipID']
@@ -36,7 +32,7 @@ class GPIODChipset(GPIOChip):
                 if alias not in self.line_alias_to_chip:
                     self.line_alias_to_chip[alias] = chip_id
                 else:
-                    self.logger.warning(t['chip-conflict'].format(alias, chip_id, self.line_alias_to_chip[alias]))
+                    self.logger.warning(self.t['chip-conflict'].format(alias, chip_id, self.line_alias_to_chip[alias]))
 
         self.logger.debug(f'Resolved line aliases: {self.line_alias_to_chip!r}')
 

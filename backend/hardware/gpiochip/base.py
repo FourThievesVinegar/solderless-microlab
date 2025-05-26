@@ -4,6 +4,7 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Optional, Literal
 
+from localization import load_translation
 from util.logger import MultiprocessingLogger
 
 LINE_REQ_DIR_OUT = 'output'
@@ -11,10 +12,11 @@ LINE_REQ_DIR_IN = 'input'
 
 
 class GPIOChip(ABC):
-    def __init__(self, chip_name: str, pin_aliases: dict[str, int]):
+    def __init__(self, device_name: str, pin_aliases: dict[str, int]):
         self._logger: Optional[logging.Logger] = None
-        self.chip_name = chip_name
+        self.device_name = device_name
         self.pin_aliases = pin_aliases
+        self.t = load_translation()
 
     @property
     def logger(self) -> logging.Logger:

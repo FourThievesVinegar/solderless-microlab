@@ -2,13 +2,15 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Optional
 
+from localization import load_translation
 from util.logger import MultiprocessingLogger
 
 
 class GRBL(ABC):
-    def __init__(self, chip_name: str):
+    def __init__(self, device_name: str):
         self._logger: Optional[logging.Logger] = None
-        self.chip_name = chip_name
+        self.device_name = device_name
+        self.t = load_translation()
 
     @property
     def logger(self) -> logging.Logger:
