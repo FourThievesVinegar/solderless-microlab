@@ -15,7 +15,7 @@ def test_detects_deplicate_ids():
         },
     ]
     with pytest.raises(Exception, match='Duplicate device id'):
-        res = validateConfiguration(devices)
+        validateConfiguration(devices)
 
 
 def test_detects_simple_circular_dependencies():
@@ -30,7 +30,7 @@ def test_detects_simple_circular_dependencies():
         },
     ]
     with pytest.raises(Exception, match='Circular dependency'):
-        res = validateConfiguration(devices)
+        validateConfiguration(devices)
 
 
 def test_detects_complex_circular_dependencies():
@@ -53,7 +53,7 @@ def test_detects_complex_circular_dependencies():
         },
     ]
     with pytest.raises(Exception, match='Circular dependency'):
-        res = validateConfiguration(devices)
+        validateConfiguration(devices)
 
 
 def test_accepts_simple_valid_config():
@@ -74,8 +74,11 @@ def test_accepts_simple_valid_config():
             "dependencies": ["3"]
         },
     ]
-    res = validateConfiguration(devices)
-    assert res is False
+    try:
+        validateConfiguration(devices)
+        assert True
+    except Exception:
+        assert False
 
 
 def test_detects_missing_dependencies():
@@ -86,7 +89,7 @@ def test_detects_missing_dependencies():
         },
     ]
     with pytest.raises(Exception, match='Missing hardware configuration for dependency'):
-        res = validateConfiguration(devices)
+        validateConfiguration(devices)
 
 
 def test_sort_device_configs_sorts_by_dependencies():

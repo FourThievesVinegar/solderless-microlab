@@ -4,9 +4,8 @@ disk and/or passed in as environment variables. Import and use this file with
 "from config import microlabConfig as config"
 Configuration is stored on disk at '/etc/microlab/microlab.ini'
 """
-import os
 import logging
-from os import environ, makedirs, path
+from os import environ, makedirs, path, listdir
 from configobj import ConfigObj, flatten_errors
 from configobj.validate import Validator 
 import shutil
@@ -19,11 +18,12 @@ class MicrolabConfig:
     changes from disk.
     """
     def __init__(self):
+        # FIXME: read config_file_name from .yaml/.ini file
         config_file_name = '/etc/microlab/microlab.ini'
-
         makedirs(path.dirname(config_file_name), exist_ok=True)
 
-        self.config = ConfigObj(config_file_name, configspec="defaultconfig.ini")
+        # FIXME: read defaultconfig.ini location from .yaml/.ini file
+        self.config = ConfigObj(config_file_name, configspec='defaultconfig.ini')
 
     def validate_config(self) -> None:
 
@@ -48,83 +48,81 @@ class MicrolabConfig:
                 if error is False:
                     error = 'Missing value or section.'
                 logging.warning(
-                    "Configuration error at {0}: '{1}', falling back to default value '{2}'."
-                    .format(section_string, error, default))
+                    f"Configuration error at {section_string}: '{error}', falling back to default value '{default}'."
+                )
 
     def reloadConfig(self) -> None:
-        """
-        Reloads microlab configuration from disk.
-        """
+        """ Reloads microlab configuration from disk. """
         self.config.reload()
 
     ## GENERAL CONFIGURATION ##
     @property
     def dataDirectory(self) -> str:
-        return self.config["GENERAL"]["dataDirectory"]
+        return self.config['GENERAL']['dataDirectory']
 
     @property
     def recipesDirectory(self) -> str:
-        return '{0}/recipes/'.format(self.dataDirectory)
+        return path.join(self.dataDirectory, 'recipes')
 
     @property
     def logDirectory(self) -> str:
-        return self.config["GENERAL"]["logDirectory"]
+        return self.config['GENERAL']['logDirectory']
         
     @property
     def logFileMaxBytes(self) -> int:
-        return self.config["GENERAL"]["logFileMaxBytes"]
+        return self.config['GENERAL']['logFileMaxBytes']
 
     @property
     def logFileBackupCount(self) -> int:
-        return self.config["GENERAL"]["logFileBackupCount"]
+        return self.config['GENERAL']['logFileBackupCount']
 
     @property
     def logToStderr(self) -> bool:
-        return self.config["GENERAL"]["logToStderr"]
+        return self.config['GENERAL']['logToStderr']
 
     @property
     def logLevel(self) -> str:
-        return self.config["GENERAL"]["logLevel"]
+        return self.config['GENERAL']['logLevel']
 
     ## FLASK CONFIGURATION ##
     @property
     def apiPort(self) -> str:
-        return environ.get("API_PORT", self.config["FLASK"]["apiPort"])  
+        return environ.get('API_PORT', self.config['FLASK']['apiPort'])  
 
     ## HARDWARE CONFIGURATION ##
     @property
     def hardwareSpeedup(self) -> int:
         # Speeds up every task for testing hardware. Should be set to 1 for actual use
-        return int(environ.get("HARDWARE_SPEEDUP", "1"))
+        return int(environ.get('HARDWARE_SPEEDUP', '1'))
 
     @property
     def controllerHardware(self) -> str:
-        return self.config["HARDWARE"]["controllerHardware"]
+        return self.config['HARDWARE']['controllerHardware']
 
     @controllerHardware.setter
     def controllerHardware(self, value) -> None:
-        self.config["HARDWARE"]["controllerHardware"] = value
+        self.config['HARDWARE']['controllerHardware'] = value
         self.config.write()
 
     @property
     def hardwareDirectory(self) -> str:
-        return '{0}/hardware/'.format(self.dataDirectory)
+        return path.join(self.dataDirectory, 'hardware')
 
     @property
     def controllerHardwareDirectory(self) -> str:
-        return '{0}/controllerhardware/'.format(self.hardwareDirectory)
+        return path.join(self.hardwareDirectory, 'controllerhardware')
 
     @property
     def labHardwareDirectory(self) -> str:
-        return '{0}/labhardware/'.format(self.hardwareDirectory)
+        return path.join(self.hardwareDirectory, 'labhardware')
 
     @property
     def labHardware(self) -> str:
-        return self.config["HARDWARE"]["labHardware"]
+        return self.config['HARDWARE']['labHardware']
 
     @labHardware.setter
     def labHardware(self, value) -> None:
-        self.config["HARDWARE"]["labHardware"] = value
+        self.config['HARDWARE']['labHardware'] = value
         self.config.write()
 
 
@@ -132,41 +130,45 @@ microlabConfig = MicrolabConfig()
 
 
 def initialSetup() -> None:
-    dataDirectory = microlabConfig.dataDirectory
-    recipesDirectory = microlabConfig.recipesDirectory
-    hardwareDirectory = microlabConfig.hardwareDirectory
-    controllerHardwareDirectory = microlabConfig.controllerHardwareDirectory
-    labHardwareDirectory = microlabConfig.labHardwareDirectory
+    fqfp_data_dir = microlabConfig.dataDirectory
+    fqfp_recipes = microlabConfig.recipesDirectory
+    fqfp_hardware = microlabConfig.hardwareDirectory
+    fqfp_hardware_controller = microlabConfig.controllerHardwareDirectory
+    fqfp_hardware_lab = microlabConfig.labHardwareDirectory
+
     # ensure data directories exist
-    makedirs(path.dirname(dataDirectory), exist_ok=True)
-    makedirs(path.dirname(recipesDirectory), exist_ok=True)
-    makedirs(path.dirname(hardwareDirectory), exist_ok=True)
-    makedirs(path.dirname(controllerHardwareDirectory), exist_ok=True)
-    makedirs(path.dirname(labHardwareDirectory), exist_ok=True)
+    makedirs(path.dirname(fqfp_data_dir), exist_ok=True)
+    makedirs(path.dirname(fqfp_recipes), exist_ok=True)
+    makedirs(path.dirname(fqfp_hardware), exist_ok=True)
+    makedirs(path.dirname(fqfp_hardware_controller), exist_ok=True)
+    makedirs(path.dirname(fqfp_hardware_lab), exist_ok=True)
   
     # ensure log directory exists
-    makedirs(path.dirname(microlabConfig.logDirectory + "/"), exist_ok=True)
+    makedirs(path.dirname(microlabConfig.logDirectory + '/'), exist_ok=True)
 
-    # copy builtin controller configurations to data directory, 
+    # copy builtin controller configurations to data directory,
     # overwriting old configurations if they exist
-    defaultControllerConfigsDir = "./data/hardware/controllerhardware/"
-    for controllerhardware in os.listdir(defaultControllerConfigsDir):
-        src = "{0}/{1}".format(defaultControllerConfigsDir, controllerhardware)
-        dest = "{0}/{1}".format(controllerHardwareDirectory, controllerhardware)
+    # FIXME: read default_hardware_controller from .yaml/.ini file
+    default_hardware_controller = './data/hardware/controllerhardware/'
+    for controllerhardware in listdir(default_hardware_controller):
+        src = path.join(default_hardware_controller, controllerhardware)
+        dest = path.join(fqfp_hardware_controller, controllerhardware)
         shutil.copy2(src, dest)
 
     # copy builtin lab configurations to data directory,
     # overwriting old configurations if they exist
-    defaultLabConfigsDir = "./data/hardware/labhardware/"
-    for labhardware in os.listdir(defaultLabConfigsDir):
-        src = "{0}/{1}".format(defaultLabConfigsDir, labhardware)
-        dest = "{0}/{1}".format(labHardwareDirectory, labhardware)
+    # FIXME: read default_hardware_lab from .yaml/.ini file
+    default_hardware_lab = './data/hardware/labhardware/'
+    for labhardware in listdir(default_hardware_lab):
+        src = path.join(default_hardware_lab, labhardware)
+        dest = path.join(fqfp_hardware_lab, labhardware)
         shutil.copy2(src, dest)
 
     # copy builtin recipes to data directory, 
     # overwriting old recipes if they exist
-    defaultRecipesDir = "./data/recipes/"
-    for recipe in os.listdir(defaultRecipesDir):
-        src = "{0}/{1}".format(defaultRecipesDir, recipe)
-        dest = "{0}/{1}".format(recipesDirectory, recipe)
+    # FIXME: read default_recipes from .yaml/.ini file
+    default_recipes = './data/recipes/'
+    for recipe in listdir(default_recipes):
+        src = path.join(default_recipes, recipe)
+        dest = path.join(fqfp_recipes, recipe)
         shutil.copy2(src, dest)
