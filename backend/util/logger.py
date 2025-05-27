@@ -1,26 +1,25 @@
 import logging
 import logging.handlers
-import os
 import queue
 import sys
 import traceback
+from multiprocessing import Queue
+from os import path, makedirs
+from typing import Union, Optional
 
 import config
-
-from typing import Union
-from multiprocessing import Queue
+from localization import load_translation
 from util.logFormatter import MultiLineFormatter
 
-from localization import load_translation
 
 class MultiprocessingLogger:
+    _logging_queue: Optional[Queue] = None
 
-    _logging_queue = None
-    _configured_loggers = {}
+    _configured_loggers: dict[str, logging.Logger] = {}
 
-    _processing_logger = None
+    _processing_logger: Optional[logging.Logger] = None
 
-    _is_main_process = False
+    _is_main_process: bool = False
 
     @classmethod
     def initialize_logger(cls, logging_queue: Union[Queue, None] = None) -> None:
@@ -65,19 +64,18 @@ class MultiprocessingLogger:
         if logger_name in cls._configured_loggers:
             return logging.getLogger(logger_name)
 
-        formatter = MultiLineFormatter(fmt="%(asctime)s %(name)-10s [%(levelname)s]: %(message)s")
+        formatter = MultiLineFormatter(fmt='%(asctime)s %(name)-10s [%(levelname)s]: %(message)s')
 
         log_handlers = []
-        
-        log_directory = config.microlabConfig.logDirectory        
-        if not os.path.exists(log_directory):
-            os.makedirs(log_directory)
+
+        log_directory = config.microlabConfig.logDirectory
+        makedirs(log_directory, exist_ok=True)
 
         rotating_file_handler = logging.handlers.RotatingFileHandler(
-                "{0}/microlab.log".format(log_directory),
-                maxBytes=config.microlabConfig.logFileMaxBytes,
-                backupCount=config.microlabConfig.logFileBackupCount,
-            )
+            path.join(log_directory, 'microlab.log'),
+            maxBytes=config.microlabConfig.logFileMaxBytes,
+            backupCount=config.microlabConfig.logFileBackupCount,
+        )
         rotating_file_handler.setFormatter(formatter)
         log_handlers.append(rotating_file_handler)
 
@@ -108,8 +106,8 @@ class MultiprocessingLogger:
 
     @classmethod
     def process_logs(cls):
-        t=load_translation()
-        
+        t = load_translation()
+
         try:
             record = cls._logging_queue.get_nowait()
             logger = cls._get_processing_logger(record.name)

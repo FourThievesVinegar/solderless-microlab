@@ -11,7 +11,7 @@ import config
 from multiprocessing import Process, Queue, set_start_method
 
 from api.core import run_flask
-from microlab.core import startMicrolabProcess
+from microlab.core import start_microlab_process
 from util.logger import MultiprocessingLogger
 from config import microlabConfig
 
@@ -92,7 +92,7 @@ class BackendManager:
         t = load_translation()
         
         self._microlab_manager_process = Process(
-            target=startMicrolabProcess, args=(self._q1, self._q2, MultiprocessingLogger.get_logging_queue()), name="microlab"
+            target=start_microlab_process, args=(self._q1, self._q2, MultiprocessingLogger.get_logging_queue()), name='microlab'
         )
 
         self._processes.append(self._microlab_manager_process)
@@ -104,7 +104,7 @@ class BackendManager:
     def _start_server(self) -> None:
         t = load_translation()
         
-        self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1, MultiprocessingLogger.get_logging_queue()), name="flask", daemon=True)
+        self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1, MultiprocessingLogger.get_logging_queue()), name='flask', daemon=True)
         self._processes.append(self._flaskProcess)
         self._logger.debug('Starting the server process')
         self._flaskProcess.start()
@@ -133,6 +133,6 @@ def main() -> None:
     backend_manager.run()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     set_start_method('spawn')
     main()

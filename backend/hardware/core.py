@@ -19,9 +19,9 @@ from util.logger import MultiprocessingLogger
 
 
 class MicroLabHardwareState(Enum):
-    STARTING = "STARTING"
-    INITIALIZED = "INITIALIZED"
-    FAILED_TO_START = "FAILED_TO_START"
+    STARTING = 'STARTING'
+    INITIALIZED = 'INITIALIZED'
+    FAILED_TO_START = 'FAILED_TO_START'
 
 
 class MicroLabHardware:

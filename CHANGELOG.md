@@ -12,6 +12,9 @@
 - Added alphabetical navigation of the recipe list. (#273)
 - Extra validation for hardware config files. Hardware components are now automatically sorted by dependencies to prevent them from loading out of order. (#269)
 - Syringe pump and peristaltic pump implementations no longer directly open a serial connection to grbl, and config instead now references a grbl device. (#282)
+- Upgraded `gpiod` library and corresponding `gpiod_chip` client to v2.3.0 (#298)
+- Refactored code for Pythonic compliance: added type hints, enhanced readability, and fixed minor type-checking bugs. 
+- Performance improvements, such as caching for `localization.load_translation` function or replacing `time.sleep` with synchronization primitives.
 
 ## [0.6.0]
 
