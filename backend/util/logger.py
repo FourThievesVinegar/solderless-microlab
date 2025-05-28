@@ -13,6 +13,8 @@ from util.logFormatter import MultiLineFormatter
 
 
 class MultiprocessingLogger:
+    _t: dict[str, str] = load_translation()
+
     _logging_queue: Optional[Queue] = None
 
     _configured_loggers: dict[str, logging.Logger] = {}
@@ -106,8 +108,6 @@ class MultiprocessingLogger:
 
     @classmethod
     def process_logs(cls):
-        t = load_translation()
-
         try:
             record = cls._logging_queue.get_nowait()
             logger = cls._get_processing_logger(record.name)
@@ -115,8 +115,8 @@ class MultiprocessingLogger:
         except queue.Empty:
             return
         except ValueError as e:
-            print(t['error-value'].format(e))
+            print(cls._t['error-value'].format(e))
             return
         except Exception as e:
-            sys.stderr.write(t['log-exception'].format(e))
+            sys.stderr.write(cls._t['log-exception'].format(e))
             sys.stderr.write(traceback.format_exc())

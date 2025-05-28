@@ -1,138 +1,132 @@
 """
-Starts the two microlab processes, one for the hardware, and the other the
-flask backend API.
-Starts the flask application on the configured port (default 8081)
-Look in api.routes for the actual api code
+Starts the two microlab processes (hardware & Flask API),
+manages clean startup/shutdown, and processes logs.
 """
 import signal
+from multiprocessing import Process, Queue, set_start_method
+from typing import List, Optional
+from types import FrameType
 
 import config
-
-from multiprocessing import Process, Queue, set_start_method
-
-from api.core import run_flask
+from config import microlabConfig
+from api.core import start_flask_process
 from microlab.core import start_microlab_process
 from util.logger import MultiprocessingLogger
-from config import microlabConfig
-
 from localization import load_translation
+
+# Sentinel to signal worker shutdown
+SHUTDOWN_SIGNAL = None
 
 
 class BackendManager:
+    def __init__(self) -> None:
+        self.t = load_translation()
 
-    def __init__(self):
-        self._q1 = Queue()
-        self._q2 = Queue()
+        # Prepare logger (initialized in *main*)
+        self.logger = MultiprocessingLogger.get_logger(__name__)
 
-        self._processes = []
-        self._queues = []
+        # Command & response queues
+        self.cmd_queue: Queue = Queue()
+        self.resp_queue: Queue = Queue()
 
-        # The MultiprocessingLogger.initialize_logger call needs to be out of the global scope
-        # as it seems if anything that is done that creates a process safe object (in this case a Queue)
-        # it seem to 'lock in' the type of process creation and calls to set_start_method('spawn') will
-        # throw an exception
+        # Keep track of child processes
+        self.processes: List[Process] = []
 
-        # Additionally the initialize_logger call without any arguments should only happen in the process that
-        # is creating other processes
-        MultiprocessingLogger.initialize_logger()
-        self._logger = MultiprocessingLogger.get_logger(__name__)
-
-    def _are_processes_alive(self) -> bool:
-        return any([process.is_alive() for process in self._processes])
-
-    def _cleanup_queues(self) -> None:
-        t = load_translation()
-        
-        self._logger.debug(t['cleaning-queues'])
-
-        self._q1.close()
-        self._q2.close()
-
-        self._q1.join_thread()
-        self._q2.join_thread()
-
-        self._logger.debug(t['cleaned-queues'])
-
-    def _cleanup_processes(self) -> None:
-        t = load_translation()
-        
-        self._logger.debug(t['cleaning-processes'])
-
-        while self._are_processes_alive():
-            for proc in self._processes:
-                try:
-                    self._q1.get_nowait()
-                except Exception:
-                    pass
-
-                try:
-                    self._q2.get_nowait()
-                except Exception:
-                    pass
-
-                if proc.is_alive():
-                    self._logger.debug(f'Attempting to join proc: {proc.pid}')
-                    proc.join(timeout=1)
-
-        self._logger.debug(t['cleaned-processes'])
-
-    def _cleanup_everything(self) -> None:
-        self._cleanup_processes()
-        self._cleanup_queues()
-
-    def _handle_exit_signals(self, signum, frame) -> None:
-        t = load_translation()
-        
-        self._logger.debug(t['begin-exit'])
-        self._cleanup_everything()
-        self._logger.debug(t['completed-exit'])
-        self._logger.debug(t['end-exit'])
+    def _register_signals(self) -> None:
+        signal.signal(signal.SIGINT, self._shutdown_signal_handler)
+        signal.signal(signal.SIGTERM, self._shutdown_signal_handler)
 
     def _start_microlab(self) -> None:
-        t = load_translation()
-        
-        self._microlab_manager_process = Process(
-            target=start_microlab_process, args=(self._q1, self._q2, MultiprocessingLogger.get_logging_queue()), name='microlab'
+        proc = Process(
+            target=start_microlab_process,
+            args=(self.cmd_queue, self.resp_queue, MultiprocessingLogger.get_logging_queue()),
+            name='microlab',
         )
-
-        self._processes.append(self._microlab_manager_process)
-
-        self._logger.debug(t['starting-microlab-process'])
-        self._microlab_manager_process.start()
-        self._logger.debug(f'microlab process pid: {self._microlab_manager_process.pid}')
+        self.processes.append(proc)
+        self.logger.debug(self.t['starting-microlab-process'])
+        proc.start()
+        self.logger.debug(f'microlab process pid: {proc.pid}')
 
     def _start_server(self) -> None:
-        t = load_translation()
-        
-        self._flaskProcess = Process(target=run_flask, args=(self._q2, self._q1, MultiprocessingLogger.get_logging_queue()), name='flask', daemon=True)
-        self._processes.append(self._flaskProcess)
-        self._logger.debug('Starting the server process')
-        self._flaskProcess.start()
-        print(f'server process pid: {self._flaskProcess.pid}')
+        proc = Process(
+            target=start_flask_process,
+            args=(self.cmd_queue, self.resp_queue, MultiprocessingLogger.get_logging_queue()),
+            name='flask',
+        )
+        self.processes.append(proc)
+        self.logger.debug(self.t['starting-server-process'])
+        proc.start()
+        self.logger.debug(f'server process pid: {proc.pid}')
+
+    def _cleanup(self) -> None:
+        self.logger.debug(self.t['begin-exit'])
+
+        # 1) Notify workers to shut down
+        for q in (self.cmd_queue, self.resp_queue):
+            try:
+                q.put(SHUTDOWN_SIGNAL)
+            except Exception:
+                self.logger.warning('Failed to send shutdown sentinel', exc_info=True)
+
+        # 2) Join/terminate child processes
+        for proc in self.processes:
+            self.logger.debug(f'Joining process {proc.name} ({proc.pid})')
+            proc.join(timeout=2)
+            if proc.is_alive():
+                self.logger.warning(f'{proc.name} did not exit; terminating')
+                proc.terminate()
+                proc.join()
+
+        # 3) Clean up queues
+        self.logger.debug(self.t['cleaning-queues'])
+        for q in (self.cmd_queue, self.resp_queue):
+            q.close()
+            q.join_thread()
+        self.logger.debug(self.t['cleaned-queues'])
+
+        # 4) Flush remaining logs
+        while MultiprocessingLogger.remaining_logs_to_process():
+            MultiprocessingLogger.process_logs()
+
+        self.logger.debug(self.t['completed-exit'])
+        self.logger.debug(self.t['end-exit'])
+
+    def _shutdown_signal_handler(self, signum: int, frame: Optional[FrameType]) -> None:
+        self._cleanup()
 
     def run(self) -> None:
-        t = load_translation()
-        
+        # Perform any initial setup (e.g. hardware calibration, config file checks)
         config.initialSetup()
-        
-        self._logger.info(t['starting-main-service'])
 
+        # Register signal handlers before launching children
+        self._register_signals()
+
+        self.logger.info(self.t['starting-main-service'])
+
+        # Launch worker processes
         self._start_microlab()
         self._start_server()
 
-        signal.signal(signal.SIGINT, self._handle_exit_signals)
-        signal.signal(signal.SIGTERM, self._handle_exit_signals)
+        # Block until all child processes exit
+        for proc in self.processes:
+            proc.join()
 
-        while self._are_processes_alive() or MultiprocessingLogger.remaining_logs_to_process():
+        # Ensure any remaining log messages are processed
+        while MultiprocessingLogger.remaining_logs_to_process():
             MultiprocessingLogger.process_logs()
 
 
 def main() -> None:
+    # must initialize logger before any Queue()/Process() creations
+    MultiprocessingLogger.initialize_logger()
+
+    # Validate config early
     microlabConfig.validate_config()
     backend_manager = BackendManager()
     backend_manager.run()
 
 
 if __name__ == '__main__':
+    # Enforce *spawn* start method before any Queue is created
     set_start_method('spawn')
     main()

@@ -1,5 +1,4 @@
 from multiprocessing import Queue
-from queue import Empty
 from typing import Any
 
 from util.logger import MultiprocessingLogger
@@ -17,42 +16,29 @@ class MicrolabInterface:
     for info on implementing commands.
     """
 
-    def __init__(self, in_queue: Queue, out_queue: Queue):
-        self.toMicrolab = out_queue
-        self.fromMicrolab = in_queue
+    def __init__(self, cmd_queue: Queue, resp_queue: Queue):
+        self.cmd_queue = cmd_queue
+        self.resp_queue = resp_queue
 
+        self.t = load_translation()
         self._logger = MultiprocessingLogger.get_logger(__name__)
 
-    def close_to_microlab_queue(self) -> None:
-        t=load_translation()
-        
-        self._logger.debug(t['purging-queue'])
-
-        while True:
-            try:
-                self.toMicrolab.get_nowait()
-            except Empty:
-                self.toMicrolab.close()
-                break
-
-        self._logger.debug(t['purged-queue'])
-
-    def start(self, name) -> tuple[bool, str]:
+    def start(self, name: str) -> tuple[bool, str]:
         """
         Start running a recipe.
 
         A recipe can only be started if the current state of the machine is idle or complete
         and the recipe exists in the list of recipes.
         :param name:
-        The name of the recipe. Must be the title of an element of the recipes.list list.
+            The name of the recipe. Must be the title of an element of the recipes.list list.
         :return:
-        (True, '') on success.
-        (False, message) on failure.
+            (True, '') on success.
+            (False, message) on failure.
         """
         # Validate that the microlab hardware controller has initialized
-        self.toMicrolab.put({"command": "start", "args": name})
+        self.cmd_queue.put({"command": "start", "args": name})
 
-        return self.fromMicrolab.get()
+        return self.resp_queue.get()
 
     def status(self) -> Any:
         """
@@ -85,8 +71,8 @@ class MicrolabInterface:
                 An ISO date string for when the current step is expected to be completed,
                 or null if unknown.
         """
-        self.toMicrolab.put({"command": "status", "args": None})
-        res = self.fromMicrolab.get()
+        self.cmd_queue.put({"command": "status", "args": None})
+        res = self.resp_queue.get()
         return res
 
     def stop(self) -> None:
@@ -94,9 +80,9 @@ class MicrolabInterface:
         Stop the currently running recipe.
 
         :return:
-        None ... at least for now.
+            None ... at least for now.
         """
-        self.toMicrolab.put({"command": "stop", "args": None})
+        self.cmd_queue.put({"command": "stop", "args": None})
 
     def selectOption(self, option) -> tuple[bool, str]:
         """
@@ -105,13 +91,13 @@ class MicrolabInterface:
         The current step must have provided a list of options through the /status API
         and the option must be part of the list provided as an option.
         :param option:
-        The selected option. It must be part of the options list as retrieved via /status
+            The selected option. It must be part of the options list as retrieved via /status
         :return:
-        (True,'') on success
-        (False,message) on failure
+            (True,'') on success
+            (False,message) on failure
         """
-        self.toMicrolab.put({"command": "selectOption", "args": option})
-        res = self.fromMicrolab.get()
+        self.cmd_queue.put({"command": "selectOption", "args": option})
+        res = self.resp_queue.get()
         return res
 
     def reloadConfig(self) -> None:
@@ -119,18 +105,18 @@ class MicrolabInterface:
         Tell the microlab process to reload configuration from disk.
         Should be called anytime the user modifies config through the API.
         :return:
-        None
+            None
         """
-        self.toMicrolab.put({"command": "reloadConfig", "args": None})
+        self.cmd_queue.put({"command": "reloadConfig", "args": None})
 
     def reloadHardware(self) -> tuple[bool, str]:
         """
         Tell the microlab process to reload hardware configuration from disk.
         Should be called anytime the user modifies hardware config through the API.
         :return:
-        (True, '') on success
-        (False, message) on failure
+            (True, '') on success
+            (False, message) on failure
         """
-        self.toMicrolab.put({"command": "reloadHardware", "args": None})
-        res = self.fromMicrolab.get()
+        self.cmd_queue.put({"command": "reloadHardware", "args": None})
+        res = self.resp_queue.get()
         return res

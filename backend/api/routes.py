@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from os.path import join
 import os
 import recipes.core
+from http import HTTPStatus
 import json
 
 from api.app import FlaskApp
@@ -117,13 +118,13 @@ class RouteManager:
         t = load_translation()
         recipe = recipes.core.getRecipeByName(name)
         if recipe is None:
-            return jsonify({'response': 'error', 'message': t['recipe-not-found']}), 404
+            return jsonify({'response': 'error', 'message': t['recipe-not-found']}), HTTPStatus.NOT_FOUND
                             
         (state, msg) = self._microlab_interface.start(name)
         if state:
-            return jsonify({'response': 'ok'}), 200
+            return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
-            return jsonify({'response': 'error', 'message': msg}), 500
+            return jsonify({'response': 'error', 'message': msg}), HTTPStatus.INTERNAL_SERVER_ERROR
 
     # /stop
     def _stop(self) -> Response:
@@ -162,9 +163,9 @@ class RouteManager:
         """
         (state, msg) = self._microlab_interface.selectOption(name)
         if state:
-            return jsonify({'response': 'ok'}), 200
+            return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
-            return jsonify({'response': 'error', 'message': msg}), 400
+            return jsonify({'response': 'error', 'message': msg}), HTTPStatus.BAD_REQUEST
 
     # /uploadRecipe
     def _upload_recipe(self) -> tuple[Response, int]:
@@ -184,7 +185,7 @@ class RouteManager:
         
         f = request.files['File']
         if f.mimetype != 'application/json':
-            return jsonify({'response': 'error', 'message': t['recipe-not-json']}), 400
+            return jsonify({'response': 'error', 'message': t['recipe-not-json']}), HTTPStatus.BAD_REQUEST
         try:
             recipeData = json.load(f.stream)
             recipeData["fileName"] = f.filename
@@ -193,15 +194,15 @@ class RouteManager:
             return jsonify({
                 'response': 'error',
                 'message': t['recipe-error'].format(f, str(err))
-                }), 400
+                }), HTTPStatus.BAD_REQUEST
         except Exception:
-            return jsonify({'response': 'error', 'message': t['json-error']}), 400
+            return jsonify({'response': 'error', 'message': t['json-error']}), HTTPStatus.BAD_REQUEST
 
         # reading the stream above sets the stream position to EOF, need to go back to start
         f.stream.seek(0)
         f.save(join(config.recipesDirectory, secure_filename(f.filename)))
 
-        return jsonify({'response': 'ok'}), 200
+        return jsonify({'response': 'ok'}), HTTPStatus.OK
 
     # /deleteRecipe/<name>
     def _delete_recipe(self, name: str) -> tuple[Response, int]:
@@ -222,9 +223,9 @@ class RouteManager:
         recipe = recipes.core.getRecipeByName(name)
         try:
             os.remove(join(config.recipesDirectory, secure_filename(recipe.fileName)))
-            return jsonify({'response': 'ok'}), 200
+            return jsonify({'response': 'ok'}), HTTPStatus.OK
         except FileNotFoundError:
-            return jsonify({'response': 'error', 'message': t['recipe-not-exist']}), 404
+            return jsonify({'response': 'error', 'message': t['recipe-not-exist']}), HTTPStatus.NOT_FOUND
         
     # /controllerHardware
     def _get_controller_hardware(self) -> tuple[Response, int]:
@@ -236,7 +237,7 @@ class RouteManager:
             controllerHardware
                 A string with the current controller hardware setting
         """
-        return jsonify({'controllerHardware': config.controllerHardware}), 200
+        return jsonify({'controllerHardware': config.controllerHardware}), HTTPStatus.OK
 
     # /controllerHardware/list
     def _list_controller_hardware(self) -> Response:
@@ -271,9 +272,9 @@ class RouteManager:
         self._microlab_interface.reloadConfig()
         (success, msg) = self._microlab_interface.reloadHardware()
         if success:
-            return jsonify({'response': 'ok'}), 200
+            return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
-            return jsonify({'response': 'error', 'message': msg}), 400
+            return jsonify({'response': 'error', 'message': msg}), HTTPStatus.BAD_REQUEST
 
     # /uploadControllerConfig
     def _upload_controller_config(self) -> Response:
@@ -315,7 +316,7 @@ class RouteManager:
             labHardware
                 A string with the current lab hardware setting
         """
-        return jsonify({'labHardware': config.labHardware}), 200
+        return jsonify({'labHardware': config.labHardware}), HTTPStatus.OK
 
     # /labHardware/list
     def _list_lab_hardware(self) -> Response:
@@ -350,9 +351,9 @@ class RouteManager:
         self._microlab_interface.reloadConfig()
         (success, msg) = self._microlab_interface.reloadHardware()
         if success:
-            return jsonify({'response': 'ok'}), 200
+            return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
-            return jsonify({'response': 'error', 'message': msg}), 400
+            return jsonify({'response': 'error', 'message': msg}), HTTPStatus.BAD_REQUEST
 
     # /uploadLabConfig
     def _upload_lab_config(self) -> Response:
@@ -401,9 +402,9 @@ class RouteManager:
         self._microlab_interface.reloadConfig()
         (success, msg) = self._microlab_interface.reloadHardware()
         if success:
-            return jsonify({'response': 'ok'}), 200
+            return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
-            return jsonify({'response': 'error', 'message': msg}), 400
+            return jsonify({'response': 'error', 'message': msg}), HTTPStatus.BAD_REQUEST
 
     # /log
     def _fetch_logs(self) -> tuple[Response, int]:
@@ -424,7 +425,7 @@ class RouteManager:
             data = Path(logFiles[-2]).read_text()
         mostRecent = logFiles[-1]
         data = data + Path(mostRecent).read_text()
-        return jsonify({'logs': data}), 200
+        return jsonify({'logs': data}), HTTPStatus.OK
 
     def _register_routes(self):
 

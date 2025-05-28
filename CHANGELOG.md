@@ -15,6 +15,7 @@
 - Upgraded `gpiod` library and corresponding `gpiod_chip` client to v2.3.0 (#298)
 - Refactored code for Pythonic compliance: added type hints, enhanced readability, and fixed minor type-checking bugs. 
 - Performance improvements, such as caching for `localization.load_translation` function or replacing `time.sleep` with synchronization primitives.
+- Improved multiprocess queues lifecycle management.
 
 ## [0.6.0]
 

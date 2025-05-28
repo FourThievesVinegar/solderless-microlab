@@ -6,6 +6,8 @@ import signal
 import sys
 import threading
 from multiprocessing import Queue
+from types import FrameType
+from typing import Optional
 
 import hardware.devicelist
 import recipes.core
@@ -18,15 +20,18 @@ from util.logger import MultiprocessingLogger
 HALT = threading.Event()
 MUTEX = threading.Lock()
 
+# Sentinel to signal worker shutdown
+SHUTDOWN_SIGNAL = None
 
-def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Queue) -> None:
+
+def start_microlab_process(cmd_queue: Queue, resp_queue: Queue, logging_queue: Queue) -> None:
     """
     Starts up the microlab process
 
-    :param in_queue:
+    :param cmd_queue:
         The queue the microlab will listen for commands on
 
-    :param out_queue:
+    :param resp_queue:
         The queue responses will be sent to, when applicable.
 
     :param logging_queue:
@@ -77,6 +82,7 @@ def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Que
                 (False, message) on failure.
             reference "selectOption" in /recipes/__init__.py for more info
     """
+    # The initialize_logger call only needs to happen once when a new process is started.
     MultiprocessingLogger.initialize_logger(logging_queue)
     logger = MultiprocessingLogger.get_logger(__name__)
 
@@ -94,7 +100,7 @@ def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Que
     microlab = threading.Thread(target=run_microlab)
     microlab.start()
 
-    def handle_signal(_a, _b):
+    def _shutdown_signal_handler(signum: int, frame: Optional[FrameType]) -> None:
         t = load_translation()
 
         logger.info('')
@@ -104,8 +110,8 @@ def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Que
         logger.info(t['shutted-microlab'])
         sys.exit()
 
-    signal.signal(signal.SIGINT, handle_signal)
-    signal.signal(signal.SIGTERM, handle_signal)
+    signal.signal(signal.SIGINT, _shutdown_signal_handler)
+    signal.signal(signal.SIGTERM, _shutdown_signal_handler)
 
     def reload_hardware():
         t = load_translation()
@@ -126,9 +132,12 @@ def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Que
 
     while True:
         try:
-            data = in_queue.get(timeout=0.1)  # blocks up to 100 ms
+            data = cmd_queue.get(timeout=0.1)  # blocks up to 100 ms
         except queue.Empty:
             continue
+
+        if data is SHUTDOWN_SIGNAL:
+            break
 
         command_name = data['command']
         command = command_mapping[command_name]
@@ -139,4 +148,4 @@ def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Que
                 result = command(data['args'])
 
         if result is not None:
-            out_queue.put(result)
+            resp_queue.put(result)
