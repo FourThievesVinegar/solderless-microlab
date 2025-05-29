@@ -1,6 +1,5 @@
 import logging
 import signal
-import sys
 from types import FrameType
 from typing import Optional
 

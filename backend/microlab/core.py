@@ -113,7 +113,7 @@ def start_microlab_process(cmd_queue: Queue, resp_queue: Queue, logging_queue: Q
     signal.signal(signal.SIGINT, _shutdown_signal_handler)
     signal.signal(signal.SIGTERM, _shutdown_signal_handler)
 
-    def reload_hardware():
+    def reload_hardware() -> tuple[bool, str]:
         t = load_translation()
 
         logger.info(t['reload-device-config'])
@@ -126,8 +126,8 @@ def start_microlab_process(cmd_queue: Queue, resp_queue: Queue, logging_queue: Q
         'status': recipes.core.status,
         'stop': recipes.core.stop,
         'selectOption': recipes.core.selectOption,
-        'reloadConfig': lambda x: config.reloadConfig(),
-        'reloadHardware': lambda x: reload_hardware(),
+        'reloadConfig': config.reloadConfig,
+        'reloadHardware': reload_hardware,
     }
 
     while True:

@@ -32,10 +32,6 @@ class BackendManager:
         # Keep track of child processes
         self.processes: List[Process] = []
 
-    def _register_signals(self) -> None:
-        signal.signal(signal.SIGINT, self._shutdown_signal_handler)
-        signal.signal(signal.SIGTERM, self._shutdown_signal_handler)
-
     def _start_microlab(self) -> None:
         proc = Process(
             target=start_microlab_process,
@@ -47,7 +43,7 @@ class BackendManager:
         proc.start()
         self.logger.debug(f'microlab process pid: {proc.pid}')
 
-    def _start_server(self) -> None:
+    def _start_web_server(self) -> None:
         proc = Process(
             target=start_flask_process,
             args=(self.cmd_queue, self.resp_queue, MultiprocessingLogger.get_logging_queue()),
@@ -61,14 +57,14 @@ class BackendManager:
     def _cleanup(self) -> None:
         self.logger.debug(self.t['begin-exit'])
 
-        # 1) Notify workers to shut down
+        # 1. Notify workers to shut down
         for q in (self.cmd_queue, self.resp_queue):
             try:
                 q.put(SHUTDOWN_SIGNAL)
             except Exception:
                 self.logger.warning('Failed to send shutdown sentinel', exc_info=True)
 
-        # 2) Join/terminate child processes
+        # 2. Join/terminate child processes
         for proc in self.processes:
             self.logger.debug(f'Joining process {proc.name} ({proc.pid})')
             proc.join(timeout=2)
@@ -77,14 +73,14 @@ class BackendManager:
                 proc.terminate()
                 proc.join()
 
-        # 3) Clean up queues
+        # 3. Clean up queues
         self.logger.debug(self.t['cleaning-queues'])
         for q in (self.cmd_queue, self.resp_queue):
             q.close()
             q.join_thread()
         self.logger.debug(self.t['cleaned-queues'])
 
-        # 4) Flush remaining logs
+        # 4. Flush remaining logs
         while MultiprocessingLogger.remaining_logs_to_process():
             MultiprocessingLogger.process_logs()
 
@@ -99,13 +95,13 @@ class BackendManager:
         config.initialSetup()
 
         # Register signal handlers before launching children
-        self._register_signals()
-
-        self.logger.info(self.t['starting-main-service'])
+        signal.signal(signal.SIGINT, self._shutdown_signal_handler)
+        signal.signal(signal.SIGTERM, self._shutdown_signal_handler)
 
         # Launch worker processes
+        self.logger.info(self.t['starting-main-service'])
         self._start_microlab()
-        self._start_server()
+        self._start_web_server()
 
         # Block until all child processes exit
         for proc in self.processes:

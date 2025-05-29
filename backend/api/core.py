@@ -14,7 +14,6 @@ from localization import load_translation
 def start_flask_process(cmd_queue: Queue, resp_queue: Queue, logging_queue: Queue) -> None:
     # The initialize_logger call only needs to happen once when a new process is started.
     MultiprocessingLogger.initialize_logger(logging_queue)
-
     logger = MultiprocessingLogger.get_logger(__name__)
     
     t = load_translation()

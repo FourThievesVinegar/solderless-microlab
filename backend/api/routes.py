@@ -2,24 +2,24 @@
 Module defining API.
 """
 
-from flask import jsonify, request, send_file, Response
-from werkzeug.utils import secure_filename
-from os.path import join
-import os
-import recipes.core
-from http import HTTPStatus
+import glob
 import json
+import os
+from http import HTTPStatus
+from os.path import join
+from pathlib import Path
 
+from flask import jsonify, request, send_file, Response
+from pydantic_core import ValidationError
+from werkzeug.utils import secure_filename
+
+import recipes.core
 from api.app import FlaskApp
 from config import microlabConfig as config
-import glob 
-from pathlib import Path
-from recipes.model import MicrolabRecipe
-from pydantic_core import ValidationError
-
-from microlab.interface import MicrolabInterface
-
 from localization import load_translation
+from microlab.interface import MicrolabInterface
+from recipes.model import MicrolabRecipe
+
 
 class RouteManager:
 
@@ -37,8 +37,8 @@ class RouteManager:
         list
             a list containing the names of the recipes. ex: ['recipe1','recipe2']
         """
-        recipeNames = list(map(lambda recipe: recipe.title, recipes.core.getRecipeList()))
-        return jsonify(recipeNames)
+        recipe_names = list(map(lambda recipe: recipe.title, recipes.core.getRecipeList()))
+        return jsonify(recipe_names)
 
     # /recipe/<name>
     def _send_recipe(self, name: str) -> Response:
@@ -119,7 +119,7 @@ class RouteManager:
         recipe = recipes.core.getRecipeByName(name)
         if recipe is None:
             return jsonify({'response': 'error', 'message': t['recipe-not-found']}), HTTPStatus.NOT_FOUND
-                            
+
         (state, msg) = self._microlab_interface.start(name)
         if state:
             return jsonify({'response': 'ok'}), HTTPStatus.OK
@@ -161,7 +161,7 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
-        (state, msg) = self._microlab_interface.selectOption(name)
+        (state, msg) = self._microlab_interface.select_option(name)
         if state:
             return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
@@ -182,19 +182,20 @@ class RouteManager:
                 Only present if response is "error" and there is a message to present to the user.
         """
         t = load_translation()
-        
+
         f = request.files['File']
         if f.mimetype != 'application/json':
             return jsonify({'response': 'error', 'message': t['recipe-not-json']}), HTTPStatus.BAD_REQUEST
+
         try:
-            recipeData = json.load(f.stream)
-            recipeData["fileName"] = f.filename
-            MicrolabRecipe.model_validate(recipeData)
+            recipe_data = json.load(f.stream)
+            recipe_data["fileName"] = f.filename
+            MicrolabRecipe.model_validate(recipe_data)
         except ValidationError as err:
             return jsonify({
                 'response': 'error',
                 'message': t['recipe-error'].format(f, str(err))
-                }), HTTPStatus.BAD_REQUEST
+            }), HTTPStatus.BAD_REQUEST
         except Exception:
             return jsonify({'response': 'error', 'message': t['json-error']}), HTTPStatus.BAD_REQUEST
 
@@ -218,7 +219,7 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
-        
+
         t = load_translation()
         recipe = recipes.core.getRecipeByName(name)
         try:
@@ -226,7 +227,7 @@ class RouteManager:
             return jsonify({'response': 'ok'}), HTTPStatus.OK
         except FileNotFoundError:
             return jsonify({'response': 'error', 'message': t['recipe-not-exist']}), HTTPStatus.NOT_FOUND
-        
+
     # /controllerHardware
     def _get_controller_hardware(self) -> tuple[Response, int]:
         """
@@ -249,8 +250,8 @@ class RouteManager:
             a list containing the names of valid controller hardware settings.
             ex: ['pi','AML-S905X-CC-V1.0A']
         """
-        files = [recipe for recipe in os.listdir(config.controllerHardwareDirectory)]
-        configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith(".yaml"), files)))
+        file_names = [recipe for recipe in os.listdir(config.controllerHardwareDirectory)]
+        configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith('.yaml'), file_names)))
         return jsonify(configs)
 
     # /controllerHardware/<name>
@@ -269,8 +270,8 @@ class RouteManager:
                 Only present if response is "error" and there is a message to present to the user.
         """
         config.controllerHardware = name
-        self._microlab_interface.reloadConfig()
-        (success, msg) = self._microlab_interface.reloadHardware()
+        self._microlab_interface.reload_config()
+        (success, msg) = self._microlab_interface.reload_hardware()
         if success:
             return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
@@ -290,7 +291,6 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
-        
         f = request.files['File']
         f.save(join(config.controllerHardwareDirectory, secure_filename(f.filename)))
         return jsonify({'response': 'ok'})
@@ -303,8 +303,8 @@ class RouteManager:
         :return:
         The controller configuration file
         """
-        fileName = "{0}.yaml".format(secure_filename(name))
-        return send_file(join(config.controllerHardwareDirectory, fileName), name, as_attachment=True)
+        file_name = f'{secure_filename(name)}.yaml'
+        return send_file(join(config.controllerHardwareDirectory, file_name), name, as_attachment=True)
 
     # /labHardware
     def _get_lab_hardware(self) -> tuple[Response, int]:
@@ -328,8 +328,8 @@ class RouteManager:
             a list containing the names of valid lab hardware settings.
             ex: ['base_hardware']
         """
-        files = [recipe for recipe in os.listdir(config.labHardwareDirectory)]
-        configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith(".yaml"), files)))
+        file_names = [recipe for recipe in os.listdir(config.labHardwareDirectory)]
+        configs = list(map(lambda x: x[:-5], filter(lambda x: x.endswith('.yaml'), file_names)))
         return jsonify(configs)
 
     # /labHardware/<name>
@@ -348,8 +348,8 @@ class RouteManager:
                 Only present if response is "error" and there is a message to present to the user.
         """
         config.labHardware = name
-        self._microlab_interface.reloadConfig()
-        (success, msg) = self._microlab_interface.reloadHardware()
+        self._microlab_interface.reload_config()
+        (success, msg) = self._microlab_interface.reload_hardware()
         if success:
             return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
@@ -369,7 +369,6 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
-        
         f = request.files['File']
         f.save(join(config.labHardwareDirectory, secure_filename(f.filename)))
         return jsonify({'response': 'ok'})
@@ -382,8 +381,8 @@ class RouteManager:
         :return:
         The lab configuration file
         """
-        fileName = "{0}.yaml".format(secure_filename(name))
-        return send_file(join(config.labHardwareDirectory, fileName), name, as_attachment=True)
+        file_name = f'{secure_filename(name)}.yaml'
+        return send_file(join(config.labHardwareDirectory, file_name), name, as_attachment=True)
 
     # /reloadHardware
     def _reload_hardware(self) -> tuple[Response, int]:
@@ -399,8 +398,8 @@ class RouteManager:
             message
                 Only present if response is "error" and there is a message to present to the user.
         """
-        self._microlab_interface.reloadConfig()
-        (success, msg) = self._microlab_interface.reloadHardware()
+        self._microlab_interface.reload_config()
+        (success, msg) = self._microlab_interface.reload_hardware()
         if success:
             return jsonify({'response': 'ok'}), HTTPStatus.OK
         else:
@@ -416,15 +415,12 @@ class RouteManager:
             logs
                 The complete log files as a string
         """
-        logFolder = config.logDirectory + "/"
-        logFiles = [file for file in glob.glob(os.path.join(logFolder, 'microlab.log*'))]
-        print(logFiles)
-        logFiles.sort(key=os.path.getmtime)
-        data = ""
-        if len(logFiles) > 1 and logFiles[-2]:
-            data = Path(logFiles[-2]).read_text()
-        mostRecent = logFiles[-1]
-        data = data + Path(mostRecent).read_text()
+        log_file_names = [file for file in glob.glob(os.path.join(config.logDirectory, 'microlab.log*'))]
+        log_file_names.sort(key=os.path.getmtime)
+
+        data: str = ''
+        for file_name in log_file_names[-2:]:
+            data += Path(file_name).read_text()
         return jsonify({'logs': data}), HTTPStatus.OK
 
     def _register_routes(self):

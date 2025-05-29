@@ -66,9 +66,8 @@ class MultiprocessingLogger:
         if logger_name in cls._configured_loggers:
             return logging.getLogger(logger_name)
 
+        log_handlers: list[logging.Handler] = []
         formatter = MultiLineFormatter(fmt='%(asctime)s %(name)-10s [%(levelname)s]: %(message)s')
-
-        log_handlers = []
 
         log_directory = config.microlabConfig.logDirectory
         makedirs(log_directory, exist_ok=True)
@@ -92,12 +91,11 @@ class MultiprocessingLogger:
             logger.addHandler(handler)
 
         cls._configured_loggers[logger_name] = logger
-
         return logger
 
     @classmethod
     def remaining_logs_to_process(cls) -> bool:
-        return cls._logging_queue.empty() == False
+        return cls._logging_queue.empty() is False
 
     @classmethod
     def _does_logger_have_queue_handler(cls, logger: logging.Logger) -> bool:

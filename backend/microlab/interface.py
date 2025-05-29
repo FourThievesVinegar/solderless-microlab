@@ -1,9 +1,9 @@
 from multiprocessing import Queue
 from typing import Any
 
+from localization import load_translation
 from util.logger import MultiprocessingLogger
 
-from localization import load_translation
 
 class MicrolabInterface:
     """
@@ -21,7 +21,7 @@ class MicrolabInterface:
         self.resp_queue = resp_queue
 
         self.t = load_translation()
-        self._logger = MultiprocessingLogger.get_logger(__name__)
+        self.logger = MultiprocessingLogger.get_logger(__name__)
 
     def start(self, name: str) -> tuple[bool, str]:
         """
@@ -36,9 +36,9 @@ class MicrolabInterface:
             (False, message) on failure.
         """
         # Validate that the microlab hardware controller has initialized
-        self.cmd_queue.put({"command": "start", "args": name})
-
-        return self.resp_queue.get()
+        self.cmd_queue.put({'command': 'start', 'args': name})
+        res = self.resp_queue.get()
+        return res
 
     def status(self) -> Any:
         """
@@ -71,7 +71,7 @@ class MicrolabInterface:
                 An ISO date string for when the current step is expected to be completed,
                 or null if unknown.
         """
-        self.cmd_queue.put({"command": "status", "args": None})
+        self.cmd_queue.put({'command': 'status', 'args': None})
         res = self.resp_queue.get()
         return res
 
@@ -82,9 +82,9 @@ class MicrolabInterface:
         :return:
             None ... at least for now.
         """
-        self.cmd_queue.put({"command": "stop", "args": None})
+        self.cmd_queue.put({'command': 'stop', 'args': None})
 
-    def selectOption(self, option) -> tuple[bool, str]:
+    def select_option(self, option) -> tuple[bool, str]:
         """
         Pass in the user selected option from a recipe step.
 
@@ -96,20 +96,20 @@ class MicrolabInterface:
             (True,'') on success
             (False,message) on failure
         """
-        self.cmd_queue.put({"command": "selectOption", "args": option})
+        self.cmd_queue.put({'command': 'selectOption', 'args': option})
         res = self.resp_queue.get()
         return res
 
-    def reloadConfig(self) -> None:
+    def reload_config(self) -> None:
         """
         Tell the microlab process to reload configuration from disk.
         Should be called anytime the user modifies config through the API.
         :return:
             None
         """
-        self.cmd_queue.put({"command": "reloadConfig", "args": None})
+        self.cmd_queue.put({'command': 'reloadConfig', 'args': None})
 
-    def reloadHardware(self) -> tuple[bool, str]:
+    def reload_hardware(self) -> tuple[bool, str]:
         """
         Tell the microlab process to reload hardware configuration from disk.
         Should be called anytime the user modifies hardware config through the API.
@@ -117,6 +117,6 @@ class MicrolabInterface:
             (True, '') on success
             (False, message) on failure
         """
-        self.cmd_queue.put({"command": "reloadHardware", "args": None})
+        self.cmd_queue.put({'command': 'reloadHardware', 'args': None})
         res = self.resp_queue.get()
         return res
