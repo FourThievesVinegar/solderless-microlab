@@ -1,5 +1,5 @@
-from config import microlabConfig
-microlabConfig.validate_config()
+from config import microlab_config
+microlab_config.validate_config()
 
 from hardware.devicelist import validateConfiguration, sort_device_configs
 import pytest
