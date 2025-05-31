@@ -8,7 +8,6 @@ from typing import List, Optional
 from types import FrameType
 
 import config
-from config import microlabConfig
 from api.core import start_flask_process
 from microlab.core import start_microlab_process
 from util.logger import MultiprocessingLogger
@@ -50,7 +49,7 @@ class BackendManager:
             name='flask',
         )
         self.processes.append(proc)
-        self.logger.debug(self.t['starting-server-process'])
+        self.logger.debug('Starting the server process...')
         proc.start()
         self.logger.debug(f'server process pid: {proc.pid}')
 
@@ -117,7 +116,7 @@ def main() -> None:
     MultiprocessingLogger.initialize_logger()
 
     # Validate config early
-    microlabConfig.validate_config()
+    config.microlab_config.validate_config()
     backend_manager = BackendManager()
     backend_manager.run()
 

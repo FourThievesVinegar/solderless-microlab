@@ -48,7 +48,7 @@ class MultiprocessingLogger:
 
         logger = logging.getLogger(logger_name)
         logger.addHandler(logging.handlers.QueueHandler(cls._logging_queue))
-        logger.setLevel(config.microlabConfig.logLevel)
+        logger.setLevel(config.microlab_config.logLevel)
 
         cls._configured_loggers[logger_name] = logger
 
@@ -69,24 +69,24 @@ class MultiprocessingLogger:
         log_handlers: list[logging.Handler] = []
         formatter = MultiLineFormatter(fmt='%(asctime)s %(name)-10s [%(levelname)s]: %(message)s')
 
-        log_directory = config.microlabConfig.logDirectory
+        log_directory = config.microlab_config.logDirectory
         makedirs(log_directory, exist_ok=True)
 
         rotating_file_handler = logging.handlers.RotatingFileHandler(
             path.join(log_directory, 'microlab.log'),
-            maxBytes=config.microlabConfig.logFileMaxBytes,
-            backupCount=config.microlabConfig.logFileBackupCount,
+            maxBytes=config.microlab_config.logFileMaxBytes,
+            backupCount=config.microlab_config.logFileBackupCount,
         )
         rotating_file_handler.setFormatter(formatter)
         log_handlers.append(rotating_file_handler)
 
-        if config.microlabConfig.logToStderr:
+        if config.microlab_config.logToStderr:
             stderr_logger = logging.StreamHandler(sys.stderr)
             stderr_logger.setFormatter(formatter)
             log_handlers.append(stderr_logger)
 
         logger = logging.getLogger(logger_name)
-        logger.setLevel(config.microlabConfig.logLevel)
+        logger.setLevel(config.microlab_config.logLevel)
         for handler in log_handlers:
             logger.addHandler(handler)
 

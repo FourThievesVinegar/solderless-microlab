@@ -15,7 +15,7 @@ from werkzeug.utils import secure_filename
 
 import recipes.core
 from api.app import FlaskApp
-from config import microlabConfig as config
+from config import microlab_config as config
 from localization import load_translation
 from microlab.interface import MicrolabInterface
 from recipes.model import MicrolabRecipe

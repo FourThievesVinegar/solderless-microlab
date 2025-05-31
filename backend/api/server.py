@@ -6,7 +6,7 @@ from typing import Optional
 from flask import Flask
 from waitress.server import create_server, MultiSocketServer
 
-from config import microlabConfig as config
+from config import microlab_config as config
 from localization import load_translation
 from microlab.interface import MicrolabInterface
 from util.logger import MultiprocessingLogger
