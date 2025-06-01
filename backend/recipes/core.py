@@ -14,7 +14,7 @@ from recipes import state
 from recipes.base import RunningRecipe
 from recipes.model import MicrolabRecipe
 from hardware.core import MicroLabHardware, MicroLabHardwareState
-from config import microlabConfig as config
+from config import microlab_config as config
 from util.logger import MultiprocessingLogger
 from pydantic_core import ValidationError
 from typing import Optional, Any

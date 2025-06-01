@@ -5,10 +5,14 @@ disk and/or passed in as environment variables. Import and use this file with
 Configuration is stored on disk at '/etc/microlab/microlab.ini'
 """
 import logging
-from os import environ, makedirs, path, listdir
-from configobj import ConfigObj, flatten_errors
-from configobj.validate import Validator 
 import shutil
+from os import environ, makedirs, path, listdir, sep
+
+from configobj import ConfigObj, flatten_errors
+from configobj.validate import Validator
+
+MICROLAB_CONFIG_DIR = environ.get('MICROLAB_CONFIG_DIR', '/etc/microlab')
+BACKEND_DIR = path.dirname(path.abspath(__file__))
 
 
 class MicrolabConfig:
@@ -18,12 +22,8 @@ class MicrolabConfig:
     changes from disk.
     """
     def __init__(self):
-        # FIXME: read config_file_name from .yaml/.ini file
-        config_file_name = '/etc/microlab/microlab.ini'
-        makedirs(path.dirname(config_file_name), exist_ok=True)
-
-        # FIXME: read defaultconfig.ini location from .yaml/.ini file
-        self.config = ConfigObj(config_file_name, configspec='defaultconfig.ini')
+        fqfp_microlab_ini = path.join(MICROLAB_CONFIG_DIR, 'microlab.ini')
+        self.config = ConfigObj(fqfp_microlab_ini, configspec=path.join(BACKEND_DIR, 'defaultconfig.ini'))
 
     def validate_config(self) -> None:
 
@@ -62,7 +62,7 @@ class MicrolabConfig:
 
     @property
     def recipesDirectory(self) -> str:
-        return path.join(self.dataDirectory, 'recipes')
+        return path.join(self.dataDirectory, 'recipes') + sep
 
     @property
     def logDirectory(self) -> str:
@@ -106,15 +106,15 @@ class MicrolabConfig:
 
     @property
     def hardwareDirectory(self) -> str:
-        return path.join(self.dataDirectory, 'hardware')
+        return path.join(self.dataDirectory, 'hardware') + sep
 
     @property
     def controllerHardwareDirectory(self) -> str:
-        return path.join(self.hardwareDirectory, 'controllerhardware')
+        return path.join(self.hardwareDirectory, 'controllerhardware') + sep
 
     @property
     def labHardwareDirectory(self) -> str:
-        return path.join(self.hardwareDirectory, 'labhardware')
+        return path.join(self.hardwareDirectory, 'labhardware') + sep
 
     @property
     def labHardware(self) -> str:
@@ -126,15 +126,15 @@ class MicrolabConfig:
         self.config.write()
 
 
-microlabConfig = MicrolabConfig()
+microlab_config = MicrolabConfig()
 
 
 def initialSetup() -> None:
-    fqfp_data_dir = microlabConfig.dataDirectory
-    fqfp_recipes = microlabConfig.recipesDirectory
-    fqfp_hardware = microlabConfig.hardwareDirectory
-    fqfp_hardware_controller = microlabConfig.controllerHardwareDirectory
-    fqfp_hardware_lab = microlabConfig.labHardwareDirectory
+    fqfp_data_dir = microlab_config.dataDirectory
+    fqfp_recipes = microlab_config.recipesDirectory
+    fqfp_hardware = microlab_config.hardwareDirectory
+    fqfp_hardware_controller = microlab_config.controllerHardwareDirectory
+    fqfp_hardware_lab = microlab_config.labHardwareDirectory
 
     # ensure data directories exist
     makedirs(path.dirname(fqfp_data_dir), exist_ok=True)
@@ -144,31 +144,28 @@ def initialSetup() -> None:
     makedirs(path.dirname(fqfp_hardware_lab), exist_ok=True)
   
     # ensure log directory exists
-    makedirs(path.dirname(microlabConfig.logDirectory + '/'), exist_ok=True)
+    makedirs(path.dirname(microlab_config.logDirectory + sep), exist_ok=True)
 
     # copy builtin controller configurations to data directory,
     # overwriting old configurations if they exist
-    # FIXME: read default_hardware_controller from .yaml/.ini file
-    default_hardware_controller = './data/hardware/controllerhardware/'
-    for controllerhardware in listdir(default_hardware_controller):
-        src = path.join(default_hardware_controller, controllerhardware)
+    fqfp_default_controller_dir = path.join(BACKEND_DIR, 'data', 'hardware', 'controllerhardware') + sep
+    for controllerhardware in listdir(fqfp_default_controller_dir):
+        src = path.join(fqfp_default_controller_dir, controllerhardware)
         dest = path.join(fqfp_hardware_controller, controllerhardware)
         shutil.copy2(src, dest)
 
     # copy builtin lab configurations to data directory,
     # overwriting old configurations if they exist
-    # FIXME: read default_hardware_lab from .yaml/.ini file
-    default_hardware_lab = './data/hardware/labhardware/'
-    for labhardware in listdir(default_hardware_lab):
-        src = path.join(default_hardware_lab, labhardware)
+    fqfp_default_lab_dir = path.join(BACKEND_DIR, 'data', 'hardware', 'labhardware') + sep
+    for labhardware in listdir(fqfp_default_lab_dir):
+        src = path.join(fqfp_default_lab_dir, labhardware)
         dest = path.join(fqfp_hardware_lab, labhardware)
         shutil.copy2(src, dest)
 
-    # copy builtin recipes to data directory, 
+    # copy builtin recipes to data directory,
     # overwriting old recipes if they exist
-    # FIXME: read default_recipes from .yaml/.ini file
-    default_recipes = './data/recipes/'
-    for recipe in listdir(default_recipes):
-        src = path.join(default_recipes, recipe)
+    fqfp_default_recipes_dir = path.join(BACKEND_DIR, 'data', 'recipes') + sep
+    for recipe in listdir(fqfp_default_recipes_dir):
+        src = path.join(fqfp_default_recipes_dir, recipe)
         dest = path.join(fqfp_recipes, recipe)
         shutil.copy2(src, dest)

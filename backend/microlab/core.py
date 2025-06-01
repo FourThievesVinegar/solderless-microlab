@@ -6,11 +6,13 @@ import signal
 import sys
 import threading
 from multiprocessing import Queue
+from types import FrameType
+from typing import Optional
 
 import hardware.devicelist
 import recipes.core
 import recipes.state
-from config import microlabConfig as config
+from config import microlab_config as config
 from hardware.core import MicroLabHardware
 from localization import load_translation
 from util.logger import MultiprocessingLogger
@@ -18,15 +20,59 @@ from util.logger import MultiprocessingLogger
 HALT = threading.Event()
 MUTEX = threading.Lock()
 
+# Sentinel to signal worker shutdown
+SHUTDOWN_SIGNAL = None
 
-def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Queue) -> None:
+
+def _shutdown_signal_handler(signum: int, frame: Optional[FrameType]) -> None:
+    sys.stderr.write('Marking HALT event as SHUTDOWN\n')
+    HALT.set()
+
+
+def run_microlab_thread():
+    logger = MultiprocessingLogger.get_logger(__name__)
+    try:
+        # Loop until HALT is set. Event.wait() returns True if the event was set, else False.
+        while not HALT.wait(timeout=0.01):
+            with MUTEX:
+                if recipes.state.currentRecipe:
+                    recipes.state.currentRecipe.tickTasks()
+                    recipes.state.currentRecipe.checkStepCompletion()
+    except Exception:
+        logger.exception('Microlab thread crashed')
+        HALT.set()
+    else:
+        logger.info('Microlab thread finished normally')
+
+def reload_hardware() -> tuple[bool, str]:
+    microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
+    logger = MultiprocessingLogger.get_logger(__name__)
+
+    t = load_translation()
+    logger.info(t['reload-device-config'])
+    hardware_config = hardware.devicelist.loadHardwareConfiguration()
+    device_definitions = hardware_config['devices']
+    return microlab_hardware.loadHardware(device_definitions)
+
+
+COMMAND_MAPPING = {
+    'start': recipes.core.start,
+    'status': recipes.core.status,
+    'stop': recipes.core.stop,
+    'selectOption': recipes.core.selectOption,
+    'reloadConfig': config.reloadConfig,
+    'reloadHardware': reload_hardware,
+}
+
+
+def start_microlab_process(cmd_queue: Queue, resp_queue: Queue, logging_queue: Queue) -> None:
     """
     Starts up the microlab process
 
-    :param in_queue:
+    :param cmd_queue:
         The queue the microlab will listen for commands on
 
-    :param out_queue:
+    :param resp_queue:
         The queue responses will be sent to, when applicable.
 
     :param logging_queue:
@@ -77,61 +123,31 @@ def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Que
                 (False, message) on failure.
             reference "selectOption" in /recipes/__init__.py for more info
     """
+    # The initialize_logger call only needs to happen once when a new process is started.
     MultiprocessingLogger.initialize_logger(logging_queue)
     logger = MultiprocessingLogger.get_logger(__name__)
+    t = load_translation()
 
+    # instantiate MicroLabHardware and start recipes thread
     microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
-
-    def run_microlab():
-        # Loop until HALT is set. Event.wait() returns True if the event was set, else False.
-        while not HALT.wait(timeout=0.01):
-            with MUTEX:
-                if recipes.state.currentRecipe:
-                    recipes.state.currentRecipe.tickTasks()
-                    recipes.state.currentRecipe.checkStepCompletion()
-        microlab_hardware.turnOffEverything()
-
-    microlab = threading.Thread(target=run_microlab)
+    microlab = threading.Thread(target=run_microlab_thread)
     microlab.start()
 
-    def handle_signal(_a, _b):
-        t = load_translation()
-
-        logger.info('')
-        logger.info(t['shutting-microlab'])
-        HALT.set()
-        microlab.join()
-        logger.info(t['shutted-microlab'])
-        sys.exit()
-
-    signal.signal(signal.SIGINT, handle_signal)
-    signal.signal(signal.SIGTERM, handle_signal)
-
-    def reload_hardware():
-        t = load_translation()
-
-        logger.info(t['reload-device-config'])
-        hardware_config = hardware.devicelist.loadHardwareConfiguration()
-        device_definitions = hardware_config['devices']
-        return microlab_hardware.loadHardware(device_definitions)
-
-    command_mapping = {
-        'start': recipes.core.start,
-        'status': recipes.core.status,
-        'stop': recipes.core.stop,
-        'selectOption': recipes.core.selectOption,
-        'reloadConfig': lambda x: config.reloadConfig(),
-        'reloadHardware': lambda x: reload_hardware(),
-    }
+    signal.signal(signal.SIGINT, _shutdown_signal_handler)
+    signal.signal(signal.SIGTERM, _shutdown_signal_handler)
 
     while True:
         try:
-            data = in_queue.get(timeout=0.1)  # blocks up to 100 ms
+            data = cmd_queue.get(timeout=0.1)  # blocks up to 100 ms
+            if data is SHUTDOWN_SIGNAL:
+                break
         except queue.Empty:
+            if HALT.is_set():
+                break
             continue
 
         command_name = data['command']
-        command = command_mapping[command_name]
+        command = COMMAND_MAPPING[command_name]
         if command_name == 'status':
             result = command(data['args'])
         else:
@@ -139,4 +155,10 @@ def start_microlab_process(in_queue: Queue, out_queue: Queue, logging_queue: Que
                 result = command(data['args'])
 
         if result is not None:
-            out_queue.put(result)
+            resp_queue.put(result)
+
+    logger.info('')
+    logger.info(t['shutting-microlab'])
+    microlab.join()
+    microlab_hardware.turnOffEverything()
+    logger.info(t['shutted-microlab'])

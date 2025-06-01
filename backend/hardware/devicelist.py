@@ -6,7 +6,7 @@ import hardware.temperaturecontroller.core as tc
 import hardware.thermometer.core as thermometer
 import hardware.gpiochip.core as gpiochip
 import hardware.grbl.core as grbl
-from config import microlabConfig as config
+from config import microlab_config as config
 import yaml
 from os import path
 from functools import cmp_to_key

@@ -20,8 +20,5 @@ if [[ ! -d "$VENV_DIR" ]] || [[ "$REQ_FILE" -nt "$VENV_DIR/bin/activate" ]]; the
   "$VENV_DIR/bin/pip" install --upgrade -r "$REQ_FILE"
 fi
 
-# Enable reading ./backend/defaultconfig.ini
-cd "$BACKEND_DIR"
-
 # Launch Flask via the venv’s python interpreter
 exec "$VENV_DIR/bin/python" "$BACKEND_DIR/main.py" production
