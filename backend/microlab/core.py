@@ -7,7 +7,7 @@ import sys
 import threading
 from multiprocessing import Queue
 from types import FrameType
-from typing import Optional
+from typing import Optional, Callable
 
 import hardware.devicelist
 import recipes.core
@@ -35,9 +35,9 @@ def run_microlab_thread():
         # Loop until HALT is set. Event.wait() returns True if the event was set, else False.
         while not HALT.wait(timeout=0.01):
             with MUTEX:
-                if recipes.state.currentRecipe:
-                    recipes.state.currentRecipe.tickTasks()
-                    recipes.state.currentRecipe.checkStepCompletion()
+                if recipes.state.current_recipe:
+                    recipes.state.current_recipe.tick_tasks()
+                    recipes.state.current_recipe.check_step_completion()
     except Exception:
         logger.exception('Microlab thread crashed')
         HALT.set()
@@ -55,12 +55,12 @@ def reload_hardware() -> tuple[bool, str]:
     return microlab_hardware.loadHardware(device_definitions)
 
 
-COMMAND_MAPPING = {
+MICROLAB_COMMANDS: dict[str, Callable] = {
     'start': recipes.core.start,
     'status': recipes.core.status,
     'stop': recipes.core.stop,
-    'selectOption': recipes.core.selectOption,
-    'reloadConfig': config.reloadConfig,
+    'selectOption': recipes.core.select_option,
+    'reloadConfig': config.reload_config,
     'reloadHardware': reload_hardware,
 }
 
@@ -147,7 +147,7 @@ def start_microlab_process(cmd_queue: Queue, resp_queue: Queue, logging_queue: Q
             continue
 
         command_name = data['command']
-        command = COMMAND_MAPPING[command_name]
+        command: Callable = MICROLAB_COMMANDS[command_name]
         if command_name == 'status':
             result = command(data['args'])
         else:

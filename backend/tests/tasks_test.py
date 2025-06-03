@@ -203,7 +203,7 @@ def test_cool_done(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_needed(microlab):
-    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 3, "time": 5})
+    fn = tasks.maintain_heat(microlab, {"temp": 30, "tolerance": 3, "time": 5})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
@@ -214,7 +214,7 @@ def test_maintain_heat_needed(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_within_tolerance(microlab):
-    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_heat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
@@ -224,7 +224,7 @@ def test_maintain_heat_within_tolerance(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_time_finished(microlab):
-    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_heat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     res = next(fn)
     microlab.turnCoolerOff = MagicMock()
     microlab.turnHeaterOff = MagicMock()
@@ -241,7 +241,7 @@ def test_maintain_heat_time_finished(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_needed(microlab):
-    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 3, "time": 5})
+    fn = tasks.maintain_cool(microlab, {"temp": 30, "tolerance": 3, "time": 5})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
@@ -252,7 +252,7 @@ def test_maintain_cool_needed(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_within_tolerance(microlab):
-    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_cool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
@@ -262,7 +262,7 @@ def test_maintain_cool_within_tolerance(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_time_finished(microlab):
-    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_cool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     res = next(fn)
     microlab.turnCoolerOff = MagicMock()
     microlab.turnHeaterOff = MagicMock()
@@ -354,7 +354,7 @@ def test_pumps_slow_dispense(microlab):
 )
 def test_maintain_PID_heat_needed(microlab):
     res = None
-    fn = tasks.maintainPID(microlab, {"temp": 100, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 100, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     for i in range(0, 9):
@@ -388,7 +388,7 @@ def test_maintain_PID_heat_needed(microlab):
 )
 def test_maintain_PID_cool_needed(microlab):
     res = None
-    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     for i in range(0, 19):
@@ -420,7 +420,7 @@ def test_maintain_PID_cool_needed(microlab):
     }
 )
 def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
-    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     res = next(fn)
@@ -438,7 +438,7 @@ def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
     }
 )
 def test_maintain_PID_turns_off_heater_pump_when_done(microlab):
-    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     microlab.secondSinceStart = MagicMock()

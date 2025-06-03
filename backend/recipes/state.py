@@ -1,3 +1,5 @@
-import config
+from typing import Optional
 
-currentRecipe = None
+from recipes.base import RunningRecipe
+
+current_recipe: Optional[RunningRecipe] = None

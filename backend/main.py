@@ -91,7 +91,7 @@ class BackendManager:
 
     def run(self) -> None:
         # Perform any initial setup (e.g. hardware calibration, config file checks)
-        config.initialSetup()
+        config.initial_setup()
 
         # Register signal handlers before launching children
         signal.signal(signal.SIGINT, self._shutdown_signal_handler)
