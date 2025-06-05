@@ -15,7 +15,7 @@ from simple_pid import PID
 
 from hardware.core import MicroLabHardware
 from localization import load_translation
-from recipes.model import RecipeTaskRunner
+from recipes.model import RecipeTaskRunnable
 from util.logger import MultiprocessingLogger
 
 
@@ -181,22 +181,14 @@ def maintain_simple(microlab: MicroLabHardware, parameters: dict) -> Generator[O
     duration = parameters['time']
     target_temp = parameters['temp']
     tolerance = parameters['tolerance']
-    if 'type' in parameters:
-        maintain_type = parameters['type']
-    else:
-        maintain_type = 'both'
-    heater_enabled = maintain_type == 'heat' or maintain_type == 'both'
-    cooler_enabled = maintain_type == 'cool' or maintain_type == 'both'
+    maintain_type = parameters.get('type', 'both')
+    heater_enabled = maintain_type in ('heat', 'both')
+    cooler_enabled = maintain_type in ('cool', 'both')
 
     interval = 0.5
-    start = microlab.secondSinceStart()
+    start_time = microlab.uptime_seconds()
 
-    logger.info(
-        t['maintaining-specific-temperature'].format(
-            target_temp, duration, tolerance
-        )
-    )
-    # default temp control
+    logger.info(t['maintaining-specific-temperature'].format(target_temp, duration, tolerance))
     logger.debug(t['maintaining-default-temperature'])
 
     while True:
@@ -204,31 +196,30 @@ def maintain_simple(microlab: MicroLabHardware, parameters: dict) -> Generator[O
         try:
             current_temp = microlab.getTemp()
             logger.debug(f'temperature @ {current_temp}')
-            if (microlab.secondSinceStart() - start) >= duration:
+            if (microlab.uptime_seconds() - start_time) >= duration:
                 microlab.turnHeaterOff()
                 microlab.turnHeaterPumpOff()
                 microlab.turnCoolerOff()
                 yield None
+
             if heater_enabled:
                 if current_temp > target_temp:
                     microlab.turnHeaterOff()
                     microlab.turnHeaterPumpOff()
-                if current_temp < target_temp - tolerance:
+                elif current_temp < target_temp - tolerance:
                     microlab.turnHeaterOn()
                     microlab.turnHeaterPumpOn()
             if cooler_enabled:
                 if current_temp > target_temp + tolerance:
                     microlab.turnCoolerOn()
-                if current_temp < target_temp:
+                elif current_temp < target_temp:
                     microlab.turnCoolerOff()
 
             yield interval
 
         except Exception as e:
             logger.error(
-                t['error-maintaining-temperature'].format(
-                    current_temp, target_temp, e
-                )
+                t['error-maintaining-temperature'].format(current_temp, target_temp, e)
             )
 
 
@@ -258,31 +249,25 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
         * If the task is finished and no further scheduling is required, yield `None`.
         * Otherwise, yield a float indicating how many seconds to wait before this generator should be re‐invoked.
     """
-    translated = load_translation()  # not 't' for avoiding ambiguity with already present t variable
-
+    translations = load_translation()  # not 't' for avoiding ambiguity with already present t variable
     logger = MultiprocessingLogger.get_logger(__name__)
 
     duration = parameters['time']
-    targetTemp = parameters['temp']
+    target_temp = parameters['temp']
     tolerance = parameters['tolerance']
-    if 'type' in parameters:
-        maintainType = parameters['type']
-    else:
-        maintainType = 'both'
-    heaterEnabled = maintainType == 'heat' or maintainType == 'both'
-    coolerEnabled = maintainType == 'cool' or maintainType == 'both'
+    maintain_type = parameters.get('type', 'both')
+    heater_enabled = maintain_type in ('heat', 'both')
+    cooler_enabled = maintain_type in ('cool', 'both')
 
-    start = microlab.secondSinceStart()
+    start_time = microlab.uptime_seconds()
 
     logger.info(
-        translated['maintaining-specific-temperature'].format(
-            targetTemp, duration, tolerance
-        )
+        translations['maintaining-specific-temperature'].format(target_temp, duration, tolerance)
     )
-    logger.debug(translated['maintaning-PID-temperature'])
+    logger.debug(translations['maintaning-PID-temperature'])
 
     pidConfig = microlab.getPIDConfig()
-    pid = PID(pidConfig['P'], pidConfig['I'], pidConfig['D'], setpoint=targetTemp)
+    pid = PID(pidConfig['P'], pidConfig['I'], pidConfig['D'], setpoint=target_temp)
     maxOutput = pidConfig['maxOutput']
     minOutput = pidConfig['minOutput']
     pid.output_limits = (minOutput, maxOutput)
@@ -301,7 +286,7 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
         control = pid(currentTemp)
         p, i, d = pid.components
         logger.info(
-            translated['heater-PID-values'].format(currentTemp, control, p, i, d)
+            translations['heater-PID-values'].format(currentTemp, control, p, i, d)
         )
 
         # We split the duty cycle length up into 1 second boxes,
@@ -310,13 +295,13 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
         # control/(max or minOutput) percent of the duty cycle,
         # rounded to the nearest second
         for i in range(1, dutyCycleLength):
-            if heaterEnabled:
+            if heater_enabled:
                 if control * heaterCycleSecond > i:
                     microlab.turnHeaterOn()
                 else:
                     microlab.turnHeaterOff()
 
-            if coolerEnabled:
+            if cooler_enabled:
                 if control * coolerCycleSecond > i:
                     microlab.turnCoolerOn()
                 else:
@@ -326,9 +311,9 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
             t = microlab.getTemp()
             a = pid(t)
             p, i, d = pid.components
-            logger.debug(translated['heater-PID-values'].format(t, a, p, i, d))
+            logger.debug(translations['heater-PID-values'].format(t, a, p, i, d))
 
-        if (microlab.secondSinceStart() - start) >= duration:
+        if (microlab.uptime_seconds() - start_time) >= duration:
             microlab.turnHeaterOff()
             microlab.turnHeaterPumpOff()
             microlab.turnCoolerOff()
@@ -353,56 +338,52 @@ def pump(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
         * Otherwise, yield a float indicating how many seconds to wait before this generator should be re‐invoked.
     """
     t = load_translation()
-
     logger = MultiprocessingLogger.get_logger(__name__)
 
     pump_name = parameters['pump']
-    volume = parameters['volume']
-    duration = parameters.get('time', None)
-    logger.info(t['dispensing'].format(volume, pump_name))
-    pump_speed_limits = microlab.getPumpSpeedLimits(pump_name)
-    min_speed = pump_speed_limits['minSpeed']
-    max_speed = pump_speed_limits['maxSpeed']
-    ml_per_second = max_speed
-    if duration:
-        ml_per_second = volume / duration
+    target_volume = parameters['volume']
+    duration = parameters.get('time')
+    logger.info(t['dispensing'].format(target_volume, pump_name))
 
-    if ml_per_second > max_speed:
-        logger.info(
-            t['dispensing-max-speed'].format(
-                pump_name
-            )
-        )
-        dispense_time = microlab.pumpDispense(pump_name, volume, None)
+    limits = microlab.getPumpSpeedLimits(pump_name)
+    min_rate, max_rate = limits['minSpeed'], limits['maxSpeed']
+    rate = (target_volume / duration) if duration else max_rate
+
+    # Fast‐or‐normal dispensing (rate >= min_rate)
+    if rate >= min_rate:
+        if rate > max_rate:
+            logger.info(t['dispensing-max-speed'].format(pump_name))
+            dispense_time = microlab.pumpDispense(pump_name, target_volume, None)
+        else:
+            dispense_time = microlab.pumpDispense(pump_name, target_volume, duration)
         yield dispense_time
-        yield None
-    elif min_speed <= ml_per_second <= max_speed:
-        dispense_time = microlab.pumpDispense(pump_name, volume, duration)
-        yield dispense_time
-        yield None
-    # If desired dispense speed is below what the pump can physically support,
-    # dispense in 1 seconds bursts at slowest possible speed, waiting
-    # for required time to emulate slower dispensing speed.
-    elif ml_per_second < min_speed:
-        onTime = ml_per_second / min_speed
-        volumeDispensed = 0
-        while volumeDispensed + min_speed < volume:
-            startTime = microlab.secondSinceStart()
-            microlab.pumpDispense(pump_name, min_speed, 1)
-            volumeDispensed += min_speed
-            # Keep track of and subtract off execution time
-            # from the total time taken for each step.
-            # helps keep the actual task completion time more accurate
-            # to desired duration
-            executionTime = microlab.secondSinceStart() - startTime
-            logger.debug(t['dispensing-time'].format(executionTime))
-            yield 1.0 / onTime - executionTime
-        # dispense remaining volume
-        remaining = volume - volumeDispensed
-        microlab.pumpDispense(pump_name, remaining)
-        # shorten duration based on amount that remains to be dispensed
-        yield (1 / onTime) * remaining / min_speed
-        yield None
+
+    else:
+        # If desired dispense speed is below what the pump can physically support,
+        # dispense in 1 seconds bursts at slowest possible speed, waiting
+        # for required time to emulate slower dispensing speed.
+        # NOTE: subtracting 1.0 accounts for the one second that pump actually spend pumping each chunk at min_rate.
+        interval = (min_rate / rate) - 1.0
+        dispensed_volume = 0.0
+
+        while dispensed_volume + min_rate < target_volume:
+            start = microlab.uptime_seconds()
+            microlab.pumpDispense(pump_name, min_rate, duration=1)
+            dispensed_volume += min_rate
+
+            exec_time = microlab.uptime_seconds() - start
+            logger.debug(t['dispensing-time'].format(exec_time))
+
+            # Wait the remainder of the burst cycle
+            yield max(interval - exec_time, 0.0)
+
+        # Dispense any remaining volume
+        remaining_volume = target_volume - dispensed_volume
+        if remaining_volume > 0:
+            microlab.pumpDispense(pump_name, remaining_volume, duration=None)
+            yield remaining_volume / rate
+
+    # Signal completion exactly once
     yield None
 
 
@@ -424,10 +405,10 @@ def stir(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
 
     duration = parameters['time']
     logger.info(t['stirring'].format(duration))
-    start = microlab.secondSinceStart()
+    start = microlab.uptime_seconds()
     microlab.turnStirrerOn()
     while True:
-        if (microlab.secondSinceStart() - start) >= duration:
+        if (microlab.uptime_seconds() - start) >= duration:
             microlab.turnStirrerOff()
             yield None
         yield 1.0
@@ -444,7 +425,7 @@ RECIPE_COMMANDS: dict[str, Callable[..., Generator[Optional[float], Any, Any]]] 
 }
 
 
-def run_task(microlab: MicroLabHardware, task: str, parameters: dict) -> RecipeTaskRunner:
+def run_task(microlab: MicroLabHardware, task: str, parameters: dict) -> RecipeTaskRunnable:
     """
     Creates a generator for running a task.
 
@@ -458,10 +439,10 @@ def run_task(microlab: MicroLabHardware, task: str, parameters: dict) -> RecipeT
         Parameters to pass to the task. The actual object definition depends on the task.
 
     :return:
-        A `RecipeTaskRunner` that has instantiated generator to execute one tick of a task per call of next()
+        A `RecipeTaskRunnable` that has instantiated generator to execute one tick of a task per call of next()
     """
     fn: Callable[..., Generator[Optional[float], Any, Any]] = RECIPE_COMMANDS[task]
-    return RecipeTaskRunner(
+    return RecipeTaskRunnable(
         fn=fn(microlab, parameters),
         parameters=parameters,
         is_done=False,

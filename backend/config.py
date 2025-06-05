@@ -23,7 +23,8 @@ class MicrolabConfig:
     """
     def __init__(self):
         fqfp_microlab_ini = path.join(MICROLAB_CONFIG_DIR, 'microlab.ini')
-        self.config = ConfigObj(fqfp_microlab_ini, configspec=path.join(BACKEND_DIR, 'defaultconfig.ini'))
+        fqfp_config_spec = path.join(BACKEND_DIR, 'defaultconfig.ini')
+        self.config = ConfigObj(infile=fqfp_microlab_ini, configspec=fqfp_config_spec)
 
     def validate_config(self) -> None:
         validator = Validator()

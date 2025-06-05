@@ -1,6 +1,4 @@
 import logging
-import textwrap
-import io
 
 
 class MultiLineFormatter(logging.Formatter):

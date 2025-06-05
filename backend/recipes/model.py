@@ -93,7 +93,7 @@ class MicrolabRecipeStep(BaseModel):
         default_factory=list,
         description='List of tasks to execute during this step'
     )
-    done: Optional[bool] = Field(
+    is_final: Optional[bool] = Field(
         default=None,
         description='Is true when this step is the final step of this recipe'
     )
@@ -101,7 +101,7 @@ class MicrolabRecipeStep(BaseModel):
     @model_validator(mode='after')
     def step_has_one_of_next_or_options(self):
         t = load_translation()
-        if self.done:
+        if self.is_final:
             return self
 
         has_next = bool(self.next)
@@ -136,57 +136,57 @@ class MicrolabRecipe(BaseModel):
     )
 
     @model_validator(mode='after')
-    def recipe_steps_within_range(self):
+    def validate_step_and_option_indices(self):
+        t = load_translation()
         length = len(self.steps)
-        for index, step in enumerate(self.steps):
-            if step.next and (step.next < 0 or step.next >= length):
-                t = load_translation()
-                raise ValueError(t['error-step-outside-range'].format(step.next, index))
-        return self
 
-    @model_validator(mode='after')
-    def recipe_options_within_range(self):
-        length = len(self.steps)
         for index, step in enumerate(self.steps):
+            # Check that step.next is within range
+            if step.next is not None and (step.next < 0 or step.next >= length):
+                raise ValueError(
+                    t['error-step-outside-range'].format(step.next, index)
+                )
+
+            # Check that each option.next is within range
             if step.options:
                 for option in step.options:
                     if option.next < 0 or option.next >= length:
-                        t = load_translation()
                         raise ValueError(
                             t['error-step-option-outside-range'].format(option.next, option.text, index)
                         )
+
         return self
 
     @model_validator(mode='after')
     def recipe_can_always_finish(self):
         """
         Validate that every step has a possible path to 
-        reaching a step that is marked as 'done'
+        reaching a step that is marked as 'is_final'
         """
-        finishible_steps: list[int] = []
-        for index, step in enumerate(self.steps):
-            if index in finishible_steps:
-                continue
-            seen_steps = []
-            unchecked_steps = [index]
-            while len(unchecked_steps) != 0:
-                next_step_index = unchecked_steps.pop()
-                seen_steps.append(next_step_index)
-                next_step = self.get_step(next_step_index)
-                if next_step.done:
-                    finishible_steps.append(index)
-                    break
-                if next_step.next:
-                    unchecked_steps.append(next_step.next)
-                elif next_step.options:
-                    next_options = map(lambda x: x.next, next_step.options)
-                    unchecked_next_options = filter(
-                        lambda x: (x not in seen_steps) and (x not in unchecked_steps), next_options
-                    )
-                    unchecked_steps += list(unchecked_next_options)
-            if index not in finishible_steps:
-                t = load_translation()
-                raise ValueError(t['error-cant-reach-final-step'].format(index=index))
+        t = load_translation()
+
+        def can_reach_final_step(idx: int, visited: set[int]) -> bool:
+            if idx in visited:
+                return False
+            visited.add(idx)
+
+            step: MicrolabRecipeStep = self.steps[idx]
+            if step.is_final:
+                return True
+
+            if step.next is not None and can_reach_final_step(step.next, visited):
+                return True
+
+            if step.options:
+                for opt in step.options:
+                    if opt.next is not None and can_reach_final_step(opt.next, visited):
+                        return True
+
+            return False
+
+        for idx in range(len(self.steps)):
+            if not can_reach_final_step(idx, set()):
+                raise ValueError(t['error-cant-reach-final-step'].format(index=idx))
 
         return self
 
@@ -199,9 +199,10 @@ class MicrolabRecipe(BaseModel):
         return self.steps[n]
 
 
-class RecipeTaskRunner(BaseModel):
+class RecipeTaskRunnable(BaseModel):
     fn: Generator[Optional[float], Any, Any] = Field(
-        description='Generator returned by executing the command function. Yields the next step index (or None) when run.'
+        description='Generator returned by executing the command function. '
+                    'Yields duration in seconds to wait before re‐invocation or None when done.'
     )
     parameters: dict[str, Any] = Field(
         description='Parameters that were passed into the command function.'
@@ -212,7 +213,7 @@ class RecipeTaskRunner(BaseModel):
     next_time: datetime = Field(
         description='Timestamp for when this command should run next.'
     )
-    exception: Optional[Exception] = Field(
-        description='Exception raised by the command.',
-        default=None
+    exception: Optional[str] = Field(
+        default=None,
+        description='Stringified exception message, if the command raised an error.'
     )

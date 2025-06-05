@@ -16,6 +16,8 @@
 - Refactored code for Pythonic compliance: added type hints, enhanced readability, and fixed minor type-checking bugs. 
 - Performance improvements, such as caching for `localization.load_translation` function or replacing `time.sleep` with synchronization primitives.
 - Improved multiprocess queues lifecycle management.
+- Expanded UnitTests
+- Expanded usage of Pydantic models
 
 ## [0.6.0]
 

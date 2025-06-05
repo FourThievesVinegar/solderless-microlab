@@ -117,7 +117,7 @@
                 "baseTask": "pump",
                 "parameters": {"pump": "X", "volume": 50}
             }],
-            "icon": "syringe"
+            "icon": "load_syringe"
         },
         {
             "nr": 13,
@@ -131,7 +131,7 @@
         {
             "nr": 14,
             "message": "Reaction complete. Dry and rinse the product.",
-            "done": true,
+            "is_final": true,
             "icon": "reaction_complete"
         }
     ]

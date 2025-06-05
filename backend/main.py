@@ -106,17 +106,18 @@ class BackendManager:
         for proc in self.processes:
             proc.join()
 
-        # Ensure any remaining log messages are processed
-        while MultiprocessingLogger.remaining_logs_to_process():
-            MultiprocessingLogger.process_logs()
+        # Shut down the logging thread (final drain happens inside)
+        MultiprocessingLogger.stop_processing_thread()
 
 
 def main() -> None:
+    # Validate config early: this converts config properties to their proper types, such as integer or boolean
+    config.microlab_config.validate_config()
+
     # must initialize logger before any Queue()/Process() creations
     MultiprocessingLogger.initialize_logger()
 
-    # Validate config early
-    config.microlab_config.validate_config()
+    # start-up processes
     backend_manager = BackendManager()
     backend_manager.run()
 

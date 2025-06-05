@@ -112,3 +112,8 @@ def test_sort_device_configs_sorts_by_dependencies():
             "dependencies": ["2"]
         },
     ]
+
+
+# if __name__ == '__main__':
+#     import sys
+#     sys.exit(pytest.main([__file__]))

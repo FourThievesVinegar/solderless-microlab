@@ -6,9 +6,8 @@ Each recipe step can also call a function that changes the desired state of the 
 in the tasks.py file and the parameters they accept can be seen in the "baseTask" definition in the
 documentation of the plan object below.
 
-You'll probably want to take a look at sample recipe in the recipes.files package. This will
-give a good idea of what the plan object looks like. For reference we will also document the
-plan object here.
+You'll probably want to take a look at sample .json recipe in the data/recipes/ directory. This will
+give a good idea of what the plan object looks like. For reference, we will also document the plan object here.
 
 plan object
     title
@@ -77,22 +76,21 @@ plan object
                             The parameters to pass to the task function. This
                             is a dictionary that will be passed as the single
                             parameter to this function.
-                done
-                    Always set to true and signals that the recipe was
-                    successfully completed.
+                is_final
+                    When True - signals that this is recipe's final step
 """
 from datetime import datetime, timedelta, timezone
-from enum import StrEnum
+from enum import Enum
 from typing import Any, Optional
 
 from hardware.core import MicroLabHardware
 from localization import load_translation
 from recipes import tasks
-from recipes.model import MicrolabRecipe, MicrolabRecipeTask, MicrolabRecipeOption, RecipeTaskRunner
+from recipes.model import MicrolabRecipe, MicrolabRecipeTask, RecipeTaskRunnable, MicrolabRecipeStep
 from util.logger import MultiprocessingLogger
 
 
-class RecipeState(StrEnum):
+class RecipeState(str, Enum):
     IDLE = 'idle'
     ERROR = 'error'
     RECIPE_UNSUPPORTED = 'recipe_unsupported'
@@ -116,7 +114,7 @@ class RunningRecipe:
         self.option_names: list[str] = []
         self.icon: str = ''
         self.step_eta: Optional[str] = None
-        self.current_tasks: list[RecipeTaskRunner] = []
+        self.current_tasks: list[RecipeTaskRunnable] = []
         self.recipe: MicrolabRecipe = recipe
         self.title: str = recipe.title if recipe.title else ''
 
@@ -217,7 +215,7 @@ class RunningRecipe:
         if self.status == RecipeState.RUNNING:
             if self.are_tasks_complete():
                 current_step = self.recipe.get_step(self.step)
-                if current_step.done:
+                if current_step.is_final:
                     self.stop()
                 elif current_step.next:
                     self.step = current_step.next
@@ -262,7 +260,7 @@ class RunningRecipe:
             None
         """
         self.logger.info(self.t['running-step'].format(self.step))
-        step = self.recipe.get_step(self.step)
+        step: MicrolabRecipeStep = self.recipe.get_step(self.step)
         self.logger.info(self.t['running-step'].format(step))
         self.message = step.message
         self.step_eta = None
@@ -288,23 +286,22 @@ class RunningRecipe:
             tasks_to_run += step.tasks
 
         if tasks_to_run:  # Run all tasks for the step
-            for task in tasks_to_run:
-                if task.baseTask and task.baseTask != 'humanTask':
-                    self.current_tasks.append(
-                        tasks.run_task(self.microlab_hardware, task.baseTask, task.parameters)
-                    )
+            # Launch all non‐human tasks and collect their generator objects
+            self.current_tasks += [
+                tasks.run_task(self.microlab_hardware, t.baseTask, t.parameters)
+                for t in tasks_to_run if t.baseTask and t.baseTask != 'humanTask'
+            ]
 
-            tasks_with_durations = filter(
-                lambda task: task.parameters and ('time' in task.parameters), tasks_to_run
-            )
-            task_durations: list[int] = list(map(lambda task: task.parameters['time'], tasks_with_durations))
+            # Compute the maximum 'time' parameter (if any) to set step_eta
+            task_durations: list[int] = [t.parameters['time'] for t in tasks_to_run if 'time' in t.parameters]
             if task_durations:
-                duration = timedelta(seconds=max(task_durations))
-                self.step_eta = (datetime.now(tz=timezone.utc) + duration).isoformat()
+                self.step_eta = (
+                    datetime.now(tz=timezone.utc) + timedelta(seconds=max(task_durations))
+                ).isoformat()
 
             self.status = RecipeState.RUNNING
 
-        if step.done is True:
+        if step.is_final is True:
             self.status = RecipeState.COMPLETE
 
     def are_tasks_complete(self) -> bool:
@@ -346,7 +343,8 @@ class RunningRecipe:
                         task.next_time = datetime.now() + duration
                 except Exception as e:
                     self.logger.exception(str(e))
-                    task.exception = e
+                    task.exception = str(e)
                     self.status = RecipeState.ERROR
                     self.message = self.t['task-failed']
                     self.stop()
+                    self.logger.error(f'Stopping recipe {self.recipe.fileName}')

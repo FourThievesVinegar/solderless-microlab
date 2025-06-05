@@ -93,7 +93,6 @@ def start(name: str) -> tuple[bool, str]:
 
     state.current_recipe = RunningRecipe(recipe, microlab_hardware)
     state.current_recipe.start()
-
     return True, ''
 
 
