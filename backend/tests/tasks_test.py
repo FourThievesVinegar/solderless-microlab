@@ -203,7 +203,7 @@ def test_cool_done(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_needed(microlab):
-    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 3, "time": 5})
+    fn = tasks.maintain_heat(microlab, {"temp": 30, "tolerance": 3, "time": 5})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
@@ -214,7 +214,7 @@ def test_maintain_heat_needed(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_within_tolerance(microlab):
-    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_heat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     microlab.turnHeaterOn = MagicMock()
     microlab.turnHeaterOff = MagicMock()
     res = next(fn)
@@ -224,12 +224,12 @@ def test_maintain_heat_within_tolerance(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 18}})
 def test_maintain_heat_time_finished(microlab):
-    fn = tasks.maintainHeat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_heat(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     res = next(fn)
     microlab.turnCoolerOff = MagicMock()
     microlab.turnHeaterOff = MagicMock()
-    microlab.secondSinceStart = MagicMock()
-    microlab.secondSinceStart.return_value = 6
+    microlab.uptime_seconds = MagicMock()
+    microlab.uptime_seconds.return_value = 6
     res = next(fn)
     assert microlab.turnCoolerOff.called
     assert microlab.turnHeaterOff.called
@@ -241,7 +241,7 @@ def test_maintain_heat_time_finished(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_needed(microlab):
-    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 3, "time": 5})
+    fn = tasks.maintain_cool(microlab, {"temp": 30, "tolerance": 3, "time": 5})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
@@ -252,7 +252,7 @@ def test_maintain_cool_needed(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_within_tolerance(microlab):
-    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_cool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     microlab.turnCoolerOn = MagicMock()
     microlab.turnCoolerOff = MagicMock()
     res = next(fn)
@@ -262,12 +262,12 @@ def test_maintain_cool_within_tolerance(microlab):
 
 @pytest.mark.microlab_data({"reactor-temperature-controller": {"temp": 40}})
 def test_maintain_cool_time_finished(microlab):
-    fn = tasks.maintainCool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
+    fn = tasks.maintain_cool(microlab, {"temp": 30, "tolerance": 15, "time": 5})
     res = next(fn)
     microlab.turnCoolerOff = MagicMock()
     microlab.turnHeaterOff = MagicMock()
-    microlab.secondSinceStart = MagicMock()
-    microlab.secondSinceStart.return_value = 6
+    microlab.uptime_seconds = MagicMock()
+    microlab.uptime_seconds.return_value = 6
     res = next(fn)
     assert microlab.turnCoolerOff.called
     assert microlab.turnHeaterOff.called
@@ -291,15 +291,14 @@ def test_stir_time_finished(microlab):
     fn = tasks.stir(microlab, {"time": 5})
     res = next(fn)
     microlab.turnStirrerOff = MagicMock()
-    microlab.secondSinceStart = MagicMock()
-    microlab.secondSinceStart.return_value = 6
+    microlab.uptime_seconds = MagicMock()
+    microlab.uptime_seconds.return_value = 6
     res = next(fn)
     assert microlab.turnStirrerOff.called
     assert res is None
 
 
 # PUMP DISPENSE
-
 
 def test_pump_x(microlab):
     fn = tasks.pump(microlab, {"pump": "X", "volume": 0.1})
@@ -337,24 +336,186 @@ def test_pumps_slow_dispense(microlab):
     fn = tasks.pump(microlab, {"pump": "X", "volume": 1, "time": 100})
     for i in range(0, 10):
         res = next(fn)
-        assert 10 == pytest.approx(res, 0.001)
+        assert 9 == pytest.approx(res, 0.001)
     res = next(fn)
     assert 0 == pytest.approx(res)
 
     res = next(fn)
     assert res is None
 
+@pytest.mark.microlab_data({"reactor-reagent-dispenser": {"minSpeed": 1.0, "maxSpeed": 5.0}})
+def test_pumps_within_speed(monkeypatch, microlab) -> None:
+    """
+    If desired rate is between minSpeed and maxSpeed, pumpDispense should be called once
+    with the requested duration, then yield exactly one dispense_time and one final None.
+    """
+    # volume=5, time=5 => rate=1.0 mL/s, exactly minSpeed
+    monkeypatch.setattr(
+        microlab,
+        "getPumpSpeedLimits",
+        lambda pump_name: {"minSpeed": 1.0, "maxSpeed": 5.0}
+    )
+    monkeypatch.setattr(
+        microlab,
+        "pumpDispense",
+        lambda pump_name, volume, duration: 2.5
+    )
+    # uptime_seconds isn’t used in this branch, but define it anyway
+    monkeypatch.setattr(
+        microlab,
+        "uptime_seconds",
+        lambda: 0.0
+    )
+
+    fn = tasks.pump(microlab, {"pump": "X", "volume": 5, "time": 5})
+
+    # 1) First yield: dispense_time returned by pumpDispense
+    dispense_time = next(fn)
+    assert dispense_time == pytest.approx(2.5)
+
+    # 2) Second yield: the single `None` (completion)
+    res = next(fn)
+    assert res is None
+
+    # Generator should now be exhausted
+    with pytest.raises(StopIteration):
+        next(fn)
+
+
+@pytest.mark.microlab_data({"reactor-reagent-dispenser": {"minSpeed": 1.0, "maxSpeed": 5.0}})
+def test_pumps_over_max_speed(monkeypatch, microlab) -> None:
+    """
+    If desired rate exceeds maxSpeed, pumpDispense should be called with duration=None,
+    then yield exactly one dispense_time and one final None.
+    """
+    # volume=10, time=1 => rate=10 mL/s > maxSpeed=5
+    monkeypatch.setattr(
+        microlab,
+        "getPumpSpeedLimits",
+        lambda pump_name: {"minSpeed": 1.0, "maxSpeed": 5.0}
+    )
+    monkeypatch.setattr(
+        microlab,
+        "pumpDispense",
+        lambda pump_name, volume, duration: 3.14
+    )
+    monkeypatch.setattr(
+        microlab,
+        "uptime_seconds",
+        lambda: 0.0
+    )
+
+    fn = tasks.pump(microlab, {"pump": "X", "volume": 10, "time": 1})
+
+    # 1) First yield: dispense_time at max speed
+    dispense_time = next(fn)
+    assert dispense_time == pytest.approx(3.14)
+
+    # 2) Second yield: the single `None` (completion)
+    res = next(fn)
+    assert res is None
+
+    # Generator should now be exhausted
+    with pytest.raises(StopIteration):
+        next(fn)
+
+
+@pytest.mark.microlab_data({"reactor-reagent-dispenser": {"minSpeed": 1.0, "maxSpeed": 5.0}})
+def test_pumps_without_time_uses_max_speed(monkeypatch, microlab) -> None:
+    """
+    If 'time' is omitted, rate defaults to maxSpeed; behavior should match the 'within-speed' branch,
+    yielding exactly one dispense_time and one final None.
+    """
+    # Omit 'time' → volume=5, so rate = maxSpeed = 5.0
+    monkeypatch.setattr(
+        microlab,
+        "getPumpSpeedLimits",
+        lambda pump_name: {"minSpeed": 1.0, "maxSpeed": 5.0}
+    )
+    monkeypatch.setattr(
+        microlab,
+        "pumpDispense",
+        lambda pump_name, volume, duration: 1.11
+    )
+    monkeypatch.setattr(
+        microlab,
+        "uptime_seconds",
+        lambda: 0.0
+    )
+
+    fn = tasks.pump(microlab, {"pump": "X", "volume": 5})
+
+    # 1) First yield: dispense_time at max speed
+    dispense_time = next(fn)
+    assert dispense_time == pytest.approx(1.11)
+
+    # 2) Second yield: single `None` (completion)
+    res = next(fn)
+    assert res is None
+
+    with pytest.raises(StopIteration):
+        next(fn)
+
+
+@pytest.mark.microlab_data({"reactor-reagent-dispenser": {"minSpeed": 2.0, "maxSpeed": 5.0}})
+def test_pumps_burst_mode_with_partial(monkeypatch, microlab) -> None:
+    """
+    If desired rate is below minSpeed, the function should:
+      1. Dispense in repeated 1-second bursts at minSpeed,
+      2. Yield (interval - exec_time) for each full burst (with exec_time=0 here),
+      3. After exhausting full bursts, yield a final fractional delay for the remaining volume,
+      4. Then yield exactly one None (completion).
+    """
+    # volume=5, time=4 => rate=1.25 < minSpeed=2.0
+    monkeypatch.setattr(
+        microlab,
+        "getPumpSpeedLimits",
+        lambda pump_name: {"minSpeed": 2.0, "maxSpeed": 5.0}
+    )
+    # Simulate instant execution of pumpDispense so exec_time = 0
+    monkeypatch.setattr(
+        microlab,
+        "uptime_seconds",
+        lambda: 100.0
+    )
+    monkeypatch.setattr(
+        microlab,
+        "pumpDispense",
+        lambda pump_name, volume, duration=None: None
+    )
+
+    fn = tasks.pump(microlab, {"pump": "X", "volume": 5, "time": 4})
+
+    # Compute expected interval = (minSpeed / rate) - 1 = (2.0 / 1.25) - 1 = 1.6 - 1 = 0.6
+    expected_interval = (2.0 / 1.25) - 1.0  # 0.6
+
+    # Two full bursts: dispenses 2 mL twice → 4 mL total → yields two intervals
+    for _ in range(2):
+        res = next(fn)
+        assert res == pytest.approx(expected_interval, rel=1e-3)
+
+    # Now 4 mL has been dispensed; remaining = 1 mL
+    # Final fractional wait = remaining / rate = 1 / 1.25 = 0.8
+    final_fractional = next(fn)
+    assert final_fractional == pytest.approx(0.8, rel=1e-3)
+
+    # Next: single None (completion)
+    res = next(fn)
+    assert res is None
+
+    # Generator should now be exhausted
+    with pytest.raises(StopIteration):
+        next(fn)
+
 
 # MAINTAIN PID
 
-
-@pytest.mark.skip(reason="temporary bypass to restore GitHub build workflow")
 @pytest.mark.microlab_data(
     {"reactor-temperature-controller": {"pidConfig": {"P": 1, "I": 0.5, "D": 5}}}
 )
 def test_maintain_PID_heat_needed(microlab):
     res = None
-    fn = tasks.maintainPID(microlab, {"temp": 100, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 100, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     for i in range(0, 9):
@@ -377,7 +538,6 @@ def test_maintain_PID_heat_needed(microlab):
     assert res is not None
 
 
-@pytest.mark.skip(reason="temporary bypass to restore GitHub build workflow")
 @pytest.mark.microlab_data(
     {
         "reactor-temperature-controller": {
@@ -388,7 +548,7 @@ def test_maintain_PID_heat_needed(microlab):
 )
 def test_maintain_PID_cool_needed(microlab):
     res = None
-    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     for i in range(0, 19):
@@ -420,7 +580,7 @@ def test_maintain_PID_cool_needed(microlab):
     }
 )
 def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
-    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
     res = next(fn)
@@ -438,17 +598,22 @@ def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
     }
 )
 def test_maintain_PID_turns_off_heater_pump_when_done(microlab):
-    fn = tasks.maintainPID(microlab, {"temp": 40, "tolerance": 3, "time": 60})
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turnHeaterPumpOn = MagicMock()
     microlab.turnHeaterPumpOff = MagicMock()
-    microlab.secondSinceStart = MagicMock()
-    microlab.secondSinceStart.return_value = 0
+    microlab.uptime_seconds = MagicMock()
+    microlab.uptime_seconds.return_value = 0
     res = next(fn)
     assert microlab.turnHeaterPumpOn.called
     for i in range(0, 59):
-        microlab.secondSinceStart.return_value = i + 2
+        microlab.uptime_seconds.return_value = i + 2
         res = next(fn)
 
     assert microlab.turnHeaterPumpOn.call_count == 1
     assert microlab.turnHeaterPumpOff.call_count == 1
     assert res is None
+
+
+# if __name__ == '__main__':
+#     import sys
+#     sys.exit(pytest.main([__file__]))

@@ -97,7 +97,7 @@ class MicroLabHardware:
         self.turnCoolerOff()
         self.turnStirrerOff()
 
-    def secondSinceStart(self) -> float:
+    def uptime_seconds(self) -> float:
         """
         The number of seconds since this package was started multiplied by config.hardwareSpeedup.
 

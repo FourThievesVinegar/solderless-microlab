@@ -6,9 +6,8 @@ Each recipe step can also call a function that changes the desired state of the 
 in the tasks.py file and the parameters they accept can be seen in the "baseTask" definition in the
 documentation of the plan object below.
 
-You'll probably want to take a look at sample recipe in the recipes.files package. This will
-give a good idea of what the plan object looks like. For reference we will also document the
-plan object here.
+You'll probably want to take a look at sample .json recipe in the data/recipes/ directory. This will
+give a good idea of what the plan object looks like. For reference, we will also document the plan object here.
 
 plan object
     title
@@ -78,84 +77,76 @@ plan object
                             is a dictionary that will be passed as the single
                             parameter to this function.
                 done
-                    Always set to true and signals that the recipe was
-                    successfully completed.
+                    When True - signals that this is recipe's final step
 """
-from typing import Any
-
-from recipes import tasks
-from recipes.model import MicrolabRecipe, MicrolabRecipeTask
-from hardware.core import MicroLabHardware
 from datetime import datetime, timedelta, timezone
 from enum import Enum
-from util.logger import MultiprocessingLogger
+from typing import Any, Optional
 
+from hardware.core import MicroLabHardware
 from localization import load_translation
+from recipes import tasks
+from recipes.model import MicrolabRecipe, MicrolabRecipeTask, RecipeTaskRunnable, MicrolabRecipeStep
+from util.logger import MultiprocessingLogger
 
 
 class RecipeState(str, Enum):
-    IDLE = "idle"
-    ERROR = "error"
-    RECIPE_UNSUPPORTED = "recipe_unsupported"
+    IDLE = 'idle'
+    ERROR = 'error'
+    RECIPE_UNSUPPORTED = 'recipe_unsupported'
     RUNNING = 'running'
     USER_INPUT = 'user_input'
     COMPLETE = 'complete'
 
+
 class RunningRecipe:
-    
-    def __init__(self, recipe: MicrolabRecipe, microlabHardware: MicroLabHardware):
+    def __init__(self, recipe: MicrolabRecipe, microlab_hardware: MicroLabHardware):
         """
-        Constructor. Saves the recipe.
-        :param recipe:
-        The recipe. See module documentation for object description.
+        Executes the recipe.
+        :param recipe: The recipe. See module documentation for object description.
         """
-        self._logger = MultiprocessingLogger.get_logger(__name__)
+        self.logger = MultiprocessingLogger.get_logger(__name__)
+        self.t = load_translation()
 
-        self.step = 0
-        self.message = ''
+        self.step: int = 0
+        self.message: str = ''
         self.status = RecipeState.IDLE
-        self.options = []
-        self.icon = ''
-        self.stepCompletionTime = None
-        self.title = ""
-        self.currentTasks = []
-        self.recipe = recipe
-        if recipe.title:
-            self.title = recipe.title
+        self.option_names: list[str] = []
+        self.icon: str = ''
+        self.step_eta: Optional[str] = None
+        self.current_tasks: list[RecipeTaskRunnable] = []
+        self.recipe: MicrolabRecipe = recipe
+        self.title: str = recipe.title if recipe.title else ''
 
-        self._microlabHardware = microlabHardware
+        self.microlab_hardware: MicroLabHardware = microlab_hardware
 
     def start(self) -> None:
         """
         Start running the recipe. Start from the first step.
         :return:
-        None
+            None
         """
-        t=load_translation()
-        
-        supported, msg = self.isRecipeSupported(self.recipe)
+        supported, msg = self.is_recipe_supported(self.recipe)
         if supported:
-            self._logger.info(t['starting-recipe'].format(self.title))
+            self.logger.info(self.t['starting-recipe'].format(self.title))
             self.step = 0
-            self.runStep()
+            self.run_step()
         else:
-            self._logger.info(t['recipe-unsupported'].format(self.title, msg))
+            self.logger.info(self.t['recipe-unsupported'].format(self.title, msg))
             self.status = RecipeState.RECIPE_UNSUPPORTED
             self.message = msg
 
-    def isRecipeSupported(self, recipe: MicrolabRecipe) -> tuple[bool, str]:
-        t=load_translation()
-      
-        max = self._microlabHardware.getMaxTemperature()
-        minTemp = self._microlabHardware.getMinTemperature()
+    def is_recipe_supported(self, recipe: MicrolabRecipe) -> tuple[bool, str]:
+        max_temp = self.microlab_hardware.getMaxTemperature()
+        min_temp = self.microlab_hardware.getMinTemperature()
         for step in recipe.steps:
             for task in step.tasks:
-                if "temp" in task.parameters:
-                    temp = task.parameters["temp"]
-                    if temp > max:
-                        return False, t['requires-more-temp'].format(temp, max)
-                    if temp < minTemp:
-                        return False, t['requires-less-temp'].format(temp, minTemp)
+                if 'temp' in task.parameters:
+                    temp = task.parameters['temp']
+                    if temp > max_temp:
+                        return False, self.t['requires-more-temp'].format(temp, max_temp)
+                    if temp < min_temp:
+                        return False, self.t['requires-less-temp'].format(temp, min_temp)
         return True, ''
 
     def stop(self) -> None:
@@ -165,19 +156,17 @@ class RunningRecipe:
         :return:
         None
         """
-        t=load_translation()
-        
-        self._logger.info(t['stopping-recipe'].format(self.title))
+        self.logger.info(self.t['stopping-recipe'].format(self.title))
         self.step = -1
         if self.status != RecipeState.ERROR:
             self.status = RecipeState.IDLE
             self.message = ''
-        self.options = []
-        self.stepCompletionTime = None
-        self.stopTasks()
-        self._microlabHardware.turnOffEverything()
+        self.option_names = []
+        self.step_eta = None
+        self.clear_tasks()
+        self.microlab_hardware.turnOffEverything()
 
-    def getStatus(self) -> dict[str, Any]:
+    def get_status(self) -> dict[str, Any]:
         """
         Get the current status of the recipe. This would be updated after
         each step is run.
@@ -209,36 +198,36 @@ class RunningRecipe:
             'status': self.status,
             'step': self.step,
             'message': self.message,
-            'options': self.options,
+            'options': self.option_names,
             'icon': self.icon,
-            'stepCompletionTime': self.stepCompletionTime,
+            'stepCompletionTime': self.step_eta,
         }
         return ret
 
-    def checkStepCompletion(self) -> None:
+    def check_step_completion(self) -> None:
         """
         Checks if the current step has finished executing, 
         and go to the next if so. If final step is completed, stops
         running the recipes.
         :return:
-        None
+            None
         """
         if self.status == RecipeState.RUNNING:
-            if self.areTasksComplete():
-                currentStep = self.recipe.getStep(self.step)
-                if currentStep.done:
+            if self.are_tasks_complete():
+                current_step = self.recipe.get_step(self.step)
+                if current_step.done:
                     self.stop()
-                elif currentStep.next:
-                    self.step = currentStep.next
-                    self.runStep()
+                elif current_step.next:
+                    self.step = current_step.next
+                    self.run_step()
 
-    def selectOption(self, optionValue) -> tuple[bool, str]:
+    def select_option(self, option_value: str) -> tuple[bool, str]:
         """
         Provide user selected input for the current recipe step.
 
-        :param optionValue:
-        The name of the user selected option. This must be one of the strings presented in the
-        "options" list in the getStatus() call.
+        :param option_value:
+        The name of the selected option. This must be one of the strings presented in the
+        "options" list in the get_status() call.
 
         :return:
         tuple
@@ -247,84 +236,75 @@ class RunningRecipe:
             string
                 The message to display to the user in case of failure.
         """
-        t=load_translation()
-        
-        found = False
-        stepOptions = self.recipe.getStep(self.step).options
-        if stepOptions:
-            for option in stepOptions:
-                if option.text == optionValue:
+        is_option_found = False
+        step_options = self.recipe.get_step(self.step).options
+        if step_options:
+            for option in step_options:
+                if option.text == option_value:
                     self.step = option.next
-                    found = True
+                    is_option_found = True
 
-        if not found:
-            return False, t['invalid-option'].format(optionValue)
+        if not is_option_found:
+            return False, self.t['invalid-option'].format(option_value)
+        else:
+            self.run_step()
+            return True, self.message
 
-        ret = self.runStep()
-        return ret, self.message
-
-    def runStep(self) -> bool:
+    def run_step(self) -> None:
         """
         Run the current step of the recipe. The actual step advancement management is left
         to the other methods. If you call this method twice for the same step, that step
         will be executed twice.
 
         :return:
-        list
-            boolean
-                Whether or not the selection succeeded.
-            string
-                The message to display to the user in case of failure.
+            None
         """
-        t=load_translation()
-        
-        self._logger.info(t['running-step'].format(self.step))
-        step = self.recipe.getStep(self.step)
-        self._logger.info(t['running-step'].format(step))
+        self.logger.info(self.t['running-step'].format(self.step))
+        step: MicrolabRecipeStep = self.recipe.get_step(self.step)
+        self.logger.info(self.t['running-step'].format(step))
         self.message = step.message
-        self.stepCompletionTime = None
-        self.currentTasks = []
-        options: list[str] = []
-        tasksToRun = []
+        self.step_eta = None
+        self.current_tasks = []
+        option_names: list[str] = []
+        tasks_to_run: list[MicrolabRecipeTask] = []
 
         if step.options:
             for option in step.options:
-                options.append(option.text)
-            if len(options) > 0:
+                option_names.append(option.text)
+            if len(option_names) > 0:
                 self.status = RecipeState.USER_INPUT
+        self.option_names = option_names
 
-        self.options = options
-
-        if (step.icon):
+        if step.icon:
             self.icon = step.icon
 
-        if step.baseTask and step.baseTask != 'humanTask': # There are tasks to perform
+        if step.baseTask and step.baseTask != 'humanTask':
             # Add the base task
-            tasksToRun = [MicrolabRecipeTask(baseTask=step.baseTask,parameters=step.parameters)]
-        if step.tasks: # We have other tasks, let's append the base task and those other tasks
-            tasksToRun = tasksToRun + step.tasks
+            tasks_to_run = [MicrolabRecipeTask(baseTask=step.baseTask, parameters=step.parameters)]
+        if step.tasks:
+            # This step has additional tasks: append them
+            tasks_to_run += step.tasks
 
-        if tasksToRun: # Run all tasks for the step
-            for task in tasksToRun:
-                if task.baseTask and task.baseTask != 'humanTask':
-                    self.currentTasks.append(tasks.runTask(self._microlabHardware, task.baseTask, task.parameters))
-            
-            tasksWithDurations = filter(
-                lambda task: task.parameters and ('time' in task.parameters), tasksToRun
-            )
-            taskDurations = list(map(lambda task: task.parameters['time'], tasksWithDurations))
-            if len(taskDurations) > 0:
-                duration = timedelta(seconds=max(taskDurations))
-                self.stepCompletionTime = (datetime.now(tz=timezone.utc) + duration).isoformat()
-                
+        if tasks_to_run:  # Run all tasks for the step
+            # Launch all non‐human tasks and collect their generator objects
+            self.current_tasks += [
+                tasks.run_task(self.microlab_hardware, t.baseTask, t.parameters)
+                for t in tasks_to_run if t.baseTask and t.baseTask != 'humanTask'
+            ]
+
+            # Compute the maximum 'time' parameter (if any) to set step_eta
+            task_durations: list[int] = [t.parameters['time'] for t in tasks_to_run if 'time' in t.parameters]
+            if task_durations:
+                self.step_eta = (
+                    datetime.now(tz=timezone.utc) + timedelta(seconds=max(task_durations))
+                ).isoformat()
+
             self.status = RecipeState.RUNNING
 
         if step.done is True:
             self.status = RecipeState.COMPLETE
 
-        return True
-
-    def areTasksComplete(self) -> bool:
+    def are_tasks_complete(self) -> bool:
         """
         Check if all currently running tasks have completed.
         :return:
@@ -333,41 +313,38 @@ class RunningRecipe:
         False
             Some tasks are still running.
         """
-        return all(task["done"] for task in self.currentTasks)
+        return all(task.is_done for task in self.current_tasks)
 
-    def stopTasks(self) -> None:
+    def clear_tasks(self) -> None:
         """
-        Stop the currently running tasks.
+        clears currently running list of tasks.
         :return:
             None
         """
-        # for task in self.currentTasks:
-        #     task.cancel()
-        self.currentTasks = []
+        self.current_tasks = []
 
-    def tickTasks(self) -> None:
+    def tick_tasks(self) -> None:
         """
         Executes one iteration of the current tasks that are scheduled to run.
         :return:
             None
         """
-        t=load_translation()
-        
-        for task in self.currentTasks:
-            if not task["done"] and datetime.now() > task["nextTime"]:
-                self._logger.debug("task is ready for next iteration")
+        for task in self.current_tasks:
+            if not task.is_done and datetime.now() > task.next_time:
+                self.logger.debug('task is ready for next iteration')
                 try:
-                    res = next(task["fn"])
-                    if res == None:
-                        self._logger.debug("task is done")
-                        task["done"] = True
+                    res = next(task.fn)
+                    if res is None:
+                        self.logger.debug('task is done')
+                        task.is_done = True
                     else:
                         duration = timedelta(seconds=res)
-                        self._logger.debug(t['task-scheduled'].format(datetime.now() + duration))
-                        task["nextTime"] = datetime.now() + duration
+                        self.logger.debug(self.t['task-scheduled'].format(datetime.now() + duration))
+                        task.next_time = datetime.now() + duration
                 except Exception as e:
-                    self._logger.exception(str(e))
-                    task["exception"] = e
+                    self.logger.exception(str(e))
+                    task.exception = str(e)
                     self.status = RecipeState.ERROR
-                    self.message = t['task-failed']
+                    self.message = self.t['task-failed']
                     self.stop()
+                    self.logger.error(f'Stopping recipe {self.recipe.fileName}')

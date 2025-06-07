@@ -6,12 +6,12 @@ Configuration is stored on disk at '/etc/microlab/microlab.ini'
 """
 import logging
 import shutil
-from os import environ, makedirs, path, listdir, sep
+from os import environ, makedirs, path, listdir
 
 from configobj import ConfigObj, flatten_errors
 from configobj.validate import Validator
 
-MICROLAB_CONFIG_DIR = environ.get('MICROLAB_CONFIG_DIR', '/etc/microlab')
+MICROLAB_CONFIG_DIR = environ.get('MICROLAB_CONFIG_DIR', '/etc/microlab/')
 BACKEND_DIR = path.dirname(path.abspath(__file__))
 
 
@@ -23,14 +23,12 @@ class MicrolabConfig:
     """
     def __init__(self):
         fqfp_microlab_ini = path.join(MICROLAB_CONFIG_DIR, 'microlab.ini')
-        self.config = ConfigObj(fqfp_microlab_ini, configspec=path.join(BACKEND_DIR, 'defaultconfig.ini'))
+        fqfp_config_spec = path.join(BACKEND_DIR, 'defaultconfig.ini')
+        self.config = ConfigObj(infile=fqfp_microlab_ini, configspec=fqfp_config_spec)
 
     def validate_config(self) -> None:
-
         validator = Validator()
-
         validation_data = self.config.validate(validator, copy=True, preserve_errors=True)
-
         self.config.write()
 
         for entry in flatten_errors(self.config, validation_data):
@@ -51,23 +49,23 @@ class MicrolabConfig:
                     f"Configuration error at {section_string}: '{error}', falling back to default value '{default}'."
                 )
 
-    def reloadConfig(self) -> None:
+    def reload_config(self) -> None:
         """ Reloads microlab configuration from disk. """
         self.config.reload()
 
     ## GENERAL CONFIGURATION ##
     @property
     def dataDirectory(self) -> str:
-        return self.config['GENERAL']['dataDirectory']
+        return path.join(self.config['GENERAL']['dataDirectory'], '')
 
     @property
     def recipesDirectory(self) -> str:
-        return path.join(self.dataDirectory, 'recipes') + sep
+        return path.join(self.dataDirectory, 'recipes', '')
 
     @property
     def logDirectory(self) -> str:
-        return self.config['GENERAL']['logDirectory']
-        
+        return path.join(self.config['GENERAL']['logDirectory'], '')
+
     @property
     def logFileMaxBytes(self) -> int:
         return self.config['GENERAL']['logFileMaxBytes']
@@ -87,7 +85,7 @@ class MicrolabConfig:
     ## FLASK CONFIGURATION ##
     @property
     def apiPort(self) -> str:
-        return environ.get('API_PORT', self.config['FLASK']['apiPort'])  
+        return environ.get('API_PORT', self.config['FLASK']['apiPort'])
 
     ## HARDWARE CONFIGURATION ##
     @property
@@ -106,15 +104,15 @@ class MicrolabConfig:
 
     @property
     def hardwareDirectory(self) -> str:
-        return path.join(self.dataDirectory, 'hardware') + sep
+        return path.join(self.dataDirectory, 'hardware', '')
 
     @property
     def controllerHardwareDirectory(self) -> str:
-        return path.join(self.hardwareDirectory, 'controllerhardware') + sep
+        return path.join(self.hardwareDirectory, 'controllerhardware', '')
 
     @property
     def labHardwareDirectory(self) -> str:
-        return path.join(self.hardwareDirectory, 'labhardware') + sep
+        return path.join(self.hardwareDirectory, 'labhardware', '')
 
     @property
     def labHardware(self) -> str:
@@ -129,43 +127,37 @@ class MicrolabConfig:
 microlab_config = MicrolabConfig()
 
 
-def initialSetup() -> None:
-    fqfp_data_dir = microlab_config.dataDirectory
-    fqfp_recipes = microlab_config.recipesDirectory
-    fqfp_hardware = microlab_config.hardwareDirectory
-    fqfp_hardware_controller = microlab_config.controllerHardwareDirectory
-    fqfp_hardware_lab = microlab_config.labHardwareDirectory
-
+def initial_setup() -> None:
     # ensure data directories exist
-    makedirs(path.dirname(fqfp_data_dir), exist_ok=True)
-    makedirs(path.dirname(fqfp_recipes), exist_ok=True)
-    makedirs(path.dirname(fqfp_hardware), exist_ok=True)
-    makedirs(path.dirname(fqfp_hardware_controller), exist_ok=True)
-    makedirs(path.dirname(fqfp_hardware_lab), exist_ok=True)
-  
+    makedirs(path.dirname(microlab_config.dataDirectory), exist_ok=True)
+    makedirs(path.dirname(microlab_config.recipesDirectory), exist_ok=True)
+    makedirs(path.dirname(microlab_config.hardwareDirectory), exist_ok=True)
+    makedirs(path.dirname(microlab_config.controllerHardwareDirectory), exist_ok=True)
+    makedirs(path.dirname(microlab_config.labHardwareDirectory), exist_ok=True)
+
     # ensure log directory exists
-    makedirs(path.dirname(microlab_config.logDirectory + sep), exist_ok=True)
+    makedirs(path.dirname(microlab_config.logDirectory), exist_ok=True)
 
     # copy builtin controller configurations to data directory,
     # overwriting old configurations if they exist
-    fqfp_default_controller_dir = path.join(BACKEND_DIR, 'data', 'hardware', 'controllerhardware') + sep
+    fqfp_default_controller_dir = path.join(BACKEND_DIR, 'data', 'hardware', 'controllerhardware', '')
     for controllerhardware in listdir(fqfp_default_controller_dir):
         src = path.join(fqfp_default_controller_dir, controllerhardware)
-        dest = path.join(fqfp_hardware_controller, controllerhardware)
+        dest = path.join(microlab_config.controllerHardwareDirectory, controllerhardware)
         shutil.copy2(src, dest)
 
     # copy builtin lab configurations to data directory,
     # overwriting old configurations if they exist
-    fqfp_default_lab_dir = path.join(BACKEND_DIR, 'data', 'hardware', 'labhardware') + sep
+    fqfp_default_lab_dir = path.join(BACKEND_DIR, 'data', 'hardware', 'labhardware', '')
     for labhardware in listdir(fqfp_default_lab_dir):
         src = path.join(fqfp_default_lab_dir, labhardware)
-        dest = path.join(fqfp_hardware_lab, labhardware)
+        dest = path.join(microlab_config.labHardwareDirectory, labhardware)
         shutil.copy2(src, dest)
 
     # copy builtin recipes to data directory,
     # overwriting old recipes if they exist
-    fqfp_default_recipes_dir = path.join(BACKEND_DIR, 'data', 'recipes') + sep
+    fqfp_default_recipes_dir = path.join(BACKEND_DIR, 'data', 'recipes', '')
     for recipe in listdir(fqfp_default_recipes_dir):
         src = path.join(fqfp_default_recipes_dir, recipe)
-        dest = path.join(fqfp_recipes, recipe)
+        dest = path.join(microlab_config.recipesDirectory, recipe)
         shutil.copy2(src, dest)

@@ -37,12 +37,12 @@ class RouteManager:
         list
             a list containing the names of the recipes. ex: ['recipe1','recipe2']
         """
-        recipe_names = list(map(lambda recipe: recipe.title, recipes.core.getRecipeList()))
+        recipe_names = list(map(lambda recipe: recipe.title, recipes.core.get_recipe_list()))
         return jsonify(recipe_names)
 
     # /recipe/<name>
     def _send_recipe(self, name: str) -> Response:
-        recipe = recipes.core.getRecipeByName(name)
+        recipe = recipes.core.get_recipe_by_name(name)
         return jsonify(recipe.model_dump())
 
     # /status
@@ -116,7 +116,7 @@ class RouteManager:
                 Only present if response is "error" and there is a message to present to the user.
         """
         t = load_translation()
-        recipe = recipes.core.getRecipeByName(name)
+        recipe = recipes.core.get_recipe_by_name(name)
         if recipe is None:
             return jsonify({'response': 'error', 'message': t['recipe-not-found']}), HTTPStatus.NOT_FOUND
 
@@ -221,7 +221,7 @@ class RouteManager:
         """
 
         t = load_translation()
-        recipe = recipes.core.getRecipeByName(name)
+        recipe = recipes.core.get_recipe_by_name(name)
         try:
             os.remove(join(config.recipesDirectory, secure_filename(recipe.fileName)))
             return jsonify({'response': 'ok'}), HTTPStatus.OK
