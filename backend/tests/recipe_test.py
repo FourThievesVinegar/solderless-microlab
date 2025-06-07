@@ -138,7 +138,7 @@ def basic_recipe():
             {
                 "nr": 14,
                 "message": "Reaction complete. Dry and rinse the product.",
-                "is_final": True,
+                "done": True,
                 "icon": "reaction_complete"
             }
         ]

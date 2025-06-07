@@ -76,7 +76,7 @@ plan object
                             The parameters to pass to the task function. This
                             is a dictionary that will be passed as the single
                             parameter to this function.
-                is_final
+                done
                     When True - signals that this is recipe's final step
 """
 from datetime import datetime, timedelta, timezone
@@ -215,7 +215,7 @@ class RunningRecipe:
         if self.status == RecipeState.RUNNING:
             if self.are_tasks_complete():
                 current_step = self.recipe.get_step(self.step)
-                if current_step.is_final:
+                if current_step.done:
                     self.stop()
                 elif current_step.next:
                     self.step = current_step.next
@@ -301,7 +301,7 @@ class RunningRecipe:
 
             self.status = RecipeState.RUNNING
 
-        if step.is_final is True:
+        if step.done is True:
             self.status = RecipeState.COMPLETE
 
     def are_tasks_complete(self) -> bool:

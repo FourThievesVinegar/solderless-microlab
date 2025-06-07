@@ -16,9 +16,9 @@ def test_step_requires_either_next_or_options() -> None:
     """
     A non-final step must have either 'next' or 'options', but not both.
     """
-    # Missing both next and options, is_final=False -> ValueError
+    # Missing both next and options, MicrolabRecipeStep.done=False -> ValueError
     with pytest.raises(ValueError, match='must have a valid value for either "next" or "options"'):
-        MicrolabRecipeStep(message='Test step', next=None, options=None, is_final=False)
+        MicrolabRecipeStep(message='Test step', next=None, options=None, done=False)
 
     # Providing both next and options -> ValueError
     option = MicrolabRecipeOption(text='opt', next=0)
@@ -27,7 +27,7 @@ def test_step_requires_either_next_or_options() -> None:
             message='Test step',
             next=1,
             options=[option],
-            is_final=False
+            done=False
         )
 
 
@@ -40,7 +40,7 @@ def test_step_allows_next_or_options_separately() -> None:
         message='Go to next',
         next=1,
         options=None,
-        is_final=False
+        done=False
     )
     assert step_with_next.next == 1
     assert step_with_next.options is None
@@ -51,7 +51,7 @@ def test_step_allows_next_or_options_separately() -> None:
         message='Choose option',
         next=None,
         options=[option],
-        is_final=False
+        done=False
     )
     assert step_with_options.options == [option]
     assert step_with_options.next is None
@@ -59,15 +59,15 @@ def test_step_allows_next_or_options_separately() -> None:
 
 def test_is_final_step_skips_next_options_validation() -> None:
     """
-    A step marked is_final=True should not raise even if 'next' and 'options' are both None.
+    A step marked MicrolabRecipeStep.done=True should not raise even if 'next' and 'options' are both None.
     """
     final_step = MicrolabRecipeStep(
         message='Done',
         next=None,
         options=None,
-        is_final=True
+        done=True
     )
-    assert final_step.is_final is True
+    assert final_step.done is True
     # Even if both next and options are missing, no exception is raised.
 
 
@@ -76,14 +76,14 @@ def test_recipe_step_index_out_of_range() -> None:
     If a step.next index is outside [0, len(steps)-1], a ValueError is raised.
     """
     # Create one valid final step at index 1
-    step1 = MicrolabRecipeStep(message='Step 1', next=None, options=None, is_final=True)
+    step1 = MicrolabRecipeStep(message='Step 1', next=None, options=None, done=True)
 
     # Create step0_bad so that next=2 (invalid, since we only have indices 0 and 1)
     step0_bad = MicrolabRecipeStep(
         message='Step 0',
         next=2,  # <-- out of range
         options=None,
-        is_final=False  # still not final, which triggers the index‐check in MicrolabRecipe
+        done=False  # still not final, which triggers the index‐check in MicrolabRecipe
     )
 
     # Building the recipe with step0_bad should raise the “out of range” error.
@@ -101,10 +101,10 @@ def test_recipe_option_index_out_of_range() -> None:
     If an option.next index is outside [0, len(steps)-1], a ValueError is raised.
     """
     # Create a valid final step at index 1.
-    step1 = MicrolabRecipeStep(message='Final', next=None, options=None, is_final=True)
+    step1 = MicrolabRecipeStep(message='Final', next=None, options=None, done=True)
     # Create a step0 with one option pointing to index=2 (invalid).
     bad_option = MicrolabRecipeOption(text='to2', next=2)
-    step0_bad_opt = MicrolabRecipeStep(message='Step 0', next=None, options=[bad_option], is_final=False)
+    step0_bad_opt = MicrolabRecipeStep(message='Step 0', next=None, options=[bad_option], done=False)
 
     with pytest.raises(ValueError,
                        match=r'The configured next step "2" for option "to2" in step 0 is outside the range of possible steps'):
@@ -121,8 +121,8 @@ def test_recipe_cant_reach_final_step() -> None:
     A recipe where some step cannot reach a final step should raise ValueError.
     """
     # Step 0 points to step 1. Step 1 loops to itself and is not final -> unreachable final.
-    step0 = MicrolabRecipeStep(message='Go to 1', next=1, options=None, is_final=False)
-    step1 = MicrolabRecipeStep(message='Loop here', next=1, options=None, is_final=False)
+    step0 = MicrolabRecipeStep(message='Go to 1', next=1, options=None, done=False)
+    step1 = MicrolabRecipeStep(message='Loop here', next=1, options=None, done=False)
     with pytest.raises(ValueError, match=r'The recipe is not valid as step 0 cannot reach a final step'):
         MicrolabRecipe(
             fileName='loop.json',
@@ -137,8 +137,8 @@ def test_valid_recipe_allows_convergence_to_final() -> None:
     A recipe where every step has at least one path to a final step should construct successfully.
     """
     # Step 0 -> step 1. Step 1 is final.
-    step0 = MicrolabRecipeStep(message='Go to 1', next=1, options=None, is_final=False)
-    step1 = MicrolabRecipeStep(message='Done', next=None, options=None, is_final=True)
+    step0 = MicrolabRecipeStep(message='Go to 1', next=1, options=None, done=False)
+    step1 = MicrolabRecipeStep(message='Done', next=None, options=None, done=True)
     recipe = MicrolabRecipe(
         fileName='good.json',
         title='GoodRecipe',
@@ -157,9 +157,9 @@ def test_recipe_options_branching_reachability() -> None:
     # Step 0 has two options: to step1 (final) and to step2 which also leads to step1.
     opt_to1 = MicrolabRecipeOption(text='to1', next=1)
     opt_to2 = MicrolabRecipeOption(text='to2', next=2)
-    step0 = MicrolabRecipeStep(message='Choose', next=None, options=[opt_to1, opt_to2], is_final=False)
-    step1 = MicrolabRecipeStep(message='Final A', next=None, options=None, is_final=True)
-    step2 = MicrolabRecipeStep(message='Go to 1', next=1, options=None, is_final=False)
+    step0 = MicrolabRecipeStep(message='Choose', next=None, options=[opt_to1, opt_to2], done=False)
+    step1 = MicrolabRecipeStep(message='Final A', next=None, options=None, done=True)
+    step2 = MicrolabRecipeStep(message='Go to 1', next=1, options=None, done=False)
     recipe = MicrolabRecipe(
         fileName='branch.json',
         title='BranchRecipe',
@@ -168,8 +168,8 @@ def test_recipe_options_branching_reachability() -> None:
     )
     # All steps should be reachable to final
     assert recipe.get_step(0) is step0
-    assert recipe.get_step(1).is_final
-    assert not recipe.get_step(2).is_final
+    assert recipe.get_step(1).done
+    assert not recipe.get_step(2).done
 
 
 def dummy_gen() -> Generator[Optional[float], Any, Any]:

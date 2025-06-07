@@ -131,7 +131,7 @@
         {
             "nr": 14,
             "message": "Reaction complete. Dry and rinse the product.",
-            "is_final": true,
+            "done": true,
             "icon": "reaction_complete"
         }
     ]

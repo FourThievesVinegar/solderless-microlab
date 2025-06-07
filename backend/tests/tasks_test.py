@@ -510,7 +510,6 @@ def test_pumps_burst_mode_with_partial(monkeypatch, microlab) -> None:
 
 # MAINTAIN PID
 
-# @pytest.mark.skip(reason="temporary bypass to restore GitHub build workflow")
 @pytest.mark.microlab_data(
     {"reactor-temperature-controller": {"pidConfig": {"P": 1, "I": 0.5, "D": 5}}}
 )
@@ -539,7 +538,6 @@ def test_maintain_PID_heat_needed(microlab):
     assert res is not None
 
 
-# @pytest.mark.skip(reason="temporary bypass to restore GitHub build workflow")
 @pytest.mark.microlab_data(
     {
         "reactor-temperature-controller": {

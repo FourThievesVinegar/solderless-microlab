@@ -93,7 +93,7 @@ class MicrolabRecipeStep(BaseModel):
         default_factory=list,
         description='List of tasks to execute during this step'
     )
-    is_final: Optional[bool] = Field(
+    done: Optional[bool] = Field(
         default=None,
         description='Is true when this step is the final step of this recipe'
     )
@@ -101,7 +101,7 @@ class MicrolabRecipeStep(BaseModel):
     @model_validator(mode='after')
     def step_has_one_of_next_or_options(self):
         t = load_translation()
-        if self.is_final:
+        if self.done:
             return self
 
         has_next = bool(self.next)
@@ -161,7 +161,7 @@ class MicrolabRecipe(BaseModel):
     def recipe_can_always_finish(self):
         """
         Validate that every step has a possible path to 
-        reaching a step that is marked as 'is_final'
+        reaching a step that is marked as 'done'
         """
         t = load_translation()
 
@@ -171,7 +171,7 @@ class MicrolabRecipe(BaseModel):
             visited.add(idx)
 
             step: MicrolabRecipeStep = self.steps[idx]
-            if step.is_final:
+            if step.done:
                 return True
 
             if step.next is not None and can_reach_final_step(step.next, visited):
