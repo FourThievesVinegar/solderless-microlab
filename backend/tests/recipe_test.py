@@ -124,7 +124,7 @@ def basic_recipe():
                     "baseTask": "pump",
                     "parameters": {"pump": "X", "volume": 50}
                 }],
-                "icon": "syringe"
+                "icon": "load_syringe"
             },
             {
                 "nr": 13,
@@ -177,3 +177,8 @@ def test_raises_when_last_step_has_neither_options_or_next(basic_recipe):
     basic_recipe["steps"][1]["options"] = []
     with pytest.raises(ValidationError, match='Step must have a valid value for either "next" or "options"'):
       MicrolabRecipe.model_validate(basic_recipe)
+
+
+# if __name__ == '__main__':
+#     import sys
+#     sys.exit(pytest.main([__file__]))

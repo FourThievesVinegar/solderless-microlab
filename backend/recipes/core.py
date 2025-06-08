@@ -10,100 +10,93 @@ directory should be considered recipes.
 import json
 from os import listdir
 from os.path import isfile, join
+from typing import Optional, Any
+
+from pydantic_core import ValidationError
+
+from config import microlab_config as config
+from hardware.core import MicroLabHardware, MicroLabHardwareState
+from localization import load_translation
 from recipes import state
 from recipes.base import RunningRecipe
 from recipes.model import MicrolabRecipe
-from hardware.core import MicroLabHardware, MicroLabHardwareState
-from config import microlab_config as config
 from util.logger import MultiprocessingLogger
-from pydantic_core import ValidationError
-from typing import Optional, Any
-from localization import load_translation
 
-def getRecipeList() -> list[MicrolabRecipe]: 
+
+def get_recipe_list() -> list[MicrolabRecipe]:
     """
     :return:
-    A list of modules in the config.recipesPackages.
-    It is assumed that these are all recipes.
+        A list of modules in the config.recipesPackages.
+        It is assumed that these are all recipes.
     """
-    t=load_translation()
-    
+    t = load_translation()
     logger = MultiprocessingLogger.get_logger(__name__)
 
-    path = config.recipesDirectory
-    files = [f for f in listdir(path) if isfile(join(path, f))]
-    recipeList = []
+    files = [f for f in listdir(config.recipesDirectory) if isfile(join(config.recipesDirectory, f))]
+    recipe_list: list[MicrolabRecipe] = []
 
     for f in files:
         if f.endswith('.json'):
             try:
-                with open(join(path, f)) as inf:
-                    recipeData = json.load(inf)
-                    recipeData["fileName"] = f
-                    recipeList.append(MicrolabRecipe.model_validate(recipeData))
+                with open(join(config.recipesDirectory, f)) as inf:
+                    recipe_data = json.load(inf)
+                    recipe_data['fileName'] = f
+                    recipe_list.append(MicrolabRecipe.model_validate(recipe_data))
             except ValidationError as err:
                 logger.error(t['error-recipe-file'].format(f, str(err)))
             except json.JSONDecodeError:
                 logger.error(t['error-json-recipe-file'].format(f))
-        # This doesn't actually work yet because .4tv are not importable as modules
+
         if f.endswith('.4tv'):
-            recipeList.append(f[:-4])
+            # FIXME: convert `f` to MicrolabRecipe
+            recipe_list.append(f[:-4])
 
-    return recipeList
+    return recipe_list
 
-def getRecipeByName(name) -> Optional[MicrolabRecipe]:
+
+def get_recipe_by_name(name: str) -> Optional[MicrolabRecipe]:
     """
-    Gets the full recipe object from its name.
+    Gets the full recipe object by its name.
     :param name:
-    The name of the recipe. This is its title in the json file.
+        The name of the recipe. This is its title in the json file.
     :return:
-    The recipe object or None if no recipe with given name could be found
+        The first recipe object or None if no recipe with given name could be found
     """
-    recipeList = getRecipeList()
+    matches = [r for r in get_recipe_list() if r.title == name]
+    return matches[0] if matches else None
 
-    recipe = next(filter(lambda recipe: recipe.title == name, recipeList), None)
 
-    return recipe
-
-def start(name) -> tuple[bool, str]:
+def start(name: str) -> tuple[bool, str]:
     """
     Start running a recipe.
 
     A recipe can only be started if the current state of the machine is idle or complete
     and the recipe exists in the list of recipes.
     :param name:
-    The name of the recipe. Must be the title of an element of the recipes.list list.
+        The name of the recipe. Must be the title of an element of the recipes.list list.
     :return:
-    (True, '') on success.
-    (False, message) on failure.
+        (True, '') on success.
+        (False, message) on failure.
     """
-    t=load_translation()
-    
-    # Validate that the microlab hardware controller has initialized
-    microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
-    if microlabHardware.state is not MicroLabHardwareState.INITIALIZED:
-        return False, t['microlab-failed-start'].format(microlabHardware.error)
+    t = load_translation()
+    microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
+    if microlab_hardware.state is not MicroLabHardwareState.INITIALIZED:
+        return False, t['microlab-failed-start'].format(microlab_hardware.error)
 
-    # If we are currently running a recipe, check if it is complete.
-    if not (state.currentRecipe is None):
-        recipeMessage = state.currentRecipe.getStatus()
-        if not recipeMessage['status'] == 'complete':
-            return False, t['stop-recipe-running'].format(state.currentRecipe.title)
+    current = state.current_recipe
+    if current and current.get_status().get('status') != 'complete':
+        return False, t['stop-recipe-running'].format(current.title)
 
-    # Check that it's a valid recipe.
-    recipe = getRecipeByName(name)
+    recipe = get_recipe_by_name(name)
     if recipe is None:
         return False, t['recipe-unknown']
 
-    # Start running the recipe
-    state.currentRecipe = RunningRecipe(recipe, microlabHardware)
-
-    state.currentRecipe.start()
-
+    state.current_recipe = RunningRecipe(recipe, microlab_hardware)
+    state.current_recipe.start()
     return True, ''
 
 
-def status(_) -> dict[str, Any]:
+def status(*args, **kwargs) -> dict[str, Any]:
     """
     Get the status of the machine.
     :return:
@@ -134,9 +127,8 @@ def status(_) -> dict[str, Any]:
             An ISO date string for when the current step is expected to be completed,
             or null if unknown. 
     """
-    t=load_translation()
-    
-    message = {
+    t = load_translation()
+    message: dict[str, Any] = {
         'status': 'idle',
         'recipe': None,
         'step': -1,
@@ -144,56 +136,52 @@ def status(_) -> dict[str, Any]:
         'options': [],
         'stepCompletionTime': None
     }
-    microlabHardware = MicroLabHardware.get_microlab_hardware_controller()
-    if microlabHardware.state is MicroLabHardwareState.FAILED_TO_START:
+    microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
+    if microlab_hardware.state is MicroLabHardwareState.FAILED_TO_START:
         message['status'] = t['error']
         message['message'] = t['microlab-failed-to-start']
-        message['hardwareError'] = str(microlabHardware.error)
+        message['hardwareError'] = str(microlab_hardware.error)
         return message
 
-    if state.currentRecipe == None:
+    if state.current_recipe is None:
         return message
 
-    recipeMessage = state.currentRecipe.getStatus()
-    message['status'] = recipeMessage['status']
-    message['step'] = recipeMessage['step']
-    message['recipe'] = state.currentRecipe.title
-    message['message'] = recipeMessage['message']
-    message['options'] = recipeMessage['options']
-    message['icon'] = recipeMessage['icon']
-    message['stepCompletionTime'] = recipeMessage['stepCompletionTime']
-    message['temp'] = microlabHardware.getTemp()
-
+    recipe_message = state.current_recipe.get_status()
+    message['status'] = recipe_message['status']
+    message['step'] = recipe_message['step']
+    message['recipe'] = state.current_recipe.title
+    message['message'] = recipe_message['message']
+    message['options'] = recipe_message['options']
+    message['icon'] = recipe_message['icon']
+    message['stepCompletionTime'] = recipe_message['stepCompletionTime']
+    message['temp'] = microlab_hardware.getTemp()
     return message
 
 
-def stop(_) -> None:
+def stop(*args, **kwargs) -> None:
     """
     Stop the currently running recipe.
-
     :return:
-    None ... at least for now.
+        None
     """
+    if not state.current_recipe is None:
+        state.current_recipe.stop()
+        state.current_recipe = None
 
-    if not state.currentRecipe is None:
-        state.currentRecipe.stop()
-        state.currentRecipe = None
 
-
-def selectOption(option) -> tuple[bool, str]:
+def select_option(option_value: str) -> tuple[bool, str]:
     """
     Pass in the user selected option from a recipe step.
 
     The current step must have provided a list of options through the /status API
     and the option must be part of the list provided as an option.
-    :param option:
-    The selected option. It must be part of the options list as retrieved via /status
+    :param option_value:
+        The selected option. It must be part of the options list as retrieved via /status
     :return:
-    (True, '') on success
-    (False, message) on failure
+        (True, '') on success
+        (False, message) on failure
     """
-    t=load_translation()
-    
-    if not state.currentRecipe is None:
-        return state.currentRecipe.selectOption(option)
+    t = load_translation()
+    if not state.current_recipe is None:
+        return state.current_recipe.select_option(option_value)
     return False, t['no-running-recipe']
