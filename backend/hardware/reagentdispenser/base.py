@@ -33,7 +33,7 @@ class ReagentDispenser(ABC):
         pass
 
     @abstractmethod
-    def getPumpSpeedLimits(self, pump_id: Literal['X', 'Y', 'Z']) -> dict[str, float]:
+    def get_pump_limits(self, pump_id: Literal['X', 'Y', 'Z']) -> dict[str, float]:
         """
         Get speed limits for the specified pump.
 

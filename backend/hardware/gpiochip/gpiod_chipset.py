@@ -4,10 +4,11 @@ from typing import Literal
 
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 from hardware.gpiochip.gpiod_chip import GPIODChip
+from hardware.util.lab_device_type import LabDevice
 
 
 class GPIODChipset(GPIOChip):
-    def __init__(self, gpio_config: dict, devices: dict):
+    def __init__(self, gpio_config: dict, devices: dict[str, LabDevice]):
         """
         :param gpio_config: {
             "chipName":    # name of the chip in gpiod

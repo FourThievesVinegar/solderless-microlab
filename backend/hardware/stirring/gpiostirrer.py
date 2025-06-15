@@ -1,4 +1,5 @@
 from hardware.stirring.base import Stirrer
+from hardware.util.lab_device_type import LabDevice
 
 RELAY_ON: int = 1
 RELAY_OFF: int = 0
@@ -6,7 +7,7 @@ RELAY_OFF: int = 0
 
 class GPIOStirrer(Stirrer):
 
-    def __init__(self, stirrer_config: dict, devices: dict):
+    def __init__(self, stirrer_config: dict, devices: dict[str, LabDevice]):
         """
         Initializes the stirrer.
         :param stirrer_config: Config dict including:
@@ -22,10 +23,10 @@ class GPIOStirrer(Stirrer):
         self.device.setup(self.stirrerPin)
         self.device.output(self.stirrerPin, RELAY_OFF)
 
-    def turnStirrerOn(self) -> None:
+    def turn_stirrer_on(self) -> None:
         """ :inheritdoc: """
         self.device.output(self.stirrerPin, RELAY_ON)
 
-    def turnStirrerOff(self) -> None:
+    def turn_stirrer_off(self) -> None:
         """ :inheritdoc: """
         self.device.output(self.stirrerPin, RELAY_OFF)

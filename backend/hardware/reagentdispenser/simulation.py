@@ -28,9 +28,9 @@ class SimulatedReagentDispenser(ReagentDispenser):
             raise ValueError(self.t['pump-doesnt-exist'].format(pump_id))
         return abs(volume)
 
-    def getPumpSpeedLimits(self, pump_id: str) -> dict[str, float]:
+    def get_pump_limits(self, pump_id: str) -> dict[str, float]:
         """ :inheritdoc: """
         return {
-            "minSpeed": self.min_speed,
-            "maxSpeed": self.max_speed
+            'minSpeed': self.min_speed,
+            'maxSpeed': self.max_speed
         }

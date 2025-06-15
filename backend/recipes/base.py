@@ -137,8 +137,8 @@ class RunningRecipe:
             self.message = msg
 
     def is_recipe_supported(self, recipe: MicrolabRecipe) -> tuple[bool, str]:
-        max_temp = self.microlab_hardware.getMaxTemperature()
-        min_temp = self.microlab_hardware.getMinTemperature()
+        max_temp = self.microlab_hardware.get_max_temperature()
+        min_temp = self.microlab_hardware.get_min_temperature()
         for step in recipe.steps:
             for task in step.tasks:
                 if 'temp' in task.parameters:
@@ -164,7 +164,7 @@ class RunningRecipe:
         self.option_names = []
         self.step_eta = None
         self.clear_tasks()
-        self.microlab_hardware.turnOffEverything()
+        self.microlab_hardware.turn_off_everything()
 
     def get_status(self) -> dict[str, Any]:
         """

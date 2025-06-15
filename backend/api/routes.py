@@ -189,7 +189,7 @@ class RouteManager:
 
         try:
             recipe_data = json.load(f.stream)
-            recipe_data["fileName"] = f.filename
+            recipe_data['fileName'] = f.filename
             MicrolabRecipe.model_validate(recipe_data)
         except ValidationError as err:
             return jsonify({

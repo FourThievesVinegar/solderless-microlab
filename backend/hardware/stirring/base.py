@@ -19,7 +19,7 @@ class Stirrer(ABC):
         return self._logger
 
     @abstractmethod
-    def turnStirrerOn(self) -> None:
+    def turn_stirrer_on(self) -> None:
         """
         Start stirrer.
 
@@ -29,7 +29,7 @@ class Stirrer(ABC):
         pass
 
     @abstractmethod
-    def turnStirrerOff(self) -> None:
+    def turn_stirrer_off(self) -> None:
         """
         Stop stirrer.
 

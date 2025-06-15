@@ -12,7 +12,7 @@ class SimulatedTempController(TempController):
         self.cooling = False
         self.temperature = sim_temp_controller_config['temp'] if 'temp' in sim_temp_controller_config else 24
 
-    def turnHeaterOn(self) -> None:
+    def turn_heater_on(self) -> None:
         """
         Sets the heater flag for the simulation.
 
@@ -22,7 +22,7 @@ class SimulatedTempController(TempController):
         self.logger.info(self.t['turning-on-heat'])
         self.heating = True
 
-    def turnHeaterOff(self) -> None:
+    def turn_heater_off(self) -> None:
         """
         Un-sets the heater flag for the simulation.
 
@@ -32,13 +32,13 @@ class SimulatedTempController(TempController):
         self.logger.info(self.t['turning-off-heat'])
         self.heating = False
 
-    def turnHeaterPumpOn(self) -> None:
+    def turn_heater_pump_on(self) -> None:
         self.logger.info(self.t['heat-pump-on'])
 
-    def turnHeaterPumpOff(self) -> None:
+    def turn_heater_pump_off(self) -> None:
         self.logger.info(self.t['heat-pump-off'])
 
-    def turnCoolerOn(self) -> None:
+    def turn_cooler_on(self) -> None:
         """
         Sets the cooler flag for the simulation.
 
@@ -48,7 +48,7 @@ class SimulatedTempController(TempController):
         self.logger.info(self.t['turning-on-cool'])
         self.cooling = True
 
-    def turnCoolerOff(self) -> None:
+    def turn_cooler_off(self) -> None:
         """
         Un-sets the cooler flag for the simulation.
 
@@ -58,7 +58,7 @@ class SimulatedTempController(TempController):
         self.logger.info(self.t['turning-off-cool'])
         self.cooling = False
 
-    def getTemp(self) -> float:
+    def get_temp(self) -> float:
         """
         Simulates and returns temperature.
 
@@ -92,13 +92,13 @@ class SimulatedTempController(TempController):
         self.logger.info(self.t['temperature-read-as'].format(self.temperature))
         return self.temperature
 
-    def getMaxTemperature(self) -> float:
+    def get_max_temperature(self) -> float:
         return self.maxTemp
 
-    def getMinTemperature(self) -> float:
+    def get_min_temperature(self) -> float:
         return self.minTemp
 
-    def getPIDConfig(self) -> dict[str, Any]:
+    def get_pid_config(self) -> dict[str, Any]:
         """
         Read the temperature controller PID configuration
 

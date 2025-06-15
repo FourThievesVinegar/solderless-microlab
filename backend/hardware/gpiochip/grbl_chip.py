@@ -3,10 +3,11 @@ from __future__ import annotations
 from typing import Literal
 
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
+from hardware.util.lab_device_type import LabDevice
 
 
 class GRBLChip(GPIOChip):
-    def __init__(self, gpio_config: dict, devices: dict):
+    def __init__(self, gpio_config: dict, devices: dict[str, LabDevice]):
         """
         Constructor. Initializes the GPIO chip.
         :param gpio_config:
@@ -31,11 +32,13 @@ class GRBLChip(GPIOChip):
         """
         for (val, pin) in (zip(self.output_values, self.output_offsets)):
             if val == 0:
-                command = "M65"
+                # M65: Disable (turn off) the digital output for the specified pin
+                command = 'M65'
             else:
-                command = "M64"
+                # M64: Enable (turn on) the digital output for the specified pin
+                command = 'M64'
 
-            self.device.grblWrite("{} P{}".format(command, pin))
+            self.device.write_gcode(f'{command} P{pin}')
 
     def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """ :inheritdoc: """

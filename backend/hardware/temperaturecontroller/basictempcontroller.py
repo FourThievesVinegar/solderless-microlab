@@ -1,13 +1,14 @@
 from typing import Any
 
 from hardware.temperaturecontroller.base import TempController
+from hardware.util.lab_device_type import LabDevice
 
 RELAY_ON: int = 1
 RELAY_OFF: int = 0
 
 
 class BasicTempController(TempController):
-    def __init__(self, temp_controller_config: dict[str, Any], devices: dict[str, Any]):
+    def __init__(self, temp_controller_config: dict[str, Any], devices: dict[str, LabDevice]):
         """
         Constructor. Initializes the stirrer.
         :param temp_controller_config:
@@ -26,23 +27,23 @@ class BasicTempController(TempController):
               Minimum temperature the hardware will support
         """
         super().__init__(temp_controller_config, devices)
-        self.heaterPin = temp_controller_config['heaterPin']
-        self.heaterPumpPin = temp_controller_config['heaterPumpPin']
-        self.coolerPin = temp_controller_config['coolerPin']
+        self.heater_pin = temp_controller_config['heaterPin']
+        self.heater_pump_pin = temp_controller_config['heaterPumpPin']
+        self.cooler_pin = temp_controller_config['coolerPin']
         self.maxTemp = temp_controller_config['maxTemp']
         self.minTemp = temp_controller_config['minTemp']
 
         self.device: 'hardware.gpiochip.base.GPIOChip' = devices[temp_controller_config['gpioID']]
-        self.device.setup(self.heaterPin)
-        self.device.setup(self.heaterPumpPin)
-        self.device.setup(self.coolerPin)
-        self.device.output(self.heaterPin, RELAY_OFF)
-        self.device.output(self.heaterPumpPin, RELAY_OFF)
-        self.device.output(self.coolerPin, RELAY_OFF)
+        self.device.setup(self.heater_pin)
+        self.device.setup(self.heater_pump_pin)
+        self.device.setup(self.cooler_pin)
+        self.device.output(self.heater_pin, RELAY_OFF)
+        self.device.output(self.heater_pump_pin, RELAY_OFF)
+        self.device.output(self.cooler_pin, RELAY_OFF)
 
         self.thermometer: 'hardware.thermometer.base.TempSensor' = devices[temp_controller_config['thermometerID']]
 
-    def turnHeaterOn(self) -> None:
+    def turn_heater_on(self) -> None:
         """
         Turns heater on.
 
@@ -50,9 +51,9 @@ class BasicTempController(TempController):
         None
         """
         self.logger.debug(self.t['turned-on-heat'])
-        self.device.output(self.heaterPin, RELAY_ON)
+        self.device.output(self.heater_pin, RELAY_ON)
 
-    def turnHeaterOff(self) -> None:
+    def turn_heater_off(self) -> None:
         """
         Turns heater off.
 
@@ -60,17 +61,17 @@ class BasicTempController(TempController):
         None
         """
         self.logger.debug(self.t['turned-off-heat'])
-        self.device.output(self.heaterPin, RELAY_OFF)
+        self.device.output(self.heater_pin, RELAY_OFF)
 
-    def turnHeaterPumpOn(self) -> None:
+    def turn_heater_pump_on(self) -> None:
         self.logger.debug(self.t['heat-pump-on'])
-        self.device.output(self.heaterPumpPin, RELAY_ON)
+        self.device.output(self.heater_pump_pin, RELAY_ON)
 
-    def turnHeaterPumpOff(self) -> None:
+    def turn_heater_pump_off(self) -> None:
         self.logger.debug(self.t['heat-pump-off'])
-        self.device.output(self.heaterPumpPin, RELAY_OFF)
+        self.device.output(self.heater_pump_pin, RELAY_OFF)
 
-    def turnCoolerOn(self) -> None:
+    def turn_cooler_on(self) -> None:
         """
         Turn cooler on.
 
@@ -78,9 +79,9 @@ class BasicTempController(TempController):
         None
         """
         self.logger.debug(self.t['turned-on-cool'])
-        self.device.output(self.coolerPin, RELAY_ON)
+        self.device.output(self.cooler_pin, RELAY_ON)
 
-    def turnCoolerOff(self) -> None:
+    def turn_cooler_off(self) -> None:
         """
         Turn cooler off.
 
@@ -88,21 +89,21 @@ class BasicTempController(TempController):
         None
         """
         self.logger.debug(self.t['turned-off-cool'])
-        self.device.output(self.coolerPin, RELAY_OFF)
+        self.device.output(self.cooler_pin, RELAY_OFF)
 
-    def getTemp(self) -> float:
+    def get_temp(self) -> float:
         """
         Read the temperature from the temperature sensor.
         :return:
         The temperature of the temperature sensor.
         """
-        return self.thermometer.getTemp()
+        return self.thermometer.get_temp()
 
-    def getMaxTemperature(self) -> float:
+    def get_max_temperature(self) -> float:
         return self.maxTemp
 
-    def getMinTemperature(self) -> float:
+    def get_min_temperature(self) -> float:
         return self.minTemp
 
-    def getPIDConfig(self) -> dict[str, Any]:
+    def get_pid_config(self) -> dict[str, Any]:
         return self.pidConfig

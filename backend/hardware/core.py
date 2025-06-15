@@ -10,10 +10,12 @@ file.
 import logging
 import time
 from enum import Enum
+from typing import Literal
 
 import config
 from hardware import devicelist
-from hardware.devicelist import loadHardwareConfiguration
+from hardware.devicelist import load_hardware_configuration
+from hardware.util.lab_device_type import LabDevice
 from localization import load_translation
 from util.logger import MultiprocessingLogger
 
@@ -28,16 +30,16 @@ class MicroLabHardware:
     _microlabHardware = None
     _logger = None
 
-    def __init__(self, deviceDefinition: list[dict]):
+    def __init__(self, device_definitions: list[dict]):
         """
         Constructor. Initializes the hardware.
         """
 
-        self.startTime: float = time.monotonic()
-        self.devices = {}
+        self.start_time: float = time.monotonic()
+        self.devices: dict[str, LabDevice] = {}
         self.state = MicroLabHardwareState.STARTING
         self.error = None
-        self.loadHardware(deviceDefinition)
+        self.load_hardware(device_definitions)
 
         if self._logger is None:
             self._logger = self._get_logger()
@@ -58,13 +60,13 @@ class MicroLabHardware:
             cls._logger.info(t['starting-hardware-controller'])
             cls._logger.info(t['loading-hardware-configuration'])
 
-            hardwareConfig = loadHardwareConfiguration()
-            deviceDefinitions = hardwareConfig['devices']
-            cls._microlabHardware = MicroLabHardware(deviceDefinitions)
+            hardware_config = load_hardware_configuration()
+            device_definitions = hardware_config['devices']
+            cls._microlabHardware = MicroLabHardware(device_definitions)
 
         return cls._microlabHardware
 
-    def loadHardware(self, deviceDefinition: list[dict]) -> tuple[bool, str]:
+    def load_hardware(self, device_definitions: list[dict]) -> tuple[bool, str]:
         """
         Loads and initializes the hardware devices
 
@@ -73,10 +75,10 @@ class MicroLabHardware:
             (False, message) on failure.
         """
         try:
-            self.devices = devicelist.setupDevices(deviceDefinition)
-            self.tempController = self.devices['reactor-temperature-controller']
+            self.devices = devicelist.setup_devices(device_definitions)
+            self.temp_controller = self.devices['reactor-temperature-controller']
             self.stirrer = self.devices['reactor-stirrer']
-            self.reagentDispenser = self.devices['reactor-reagent-dispenser']
+            self.reagent_dispenser = self.devices['reactor-reagent-dispenser']
             self.state = MicroLabHardwareState.INITIALIZED
             return True, ''
         except Exception as e:
@@ -85,17 +87,17 @@ class MicroLabHardware:
             self.error = e
             return False, str(e)
 
-    def turnOffEverything(self) -> None:
+    def turn_off_everything(self) -> None:
         """
         Stops any running hardware
 
         :return:
         None
         """
-        self.turnHeaterOff()
-        self.turnHeaterPumpOff()
-        self.turnCoolerOff()
-        self.turnStirrerOff()
+        self.turn_heater_off()
+        self.turn_heater_pump_off()
+        self.turn_cooler_off()
+        self.turn_stirrer_off()
 
     def uptime_seconds(self) -> float:
         """
@@ -106,7 +108,7 @@ class MicroLabHardware:
         :return:
         The number of seconds since this package was started multiplied by config.hardwareSpeedup.
         """
-        elapsed: float = time.monotonic() - self.startTime
+        elapsed: float = time.monotonic() - self.start_time
         if hasattr(config, 'hardwareSpeedup'):
             speed = config.hardwareSpeedup
             if speed is not None:
@@ -130,123 +132,123 @@ class MicroLabHardware:
         """
         if hasattr(config, 'hardwareSpeedup'):
             speed = config.hardwareSpeedup
-            if not (speed is None):
+            if speed is not None:
                 time.sleep(seconds / speed)
                 return
 
         time.sleep(seconds)
 
-    def getMaxTemperature(self) -> float:
+    def get_max_temperature(self) -> float:
         """
         :return:
         The max allowed temperature of the microlab in Celsius as a number
         """
-        return self.tempController.getMaxTemperature()
+        return self.temp_controller.get_max_temperature()
 
-    def getMinTemperature(self) -> float:
+    def get_min_temperature(self) -> float:
         """
         :return:
         The minimum allowed temperature of the microlab in Celsius as a number
         """
-        return self.tempController.getMinTemperature()
+        return self.temp_controller.get_min_temperature()
 
-    def turnHeaterOn(self) -> None:
+    def turn_heater_on(self) -> None:
         """
         Start heating the jacket.
 
         :return:
             None
         """
-        self.tempController.turnCoolerOff()
-        self.tempController.turnHeaterOn()
+        self.temp_controller.turn_cooler_off()
+        self.temp_controller.turn_heater_on()
 
-    def turnHeaterOff(self) -> None:
+    def turn_heater_off(self) -> None:
         """
         Stop heating the jacket.
 
         :return:
             None
         """
-        self.tempController.turnHeaterOff()
+        self.temp_controller.turn_heater_off()
 
-    def turnHeaterPumpOn(self) -> None:
+    def turn_heater_pump_on(self) -> None:
         """
         Turns on the heater pump.
 
         :return:
             None
         """
-        self.tempController.turnHeaterPumpOn()
+        self.temp_controller.turn_heater_pump_on()
 
-    def turnHeaterPumpOff(self) -> None:
+    def turn_heater_pump_off(self) -> None:
         """
         Turns off the heater pump.
 
         :return:
             None
         """
-        self.tempController.turnHeaterPumpOff()
+        self.temp_controller.turn_heater_pump_off()
 
-    def turnCoolerOn(self) -> None:
+    def turn_cooler_on(self) -> None:
         """
         Start cooling the jacket.
 
         :return:
             None
         """
-        self.tempController.turnHeaterOff()
-        self.tempController.turnCoolerOn()
+        self.temp_controller.turn_heater_off()
+        self.temp_controller.turn_cooler_on()
 
-    def turnCoolerOff(self) -> None:
+    def turn_cooler_off(self) -> None:
         """
         Stop cooling the jacket.
 
         :return:
             None
         """
-        self.tempController.turnCoolerOff()
+        self.temp_controller.turn_cooler_off()
 
-    def turnStirrerOn(self) -> None:
+    def turn_stirrer_on(self) -> None:
         """
         Start stirrer.
 
         :return:
             None
         """
-        self.stirrer.turnStirrerOn()
+        self.stirrer.turn_stirrer_on()
 
-    def turnStirrerOff(self) -> None:
+    def turn_stirrer_off(self) -> None:
         """
         Start stirrer.
 
         :return:
             None
         """
-        self.stirrer.turnStirrerOff()
+        self.stirrer.turn_stirrer_off()
 
-    def getTemp(self) -> float:
+    def get_temp(self) -> float:
         """
         Return the temperature.
 
         :return:
             The temperature as read from the sensor in Celsius
         """
-        return self.tempController.getTemp()
+        return self.temp_controller.get_temp()
 
-    def getPIDConfig(self) -> dict:
+    def get_pid_config(self) -> dict:
         """
         Return the temperature.
 
         :return:
             The temperature as read from the sensor in Celsius
         """
-        return self.tempController.getPIDConfig()
+        return self.temp_controller.get_pid_config()
 
-    def pumpDispense(self, pumpId: str, volume: int, duration: int = None) -> float:
+    def pump_dispense(self, pump_id: Literal['X', 'Y', 'Z'], volume: int, duration: int = None) -> float:
         """
         Dispense a number of ml from a particular pump.
 
-        :param pumpId:
+        :param pump_id:
             The pump id. One of 'X', 'Y' or 'Z'
         :param volume:
             The number ml to dispense
@@ -255,13 +257,13 @@ class MicroLabHardware:
         :return:
             a Float Number indicating duration of the dispensation
         """
-        return self.reagentDispenser.dispense(pumpId, volume, duration)
+        return self.reagent_dispenser.dispense(pump_id, volume, duration)
 
-    def getPumpSpeedLimits(self, pumpId: str) -> dict:
+    def get_pump_limits(self, pump_id: Literal['X', 'Y', 'Z']) -> dict:
         """
         Get maximum and minimum speed of specified pump.
 
-        :param pumpId:
+        :param pump_id:
             The pump id. One of 'X' or 'Y' or 'Z'
         :return:
             dict
@@ -270,4 +272,4 @@ class MicroLabHardware:
                 maxSpeed
                     Maximum speed the pump can dispense in ml/s
         """
-        return self.reagentDispenser.getPumpSpeedLimits(pumpId)
+        return self.reagent_dispenser.get_pump_limits(pump_id)

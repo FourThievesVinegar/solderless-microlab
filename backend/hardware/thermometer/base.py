@@ -19,7 +19,7 @@ class TempSensor(ABC):
         return self._logger
 
     @abstractmethod
-    def getTemp(self) -> float:
+    def get_temp(self) -> float:
         """
         Get the temperature of the sensor in Celsius.
         :return:

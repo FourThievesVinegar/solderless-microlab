@@ -17,7 +17,7 @@ class W1TempSensor(TempSensor):
         self.sensor = W1ThermSensor()
         self.nextTempReadingTime = datetime.now()
 
-    def getTemp(self) -> float:
+    def get_temp(self) -> float:
         """
         Get the temperature of the sensor in Celsius.
         :return:

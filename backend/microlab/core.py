@@ -50,9 +50,9 @@ def reload_hardware() -> tuple[bool, str]:
 
     t = load_translation()
     logger.info(t['reload-device-config'])
-    hardware_config = hardware.devicelist.loadHardwareConfiguration()
+    hardware_config = hardware.devicelist.load_hardware_configuration()
     device_definitions = hardware_config['devices']
-    return microlab_hardware.loadHardware(device_definitions)
+    return microlab_hardware.load_hardware(device_definitions)
 
 
 MICROLAB_COMMANDS: dict[str, Callable] = {
@@ -160,5 +160,5 @@ def start_microlab_process(cmd_queue: Queue, resp_queue: Queue, logging_queue: Q
     logger.info('')
     logger.info(t['shutting-microlab'])
     microlab.join()
-    microlab_hardware.turnOffEverything()
+    microlab_hardware.turn_off_everything()
     logger.info(t['shutted-microlab'])
