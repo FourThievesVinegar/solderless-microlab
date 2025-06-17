@@ -38,7 +38,7 @@ class SyringePump(ReagentDispenser):
         self.syringe_pumps_config = reagent_dispenser_config['syringePumpsConfig']
         self.axis_min_mm_per_min: dict[str, float] = {}
 
-        # GRBL exposes each axis’s settings under numbered variables:
+        # GRBL exposes each axis's settings under numbered variables:
         # $100 = X-axis steps/mm
         # $101 = Y-axis steps/mm
         # $102 = Z-axis steps/mm
@@ -54,7 +54,7 @@ class SyringePump(ReagentDispenser):
             steps_per_mm = cfg['stepsPerRev'] / cfg['mmPerRev']
 
             # Calculate a safe minimum feed-rate to avoid stalling:
-            # Use 30 RPM as the slowest screw speed, convert rev/min → mm/min:
+            # Use 30 RPM as the slowest screw speed, convert rev/min -> mm/min:
             #   30 rev/min × (mmPerRev) = mm/min at 30 RPM
             # Then round up to the next integer feed-rate.
             self.axis_min_mm_per_min[axis] = math.ceil(30 * cfg['mmPerRev'])

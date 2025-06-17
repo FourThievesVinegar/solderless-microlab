@@ -110,7 +110,7 @@ def _check_for_cyclical_dependency(
 
 def _check_for_missing_and_circular_hardware_deps(device_configurations: dict[str, Any]) -> None:
     for device_id, device_config in device_configurations.items():
-        # We only care about checking dependencies if they are present
+        # Only consider checking dependencies if they are present
         if device_config.get('dependencies'):
             _check_for_missing_dependency(device_config, device_configurations)
             _check_for_cyclical_dependency(device_id, device_config, device_configurations)

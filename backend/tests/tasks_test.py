@@ -358,7 +358,7 @@ def test_pumps_within_speed(monkeypatch, microlab) -> None:
         "pump_dispense",
         lambda pump_name, volume, duration: 2.5
     )
-    # uptime_seconds isn’t used in this branch, but define it anyway
+    # uptime_seconds isn't used in this branch, but define it anyway
     monkeypatch.setattr(
         microlab,
         "uptime_seconds",

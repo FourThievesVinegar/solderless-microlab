@@ -81,7 +81,7 @@ class GPIODChip(GPIOChip):
         if offset not in self.output_offsets:
             raise ValueError(f'Pin {pin!r} not set up for output')
 
-        # update our cache
+        # update the cache
         self.output_values[offset] = Value.ACTIVE if value else Value.INACTIVE
 
         # apply just this line
