@@ -228,8 +228,7 @@ def test_maintain_heat_time_finished(microlab):
     res = next(fn)
     microlab.turn_cooler_off = MagicMock()
     microlab.turn_heater_off = MagicMock()
-    microlab.uptime_seconds = MagicMock()
-    microlab.uptime_seconds.return_value = 6
+    microlab.uptime_seconds = MagicMock(return_value=6)
     res = next(fn)
     assert microlab.turn_cooler_off.called
     assert microlab.turn_heater_off.called
@@ -266,8 +265,7 @@ def test_maintain_cool_time_finished(microlab):
     res = next(fn)
     microlab.turn_cooler_off = MagicMock()
     microlab.turn_heater_off = MagicMock()
-    microlab.uptime_seconds = MagicMock()
-    microlab.uptime_seconds.return_value = 6
+    microlab.uptime_seconds = MagicMock(return_value=6)
     res = next(fn)
     assert microlab.turn_cooler_off.called
     assert microlab.turn_heater_off.called
@@ -291,8 +289,7 @@ def test_stir_time_finished(microlab):
     fn = tasks.stir(microlab, {"time": 5})
     res = next(fn)
     microlab.turn_stirrer_off = MagicMock()
-    microlab.uptime_seconds = MagicMock()
-    microlab.uptime_seconds.return_value = 6
+    microlab.uptime_seconds = MagicMock(return_value=6)
     res = next(fn)
     assert microlab.turn_stirrer_off.called
     assert res is None
@@ -343,21 +340,22 @@ def test_pumps_slow_dispense(microlab):
     res = next(fn)
     assert res is None
 
+
 @pytest.mark.microlab_data({"reactor-reagent-dispenser": {"minSpeed": 1.0, "maxSpeed": 5.0}})
 def test_pumps_within_speed(monkeypatch, microlab) -> None:
     """
-    If desired rate is between minSpeed and maxSpeed, pumpDispense should be called once
+    If desired rate is between minSpeed and maxSpeed, pump_dispense should be called once
     with the requested duration, then yield exactly one dispense_time and one final None.
     """
     # volume=5, time=5 => rate=1.0 mL/s, exactly minSpeed
     monkeypatch.setattr(
         microlab,
-        "getPumpSpeedLimits",
+        "get_pump_limits",
         lambda pump_name: {"minSpeed": 1.0, "maxSpeed": 5.0}
     )
     monkeypatch.setattr(
         microlab,
-        "pumpDispense",
+        "pump_dispense",
         lambda pump_name, volume, duration: 2.5
     )
     # uptime_seconds isn’t used in this branch, but define it anyway
@@ -369,7 +367,7 @@ def test_pumps_within_speed(monkeypatch, microlab) -> None:
 
     fn = tasks.pump(microlab, {"pump": "X", "volume": 5, "time": 5})
 
-    # 1) First yield: dispense_time returned by pumpDispense
+    # 1) First yield: dispense_time returned by pump_dispense
     dispense_time = next(fn)
     assert dispense_time == pytest.approx(2.5)
 
@@ -385,18 +383,18 @@ def test_pumps_within_speed(monkeypatch, microlab) -> None:
 @pytest.mark.microlab_data({"reactor-reagent-dispenser": {"minSpeed": 1.0, "maxSpeed": 5.0}})
 def test_pumps_over_max_speed(monkeypatch, microlab) -> None:
     """
-    If desired rate exceeds maxSpeed, pumpDispense should be called with duration=None,
+    If desired rate exceeds maxSpeed, pump_dispense should be called with duration=None,
     then yield exactly one dispense_time and one final None.
     """
     # volume=10, time=1 => rate=10 mL/s > maxSpeed=5
     monkeypatch.setattr(
         microlab,
-        "getPumpSpeedLimits",
+        "get_pump_limits",
         lambda pump_name: {"minSpeed": 1.0, "maxSpeed": 5.0}
     )
     monkeypatch.setattr(
         microlab,
-        "pumpDispense",
+        "pump_dispense",
         lambda pump_name, volume, duration: 3.14
     )
     monkeypatch.setattr(
@@ -426,15 +424,15 @@ def test_pumps_without_time_uses_max_speed(monkeypatch, microlab) -> None:
     If 'time' is omitted, rate defaults to maxSpeed; behavior should match the 'within-speed' branch,
     yielding exactly one dispense_time and one final None.
     """
-    # Omit 'time' → volume=5, so rate = maxSpeed = 5.0
+    # Omit 'time' -> volume=5, so rate = maxSpeed = 5.0
     monkeypatch.setattr(
         microlab,
-        "getPumpSpeedLimits",
+        "get_pump_limits",
         lambda pump_name: {"minSpeed": 1.0, "maxSpeed": 5.0}
     )
     monkeypatch.setattr(
         microlab,
-        "pumpDispense",
+        "pump_dispense",
         lambda pump_name, volume, duration: 1.11
     )
     monkeypatch.setattr(
@@ -469,10 +467,10 @@ def test_pumps_burst_mode_with_partial(monkeypatch, microlab) -> None:
     # volume=5, time=4 => rate=1.25 < minSpeed=2.0
     monkeypatch.setattr(
         microlab,
-        "getPumpSpeedLimits",
+        "get_pump_limits",
         lambda pump_name: {"minSpeed": 2.0, "maxSpeed": 5.0}
     )
-    # Simulate instant execution of pumpDispense so exec_time = 0
+    # Simulate instant execution of pump_dispense so exec_time = 0
     monkeypatch.setattr(
         microlab,
         "uptime_seconds",
@@ -480,7 +478,7 @@ def test_pumps_burst_mode_with_partial(monkeypatch, microlab) -> None:
     )
     monkeypatch.setattr(
         microlab,
-        "pumpDispense",
+        "pump_dispense",
         lambda pump_name, volume, duration=None: None
     )
 
@@ -489,7 +487,7 @@ def test_pumps_burst_mode_with_partial(monkeypatch, microlab) -> None:
     # Compute expected interval = (minSpeed / rate) - 1 = (2.0 / 1.25) - 1 = 1.6 - 1 = 0.6
     expected_interval = (2.0 / 1.25) - 1.0  # 0.6
 
-    # Two full bursts: dispenses 2 mL twice → 4 mL total → yields two intervals
+    # Two full bursts: dispenses 2 mL twice -> 4 mL total -> yields two intervals
     for _ in range(2):
         res = next(fn)
         assert res == pytest.approx(expected_interval, rel=1e-3)
@@ -542,7 +540,7 @@ def test_maintain_PID_heat_needed(microlab):
     {
         "reactor-temperature-controller": {
             "pidConfig": {"P": 1, "I": 0.5, "D": 5},
-            "temp": 100,
+            "temp": 100,  # starting temperature
         }
     }
 )
@@ -575,14 +573,14 @@ def test_maintain_PID_cool_needed(microlab):
     {
         "reactor-temperature-controller": {
             "pidConfig": {"P": 1, "I": 0.5, "D": 5},
-            "temp": 100,
+            "temp": 100,  # starting temperature
         }
     }
 )
 def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
-    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     microlab.turn_heater_pump_on = MagicMock()
     microlab.turn_heater_pump_off = MagicMock()
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
     res = next(fn)
     assert microlab.turn_heater_pump_on.called
     assert not microlab.turn_heater_pump_off.called
@@ -593,25 +591,170 @@ def test_maintain_PID_turns_on_heater_pump_at_start(microlab):
     {
         "reactor-temperature-controller": {
             "pidConfig": {"P": 1, "I": 0.5, "D": 5},
-            "temp": 100,
+            "temp": 100,  # starting temperature
         }
     }
 )
 def test_maintain_PID_turns_off_heater_pump_when_done(microlab):
-    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 60})
+    time_in_seconds: int = 60
     microlab.turn_heater_pump_on = MagicMock()
     microlab.turn_heater_pump_off = MagicMock()
-    microlab.uptime_seconds = MagicMock()
-    microlab.uptime_seconds.return_value = 0
+    microlab.uptime_seconds = MagicMock(return_value=0)
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": time_in_seconds})
     res = next(fn)
+
     assert microlab.turn_heater_pump_on.called
-    for i in range(0, 59):
+    for i in range(0, time_in_seconds - 1):
         microlab.uptime_seconds.return_value = i + 2
         res = next(fn)
 
     assert microlab.turn_heater_pump_on.call_count == 1
     assert microlab.turn_heater_pump_off.call_count == 1
     assert res is None
+
+
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {
+                "P": 1, "I": 0.0, "D": 0.0, "maxOutput": 100, "minOutput": -100, "dutyCycleLength": 10,
+                "proportionalOnMeasurement": False, "differentialOnMeasurement": True
+            },
+            "temp": 100,  # starting temperature
+        }
+    }
+)
+def test_maintain_PID_heat_only(microlab):
+    # force PID to always request heating (e.g. current_temp >> setpoint -> positive control)
+    cycle_length = microlab.get_pid_config()["dutyCycleLength"]
+    microlab.get_temp = MagicMock(side_effect=[20] * 20)
+    microlab.turn_heater_on = MagicMock()
+    microlab.turn_cooler_on = MagicMock()
+    fn = tasks.maintain_pid(microlab, {"temp": 40, "tolerance": 3, "time": 5, "type": "both"})
+    next(fn)
+
+    # run one full cycle (`dutyCycleLength` seconds)
+    for _ in range(cycle_length): next(fn)
+
+    # heater should have been toggled on, cooler never on
+    assert microlab.turn_heater_on.call_count > 0
+    assert not microlab.turn_cooler_on.called
+
+
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {
+                "P": 1, "I": 0.0, "D": 0.0, "maxOutput": 100, "minOutput": -100, "dutyCycleLength": 10,
+                "proportionalOnMeasurement": False, "differentialOnMeasurement": True
+            },
+            "temp": 100,  # starting temperature
+        }
+    }
+)
+def test_maintain_PID_cool_only(microlab):
+    # force PID to always request heating (e.g. current_temp << setpoint -> positive control)
+    cycle_length = microlab.get_pid_config()["dutyCycleLength"]
+    microlab.get_temp = MagicMock(side_effect=[60] * 20)
+    microlab.turn_heater_on = MagicMock()
+    microlab.turn_cooler_on = MagicMock()
+    fn = tasks.maintain_pid(microlab, {"temp": 20, "tolerance": 3, "time": 5, "type": "both"})
+    next(fn)
+
+    # run one full cycle (`dutyCycleLength` seconds)
+    for _ in range(cycle_length): next(fn)
+
+    # cooler should have been toggled on, heater never on
+    assert microlab.turn_cooler_on.call_count > 0
+    assert not microlab.turn_heater_on.called
+
+
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {
+                "P": 1, "I": 0.0, "D": 0.0, "maxOutput": 100, "minOutput": -100, "dutyCycleLength": 5,
+                "proportionalOnMeasurement": False, "differentialOnMeasurement": True
+            },
+            "temp": 100,  # starting temperature
+        }
+    }
+)
+def test_no_action_if_within_tolerance(microlab):
+    cycle_length = microlab.get_pid_config()["dutyCycleLength"]
+    microlab.get_temp = MagicMock(return_value=100)
+    microlab.turn_heater_on = MagicMock()
+    microlab.turn_cooler_on = MagicMock()
+    fn = tasks.maintain_pid(microlab, {"temp": 100, "tolerance": 3, "time": 2})
+    next(fn)
+
+    # run one full 5-second cycle
+    for _ in range(cycle_length): next(fn)
+
+    assert not microlab.turn_heater_on.called
+    assert not microlab.turn_cooler_on.called
+
+
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {
+                "P": 1, "I": 0.0, "D": 0.0, "maxOutput": 50, "minOutput": -50, "dutyCycleLength": 5,
+                "proportionalOnMeasurement": False, "differentialOnMeasurement": True
+            },
+            "temp": 100,  # starting temperature
+        }
+    }
+)
+def test_zero_duration_terminates_immediately(microlab):
+    microlab.get_temp = MagicMock(return_value=20)
+
+    fn = tasks.maintain_pid(microlab, {"temp": 25, "tolerance": 1, "time": 0})
+    vals = [next(fn) for _ in range(2)]
+
+    assert vals[-1] is None
+    with pytest.raises(StopIteration):
+        next(fn)
+
+
+@pytest.mark.microlab_data(
+    {
+        "reactor-temperature-controller": {
+            "pidConfig": {
+                "P": 1, "I": 0.0, "D": 0.0, "maxOutput": 100, "minOutput": -100, "dutyCycleLength": 8,
+                "proportionalOnMeasurement": False, "differentialOnMeasurement": True
+            },
+            "temp": 50,  # starting temperature
+        }
+    }
+)
+def test_known_control_signal(monkeypatch, microlab):
+    cycle_length = microlab.get_pid_config()["dutyCycleLength"]
+    microlab.get_temp = MagicMock(return_value=0.0)
+    microlab.turn_heater_on = MagicMock()
+    microlab.turn_heater_off = MagicMock()
+    microlab.turn_cooler_on = MagicMock()
+    microlab.turn_cooler_off = MagicMock()
+
+    class DummyPID:
+        # stub PID(...) to return a dummy with a fixed output of 50
+        def __init__(self, *args, **kw): self.components = (0, 0, 0)
+
+        def __call__(self, temp): return 50
+
+    monkeypatch.setattr(tasks, "PID", DummyPID)
+
+    fn = tasks.maintain_pid(microlab, {"temp": 100, "tolerance": 1, "time": 5})
+    next(fn)  # pump-on
+
+    # one full 8-second cycle:
+    for _ in range(cycle_length - 1): next(fn)
+
+    # expected on-time = 8*(50/100) = 4 seconds
+    assert microlab.turn_heater_on.call_count == 4
+    assert microlab.turn_heater_off.call_count == 4
+    assert microlab.turn_cooler_on.call_count == 0
+    assert microlab.turn_cooler_off.call_count == cycle_length
 
 
 # if __name__ == '__main__':

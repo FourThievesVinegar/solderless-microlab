@@ -19,18 +19,18 @@ class TempController(ABC):
             raise KeyError(f"Device '{self.device_name}' missing required parameter(s): {', '.join(missing)}")
 
         # handle optional pidConfig
-        pid = config.get('pidConfig')
-        if pid is None:
-            self.pidConfig = None
+        pid_configuration = config.get('pidConfig')
+        if pid_configuration is None:
+            self.pid_config = None
         else:
-            if not isinstance(pid, dict):
+            if not isinstance(pid_configuration, dict):
                 raise TypeError(
                     f"Device '{self.device_name}' parameter pidConfig has invalid type, "
                     "must be a dict with numeric 'P','I','D'"
                 )
     
             # required PID keys
-            required_pid = [k for k in ('P', 'I', 'D') if k not in pid]
+            required_pid = [k for k in ('P', 'I', 'D') if k not in pid_configuration]
             if required_pid:
                 raise KeyError(
                     f"Device '{self.device_name}' missing required parameter(s) in pidConfig: "
@@ -46,9 +46,9 @@ class TempController(ABC):
                 'dutyCycleLength': 10,
             }
             for key, default in defaults.items():
-                pid.setdefault(key, default)
+                pid_configuration.setdefault(key, default)
     
-            self.pidConfig = pid
+            self.pid_config = pid_configuration
 
     @property
     def logger(self) -> logging.Logger:
@@ -160,4 +160,4 @@ class TempController(ABC):
             maxOutput: number
             dutyCycleLength: number
         """
-        return self.pidConfig
+        return self.pid_config

@@ -18,7 +18,6 @@ class GPIODChipSimulation(GPIOChip):
 
         self.output_offsets = []
         self.output_values = []
-        # self.output_lines = []
         self.device = None  # no real chip in simulation
 
     def __output(self):

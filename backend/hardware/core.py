@@ -10,7 +10,7 @@ file.
 import logging
 import time
 from enum import Enum
-from typing import Literal
+from typing import Literal, Any
 
 import config
 from hardware import devicelist
@@ -235,7 +235,7 @@ class MicroLabHardware:
         """
         return self.temp_controller.get_temp()
 
-    def get_pid_config(self) -> dict:
+    def get_pid_config(self) -> dict[str, Any]:
         """
         Return the temperature.
 

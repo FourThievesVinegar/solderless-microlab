@@ -76,8 +76,7 @@ devices:
       # Max output of the PID controller
       # Defaults to 100
       maxOutput: 100
-      # Total length of the duty cycle for controlling the heater and cooler
-      # in seconds.
+      # Total length of the duty cycle for controlling the heater and cooler in seconds.
       # Defaults to 10
       dutyCycleLength: 10
     # list of device IDs that must be setup before this device

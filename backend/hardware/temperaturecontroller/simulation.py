@@ -111,4 +111,4 @@ class SimulatedTempController(TempController):
             proportionalOnMeasurement: Boolean (optional)
             differentialOnMeasurement: Boolean (optional)
         """
-        return self.pidConfig
+        return self.pid_config
