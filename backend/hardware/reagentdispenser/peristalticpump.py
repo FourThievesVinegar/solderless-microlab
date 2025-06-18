@@ -1,10 +1,11 @@
 from typing import Literal, Optional, Any
 
 from hardware.reagentdispenser.base import ReagentDispenser
+from hardware.util.lab_device_type import LabDevice
 
 
 class PeristalticPump(ReagentDispenser):
-    def __init__(self, reagent_dispenser_config: dict[str, Any], devices: dict[str, Any]):
+    def __init__(self, reagent_dispenser_config: dict[str, Any], devices: dict[str, LabDevice]):
         """
         Initializes the peristaltic pump.
 
@@ -20,7 +21,7 @@ class PeristalticPump(ReagentDispenser):
         self.peristalticPumpsConfig = reagent_dispenser_config['peristalticPumpsConfig']
         self.device: 'hardware.grbl.base.GRBL' = devices[reagent_dispenser_config['grblID']]
         # G91: Set GRBL to incremental (relative) positioning mode
-        self.device.grblWrite('G91')
+        self.device.write_gcode('G91')
 
     def dispense(self, pump_id: Literal['X', 'Y', 'Z'], volume: float, duration: Optional[float] = None) -> float:
         """
@@ -44,7 +45,7 @@ class PeristalticPump(ReagentDispenser):
         # G91 placed before ensures move is relative
         command = f'G91 G1 {pump_id}{total_mm} F{dispense_speed}'
         self.logger.debug(self.t['dispensing-command'].format(command))
-        self.device.grblWrite(command)
+        self.device.write_gcode(command)
 
         # Calculate dispense time in seconds:
         # dispense_speed (mm/min) / 60 gives mm/s, so time = distance_mm / (mm/min / 60)
@@ -52,7 +53,7 @@ class PeristalticPump(ReagentDispenser):
         self.logger.info(self.t['dispensing-specific'].format(volume, dispense_speed, dispense_time))
         return dispense_time
 
-    def getPumpSpeedLimits(self, pump_id: Literal['X', 'Y', 'Z']) -> dict[str, float]:
+    def get_pump_limits(self, pump_id: Literal['X', 'Y', 'Z']) -> dict[str, float]:
         """
         Returns minimum and maximum dispense speeds for pump in ml/s.
 
@@ -83,6 +84,6 @@ class PeristalticPump(ReagentDispenser):
         min_speed_ml_s = min_mm_per_second / mm_per_ml
 
         return {
-            "minSpeed": min_speed_ml_s,
-            "maxSpeed": max_speed_ml_s,
+            'minSpeed': min_speed_ml_s,
+            'maxSpeed': max_speed_ml_s,
         }

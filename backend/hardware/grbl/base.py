@@ -19,7 +19,7 @@ class GRBL(ABC):
         return self._logger
 
     @abstractmethod
-    def grblWrite(self, command: str, retries: int = 3) -> None:
+    def write_gcode(self, command: str, retries: int = 3) -> None:
         """
         Writes the gcode command to grbl
 

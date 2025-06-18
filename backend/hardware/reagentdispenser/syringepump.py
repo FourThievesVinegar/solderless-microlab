@@ -1,9 +1,11 @@
-from hardware.reagentdispenser.base import ReagentDispenser
 import math
+
+from hardware.reagentdispenser.base import ReagentDispenser
+from hardware.util.lab_device_type import LabDevice
 
 
 class SyringePump(ReagentDispenser):
-    def __init__(self, reagent_dispenser_config: dict, devices: dict):
+    def __init__(self, reagent_dispenser_config: dict, devices: dict[str, LabDevice]):
         """
         Initialize a SyringePump by configuring its axes on the GRBL controller.
 
@@ -36,7 +38,7 @@ class SyringePump(ReagentDispenser):
         self.syringe_pumps_config = reagent_dispenser_config['syringePumpsConfig']
         self.axis_min_mm_per_min: dict[str, float] = {}
 
-        # GRBL exposes each axis’s settings under numbered variables:
+        # GRBL exposes each axis's settings under numbered variables:
         # $100 = X-axis steps/mm
         # $101 = Y-axis steps/mm
         # $102 = Z-axis steps/mm
@@ -52,7 +54,7 @@ class SyringePump(ReagentDispenser):
             steps_per_mm = cfg['stepsPerRev'] / cfg['mmPerRev']
 
             # Calculate a safe minimum feed-rate to avoid stalling:
-            # Use 30 RPM as the slowest screw speed, convert rev/min → mm/min:
+            # Use 30 RPM as the slowest screw speed, convert rev/min -> mm/min:
             #   30 rev/min × (mmPerRev) = mm/min at 30 RPM
             # Then round up to the next integer feed-rate.
             self.axis_min_mm_per_min[axis] = math.ceil(30 * cfg['mmPerRev'])
@@ -60,20 +62,20 @@ class SyringePump(ReagentDispenser):
             # Send GRBL the steps/mm setting for this axis:
             #   $10n = steps/mm for axis n (0=X,1=Y,2=Z)
             cmd_steps = f'$10{axis_to_cnc_id[axis]}={steps_per_mm}'
-            self.device.grblWrite(cmd_steps)
+            self.device.write_gcode(cmd_steps)
             self.logger.debug(f'Configured steps/mm ({axis}): {cmd_steps}')
 
             # Send GRBL the max feed-rate (mm/min) for this axis:
             #   $11n = max feed-rate for axis n (0=X,1=Y,2=Z)
             max_mm_per_min = cfg['maxMmPerMin']
             cmd_max_rate = f'$11{axis_to_cnc_id[axis]}={max_mm_per_min}'
-            self.device.grblWrite(cmd_max_rate)
+            self.device.write_gcode(cmd_max_rate)
             self.logger.debug(f'Configured max feed-rate ({axis}): {cmd_max_rate}')
 
     def dispense(self, pump_id: str, volume: int, duration: int = None) -> float:
         """ :inheritdoc: """
-        max_mm_per_min = self.syringe_pumps_config[pump_id]["maxMmPerMin"]
-        mm_per_ml = self.syringe_pumps_config[pump_id]["mmPerMl"]
+        max_mm_per_min = self.syringe_pumps_config[pump_id]['maxMmPerMin']
+        mm_per_ml = self.syringe_pumps_config[pump_id]['mmPerMl']
 
         # Determine feed rate (F) in mm/min
         # If duration given (in s), convert desired ml/s to mm/min:
@@ -92,9 +94,9 @@ class SyringePump(ReagentDispenser):
         # G91 = Set to Relative Positioning mode (moves are relative to current position)
         # G1  = Linear motion with specified feed rate
         # F   = Feed rate in mm/min (GRBL expects per-minute units)
-        command = f"G91 G1 {pump_id}{total_mm} F{feed_mm_per_min}"
+        command = f'G91 G1 {pump_id}{total_mm} F{feed_mm_per_min}'
         self.logger.debug(self.t['dispensing-command'].format(command))
-        self.device.grblWrite(command)
+        self.device.write_gcode(command)
 
         # Calculate actual dispense time: distance / speed
         # speed = feed_mm_per_min [mm/min] => feed_mm_per_min/60 = mm/s
@@ -103,12 +105,12 @@ class SyringePump(ReagentDispenser):
         self.logger.info(self.t['dispensing-specific'].format(volume, feed_mm_per_min, dispense_time))
         return dispense_time
 
-    def getPumpSpeedLimits(self, pump_id: str) -> dict[str, float]:
+    def get_pump_limits(self, pump_id: str) -> dict[str, float]:
         """ :inheritdoc: """
-        max_mm_per_min = self.syringe_pumps_config[pump_id]["maxMmPerMin"]
-        mm_per_ml = self.syringe_pumps_config[pump_id]["mmPerMl"]
+        max_mm_per_min = self.syringe_pumps_config[pump_id]['maxMmPerMin']
+        mm_per_ml = self.syringe_pumps_config[pump_id]['mmPerMl']
 
         # Convert mm/min to ml/s: mm/min / mm_per_ml = ml/min, then /60 => ml/s
         max_speed_ml_s = max_mm_per_min / mm_per_ml / 60
         min_speed_ml_s = self.axis_min_mm_per_min[pump_id] / mm_per_ml / 60
-        return {"minSpeed": min_speed_ml_s, "maxSpeed": max_speed_ml_s}
+        return {'minSpeed': min_speed_ml_s, 'maxSpeed': max_speed_ml_s}

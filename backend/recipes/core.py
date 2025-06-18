@@ -154,7 +154,7 @@ def status(*args, **kwargs) -> dict[str, Any]:
     message['options'] = recipe_message['options']
     message['icon'] = recipe_message['icon']
     message['stepCompletionTime'] = recipe_message['stepCompletionTime']
-    message['temp'] = microlab_hardware.getTemp()
+    message['temp'] = microlab_hardware.get_temp()
     return message
 
 

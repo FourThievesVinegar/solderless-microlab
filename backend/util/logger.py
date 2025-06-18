@@ -17,7 +17,7 @@ class MultiprocessingLogger:
     """
     A singleton‐style logger that, in the "main" process, starts a background
     thread to drain a multiprocessing.Queue of LogRecords, replaying them through
-    normal handlers (RotatingFileHandler, StreamHandler, etc.).  Child processes
+    normal handlers (RotatingFileHandler, StreamHandler, etc.). Child processes
     simply get a "QueueHandler" pointed at that same queue.
     """
 
@@ -26,7 +26,7 @@ class MultiprocessingLogger:
     # The shared multiprocessing Queue into which child processes will put LogRecords.
     _logging_queue: Optional[Queue] = None
 
-    # A map from logger_name → Logger object, so that we only configure each one once.
+    # A map from logger_name -> Logger object, so that the Loggers are configured once only.
     _configured_loggers: dict[str, logging.Logger] = {}
 
     # The dedicated "processing logger" (i.e. the one that actually writes to file/stderr) is referenced by this name.
@@ -38,32 +38,32 @@ class MultiprocessingLogger:
     # Event to tell the background thread to exit
     _processor_stop_event: Optional[threading.Event] = None
 
-    # Are we "main" (i.e. the process that should drain the queue)?  Set in initialize_logger().
+    # Is this a "main" (i.e. the process that should drain the queue)? Set in initialize_logger().
     _is_main_process: bool = False
 
     @classmethod
     def initialize_logger(cls, logging_queue: Optional[Queue] = None) -> None:
         """
         Must be called *first* in every process that uses this class.
-        - In the "main" process: call with no arguments.  That sets _is_main_process=True,
+        - In the "main" process: call with no arguments. That sets _is_main_process=True,
           creates a new multiprocessing.Queue, and spins up the background thread.
-        - In each child process: call with the Queue passed in from the main process.  That sets
+        - In each child process: call with the Queue passed in from the main process. That sets
           _is_main_process=False, and simply remembers the queue so that any get_logger()
           calls return a QueueHandler-based Logger.
 
         Usage:
-            # In the very beginning of your "main" script:
+            # In the very beginning of the "backend/main.py":
             MultiprocessingLogger.initialize_logger()
 
             # Pass MultiprocessingLogger.get_logging_queue() into each child.
         """
         if logging_queue is None:
-            # We are in the main process
+            # This is the main process
             cls._is_main_process = True
             cls._logging_queue = Queue()
             cls._start_processor_thread()
         else:
-            # We are in a worker process
+            # This is a worker process
             cls._is_main_process = False
             cls._logging_queue = logging_queue
 
@@ -77,9 +77,9 @@ class MultiprocessingLogger:
     @classmethod
     def _start_processor_thread(cls) -> None:
         """
-        Called only in the main process, right after creating the queue.  Spins up
-        a daemon thread that continuously calls process_logs() every 0.1s.  We keep
-        a stop-event so that we can ask it to exit cleanly later.
+        Called only in the main process, right after creating the queue. Spins up
+        a daemon thread that continuously calls process_logs() every 0.1s.
+        We keep a stop-event `_processor_stop_event` to ask it to exit cleanly later.
         """
         if not cls._is_main_process or cls._logging_queue is None:
             return
@@ -94,7 +94,7 @@ class MultiprocessingLogger:
             while not cls._processor_stop_event.is_set():
                 # Drain one record if available; if not, just return immediately.
                 cls.process_logs()
-                # Brief sleep so we don’t spin CPU at 100%
+                # Brief sleep to avoid spinning CPU at 100%
                 time.sleep(0.1)
 
             # Once stop_event is set, do a final drain of anything left over.
@@ -115,7 +115,7 @@ class MultiprocessingLogger:
     @classmethod
     def stop_processing_thread(cls) -> None:
         """
-        Called (only in main) when you want to cleanly exit.  This will signal the
+        Called only in backend/main.py to cleanly exit. This will signal the
         background thread to stop, wait (join) up to 2s, and then do one last drain.
         """
         if cls._is_main_process and cls._processor_thread:
@@ -132,8 +132,7 @@ class MultiprocessingLogger:
     @classmethod
     def _get_queue_logger(cls, logger_name: str) -> logging.Logger:
         """
-        In a child process: return a Logger that has a QueueHandler, pointed
-        at our shared multiprocessing Queue.
+        In a child process: return a Logger that has a QueueHandler, pointed at the shared multiprocessing Queue.
         """
         if logger_name in cls._configured_loggers:
             return cls._configured_loggers[logger_name]
@@ -195,7 +194,7 @@ class MultiprocessingLogger:
         """
         if cls._is_main_process:
             # Always route everything through the same "processing logger" name,
-            # so that we only ever have one set of file/stderr handlers.
+            # to have only one set of file/stderr handlers.
             return cls._get_processing_logger(cls._processing_logger_name)
         else:
             return cls._get_queue_logger(logger_name)

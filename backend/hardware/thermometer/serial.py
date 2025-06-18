@@ -43,7 +43,7 @@ class SerialTempSensor(TempSensor):
                     return reading
             time.sleep(0.5)
 
-    def getTemp(self) -> float:
+    def get_temp(self) -> float:
         """
         Get the temperature of the sensor in Celsius.
         Recommended sensor: DS18B20

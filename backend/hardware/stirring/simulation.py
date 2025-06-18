@@ -5,10 +5,10 @@ class SimulatedStirrer(Stirrer):
     def __init__(self) -> None:
         super().__init__('simulation')
 
-    def turnStirrerOn(self) -> None:
+    def turn_stirrer_on(self) -> None:
         """ :inheritdoc: """
         return None
 
-    def turnStirrerOff(self) -> None:
+    def turn_stirrer_off(self) -> None:
         """ :inheritdoc: """
         return None

@@ -7,6 +7,6 @@ class GRBLSimulation(GRBL):
         """
         super().__init__('simulation')
 
-    def grblWrite(self, command: str, retries: int = 3) -> None:
+    def write_gcode(self, command: str, retries: int = 3) -> None:
         """ :inheritdoc: """
         pass

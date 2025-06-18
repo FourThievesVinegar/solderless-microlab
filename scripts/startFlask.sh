@@ -16,9 +16,9 @@ REQ_FILE="$BACKEND_DIR/requirements.txt"
 # Create/update venv only if missing or if requirements.txt is newer
 if [[ ! -d "$VENV_DIR" ]] || [[ "$REQ_FILE" -nt "$VENV_DIR/bin/activate" ]]; then
   python3 -m venv "$VENV_DIR"
-  # use the venv’s pip to install or upgrade
+  # use the venv's pip to install or upgrade
   "$VENV_DIR/bin/pip" install --upgrade -r "$REQ_FILE"
 fi
 
-# Launch Flask via the venv’s python interpreter
+# Launch Flask via the venv's python interpreter
 exec "$VENV_DIR/bin/python" "$BACKEND_DIR/main.py" production

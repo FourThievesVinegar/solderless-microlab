@@ -15,7 +15,7 @@ class GRBLSerial(GRBL):
         super().__init__(grbl_config['id'])
         self.device = serial.Serial(grbl_config['grblPort'], 115200, timeout=1)
 
-    def grblWrite(self, command: str, retries: int = 3) -> None:
+    def write_gcode(self, command: str, retries: int = 3) -> None:
         """ :inheritdoc: """
         self.device.reset_input_buffer()
         self.device.write(bytes('{}\n'.format(command), 'utf-8'))
@@ -27,6 +27,6 @@ class GRBLSerial(GRBL):
         if 'error' in str(response):
             if retries > 0:
                 self._logger.warning(self.t['grbl-error-retrying'].format(response, command))
-                self.grblWrite(command, retries - 1)
+                self.write_gcode(command, retries - 1)
             else:
                 raise ValueError(self.t['grlb-error'].format(response, command))

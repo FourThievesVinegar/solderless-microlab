@@ -1,13 +1,14 @@
 import logging
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
 from typing import Any, Optional
 
+from hardware.util.lab_device_type import LabDevice
 from localization import load_translation
 from util.logger import MultiprocessingLogger
 
 
 class TempController(ABC):
-    def __init__(self, config: dict[str, Any], devices: dict[str, Any]):
+    def __init__(self, config: dict[str, Any], devices: dict[str, LabDevice] = None):
         self._logger: Optional[logging.Logger] = None
         self.device_name = config['id']
         self.t = load_translation()
@@ -18,18 +19,18 @@ class TempController(ABC):
             raise KeyError(f"Device '{self.device_name}' missing required parameter(s): {', '.join(missing)}")
 
         # handle optional pidConfig
-        pid = config.get('pidConfig')
-        if pid is None:
-            self.pidConfig = None
+        pid_configuration = config.get('pidConfig')
+        if pid_configuration is None:
+            self.pid_config = None
         else:
-            if not isinstance(pid, dict):
+            if not isinstance(pid_configuration, dict):
                 raise TypeError(
                     f"Device '{self.device_name}' parameter pidConfig has invalid type, "
                     "must be a dict with numeric 'P','I','D'"
                 )
     
             # required PID keys
-            required_pid = [k for k in ('P', 'I', 'D') if k not in pid]
+            required_pid = [k for k in ('P', 'I', 'D') if k not in pid_configuration]
             if required_pid:
                 raise KeyError(
                     f"Device '{self.device_name}' missing required parameter(s) in pidConfig: "
@@ -45,9 +46,9 @@ class TempController(ABC):
                 'dutyCycleLength': 10,
             }
             for key, default in defaults.items():
-                pid.setdefault(key, default)
+                pid_configuration.setdefault(key, default)
     
-            self.pidConfig = pid
+            self.pid_config = pid_configuration
 
     @property
     def logger(self) -> logging.Logger:
@@ -56,7 +57,7 @@ class TempController(ABC):
         return self._logger
 
     @abstractmethod
-    def turnHeaterOn(self) -> None:
+    def turn_heater_on(self) -> None:
         """
         Turns the heater on.
 
@@ -66,7 +67,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterOff(self) -> None:
+    def turn_heater_off(self) -> None:
         """
         Turns the heater off.
 
@@ -76,7 +77,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterPumpOn(self) -> None:
+    def turn_heater_pump_on(self) -> None:
         """
         Turns the heater pump on.
 
@@ -86,7 +87,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnHeaterPumpOff(self) -> None:
+    def turn_heater_pump_off(self) -> None:
         """
         Turns the heater pump off.
 
@@ -96,7 +97,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnCoolerOn(self) -> None:
+    def turn_cooler_on(self) -> None:
         """
         Turns the cooler on.
 
@@ -106,7 +107,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def turnCoolerOff(self) -> None:
+    def turn_cooler_off(self) -> None:
         """
         Turns the cooler off.
 
@@ -116,16 +117,16 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getTemp(self) -> float:
+    def get_temp(self) -> float:
         """
-        Reads the temperature of the microlab
+        Reads the temperature of the microlab in Celsius
 
         :return:
         """
         pass
 
     @abstractmethod
-    def getMaxTemperature(self) -> float:
+    def get_max_temperature(self) -> float:
         """
         Read the max allowed temperature of the microlab in Celsius
 
@@ -134,7 +135,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getMinTemperature(self) -> float:
+    def get_min_temperature(self) -> float:
         """
         Read the minimum allowed temperature of the microlab in Celsius
 
@@ -143,7 +144,7 @@ class TempController(ABC):
         pass
 
     @abstractmethod
-    def getPIDConfig(self) -> dict[str, Any]:
+    def get_pid_config(self) -> dict[str, Any]:
         """
         Read the temperature controller PID configuration
 
@@ -159,4 +160,4 @@ class TempController(ABC):
             maxOutput: number
             dutyCycleLength: number
         """
-        return self.pidConfig
+        return self.pid_config
