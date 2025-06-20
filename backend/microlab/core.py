@@ -45,11 +45,15 @@ def run_microlab_thread():
         logger.info('Microlab thread finished normally')
 
 def reload_hardware(*args, **kwargs) -> tuple[bool, str]:
-    microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
     logger = MultiprocessingLogger.get_logger(__name__)
-
     t = load_translation()
+
     logger.info(t['reload-device-config'])
+    microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
+    for device_name, device in microlab_hardware.devices:
+        # close instantiated devices
+        device.close()
+
     hardware_config = hardware.devicelist.load_hardware_configuration()
     device_definitions = hardware_config['devices']
     return microlab_hardware.load_hardware(device_definitions)
