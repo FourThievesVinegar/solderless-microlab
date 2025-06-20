@@ -33,3 +33,6 @@ class W1TempSensor(TempSensor):
             except SensorNotReadyError as e:
                 self.logger.debug(f'SensorNotReadyError for {self.device_name}: ', e)
         return self.lastTemp
+
+    def close(self) -> None:
+        pass

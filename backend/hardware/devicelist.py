@@ -12,7 +12,7 @@ import hardware.stirring.core as stirrer
 import hardware.temperaturecontroller.core as tc
 import hardware.thermometer.core as thermometer
 from config import microlab_config as config
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 from localization import load_translation
 from util.logger import MultiprocessingLogger
 

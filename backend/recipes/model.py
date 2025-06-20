@@ -23,9 +23,11 @@ class MicrolabRecipeTask(BaseModel):
         'maintainHeat',
         'maintain',
         'pump',
-        'stir'
+        'stir',
+        'humanTask'
     ] = Field(
-        description='Which task to execute; one of: heat, cool, maintainCool, maintainHeat, maintain, pump, stir'
+        description='Which task to execute; one of: '
+                    'heat, cool, maintainCool, maintainHeat, maintain, pump, stir, humanTask'
     )
     parameters: dict[str, Any] = Field(
         description='Parameters for the task'
@@ -76,10 +78,12 @@ class MicrolabRecipeStep(BaseModel):
         'maintainHeat',
         'maintain',
         'pump',
-        'stir'
+        'stir',
+        'humanTask'
     ]] = Field(
         default=None,
-        description='Which task to execute; one of: heat, cool, maintainCool, maintainHeat, maintain, pump, stir'
+        description='Which task to execute; one of: '
+                    'heat, cool, maintainCool, maintainHeat, maintain, pump, stir, humanTask'
     )
     parameters: Optional[dict[str, Any]] = Field(
         default=None,

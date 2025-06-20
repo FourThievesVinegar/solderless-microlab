@@ -49,7 +49,7 @@ class MicrolabConfig:
                     f"Configuration error at {section_string}: '{error}', falling back to default value '{default}'."
                 )
 
-    def reload_config(self) -> None:
+    def reload_config(self, *args, **kwargs) -> None:
         """ Reloads microlab configuration from disk. """
         self.config.reload()
 

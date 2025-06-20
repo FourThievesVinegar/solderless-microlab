@@ -10,3 +10,6 @@ class GRBLSimulation(GRBL):
     def write_gcode(self, command: str, retries: int = 3) -> None:
         """ :inheritdoc: """
         pass
+
+    def close(self) -> None:
+        pass

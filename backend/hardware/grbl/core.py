@@ -5,7 +5,7 @@ and the individual files for configuration information.
 from typing import Any
 
 from hardware.grbl.base import GRBL
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 def create_grbl(device_config: dict[str, Any], devices: dict[str, LabDevice]) -> GRBL:

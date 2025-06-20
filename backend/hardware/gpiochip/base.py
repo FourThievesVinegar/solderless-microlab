@@ -1,28 +1,20 @@
 from __future__ import annotations
 
-import logging
-from abc import ABC, abstractmethod
-from typing import Optional, Literal
+from abc import abstractmethod
+from typing import Literal
 
+from hardware.lab_device import LabDevice
 from localization import load_translation
-from util.logger import MultiprocessingLogger
 
 LINE_REQ_DIR_OUT = 'output'
 LINE_REQ_DIR_IN = 'input'
 
 
-class GPIOChip(ABC):
+class GPIOChip(LabDevice):
     def __init__(self, device_name: str, pin_aliases: dict[str, int]):
-        self._logger: Optional[logging.Logger] = None
-        self.device_name = device_name
+        super().__init__(device_name)
         self.pin_aliases = pin_aliases
         self.t = load_translation()
-
-    @property
-    def logger(self) -> logging.Logger:
-        if not self._logger:
-            self._logger = MultiprocessingLogger.get_logger(type(self).__name__)
-        return self._logger
 
     def _get_pin(self, pin: str | int) -> int:
         """

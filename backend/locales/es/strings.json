@@ -24,7 +24,8 @@
   
   "shutting-microlab": "ESShutting down microlab.",
   "shutted-microlab": "ESShutdown completed.",
-  "reload-device-config": "ESReloading microlab device configuration",
+  "reloading-device-config": "ESReloading microlab device configuration",
+  "reloaded-device-config": "ESReloading of the microlab device configuration completed",
   
   "purging-queue": "ESBeginning purge of to microlab queue",
   "purged-queue": "ESCompleted purge of to microlab queue",

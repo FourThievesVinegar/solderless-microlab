@@ -1,7 +1,7 @@
 import math
 
 from hardware.reagentdispenser.base import ReagentDispenser
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 class SyringePump(ReagentDispenser):
@@ -114,3 +114,6 @@ class SyringePump(ReagentDispenser):
         max_speed_ml_s = max_mm_per_min / mm_per_ml / 60
         min_speed_ml_s = self.axis_min_mm_per_min[pump_id] / mm_per_ml / 60
         return {'minSpeed': min_speed_ml_s, 'maxSpeed': max_speed_ml_s}
+
+    def close(self) -> None:
+        self.device.close()

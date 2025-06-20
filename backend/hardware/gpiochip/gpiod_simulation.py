@@ -42,3 +42,6 @@ class GPIODChipSimulation(GPIOChip):
         index = self.output_offsets.index(pin_number)
         self.output_values[index] = value
         self.__output()
+
+    def close(self) -> None:
+        pass

@@ -1,5 +1,5 @@
 from hardware.stirring.base import Stirrer
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 RELAY_ON: int = 1
 RELAY_OFF: int = 0
@@ -17,7 +17,7 @@ class GPIOStirrer(Stirrer):
         :param devices: Dict of hardware devices.
         """
         super().__init__(stirrer_config['id'])
-        self.device = devices[stirrer_config['gpioID']]
+        self.device: 'hardware.gpiochip.base.GPIOChip' = devices[stirrer_config['gpioID']]
         self.stirrerPin = stirrer_config['stirrerPin']
         
         self.device.setup(self.stirrerPin)
@@ -30,3 +30,6 @@ class GPIOStirrer(Stirrer):
     def turn_stirrer_off(self) -> None:
         """ :inheritdoc: """
         self.device.output(self.stirrerPin, RELAY_OFF)
+
+    def close(self) -> None:
+        self.device.close()
