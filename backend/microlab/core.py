@@ -50,7 +50,7 @@ def reload_hardware(*args, **kwargs) -> tuple[bool, str]:
 
     logger.info(t['reloading-device-config'])
     microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
-    for device_name, device in microlab_hardware.devices:
+    for device_name, device in microlab_hardware.devices.items():
         # close instantiated devices
         device.close()
 
