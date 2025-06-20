@@ -46,7 +46,7 @@ You will **gently** turn the potentometers on the motor control boards clockwise
 
 ### Stepper motor verification
 
-** This is a more in-depth way to test the function of the stepper motors. If you have tuned the potentiometers as described above and the motors turn smoothly, you do not need to perform these steps. **
+**This is a more in-depth way to test the function of the stepper motors. If you have tuned the potentiometers as described above and the motors turn smoothly, you do not need to perform these steps.**
 
 Check each peristaltic pump's motor. With the cables and power disconnected, you should be able to spin the shaft of the stepper motor with your fingers and feel almost no resistance.
 
@@ -64,6 +64,8 @@ If you do not feel any change in resistance, try jumpering other combinations of
 ### Reactor Core
 
 Please note that we are experimenting with sinking nuts into various components for more reliable and durable connections. This is why the screw holes on top of the manifold are hexagonal at the top. Doing this requires a soldering iron and a steady hand, as the nuts have to be kept flats in order to accept screws.
+
+The new GL-45 reactor does not require as much assembly. We are still developing it, but it is recommended in place of the original v0.6.0 reactore core assembly.
 
 ### Optimizing Heat Exchange
 
