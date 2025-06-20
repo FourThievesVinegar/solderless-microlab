@@ -4,7 +4,7 @@ from typing import Literal
 
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 from hardware.gpiochip.gpiod_chip import GPIODChip
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 class GPIODChipset(GPIOChip):
@@ -72,3 +72,7 @@ class GPIODChipset(GPIOChip):
         """
         chip_id = self._get_chip_id(pin)
         return self.chips[chip_id].output(pin, value)
+
+    def close(self) -> None:
+        for chip in self.chips.values():
+            chip.close()

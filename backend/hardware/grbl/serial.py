@@ -30,3 +30,6 @@ class GRBLSerial(GRBL):
                 self.write_gcode(command, retries - 1)
             else:
                 raise ValueError(self.t['grlb-error'].format(response, command))
+
+    def close(self) -> None:
+        self.device.close()

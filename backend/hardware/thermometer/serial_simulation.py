@@ -28,3 +28,6 @@ class SerialTempSensorSimulation(TempSensor):
         """
         reading = self.temp if self.temp is not None else +29.06
         return float(reading)
+
+    def close(self) -> None:
+        pass

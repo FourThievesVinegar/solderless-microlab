@@ -34,3 +34,6 @@ class SimulatedReagentDispenser(ReagentDispenser):
             'minSpeed': self.min_speed,
             'maxSpeed': self.max_speed
         }
+
+    def close(self) -> None:
+        pass

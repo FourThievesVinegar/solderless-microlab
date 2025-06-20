@@ -5,7 +5,7 @@ and either the individual files or backend/config.py for configuration informati
 from typing import Any
 
 from hardware.reagentdispenser.base import ReagentDispenser
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 def create_reagent_dispenser(device_config: dict[str, Any], devices: dict[str, LabDevice]) -> ReagentDispenser:

@@ -1,22 +1,13 @@
-import logging
-from abc import ABC, abstractmethod
-from typing import Optional
+from abc import abstractmethod
 
+from hardware.lab_device import LabDevice
 from localization import load_translation
-from util.logger import MultiprocessingLogger
 
 
-class GRBL(ABC):
+class GRBL(LabDevice):
     def __init__(self, device_name: str):
-        self._logger: Optional[logging.Logger] = None
-        self.device_name = device_name
+        super().__init__(device_name)
         self.t = load_translation()
-
-    @property
-    def logger(self) -> logging.Logger:
-        if not self._logger:
-            self._logger = MultiprocessingLogger.get_logger(type(self).__name__)
-        return self._logger
 
     @abstractmethod
     def write_gcode(self, command: str, retries: int = 3) -> None:

@@ -1,7 +1,7 @@
 from typing import Literal, Optional, Any
 
 from hardware.reagentdispenser.base import ReagentDispenser
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 class PeristalticPump(ReagentDispenser):
@@ -87,3 +87,6 @@ class PeristalticPump(ReagentDispenser):
             'minSpeed': min_speed_ml_s,
             'maxSpeed': max_speed_ml_s,
         }
+
+    def close(self) -> None:
+        self.device.close()

@@ -112,3 +112,6 @@ class SimulatedTempController(TempController):
             differentialOnMeasurement: Boolean (optional)
         """
         return self.pid_config
+
+    def close(self) -> None:
+        pass
