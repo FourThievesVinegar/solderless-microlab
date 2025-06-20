@@ -11,7 +11,6 @@ We will need the:
 
 - Raspberry Pi that is set up
 - Arduino that is set up
-- **Pi power cable?**
 - Peristaltic pumps with stepper motors
 - Small phillips head screw driver
 
@@ -27,7 +26,8 @@ In the image above, the potentiometers are circled and their slightly-flat sides
 
 **WARNING!** Failure to correctly tune the potentometers can damage the motor controller and the motors themselves.
 
-How to tune:
+#### How to tune
+
 You will **gently** turn the potentometers on the motor control boards clockwise or counter-clockwise using a small phillips head screw driver. Be careful to stop once there is any resistance, do not to turn past the resistance.
 
 - Turning them clockwise "closes" the voltage down
@@ -36,15 +36,17 @@ You will **gently** turn the potentometers on the motor control boards clockwise
 1. Attach the Arduino's stepper motor cables to the stepper motor on the peristalic pump.
 1. Double check the everything is connected properly.
 1. Start with the potentiometers in the "closed" position.
+1. Connect the Arduino to the Pi.
 1. Power on the Raspberry Pi, the Arduino shield and the pumps.
-1. **Don't we need to add cable between Arduino and Pi?**
 1. On the Raspberry Pi, the MicroLab software will load, locate the Test Recipe and choose to manually run each of the peristalic pumps. **More detail needed**<br>
 1. Slowly turn the potentiometer counter-clockwise an eighth of a turn at a time to "open" them. Check if the stepper motors turn smoothly. If they do not move, "open" the potentiometer an eighth-turn and try again. If they move erratically, your voltage is likely too high and you "close" the potentiometer.
-1. Once tuned, power off the motors and the Raspberry Pi. Remove the stepper motor cabls from the stepper motors of the eristaltic pumps.
+1. Once tuned, power off the motors and the Raspberry Pi. Remove the stepper motor cables from the stepper motors of the peristaltic pumps.
 
 - You can tune the potentiometers later as well, but the lid on the Control Unit will need to be off.
 
 ### Stepper motor verification
+
+** This is a more in-depth way to test the function of the stepper motors. If you have tuned the potentiometers as described above and the motors turn smoothly, you do not need to perform these steps. **
 
 Check each peristaltic pump's motor. With the cables and power disconnected, you should be able to spin the shaft of the stepper motor with your fingers and feel almost no resistance.
 
