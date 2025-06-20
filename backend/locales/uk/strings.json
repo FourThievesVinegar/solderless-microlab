@@ -24,7 +24,8 @@
 
   "shutting-microlab": "Зупинка MicroLab.",
   "shutted-microlab": "Зупинка завершена.",
-  "reload-device-config": "Перезавантаження конфігурації пристроїв MicroLab",
+  "reloading-device-config": "Перезавантаження конфігурації пристроїв MicroLab...",
+  "reloaded-device-config": "Перезавантаження конфігурації пристроїв MicroLab завершене.",
 
   "purging-queue": "Початок очищення черги для MicroLab",
   "purged-queue": "Очищення черги для MicroLab завершено",
