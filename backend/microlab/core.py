@@ -44,7 +44,7 @@ def run_microlab_thread():
     else:
         logger.info('Microlab thread finished normally')
 
-def reload_hardware() -> tuple[bool, str]:
+def reload_hardware(*args, **kwargs) -> tuple[bool, str]:
     microlab_hardware = MicroLabHardware.get_microlab_hardware_controller()
     logger = MultiprocessingLogger.get_logger(__name__)
 
