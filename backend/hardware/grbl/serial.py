@@ -26,7 +26,7 @@ class GRBLSerial(GRBL):
         response = self.device.read_until()
         if 'error' in str(response):
             if retries > 0:
-                self._logger.warning(self.t['grbl-error-retrying'].format(response, command))
+                self.logger.warning(self.t['grbl-error-retrying'].format(response, command))
                 self.write_gcode(command, retries - 1)
             else:
                 raise ValueError(self.t['grlb-error'].format(response, command))
