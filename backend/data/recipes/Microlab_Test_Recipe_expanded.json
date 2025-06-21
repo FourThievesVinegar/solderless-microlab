@@ -1,0 +1,214 @@
+{
+  "title": "Microlab Test Recipe",
+  "steps": [
+    {
+      "message": "Welcome! Here are the testing options.",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [
+        { "text": "Reagent Pumps", "next": 1 },
+        { "text": "Stirring", "next": 8 },
+        { "text": "Heating", "next": 15 },
+        { "text": "Cooling", "next": 20 }
+      ],
+      "icon": "reaction_complete"
+    },
+    {
+      "message": "Pump Tests",
+      "done": false,
+      "options": [
+        { "text": "All Pumps (10ml)", "next": 2 },
+        { "text": "Pump X 10ml over 10 min", "next": 6 }
+      ],
+      "icon": "dispensing"
+    },
+    {
+      "message": "Testing Pump X",
+      "parameters": { "volume": 30, "pump": "X" },
+      "done": false,
+      "baseTask": "pump",
+      "next": 3
+    },
+    {
+      "message": "Testing Pump Y",
+      "parameters": { "pump": "Y", "volume": 30 },
+      "done": false,
+      "baseTask": "pump",
+      "next": 4
+    },
+    {
+      "message": "Testing Pump Z",
+      "parameters": { "pump": "Z", "volume": 20 },
+      "done": false,
+      "baseTask": "pump",
+      "next": 5
+    },
+    {
+      "message": "Pumps Test Complete. Would you like another test?",
+      "done": false,
+      "options": [
+        { "text": "More!", "next": 0 },
+        { "text": "No way!", "next": 24 }
+      ],
+      "icon": "dispensing"
+    },
+    {
+      "message": "Pump X - 10ml over 10 minutes",
+      "baseTask": "pump",
+      "parameters": { "pump": "X", "volume": 10, "time": 600 },
+      "done": false,
+      "next": 7,
+      "details": "Dispensing 10 ml over 10 minutes"
+    },
+    {
+      "message": "Dispense over time test complete. Would you like another?",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [
+        { "text": "Yes please", "next": 0 },
+        { "text": "No thanks", "next": 24 }
+      ]
+    },
+    {
+      "message": "Stirring Tests",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [
+        { "text": "Stir 5 seconds", "next": 9 },
+        { "text": "Stir 30 minutes", "next": 11 },
+        { "text": "Stir 12 hours", "next": 13 }
+      ],
+      "icon": "stirring"
+    },
+    {
+      "message": "Activating stirrer for 5 seconds.",
+      "parameters": { "time": 5 },
+      "done": false,
+      "baseTask": "stir",
+      "next": 10,
+      "icon": "stirring"
+    },
+    {
+      "message": "Stirring test complete. Would you like another?",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [
+        { "text": "Yes", "next": 0 },
+        { "text": "No", "next": 24 }
+      ],
+      "icon": "stirring"
+    },
+    {
+      "message": "Stirring for 30 minutes.",
+      "baseTask": "stir",
+      "parameters": { "time": 1800 },
+      "done": false,
+      "next": 12
+    },
+    {
+      "message": "30m stirring test complete. Would you like another test?",
+      "done": false,
+      "options": [
+        { "text": "Yes please!", "next": 0 },
+        { "text": "No thanks.", "next": 24 }
+      ],
+      "icon": "stirring"
+    },
+    {
+      "message": "Stirring for 12 hours",
+      "parameters": { "temp": 35, "time": 43200 },
+      "done": false,
+      "baseTask": "stir",
+      "next": 14,
+      "details": "This temperature is necessary to speed the reaction."
+    },
+    {
+      "message": "12h stirring test complete. Would you like another test?",
+      "done": false,
+      "options": [
+        { "text": "I guess.", "next": 0 },
+        { "text": "Nah.", "next": 24 }
+      ],
+      "icon": "stirring"
+    },
+    {
+      "message": "Heating Tests",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [{ "text": "Heat to 30 (and stir)", "next": 16 }],
+      "icon": "maintain_heat"
+    },
+    {
+      "message": "Heating to 30",
+      "baseTask": "heat",
+      "parameters": { "temp": 30 },
+      "done": false,
+      "icon": "heating",
+      "next": 17,
+      "andStir": true
+    },
+    {
+      "message": "Maintaining heat",
+      "baseTask": "maintainHeat",
+      "parameters": { "temp": 30, "tolerance": 2, "time": 10 },
+      "done": false,
+      "next": 18,
+      "andStir": true,
+      "tasks": [{ "baseTask": "stir", "parameters": { "time": 10 } }]
+    },
+    {
+      "message": "Heating test complete. Want another?",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [
+        { "text": "Yup.", "next": 0 },
+        { "text": "Nope", "next": 24 }
+      ]
+    },
+    {
+      "message": "Cooling Tests",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [{ "text": "Cool to 20C", "next": 21 }],
+      "icon": "cooling"
+    },
+    {
+      "message": "Cooling to 20C for 30 seconds",
+      "baseTask": "cool",
+      "parameters": { "temp": 20 },
+      "done": false,
+      "icon": "cooling",
+      "next": 21
+    },
+    {
+      "message": "Keeping cool...",
+      "baseTask": "maintainCool",
+      "parameters": { "temp": 20, "time": 30, "tolerance": 2 },
+      "done": false,
+      "next": 22
+    },
+    {
+      "message": "Stirring...",
+      "baseTask": "stir",
+      "parameters": { "time": 30 },
+      "done": false,
+      "icon": "stirring",
+      "next": 23
+    },
+    {
+      "message": "Cooling Test complete! Would you like another?",
+      "baseTask": "humanTask",
+      "done": false,
+      "options": [
+        { "text": "Yes.", "next": 0 },
+        { "text": "No", "next": 24 }
+      ]
+    },
+    {
+      "message": "Okay then! That was always allowed.",
+      "done": true,
+      "icon": "reaction_complete"
+    }
+  ]
+}
+
