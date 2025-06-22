@@ -17,8 +17,8 @@ class SerialTempSensor(TempSensor):
               A string with the device read from
         """
         super().__init__(thermometer_config['id'])
-        self.lastTemp: float = 0.0
-        self.nextTempReadingTime = datetime.now()
+        self.last_temp: float = 0.0
+        self.next_temp_reading_time = datetime.now()
 
         try:
             self.device = serial.Serial(thermometer_config['serialDevice'], timeout=0.5)
@@ -56,8 +56,8 @@ class SerialTempSensor(TempSensor):
         :return:
             Temperature in Celsius
         """
-        if datetime.now() < self.nextTempReadingTime:
-            return self.lastTemp
+        if datetime.now() < self.next_temp_reading_time:
+            return self.last_temp
 
         # Read temperature, and afterward clear the serial buffer
         sensor_reading = self.read_sensor()
@@ -82,21 +82,21 @@ class SerialTempSensor(TempSensor):
         # Make sure that we have a start and an end and that there is something between them
         if start > -1 and end > -1 and end - start > 2:
             try:
-                self.lastTemp = float(sensor_reading[start:end])
-                self.nextTempReadingTime = datetime.now() + timedelta(seconds=1)
+                self.last_temp = float(sensor_reading[start:end])
+                self.next_temp_reading_time = datetime.now() + timedelta(seconds=1)
             except Exception as e:
                 self.logger.error(self.t['temperature-conversion-error'])
                 self.logger.error(sensor_reading[start:end])
                 self.logger.exception(str(e))
-                self.lastTemp = -999.0
+                self.last_temp = -999.0
         else:
-            self.lastTemp = -999.0
+            self.last_temp = -999.0
             self.logger.error(self.t['error-reading-thermometer-specific'].format(sensor_reading[start:end]))
         self.logger.debug(
-            self.t['temperature-read'].format(str(self.lastTemp))
+            self.t['temperature-read'].format(str(self.last_temp))
         )
 
-        return self.lastTemp
+        return self.last_temp
 
     def close(self) -> None:
         if self.device:

@@ -18,18 +18,18 @@ class GPIOStirrer(Stirrer):
         """
         super().__init__(stirrer_config['id'])
         self.device: 'hardware.gpiochip.base.GPIOChip' = devices[stirrer_config['gpioID']]
-        self.stirrerPin = stirrer_config['stirrerPin']
+        self.stirrer_pin = stirrer_config['stirrerPin']
         
-        self.device.setup(self.stirrerPin)
-        self.device.output(self.stirrerPin, RELAY_OFF)
+        self.device.setup(self.stirrer_pin)
+        self.device.output(self.stirrer_pin, RELAY_OFF)
 
     def turn_stirrer_on(self) -> None:
         """ :inheritdoc: """
-        self.device.output(self.stirrerPin, RELAY_ON)
+        self.device.output(self.stirrer_pin, RELAY_ON)
 
     def turn_stirrer_off(self) -> None:
         """ :inheritdoc: """
-        self.device.output(self.stirrerPin, RELAY_OFF)
+        self.device.output(self.stirrer_pin, RELAY_OFF)
 
     def close(self) -> None:
         self.device.close()

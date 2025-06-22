@@ -4,7 +4,6 @@ from abc import abstractmethod
 from typing import Literal
 
 from hardware.lab_device import LabDevice
-from localization import load_translation
 
 LINE_REQ_DIR_OUT = 'output'
 LINE_REQ_DIR_IN = 'input'
@@ -14,7 +13,6 @@ class GPIOChip(LabDevice):
     def __init__(self, device_name: str, pin_aliases: dict[str, int]):
         super().__init__(device_name)
         self.pin_aliases = pin_aliases
-        self.t = load_translation()
 
     def _get_pin(self, pin: str | int) -> int:
         """
@@ -31,13 +29,13 @@ class GPIOChip(LabDevice):
         return pin
 
     @abstractmethod
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+    def setup(self, pin: str | int, pin_type: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """
         Sets up pin for use, currently only output is supported.
 
         :param pin:
             The pin to setup. Either a defined alias or the line number for the pin
-        :param pinType:
+        :param pin_type:
             One of "output" or "input". Currently only "output" is supported
         :param value:
             Either 0 or 1, the value to output on the pin

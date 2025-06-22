@@ -1,13 +1,11 @@
 from abc import abstractmethod
 
 from hardware.lab_device import LabDevice
-from localization import load_translation
 
 
 class Stirrer(LabDevice):
     def __init__(self, device_name: str) -> None:
         super().__init__(device_name)
-        self.t = load_translation()
 
     @abstractmethod
     def turn_stirrer_on(self) -> None:

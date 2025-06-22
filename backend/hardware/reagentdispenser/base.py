@@ -2,13 +2,11 @@ from abc import abstractmethod
 from typing import Literal, Optional
 
 from hardware.lab_device import LabDevice
-from localization import load_translation
 
 
 class ReagentDispenser(LabDevice):
     def __init__(self, device_name: str) -> None:
         super().__init__(device_name)
-        self.t = load_translation()
 
     @abstractmethod
     def dispense(

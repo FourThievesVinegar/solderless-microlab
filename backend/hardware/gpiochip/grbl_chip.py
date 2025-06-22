@@ -40,11 +40,11 @@ class GRBLChip(GPIOChip):
 
             self.device.write_gcode(f'{command} P{pin}')
 
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+    def setup(self, pin: str | int, pin_type: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """ :inheritdoc: """
         pin_number = self._get_pin(pin)
 
-        if pinType == LINE_REQ_DIR_OUT:
+        if pin_type == LINE_REQ_DIR_OUT:
             self.output_offsets.append(pin_number)
             self.output_values.append(value)
             self.__output()

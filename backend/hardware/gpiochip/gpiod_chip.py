@@ -49,11 +49,11 @@ class GPIODChip(GPIOChip):
         except Exception:
             pass
 
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+    def setup(self, pin: str | int, pin_type: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """ :inheritdoc: """
         offset = self._get_pin(pin)
 
-        if pinType == 'output':
+        if pin_type == 'output':
             # record new output
             self.output_offsets.append(offset)
             self.output_values[offset] = Value.ACTIVE if value else Value.INACTIVE

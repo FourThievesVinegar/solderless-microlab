@@ -2,13 +2,11 @@ from abc import abstractmethod
 from typing import Any
 
 from hardware.lab_device import LabDevice
-from localization import load_translation
 
 
 class TempController(LabDevice):
     def __init__(self, config: dict[str, Any], devices: dict[str, LabDevice] = None):
         super().__init__(config.get('id', 'TempController'))
-        self.t = load_translation()
 
         # ensure top-level required params
         missing = [k for k in ('maxTemp', 'minTemp') if k not in config]
