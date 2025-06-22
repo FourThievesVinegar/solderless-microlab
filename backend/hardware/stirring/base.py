@@ -1,22 +1,11 @@
-import logging
-from abc import ABC, abstractmethod
-from typing import Optional
+from abc import abstractmethod
 
-from localization import load_translation
-from util.logger import MultiprocessingLogger
+from hardware.lab_device import LabDevice
 
 
-class Stirrer(ABC):
+class Stirrer(LabDevice):
     def __init__(self, device_name: str) -> None:
-        self._logger: Optional[logging.Logger] = None
-        self.device_name = device_name
-        self.t = load_translation()
-
-    @property
-    def logger(self) -> logging.Logger:
-        if not self._logger:
-            self._logger = MultiprocessingLogger.get_logger(type(self).__name__)
-        return self._logger
+        super().__init__(device_name)
 
     @abstractmethod
     def turn_stirrer_on(self) -> None:

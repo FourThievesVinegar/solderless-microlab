@@ -12,3 +12,6 @@ class SimulatedStirrer(Stirrer):
     def turn_stirrer_off(self) -> None:
         """ :inheritdoc: """
         return None
+
+    def close(self) -> None:
+        pass

@@ -9,7 +9,7 @@ class GPIODChipSimulation(GPIOChip):
     def __init__(self, gpio_config: dict):
         """
          :param gpio_config: {
-            "lineAliases": {alias_str: line_number, …}  # optional
+            "lineAliases": {alias_str: line_number, ...}  # optional
         }
         """
         pin_aliases = dict(gpio_config.get('lineAliases', {}))
@@ -26,12 +26,12 @@ class GPIODChipSimulation(GPIOChip):
         """
         pass
 
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+    def setup(self, pin: str | int, pin_type: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """ :inheritdoc: """
         pin_number = self._get_pin(pin)
 
         # TODO: add better simulation
-        if pinType == LINE_REQ_DIR_OUT:
+        if pin_type == LINE_REQ_DIR_OUT:
             self.output_offsets.append(pin_number)
             self.output_values.append(value)
             self.__output()
@@ -42,3 +42,6 @@ class GPIODChipSimulation(GPIOChip):
         index = self.output_offsets.index(pin_number)
         self.output_values[index] = value
         self.__output()
+
+    def close(self) -> None:
+        pass

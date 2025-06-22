@@ -1,7 +1,7 @@
 from typing import Literal, Optional, Any
 
 from hardware.reagentdispenser.base import ReagentDispenser
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 class PeristalticPump(ReagentDispenser):
@@ -18,7 +18,7 @@ class PeristalticPump(ReagentDispenser):
         :param devices: Dict of hardware devices.
         """
         super().__init__(reagent_dispenser_config['id'])
-        self.peristalticPumpsConfig = reagent_dispenser_config['peristalticPumpsConfig']
+        self.pump_config = reagent_dispenser_config['peristalticPumpsConfig']
         self.device: 'hardware.grbl.base.GRBL' = devices[reagent_dispenser_config['grblID']]
         # G91: Set GRBL to incremental (relative) positioning mode
         self.device.write_gcode('G91')
@@ -29,8 +29,8 @@ class PeristalticPump(ReagentDispenser):
 
         :inheritdoc:
         """
-        f_value = self.peristalticPumpsConfig['F']  # Max feed rate in mm/min
-        mm_per_ml = self.peristalticPumpsConfig[pump_id]['mmPerMl']
+        f_value = self.pump_config['F']  # Max feed rate in mm/min
+        mm_per_ml = self.pump_config[pump_id]['mmPerMl']
         total_mm = volume * mm_per_ml  # Total distance in mm to move the pump
 
         # Determine dispense speed (mm/min): default to max, optionally limit by desired duration
@@ -61,9 +61,9 @@ class PeristalticPump(ReagentDispenser):
         - Max pulse rate ~30,000 pulses/sec; GRBL limit: https://github.com/grbl/grbl/issues/1255
         - Default pulses/mm ~250 (machine default)
         """
-        mm_per_ml = self.peristalticPumpsConfig[pump_id]['mmPerMl']
+        mm_per_ml = self.pump_config[pump_id]['mmPerMl']
 
-        f_value = self.peristalticPumpsConfig['F']  # Max feed rate in mm/min
+        f_value = self.pump_config['F']  # Max feed rate in mm/min
         # Convert F (mm/min) to mm/s, then to ml/s
         f_mm_per_s = f_value / 60
         f_ml_per_s = f_mm_per_s / mm_per_ml
@@ -87,3 +87,6 @@ class PeristalticPump(ReagentDispenser):
             'minSpeed': min_speed_ml_s,
             'maxSpeed': max_speed_ml_s,
         }
+
+    def close(self) -> None:
+        self.device.close()

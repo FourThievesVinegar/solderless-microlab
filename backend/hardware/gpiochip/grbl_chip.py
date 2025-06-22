@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Literal
 
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 class GRBLChip(GPIOChip):
@@ -40,11 +40,11 @@ class GRBLChip(GPIOChip):
 
             self.device.write_gcode(f'{command} P{pin}')
 
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+    def setup(self, pin: str | int, pin_type: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """ :inheritdoc: """
         pin_number = self._get_pin(pin)
 
-        if pinType == LINE_REQ_DIR_OUT:
+        if pin_type == LINE_REQ_DIR_OUT:
             self.output_offsets.append(pin_number)
             self.output_values.append(value)
             self.__output()
@@ -55,3 +55,6 @@ class GRBLChip(GPIOChip):
         index = self.output_offsets.index(pin_number)
         self.output_values[index] = value
         self.__output()
+
+    def close(self) -> None:
+        self.device.close()

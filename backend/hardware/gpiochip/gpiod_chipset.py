@@ -4,7 +4,7 @@ from typing import Literal
 
 from hardware.gpiochip.base import GPIOChip, LINE_REQ_DIR_OUT
 from hardware.gpiochip.gpiod_chip import GPIODChip
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 
 class GPIODChipset(GPIOChip):
@@ -43,13 +43,13 @@ class GPIODChipset(GPIOChip):
         chip_id = self.line_alias_to_chip.get(pin) or 'defaultChip'
         return chip_id
 
-    def setup(self, pin: str | int, pinType: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
+    def setup(self, pin: str | int, pin_type: Literal['input', 'output'] = LINE_REQ_DIR_OUT, value: int = 0) -> None:
         """
         Sets up pin for use, currently only output is supported.
 
         :param pin:
             The pin to output on. Must be a line alias.
-        :param pinType:
+        :param pin_type:
             One of "output" or "input". Currently only "output" is supported
         :param value:
             Either 0 or 1, the value to output on the pin
@@ -57,7 +57,7 @@ class GPIODChipset(GPIOChip):
             None
         """
         chip_id = self._get_chip_id(pin)
-        return self.chips[chip_id].setup(pin, pinType, value)
+        return self.chips[chip_id].setup(pin, pin_type, value)
 
     def output(self, pin: str, value: int) -> None:
         """
@@ -72,3 +72,7 @@ class GPIODChipset(GPIOChip):
         """
         chip_id = self._get_chip_id(pin)
         return self.chips[chip_id].output(pin, value)
+
+    def close(self) -> None:
+        for chip in self.chips.values():
+            chip.close()

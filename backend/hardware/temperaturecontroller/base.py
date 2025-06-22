@@ -1,17 +1,12 @@
-import logging
-from abc import ABC, abstractmethod
-from typing import Any, Optional
+from abc import abstractmethod
+from typing import Any
 
-from hardware.util.lab_device_type import LabDevice
-from localization import load_translation
-from util.logger import MultiprocessingLogger
+from hardware.lab_device import LabDevice
 
 
-class TempController(ABC):
+class TempController(LabDevice):
     def __init__(self, config: dict[str, Any], devices: dict[str, LabDevice] = None):
-        self._logger: Optional[logging.Logger] = None
-        self.device_name = config['id']
-        self.t = load_translation()
+        super().__init__(config.get('id', 'TempController'))
 
         # ensure top-level required params
         missing = [k for k in ('maxTemp', 'minTemp') if k not in config]
@@ -49,12 +44,6 @@ class TempController(ABC):
                 pid_configuration.setdefault(key, default)
     
             self.pid_config = pid_configuration
-
-    @property
-    def logger(self) -> logging.Logger:
-        if not self._logger:
-            self._logger = MultiprocessingLogger.get_logger(type(self).__name__)
-        return self._logger
 
     @abstractmethod
     def turn_heater_on(self) -> None:

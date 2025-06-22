@@ -1,7 +1,7 @@
 from typing import Any
 
 from hardware.temperaturecontroller.base import TempController
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 
 RELAY_ON: int = 1
 RELAY_OFF: int = 0
@@ -87,3 +87,7 @@ class BasicTempController(TempController):
 
     def get_pid_config(self) -> dict[str, Any]:
         return self.pid_config
+
+    def close(self) -> None:
+        self.device.close()
+        self.thermometer.close()

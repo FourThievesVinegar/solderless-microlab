@@ -13,9 +13,9 @@ class W1TempSensor(TempSensor):
         """
         super().__init__('W1ThermSensor')
 
-        self.lastTemp: float = 0.0
+        self.last_temp: float = 0.0
         self.sensor = W1ThermSensor()
-        self.nextTempReadingTime = datetime.now()
+        self.next_temp_reading_time = datetime.now()
 
     def get_temp(self) -> float:
         """
@@ -26,10 +26,13 @@ class W1TempSensor(TempSensor):
         # With the DS18S20 at least reading new data seems to take ~0.8 seconds,
         # so only read new temp if our temp is over 1 second old to prevent
         # blocking threads for data that hasn't changed much
-        if datetime.now() > self.nextTempReadingTime:
+        if datetime.now() > self.next_temp_reading_time:
             try:
-                self.lastTemp = self.sensor.get_temperature()
-                self.nextTempReadingTime = datetime.now() + timedelta(seconds=1)
+                self.last_temp = self.sensor.get_temperature()
+                self.next_temp_reading_time = datetime.now() + timedelta(seconds=1)
             except SensorNotReadyError as e:
                 self.logger.debug(f'SensorNotReadyError for {self.device_name}: ', e)
-        return self.lastTemp
+        return self.last_temp
+
+    def close(self) -> None:
+        pass

@@ -15,7 +15,7 @@ from typing import Literal, Any
 import config
 from hardware import devicelist
 from hardware.devicelist import load_hardware_configuration
-from hardware.util.lab_device_type import LabDevice
+from hardware.lab_device import LabDevice
 from localization import load_translation
 from util.logger import MultiprocessingLogger
 
