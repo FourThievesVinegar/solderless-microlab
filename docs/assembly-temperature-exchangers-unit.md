@@ -36,7 +36,8 @@ TC-CTB|Copper tubing 1/4" OD x 3/16" ID|1
 TC-STB|Silicone tubing 8mm OD x 5mm ID|1
 RX-TEE|Barbed tee fittings for 6mm tubing|2
 TC-JAR|32oz canning jar |2 | We've don't have a optimal size for the jar, we've also used 16oz jars. You may want to experiment to find the best size for your project.
-TC-REL|Switchable power supply|1
+TC-REL|Not Recommended: Switchable power supply|1
+TC-AQ|Recommended: aquarium temperature controller | 1
 TC-INS|	Insulation for jars|	2
 TC-TAP|	Tape for the insulation|	2
 TC-TCT|	Copper tube cutter tool|1
@@ -92,6 +93,7 @@ This component holds ice water or another cold substance to cool the reactor cor
 
 * **Insert tubing into lid.** Take the Cooling Unit Lid (TC-CUL). Insert the ends of your copper tube helix up through the holes in the lid.
 * **Attach lid.** Lower the copper tubing into the jar (TC-JAR) as you place the lid on top of the jar. Place the canning jar lid ring (that comes with the Mason jar) over the lid and screw it to the jar to secure the lid in place.
+* **NOTE:** The cooling reservoir is limited by its size and the volume of ice it can hold. You can also simply submerge the heat exchanger coil in an ice bath in a larger container. This may be preferable or necessary for longer-running reactions.
 
   <IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/temperature-control-units-assembled.jpg" WIDTH="400" />
 
