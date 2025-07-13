@@ -62,22 +62,22 @@ if [[ ! -f "$GRBL_HEX" ]]; then
 fi
 
 # Step 4: Check for /dev/arduino_usb
-DEV_TTY_ARDUINO="/dev/arduino_usb"
+DEV_ARDUINO_USB="/dev/arduino_usb"
 
-if [[ ! -e "$DEV_TTY_ARDUINO" ]]; then
-    echo "Could not find device at $DEV_TTY_ARDUINO. Make sure the Arduino is connected and udev rules are applied."
+if [[ ! -e "$DEV_ARDUINO_USB" ]]; then
+    echo "Could not find device at $DEV_ARDUINO_USB. Make sure the Arduino is connected and udev rules are applied."
     exit 1
 else
-    echo "Arduino detected at $DEV_TTY_ARDUINO"
+    echo "Arduino detected at $DEV_ARDUINO_USB"
 fi
 
-# Step 5: Flash GRBL to Arduino Uno
-echo "Flashing GRBL to Arduino Uno..."
-avrdude -v -patmega328p -carduino -P "$DEV_TTY_ARDUINO" -b115200 -D -Uflash:w:$GRBL_HEX:i
+# Step 5
+echo "Flashing GRBL firmware to Arduino Uno..."
+avrdude -v -patmega328p -carduino -P "$DEV_ARDUINO_USB" -b115200 -D -Uflash:w:$GRBL_HEX:i
 
 if [[ $? -eq 0 ]]; then
     echo "GRBL firmware flashed successfully!"
 else
-    echo "Flashing failed."
+    echo "GRBL firmware flashing failed."
     exit 1
 fi
