@@ -31,6 +31,7 @@ fi
 
 # Step 2: Create udev rule for Arduino symlink
 UDEV_RULES_FILE="/etc/udev/rules.d/99-microlab.rules"
+DEV_ARDUINO_USB="/dev/arduino_usb"
 
 if [[ ! -f "$UDEV_RULES_FILE" ]]; then
     echo "Creating udev rules for Arduino USB devices..."
@@ -45,25 +46,37 @@ SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5523", SYMLINK+="t
 EOF
     udevadm control --reload-rules
     udevadm trigger
+
+    # Wait for /dev/arduino_usb to appear (max 5 seconds)
+    for i in {1..5}; do
+        if [[ -e "${DEV_ARDUINO_USB}" ]]; then
+            break
+        fi
+        echo "Waiting for ${DEV_ARDUINO_USB} to appear..."
+        sleep 1
+    done
 else
     echo "udev rules file already exists: $UDEV_RULES_FILE"
 fi
 
-# Step 3: Download GRBL .hex file
+# Step 3: Download GRBL .hex file if not present
 GRBL_HEX="grbl.hex"
 GRBL_URL="https://github.com/gnea/grbl/releases/download/v1.1h.20190825/grbl_v1.1h.20190825.hex"
 
-echo "Downloading GRBL firmware..."
-wget -O "$GRBL_HEX" "$GRBL_URL"
-
+echo "Checking for existing GRBL firmware..."
 if [[ ! -f "$GRBL_HEX" ]]; then
-    echo "Failed to download GRBL firmware."
-    exit 1
+    echo "Firmware not found locally. Downloading..."
+    wget -O "$GRBL_HEX" "$GRBL_URL"
+
+    if [[ ! -f "$GRBL_HEX" ]]; then
+        echo "Failed to download GRBL firmware."
+        exit 1
+    fi
+else
+    echo "Found existing firmware file: $GRBL_HEX"
 fi
 
 # Step 4: Check for /dev/arduino_usb
-DEV_ARDUINO_USB="/dev/arduino_usb"
-
 if [[ ! -e "$DEV_ARDUINO_USB" ]]; then
     echo "Could not find device at $DEV_ARDUINO_USB. Make sure the Arduino is connected and udev rules are applied."
     exit 1
