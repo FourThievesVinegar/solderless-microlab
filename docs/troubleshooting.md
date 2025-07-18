@@ -5,9 +5,9 @@ https://www.dropbox.com/scl/fo/hawpkmswazw5h7lv2p8vq/AJa3CosqXNYN0Y3zPbmVNjM/Dri
 
 ## Stepper Motor Calibration
 
-Before we continue with assembly we should tune the potentiometers and test the stepper motor wiring.
+Before we continue with assembly, we should tune the potentiometers and test the stepper motor wiring.
 
-We will need the:
+We will need:
 
 - Raspberry Pi that is set up
 - Arduino that is set up
@@ -16,7 +16,7 @@ We will need the:
 
 ### Potentiometer tuning
 
-- On the Arduino, each A4988 stepper motor driver board has a small potentiometer that look like a small phillips head screw on the board.
+- On the Arduino, each A4988 stepper motor driver board has a small potentiometer that looks like a small phillips head screw on the board.
 - You **DEFINITELY** want to tune the potentiometers. If you don't, the stepper motors will likely behave strangely and could be damaged by excess voltage.
 
 <IMG ALT="Potentiometer" SRC="./media/control-unit/potentiometers-annotated.jpg" WIDTH="600" />
@@ -24,21 +24,21 @@ We will need the:
 Note:
 In the image above, the potentiometers are circled and their slightly-flat sides are pointed to the left. This is the "slightly-open" position.
 
-**WARNING!** Failure to correctly tune the potentometers can damage the motor controller and the motors themselves.
+**WARNING!** Failure to correctly tune the potentiometers can damage the motor controller and the motors themselves.
 
 #### How to tune
 
-You will **gently** turn the potentometers on the motor control boards clockwise or counter-clockwise using a small phillips head screw driver. Be careful to stop once there is any resistance, do not to turn past the resistance.
+You will **gently** turn the potentiometers on the motor control boards clockwise or counter-clockwise using a small phillips head screw driver. Be careful to stop once there is any resistance, do not to turn past the resistance.
 
 - Turning them clockwise "closes" the voltage down
 - Turning them counter-clockwise "opens" the voltage up
 
-1. Attach the Arduino's stepper motor cables to the stepper motor on the peristalic pump.
-1. Double check the everything is connected properly.
+1. Attach the Arduino's stepper motor cables to the stepper motor on the peristaltic pump.
+1. Double-check that everything is connected properly.
 1. Start with the potentiometers in the "closed" position.
 1. Connect the Arduino to the Pi.
 1. Power on the Raspberry Pi, the Arduino shield and the pumps.
-1. On the Raspberry Pi, the MicroLab software will load, locate the Test Recipe and choose to manually run each of the peristalic pumps. **More detail needed**<br>
+1. On the Raspberry Pi, the MicroLab software will load, locate the Test Recipe and choose to manually run each of the peristaltic pumps. **More detail needed**<br>
 1. Slowly turn the potentiometer counter-clockwise an eighth of a turn at a time to "open" them. Check if the stepper motors turn smoothly. If they do not move, "open" the potentiometer an eighth-turn and try again. If they move erratically, your voltage is likely too high and you "close" the potentiometer.
 1. Once tuned, power off the motors and the Raspberry Pi. Remove the stepper motor cables from the stepper motors of the peristaltic pumps.
 

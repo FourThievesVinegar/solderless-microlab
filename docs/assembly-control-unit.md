@@ -34,7 +34,7 @@ To wire things up properly we'll tackle different parts of the Control Unit and 
 ## Tools Needed
 
 * Wire cutters/stripper (CU-WCS)
-* Computer w/ SD reader. You may need an SD card to USB converter
+* Computer with an SD reader. You may need an SD card to USB converter
 * Small phillips head screwdriver for M3 screws, one came in kit on the parts list
 * Flush cutters (CU-FCT)
 * Needle nose pilers (CU-NNP)
@@ -88,7 +88,7 @@ Shared Parts|	SP-ETN|	1 roll|	Electrical tape, narrow
 
 #### **Prepare Wires**
 
-- The Stepper Motor cables (SP-SMC) should have come with the three peristalic pumps with stepper motors. Take the 3 cables and cut them in half with the wire cuters.
+- The Stepper Motor cables (SP-SMC) should have come with the three peristaltic pumps with stepper motors. Take the 3 cables and cut them in half with the wire cuters.
 - Strip both ends on each of the wires (see [Skills Needed](#skills)) for help with stripping wires). Expect to remove 1/4" or more of the insulation. If the lever connector or screw terminal closes on the insulation the electricity won't pass through.
 - You should now have 6 cables, three to connect the Arduino to the 12-pin connector in the Control Unit and three to connect the pumps to the 12-pin unit in the Pumps box.
 
@@ -109,7 +109,7 @@ The Raspberry Pi runs its software from the SD card. In this section we will hav
    * **NOTE:** If you have a different touchscreen display, you will need to use the development image, then download and install the appropriate drivers.
 1. **Connect the MicroSD card to your computer.**
 1. **Install the MicroLab disk image onto the SD card** [following the Raspberry Pi website instructions](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-using-imager).
-   * Be sure to "Use Custom" for the OS and then select the MicroLab disk iamge.
+   * Be sure to "Use Custom" for the OS and then select the MicroLab disk image.
 1. **Verify the disk.** The imager program will run a verification check to make sure the OS was installed correctly. This will take several minutes.
 1. **Install the SD card.** Once complete, remove the SD card from your computer, and insert into your Raspberry Pi.
  * **Note:** The SD card extends beyond the edge of the Pi's circuit board.
@@ -133,9 +133,14 @@ Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00
 
 **Critical Safety Note:** ALWAYS disconnect the power before connecting or disconnecting the stepper motors from the CNC shield. Failure to do so can hurt both you and the component.
 
-1. **Installing the CNC shield controller software.** The Arduino needs the grbl software to control the CNC shield. Follow the instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash ```grbl``` to the arduino
-1. **Watch the install video** This external video shows the assembly of the CNC shield and stepper motor driver boards. [YouTube Video link](https://youtu.be/zUb8tiFCwmk?t=37)
-     * Note: We use 3 motor driver modules (the X, Y, and Z) while the video shows 4 being installed.
+1. **Installing the CNC shield controller software.** The Arduino Uno board requires the [GRBL](https://github.com/gnea/grbl/) software to control the CNC shield. Execute the following script with root permissions from the Raspberry Pi to download and flash the GRBL:
+    ```shell
+    sudo /home/thief/solderless-microlab/scripts/flash-grbl-arduino.sh
+    ``` 
+    NOTE: you can access detailed how-to instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash ```grbl``` to the arduino manually.
+
+1. **Watch the installation video** This external video shows the assembly of the CNC shield and stepper motor driver boards. [YouTube Video link](https://youtu.be/zUb8tiFCwmk?t=37)  
+    NOTE: We use 3 motor driver modules (the X, Y and Z) while the video shows 4 being installed.
 
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/arduino.jpg" WIDTH="1000" />
 
@@ -143,7 +148,7 @@ Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00
 
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_shield.png" WIDTH="200" />
 
-1. **Add Heatsinks to Stepper Motor Driver Modules.** Each Stepper Motor Driver modules came with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
+1. **Add Heatsinks to Stepper Motor Driver Modules.** Each Stepper Motor Driver module comes with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
 
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_motor_driver.jpeg" WIDTH="300" />
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_driver_heat.png" WIDTH="200" />
@@ -152,7 +157,7 @@ Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00
 
 <IMG ALT="Adding Stepper Motor Driver Boards" SRC="./media/control-unit/cu_arduino_assembled.png" WIDTH="300" />
 
-1. **Set Enable Pin to Ground.** Place 1 female-female jumper lead on the Enable and Ground pins to enable the board.
+1. OPTIONAL: **Set Enable Pin to Ground.** Place a female-female jumper on the Enable and Ground pins to enable the board.
 
 1. **Add Stepper Motor Cables.** The stepper motors cables have a female connector on one end and bare wire on the other. Connect a female connector to the X header, Y header, and Z header on the CNC shield.
 
@@ -181,7 +186,7 @@ The 12V circuit is where all the necessary wires are connected so electricity ca
 
 ### Relay Board Wiring
 <a name="relay"></a>
-In order to send 12V out to components the 4-channel relay board, the 8-pin connector and the 12V wire connector all connect to each other.
+In order to send 12V out to components: the 4-channel relay board, the 8-pin connector and the 12V wire connector all connect to each other.
 
 <IMG ALT="8-pin relay sub-assembly parts" SRC="./media/control-unit/relay_8pin.png" WIDTH="400" />
 
@@ -276,7 +281,7 @@ For this project we will only use two of the terminals with each relay, the NO a
 ###  Arduino Shield wiring
 
 <a name="12vshield"></a>
-In order to send 12V out to the peristalic pumps, the Arduino CNC shield needs to be connected to the 12V Wiring Connector and the 12-pin connector.
+In order to send 12V out to the peristaltic pumps, the Arduino CNC shield needs to be connected to the 12V Wiring Connector and the 12-pin connector.
 
 <IMG ALT="12-pin sub-assembly parts" SRC="./media/control-unit/12vshield.png" width="400" />
 
@@ -375,7 +380,7 @@ The 12V Wire Connector passes the 12V power to the converter which, as the name 
 #### Assembly
 
 - Take the 12V Wire Connector, locate the empty slot on the positive (red) side. Open the lever, insert the red wire and then close the lever.
-- On the 12V Wire Connector  locate the empty slot on the negative (black) side. Open that lever, insert the black wire and then close the lever.
+- On the 12V Wire Connector locate the empty slot on the negative (black) side. Open that lever, insert the black wire and then close the lever.
 - Plug the male barrel plug connector into the 12V to 5V converter module.
 
 <IMG ALT="Power manifold parts" SRC="./media/control-unit/cu_convert_wires.png" width="300" />
@@ -434,10 +439,10 @@ CU-JMP|Breadboard Jumper Wires - male-female|4| For consistency we used black, g
 - **Adding wires.** Use a small screwdriver to open the 6 screw terminals on Relay Board. Then insert the appropriate wire to the terminal and then tighten the screw terminal.
   - **(DC+) terminal**: attach the 6" red wire
   - **(DC-) terminal**: attach the 6" black wire
-  - **(IN1) terminal**: attach the the right-angle header pin and then plug in the male end of the blue (Heat) jumper wire
-  - **(IN2) terminal**: attach the the right-angle header pin and then plug in the male end of the red (Cool) jumper wire
-  - **(IN3) terminal**: attach the the right-angle header pin and then plug in the green (Stir) jumper wire
-  - **(IN4) terminal**: attach the the right-angle header pin and then plug in the black (Accessory) jumper wire
+  - **(IN1) terminal**: attach the right-angle header pin and then plug in the male end of the blue (Heat) jumper wire
+  - **(IN2) terminal**: attach the right-angle header pin and then plug in the male end of the red (Cool) jumper wire
+  - **(IN3) terminal**: attach the right-angle header pin and then plug in the green (Stir) jumper wire
+  - **(IN4) terminal**: attach the right-angle header pin and then plug in the black (Accessory) jumper wire
   <IMG ALT="Panel-mounted components" SRC="./media/control-unit/5vrelay_wires.png" width="200" />
 
 - **Relay Board cleanup.** To conserve space and prevent short circuits, we recommend using flush cutters to trim pins sticking out on the underside of the board. Then use electrical tape to cover the bottom of the board.

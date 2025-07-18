@@ -69,8 +69,8 @@ The Control Unit will need to be connected to the power supply, the Pumps box (t
 
 <IMG ALT="Temp Tubing" SRC="./media/control-unit/cu_cables.jpeg" WIDTH="200"/>
 
-* **8-pin cable** Connect the 8-pin cable to mounted 8-pin connector on the Control Unit box and on the Pumps Box.
-* **12-pin cable Connect** the 12-pin cable to mounted 12-pin connector on the Control Unit box and on the Pumps Box.
+* **8-pin cable** connects the 8-pin cable to mounted 8-pin connector on the Control Unit box and on the Pumps Box.
+* **12-pin cable** connects the 12-pin cable to mounted 12-pin connector on the Control Unit box and on the Pumps Box.
 * **Connect Thermistor USB to Control Unit** Plug the USB end of the Thermistor into the Control Unit's USB port.
 * **Plug in Power supply** Insert the barrel connector of the power supply to the barrel connector power port on the Control Unit.
 
@@ -175,7 +175,7 @@ Once ready, use the touchscreen to start the Test Recipe. follow the steps to te
 
 New recipes can be made online, downloaded to a thumbdrive and then uploaded to the Control Unit.  
 
-You make make a recipe directly on the [Recipe Press site](https://recipe-press.fourthievesvinegar.org/).
+You make a recipe directly on the [Recipe Press site](https://recipe-press.fourthievesvinegar.org/).
 
 Another option is to start [a project in Vinni](https://vinni.fourthievesvinegar.org/projects/NVXg2yPAKaMu) and save your recipes that way.
    * More on this as Vinni approaches a real release and our services get integrated.
