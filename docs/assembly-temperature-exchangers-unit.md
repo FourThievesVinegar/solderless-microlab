@@ -6,8 +6,15 @@ The Heating Unit and Cooling Units are supporting components of the MicroLab tha
 <IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tc_temperature_units.png" WIDTH="400" />
 
 ## 🚨 UNDER ACTIVE DEVELOPMENT🚨
+```
+Please note that this part of the project is under active development. While these instructions show jars for the heat source and heat sink, these can be limited and impractical for many applications. Our development team is exploring additional options like:
+- A [mini deep fryer](https://www.amazon.com/dp/B09HW3GFKP?th=1) full of propylene glycol as a heat source.
+- A [mini chest freezer](https://www.homedepot.com/p/COWSAR-20-67-in-W-1-8-Cubic-Feet-Manual-Defrost-Garage-Ready-Chest-Freezer-with-Adjustable-Temperature-Controls-in-Black-SZHD-D5850-BLACK/330363273) as a heat sink.
+- Even a cooler full of ice would be better than a jar.
+- You can also insulate the tubing and reactor core for added efficiency.
 
-Please note that this part of the project is under active development. While these instructions show jars for the heat source and heat sink, these may be of limited 
+We will update with more details as part of the next release.
+```
 
 ## Skills Needed
 
@@ -59,14 +66,6 @@ TC-HUL|	Heating Unit Lid (Printed)| 1
 ### Heat Exchanger
 
 This component heats and stores hot water, or other liquids, which are then used to heat the Reactor Core.
-
-#### 🚨 DEVELOPMENT NOTE 🚨 
-
-```
-These instuctions reference beverage heating coils controlled by a switchable relay. Our developers have had more consistent results with aquarium temperature controllers [like this one](https://www.amazon.com/dp/B0D1KG9Y5Z?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_4). We are also experimenting with heat sources like [mini-deep fryers](https://www.amazon.com/dp/B09HW3GFKP?th=1) full of propylene glycol and heat sinks like [mini chest freezers}(https://www.homedepot.com/p/COWSAR-20-67-in-W-1-8-Cubic-Feet-Manual-Defrost-Garage-Ready-Chest-Freezer-with-Adjustable-Temperature-Controls-in-Black-SZHD-D5850-BLACK/330363273). Even a large cooler filled with ice is likely better than a jar. Insulating the tubing is also recommended.
-
-We will update these docs with more details as part of the next release.
-```
 
 * **Bending the tubing.** Gently bend the copper tubing into a helix that will fit in the jar, be sure to leave space for the heating coil.
  - Tips
