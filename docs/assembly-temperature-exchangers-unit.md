@@ -7,7 +7,9 @@ The Heating Unit and Cooling Units are supporting components of the MicroLab tha
 
 ## 🚨 UNDER ACTIVE DEVELOPMENT🚨
 ```
-Please note that this part of the project is under active development. While these instructions show jars for the heat source and heat sink, these can be limited and impractical for many applications. Our development team is exploring additional options like:
+Please note that this part of the project is under active development.
+While these instructions show jars for the heat source and heat sink, these can be limited and impractical for many applications.
+Our development team is exploring additional options like:
 - A [mini deep fryer](https://www.amazon.com/dp/B09HW3GFKP?th=1) full of propylene glycol as a heat source.
 - A [mini chest freezer](https://www.homedepot.com/p/COWSAR-20-67-in-W-1-8-Cubic-Feet-Manual-Defrost-Garage-Ready-Chest-Freezer-with-Adjustable-Temperature-Controls-in-Black-SZHD-D5850-BLACK/330363273) as a heat sink.
 - Even a cooler full of ice would be better than a jar.
