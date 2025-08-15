@@ -97,12 +97,12 @@ pip3 install virtualenv
 ```
 
 Set up a Python virtual environment:
-virtualenv -p python3 --system-site-packages env
+virtualenv -p python3 --system-site-packages .venv
 
 ```bash
 cd backend
-virtualenv -p python3 --system-site-packages env
-source env/bin/activate
+virtualenv -p python3 --system-site-packages .venv
+source .venv/bin/activate
 (env) $ pip install -r requirements.txt
 ```
 

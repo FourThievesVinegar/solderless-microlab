@@ -10,7 +10,7 @@ fi
 # Deduct the backend directory (where we keep main.py & requirements.txt)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKEND_DIR="$SCRIPT_DIR/../backend"
-VENV_DIR="$BACKEND_DIR/env"
+VENV_DIR="$BACKEND_DIR/.venv"
 REQ_FILE="$BACKEND_DIR/requirements.txt"
 
 # Create/update venv only if missing or if requirements.txt is newer
