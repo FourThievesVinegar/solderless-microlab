@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 
 import './styles/app.css'
 import './styles/4tv.scss'
+import 'semantic-ui-css/semantic.min.css';
 
 export function App() {
   const { t } = useTranslation()

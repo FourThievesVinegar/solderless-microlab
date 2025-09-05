@@ -3,12 +3,19 @@
   flex-direction: row;
   padding: 0;
   overflow: hidden;
+  min-height: 0;     /* crucial for nested scroll areas */
+}
+
+.recipes-left-nav,
+.recipes-list {
+  min-width: 0;      /* prevent horizontal overflow in flex row */
+  min-height: 0;     /* allow vertical shrink within .page */
 }
 
 .recipes-left-nav {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   padding: 4px;
 

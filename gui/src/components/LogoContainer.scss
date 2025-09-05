@@ -8,8 +8,8 @@
 
 .logo-container {
     position: relative;
-    height: 220px;
-    width: 220px;
+    height: clamp(120px, 28vh, 240px);
+    width: clamp(120px, 28vh, 240px);
     left: -5%;
     z-index: 1;
     margin-bottom: 4px;

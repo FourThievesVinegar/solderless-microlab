@@ -15,6 +15,7 @@
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
     "react-scripts": "^5.0.1",
+    "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.5",
     "typescript": "^5.4.3",
     "@uidotdev/usehooks": "^2.4.1"

@@ -1,27 +1,60 @@
-/* Global Resets and layouts */
+/* ==========================================================================
+   App CSS
+   - Fills 100% of the window on any display
+   - Replaces hardcoded pixel dimensions with viewport-based sizing
+   ========================================================================== */
 
-html {
-  font-size: 20px;
+/* Global resets and layout scaffolding */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-body {
-  background: grey;
-}
+html, body, #root { height: 100%; }
 
+html { font-size: clamp(14px, 2.2vh, 20px); }
+
+body { margin: 0; background: grey; }
+
+/* Root wrapper should take full viewport */
 .lcd-wrapper {
   position: relative;
-  width: 480px;   /* 800px for 800x480 display */
-  height: 320px;  /* 480px for 800x480 display */
+  display: flex;
+  flex-direction: column;
+  width: 100vw;     /* full viewport width */
+  height: 100vh;    /* full viewport height */
   margin: 0 auto;
   background: white;
-  overflow: hidden;
+  overflow: hidden; /* prevent accidental scroll bleed */
 }
 
+/* If you have a header or top bar, reserve its space via CSS var.
+   Otherwise this defaults to 0. JS/HTML can set --app-header-h later if needed. */
+:root {
+  --app-header-h: 0px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+/* Scrollable page region fills the remaining space */
 .page {
+  position: relative;
+  flex: 1 1 auto;               /* take remaining space in the column */
+  min-height: 0;                /* important so flex child can shrink and allow scroll */
   padding: 0.5rem 1rem;
-  height: 260px;  /* 432px for 800x480 display */
+  padding-left: calc(1rem + var(--safe-left));
+  padding-right: calc(1rem + var(--safe-right));
+  padding-top: max(0.5rem, var(--safe-top));
+  padding-bottom: max(0.5rem, var(--safe-bottom));
   overflow-y: auto;
 }
+
+/* ==========================================================================
+   Menus & grids
+   ========================================================================== */
 
 /* Override "special snowflakes" to vertically center the home page button(s) */
 .home-page-menu.home-page-menu.home-page-menu.home-page-menu {
@@ -46,9 +79,10 @@ body {
   height: 100%;
 }
 
+/* Slide-in main menu occupies full app area when active */
 .main-menu {
   position: absolute;
-  top: 60px;
+  top: var(--app-header-h);
   bottom: 0;
   left: 0;
   right: 0;
@@ -60,6 +94,10 @@ body {
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.75rem;
+  padding-left: calc(0.75rem + var(--safe-left));
+  padding-right: calc(0.75rem + var(--safe-right));
 }
 
 .menu .header.item {
@@ -70,25 +108,45 @@ body {
   transform: translateX(0);
 }
 
-.button-list {
-  margin: 0.34rem;
-}
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
 
+.button-list { margin: 0.34rem; }
 .button-list .ui.button {
   display: block;
   margin-bottom: 0.75rem;
   width: 100%;
 }
 
-/* Pages */
-
-
 .ui.button {
-  margin-right: 0px !important;
+  margin-right: 0 !important;
   padding: 8px 8px 12px 8px;
 }
 
 .cancel-button {
   padding-right: 10px !important;
   padding-left: 10px !important;
+}
+
+/* ==========================================================================
+   Responsive polish
+   ========================================================================== */
+
+/* Slightly tighten base size on very small displays (e.g., 320x240) */
+@media (max-width: 360px), (max-height: 280px) {
+  html { font-size: clamp(13px, 2.4vh, 18px); }
+  .button-list .ui.button { margin-bottom: 0.5rem; }
+  .page { padding: 0.5rem; }
+}
+
+/* Add a bit more breathing room on larger displays (e.g., 800x480 and up) */
+@media (min-width: 640px) and (min-height: 400px) {
+  html { font-size: clamp(16px, 2.0vh, 20px); }
+  .page { padding: 0.75rem 1.25rem; }
+}
+
+/* Prevent accidental overscroll bounce on kiosk-like deployments */
+@supports (overscroll-behavior: contain) {
+  html, body { overscroll-behavior: none; }
 }
