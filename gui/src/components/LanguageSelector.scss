@@ -1,6 +1,6 @@
 .general-settings {
   .ui.selection.dropdown {
     min-width: 0;
-    width: 120px;
+    width: min(120px, 40vw);
   }
 }
