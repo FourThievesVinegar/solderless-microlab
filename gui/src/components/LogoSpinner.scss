@@ -1,7 +1,7 @@
 .logo-spinner {
   position: relative;
-  height: 60px;
-  width: 60px;
+  height: clamp(40px, 12vh, 60px);
+  width: clamp(40px, 12vh, 60px);
   max-width: 100%;
   z-index: 1;
   margin-bottom: 10px;
