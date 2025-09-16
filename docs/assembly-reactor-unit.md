@@ -24,7 +24,7 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 | RU-SRM  | Stir rod motor                               | 1     |
 | RU-STR  | Stir rod                                     | 1     |
 | RU-SRC  | Stir rod coupling                            |
-| RU-LID  | Reactor manifold core and lid (Printed)      | 1     |
+| RU-LID  | Reactor manifold core and lid (Printed)      | 1     | [YOU PROBABLY WANT TO USE THESE PARTS INSTEAD!](https://github.com/FourThievesVinegar/microlab-parts/tree/master/additional-parts/reactor-manifold-GL45)
 | RU-SRM  | Stir rod mount (Printed)                     | 1     |
 | RU-RJF  | Jar Flanges (Printed)                        | 2     |
 | RU-COR  | 6 oz mason jar for core chamber              | 1     |
@@ -48,6 +48,9 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 ## Assembling the Pumps Box
 
 <a name="pumps"></a>
+
+
+> **Howdy Partner!** 🤠 There are some updates coming in the next release that you will want to take advantage of. First thing to know is that the new pumps box housing has a solid lid and holes to mount the ports on the bottom of the pumps box itself. If you have the latest parts, they should look a little different than the pictures here. We'll be updating this as part of an upcoming release.
 
 The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject reagents into the Reactor Core and the 2 circulating pumps on the sides that move hot and cold fluids to control the Reactor Core's temperature. It also has plugs on the front for the stirring motor and an accessory port that can be used to power accessories like a light.
 
@@ -167,6 +170,8 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 
 <a name="core"></a>
 
+> **WOAH THERE!** 🦄 There's a [new Reactor Core](https://github.com/FourThievesVinegar/microlab-parts/tree/master/additional-parts/reactor-manifold-GL45) in town, with improved chemical and thermal tolerances. The parts are different, but the overall configuration is basically the same. We'll be updating these docs during the next release. For now, just know that you probably want to get a 1/8" teflon sheet, a [250ml GL45 bottle](https://www.amazon.com/storage-bottles-borosilicate-karter-scientific/dp/B07WTPQJXN) print the parts at the link above, and use them to assemble the Reactor Core instead of exactly following the instructions below. More detailed pics and documentation coming with the next release.
+
 The Reactor Core houses the reaction chamber, which is where the SCIENCE happens. We're going to build the manifold, attach the stirring assembly, and put it all inside the mason jars!
 
 <IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" />
@@ -179,11 +184,11 @@ The Reactor Core houses the reaction chamber, which is where the SCIENCE happens
 | RU-SRM    | Stir rod motor                                | 1     |
 | RU-STR    | Stir rod                                      | 1     |
 | RU-SRC    | Stir rod coupler                              | 1     |
-| RU-COR    | Reactor manifold core (Printed)               | 1     |
-| RU-LID    | Reactor manifold lid (Printed)                | 1     |
+| RU-COR    | Reactor manifold core (Printed)               | 1     | [Use this instead](https://github.com/FourThievesVinegar/microlab-parts/tree/master/additional-parts/reactor-manifold-GL45)
+| RU-LID    | Reactor manifold lid (Printed)                | 1     | You don't need this part if you use the part linked above.
 | RU-SRM    | Stir rod mount (Printed)                      | 1     |
 | RU-RJF    | Jar Flanges (Printed)                         | 2     |
-| RU-COR    | 6 oz regular mouth mason jar for core chamber | 1     |
+| RU-COR    | 6 oz regular mouth mason jar for core chamber | 1     | [Use a 250ml GL45 bottle instead](https://www.amazon.com/storage-bottles-borosilicate-karter-scientific/dp/B07WTPQJXN)
 | RU-OUT    | 32oz wide mouth mason jar for outer jacket    | 1     |
 | RU-SDH    | Reactor stand - H (Printed)                   | 1     |
 | RU-SDH    | Reactor stand - A (Printed)                   | 1     |
