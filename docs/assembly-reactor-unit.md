@@ -6,7 +6,7 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 - [Assembling the Reactor Core](#core)
 - [Assembling the Reactor Unit](#unit)
 
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/microlab-v0.6.5-reactor-unit.jpeg" WIDTH="300" />
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg" WIDTH="300" />
 
 ## Skills Needed
 
