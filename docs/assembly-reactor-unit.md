@@ -6,7 +6,7 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 - [Assembling the Reactor Core](#core)
 - [Assembling the Reactor Unit](#unit)
 
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/ru_add_rc.png" WIDTH="300" />
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/microlab-v0.6.5-reactor-unit.jpeg" WIDTH="300" />
 
 ## Skills Needed
 
@@ -50,7 +50,7 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 <a name="pumps"></a>
 
 
-> **Howdy Partner!** 🤠 There are some updates coming in the next release that you will want to take advantage of. First thing to know is that the new pumps box housing has a solid lid and holes to mount the ports on the bottom of the pumps box itself. If you have the latest parts, they should look a little different than the pictures here. We'll be updating this as part of an upcoming release.
+> **Howdy Partner!** 🤠 There are some updates coming in the next release that you will want to take advantage of. First thing to know is that the new pumps box housing has a solid lid and holes to mount the ports on the bottom of the pumps box itself. The barrel plug sockets are also off to the side now. If you have the latest parts, they should look a little different than the pictures here. We'll be updating this as part of an upcoming release.
 
 The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject reagents into the Reactor Core and the 2 circulating pumps on the sides that move hot and cold fluids to control the Reactor Core's temperature. It also has plugs on the front for the stirring motor and an accessory port that can be used to power accessories like a light.
 
@@ -170,11 +170,13 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 
 <a name="core"></a>
 
-> **WOAH THERE!** 🦄 There's a [new Reactor Core](https://github.com/FourThievesVinegar/microlab-parts/tree/master/additional-parts/reactor-manifold-GL45) in town, with improved chemical and thermal tolerances. The parts are different, but the overall configuration is basically the same. We'll be updating these docs during the next release. For now, just know that you probably want to get a 1/8" teflon sheet, a [250ml GL45 bottle](https://www.amazon.com/storage-bottles-borosilicate-karter-scientific/dp/B07WTPQJXN) print the parts at the link above, and use them to assemble the Reactor Core instead of exactly following the instructions below. More detailed pics and documentation coming with the next release.
+> **WOAH THERE!** 🦄 There's a [new Reactor Core](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6/reactor-manifold-GL45) in town, with improved chemical and thermal tolerances. The parts are different, but the overall configuration is basically the same. We'll be updating these docs during the next release. For now, just know that you probably want to get a 1/8" teflon sheet, a [250ml GL45 bottle](https://www.amazon.com/storage-bottles-borosilicate-karter-scientific/dp/B07WTPQJXN) print [the parts](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6/reactor-manifold-GL45), and use them to assemble the Reactor Core instead of exactly following the instructions below. More detailed pics and documentation coming with the next release.
 
 The Reactor Core houses the reaction chamber, which is where the SCIENCE happens. We're going to build the manifold, attach the stirring assembly, and put it all inside the mason jars!
 
-<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" />
+| Old | New |
+| --- | --- |
+|<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" /> | <img src="./media/reactor-unit/v0.6.5-reactor-assembled.jpeg" width="400"> |
 
 ### Parts
 
@@ -207,9 +209,18 @@ The Reactor Core houses the reaction chamber, which is where the SCIENCE happens
 
 #### Assembling the Reactor Core Manifold
 
-First, we need to assemble the manifold lid that holds the jars together and allows tubing into the reaction chamber and temperature control chamber.
+> 🌵🌵🌵 Don't get stuck in a prickly pass! The new reactor core manifold is just the printed part and the carved PTFE disc!
 
-<IMG ALT="Reactor manifold parts" SRC="./media/reactor-unit/reactor-manifold-parts.jpg" WIDTH="400" />
+<IMG ALT="v0.6.5 Reactor Core parts" SRC="./media/reactor-unit/v0.6.5-reactor-parts.jpeg" WIDTH="400" />
+
+The printed manifold screws onto the GL45 250ml bottle, but first you have to carve the PTFE disc to fit between them and insert the stirrer through the central hole. Then you can use the shaft coupler to connect the motor to the stirrer. You may want to shim the motor with some tape to hold it more firmly in place. Then insert the whole thing into the main jar.
+
+The trickiest thing is connecting the barrel plug connector to the motor. Soldering honestly helps here but you can also use thin solid-core wire (wires from ethernet cables are good for this) inserted into the motor's contacts.
+
+> 🌵🌵🌵 If you have the new parts, that's it! you can skip down to the Reactor Stand assembly section.
+
+First, we need to assemble the manifold lid that holds the jars together and allows tubing into the reaction chamber and temperature control chamber.
+ <IMG ALT="Reactor manifold parts" SRC="./media/reactor-unit/reactor-manifold-parts.jpg" WIDTH="400" /> 
 
 **Parts:**
 
@@ -308,8 +319,7 @@ These instructions assume you have already assembled the Pumps Box and the React
 
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/ru_stand.png" WIDTH="300" />
 
-- Use the M3 screws to assemble the Reactor Stand pieces in the following way:
-
+- Assemble the Reactor Stand:
   - **Connect H and A**
 
     - Place the H on the left, tilted up in its left side, the top "arms" of the H at the back should have 2 slots.
@@ -360,6 +370,8 @@ You've already built the core and the pump. All that's left to do is connect it 
   - Plug the stirring motor's plug into the upper barrel connector socket on the Pumps Box.
   - Attach one piece of tubing to each of the the peristaltic pumps and through the holes in the Reactor Core manifold to reach the 6oz mason jar chamber.
 
-<IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_add_rc.png" WIDTH="400"/>
+| Old | New |
+| --- | --- |
+| <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_add_rc.png" WIDTH="400"/> | <IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg"  WIDTH="400"/> |
 
 This concludes the assembly instructions for the Reactor Unit. Next up: [MicroLab Setup & Operation](/docs/operation.md).
