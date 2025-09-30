@@ -1,0 +1,45 @@
+name: /pub/medical/laboratory/4tvc-microlab
+desc: Microlab by Four Thieves Vinegar Collective.
+partcad: ">=0.6.33"
+cover:
+  assembly: microlab
+
+docs:
+  intro: |
+    This is a [PartCAD](https://partcad.org/) package for MicroLab.
+    It is intended to maintain the information about all the parts
+    for the following purposes: manufacturing, procurement and assembly
+    (both manual and automated assembly instructions).
+
+    *DISCLAIMER: PartCAD is still under heavy development, and so is
+    the PartCAD package for Microlab. Please, consider contributing to
+    both PartCAD and this package, but do not yet use this package
+    for manufacturing or ordering Microlab parts.*
+
+import:
+  pub:
+    onlyInRoot: True
+    type: git
+    url: https://github.com/openvmp/partcad-index.git
+  v6:
+    type: local
+    desc: The latest version of MicroLab.
+    path: hardware/v6
+    includePaths: [".."]
+
+assemblies:
+  microlab:
+    desc: The recommended version of the microlab
+    source: v6:microlab
+    type: alias
+    # TODO(clairbee): replace with "enrich" whenever available for assemblies
+    # type: enrich
+    # with:
+    #   profile: flat
+    render:
+      svg:
+        viewportOrigin: [75, 0, 150]
+
+render:
+  svg: hardware/
+  readme: hardware/README.md
