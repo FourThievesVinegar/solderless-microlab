@@ -11,19 +11,31 @@
   box-sizing: border-box;
 }
 
-html, body, #root { height: 100%; }
+html,
+body,
+#root {
+  height: 100%;
+  font-size: 20px;
+}
 
-html { font-size: clamp(14px, 2.2vh, 20px); }
+html {
+  font-size: clamp(20px, 2.2vh, 20px);
+}
 
-body { margin: 0; background: grey; }
+body {
+  margin: 0;
+  background: grey;
+}
 
 /* Root wrapper should take full viewport */
 .lcd-wrapper {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  width: 100vw;     /* full viewport width */
-  height: 100vh;    /* full viewport height */
+  width: 100vw; /* full viewport width */
+  height: 100vh; /* full viewport height */
+  max-height: 100%;
+  max-width: 100%;
   margin: 0 auto;
   background: white;
   overflow: hidden; /* prevent accidental scroll bleed */
@@ -37,13 +49,14 @@ body { margin: 0; background: grey; }
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
+  font-size: 20px;
 }
 
 /* Scrollable page region fills the remaining space */
 .page {
   position: relative;
-  flex: 1 1 auto;               /* take remaining space in the column */
-  min-height: 0;                /* important so flex child can shrink and allow scroll */
+  flex: 1 1 auto; /* take remaining space in the column */
+  min-height: 0; /* important so flex child can shrink and allow scroll */
   padding: 0.5rem 1rem;
   padding-left: calc(1rem + var(--safe-left));
   padding-right: calc(1rem + var(--safe-right));
@@ -56,26 +69,8 @@ body { margin: 0; background: grey; }
    Menus & grids
    ========================================================================== */
 
-/* Override "special snowflakes" to vertically center the home page button(s) */
-.home-page-menu.home-page-menu.home-page-menu.home-page-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 /* And to make the status page buttons FAR APART */
 .status-page-menu.status-page-menu.status-page-menu.status-page-menu {
-  height: 100%;
-}
-
-.status-page-menu .button-list {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.status-page-grid {
   height: 100%;
 }
 
@@ -109,10 +104,12 @@ body { margin: 0; background: grey; }
 }
 
 /* ==========================================================================
-   Buttons
+   Buttons & Forms
    ========================================================================== */
 
-.button-list { margin: 0.34rem; }
+.button-list {
+  margin: 0.34rem;
+}
 .button-list .ui.button {
   display: block;
   margin-bottom: 0.75rem;
@@ -129,24 +126,42 @@ body { margin: 0; background: grey; }
   padding-left: 10px !important;
 }
 
+.ui.form {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* ==========================================================================
    Responsive polish
    ========================================================================== */
 
 /* Slightly tighten base size on very small displays (e.g., 320x240) */
 @media (max-width: 360px), (max-height: 280px) {
-  html { font-size: clamp(13px, 2.4vh, 18px); }
-  .button-list .ui.button { margin-bottom: 0.5rem; }
-  .page { padding: 0.5rem; }
+  html {
+    font-size: clamp(13px, 2.4vh, 18px);
+  }
+  .button-list .ui.button {
+    margin-bottom: 0.5rem;
+  }
+  .page {
+    padding: 0.5rem;
+  }
 }
 
 /* Add a bit more breathing room on larger displays (e.g., 800x480 and up) */
 @media (min-width: 640px) and (min-height: 400px) {
-  html { font-size: clamp(16px, 2.0vh, 20px); }
-  .page { padding: 0.75rem 1.25rem; }
+  html {
+    font-size: clamp(16px, 2vh, 20px);
+  }
+  .page {
+    padding: 0.75rem 1.25rem;
+  }
 }
 
 /* Prevent accidental overscroll bounce on kiosk-like deployments */
 @supports (overscroll-behavior: contain) {
-  html, body { overscroll-behavior: none; }
+  html,
+  body {
+    overscroll-behavior: none;
+  }
 }

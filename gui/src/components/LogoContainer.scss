@@ -1,134 +1,134 @@
 @mixin huge-and-rotated {
-    transform: scale(20) rotate(1440deg);
+  transform: scale(20) rotate(1440deg);
 }
 
 @mixin container-start {
-    transform: translateX(60%);
+  transform: translateX(28vw);
 }
 
 .logo-container {
-    position: relative;
-    height: clamp(120px, 28vh, 240px);
-    width: clamp(120px, 28vh, 240px);
-    left: -5%;
-    z-index: 1;
-    margin-bottom: 4px;
-    @include container-start;
-    animation-name: container-animation;
+  position: relative;
+  height: clamp(120px, 75vh, 240px);
+  width: clamp(120px, 75vh, 240px);
+  left: -5%;
+  z-index: 1;
+  margin-bottom: 4px;
+  @include container-start;
+  animation-name: container-animation;
+  animation-fill-mode: forwards;
+  animation-delay: 2.7s;
+  animation-duration: 0.5s;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+
+    &:not(:first-child) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+
+  .logo-head {
+    position: absolute;
+    left: 22.5%;
+    top: 22%;
+    width: 57%;
+    transform: scale(0);
+    animation-name: scale-up-from-nothing;
     animation-fill-mode: forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.2s;
+  }
+
+  .logo-burst {
+    @include huge-and-rotated;
+    animation-name: twirl-in-from-huge;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+  }
+
+  .logo-border {
+    @include huge-and-rotated;
+    animation-name: twirl-in-from-huge;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.8s;
+  }
+
+  .logo-backdrop {
+    position: absolute;
+    background: #fff;
+    width: 200vw;
+    height: 200vh;
+    top: -100vh;
+    left: -100vw;
+    z-index: -2;
+    opacity: 1;
+    animation-name: fade-out;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
     animation-delay: 2.7s;
-    animation-duration: 0.5s;
-
-    img {
-        max-width: 100%;
-        max-height: 100%;
-
-        &:not(:first-child) {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: -1;
-        }
-    }
-
-    .logo-head {
-        position: absolute;
-        left: 22.5%;
-        top: 22%;
-        width: 57%;
-        transform: scale(0);
-        animation-name: scale-up-from-nothing;
-        animation-fill-mode: forwards;
-        animation-duration: 1s;
-        animation-timing-function: ease-out;
-        animation-delay: 0.2s;
-    }
-
-    .logo-burst {
-        @include huge-and-rotated;
-        animation-name: twirl-in-from-huge;
-        animation-fill-mode: forwards;
-        animation-duration: 1s;
-        animation-timing-function: ease-out;
-    }
-
-    .logo-border {
-        @include huge-and-rotated;
-        animation-name: twirl-in-from-huge;
-        animation-fill-mode: forwards;
-        animation-duration: 1s;
-        animation-timing-function: ease-out;
-        animation-delay: 0.8s;
-    }
-
-    .logo-backdrop {
-        position: absolute;
-        background: #fff;
-        width: 200vw;
-        height: 200vh;
-        top: -100vh;
-        left: -100vw;
-        z-index: -2;
-        opacity: 1;
-        animation-name: fade-out;
-        animation-fill-mode: forwards;
-        animation-duration: 1s;
-        animation-delay: 2.7s;
-        overflow: hidden;
-    }
+    overflow: hidden;
+  }
 }
 
 @keyframes scale-up-from-nothing {
-    0% {
-        transform: scale(0);
-    }
+  0% {
+    transform: scale(0);
+  }
 
-    80% {
-        transform: scale(1.4);
-    }
+  80% {
+    transform: scale(1.4);
+  }
 
-    90% {
-        transform: scale(1.4);
-    }
+  90% {
+    transform: scale(1.4);
+  }
 
-    100% {
-        transform: scale(1);
-    }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes twirl-in-from-huge {
-    0% {
-        @include huge-and-rotated;
-    }
+  0% {
+    @include huge-and-rotated;
+  }
 
-    100% {
-        transform: scale(1) rotate(0deg);
-    }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 @keyframes container-animation {
-    0% {
-        @include container-start;
-    }
+  0% {
+    @include container-start;
+  }
 
-    100% {
-        transform: translateX(2%);
-    }
+  100% {
+    transform: translateX(2%);
+  }
 }
 
 @keyframes fade-out {
-    0% {
-        opacity: 1;
-        height: 200vh;
-    }
+  0% {
+    opacity: 1;
+    height: 200vh;
+  }
 
-    99% {
-        opacity: 0;
-        height: 200vh;
-    }
+  99% {
+    opacity: 0;
+    height: 200vh;
+  }
 
-    100% {
-        height: 0;
-    }
+  100% {
+    height: 0;
+  }
 }

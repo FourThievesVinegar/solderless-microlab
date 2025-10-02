@@ -15,11 +15,11 @@ export function HomePage(props: { status: MicrolabStatusResponse }) {
     <div className="home-page page">
       <Grid style={{ height: '100%' }}>
         <Grid.Row columns={2} style={{ height: '100%' }}>
-          <Grid.Column style={{ height: '100%' }}>
+          <Grid.Column className="home-page-column">
             <LogoContainer />
             <p>{t('Four Thieves Vinegar MicroLab')}</p>
           </Grid.Column>
-          <Grid.Column className="home-page-menu">
+          <Grid.Column className="home-page-column">
             <div className="button-list">
               {status && status.recipe ? (
                 //if there's a recipe in progress, give a link to see its status

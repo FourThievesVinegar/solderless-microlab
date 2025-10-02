@@ -39,7 +39,7 @@ export const SoundSettings = (props: any) => {
         <br />
         <input type="range" min="0" max="1" step="0.01" value={settings.volume} onChange={updateVolume} />
       </div>
-      <div className="settings-block">
+      <div className="settings-block sound-events">
         <span>{t('play-sounds-label')}:</span>
         <Checkbox
           className="sound-setting-checkbox"
