@@ -1,6 +1,6 @@
 .status-icon-container {
   display: inline-block;
-  width: 80%;
+  width: 60%;
   margin: 5vh 0;
   aspect-ratio: 1;
   align-content: center;
@@ -12,6 +12,6 @@
   background-color: var(--medium-gray-transparent);
 }
 .status-icon {
-  max-width: 40vh;
-  max-height: 40vh;
+  max-width: 30vh;
+  max-height: 30vh;
 }
