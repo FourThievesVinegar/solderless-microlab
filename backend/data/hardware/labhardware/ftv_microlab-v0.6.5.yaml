@@ -65,13 +65,13 @@ devices:
       F: 175
       X:
         # scaling factor based on initial calibration
-        mmPerMl: 0.5555555
+        mmPerMl: 0.133
       Y:
         # scaling factor based on initial calibration
-        mmPerMl: 0.5555555
+        mmPerMl: 0.133
       Z:
         # scaling factor based on initial calibration
-        mmPerMl: 0.5555555
+        mmPerMl: 0.2
 
   - id: "reactor-stirrer"
     type: "stirrer"
