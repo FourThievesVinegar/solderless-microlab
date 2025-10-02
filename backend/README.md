@@ -36,6 +36,10 @@ Only a device named `gpio-primary` using some kind of `gpiochip` describing the 
 
 The microlab by default loads recipes from files located in `/var/lib/microlab/recipes/`. Recipe files can be uploaded to the microlab from the recipes page. See `solderless-microlab/backend/recipes/base.py` for information on the format required for recipe files.
 
+## Hardware Configs
+
+The microlab by default loads configs from files located in `/var/lib/microlab/hardware/`. Config files can be uploaded to the microlab from the settings page. See `solderless-microlab/backend/data/hardware/lab_hardware_reference.yaml` and `backend/data/hardware/controller_hardware_reference.yaml` for information on the format required for lab hardware and controller hardware configs.
+
 ## API
 
 The Microlab backend API includes several endpoints described below. This list is incomplete, for more details, see the implementation at
