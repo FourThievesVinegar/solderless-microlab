@@ -1,7 +1,10 @@
 .status-icon-container {
   display: inline-block;
-  width: 60%;
-  margin: 5vh 0;
+  width: 45vh;
+  height: 45vh;
+  max-width: 45vw;
+  max-height: 45vw;
+  margin: 1vh 0;
   aspect-ratio: 1;
   align-content: center;
 }

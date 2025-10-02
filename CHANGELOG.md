@@ -9,6 +9,8 @@
 
 ### Changed
 
+- New display support and GUI updates
+- Updated docs with new reactor core
 - Added alphabetical navigation of the recipe list. (#273)
 - Extra validation for hardware config files. Hardware components are now automatically sorted by dependencies to prevent them from loading out of order. (#269)
 - Syringe pump and peristaltic pump implementations no longer directly open a serial connection to grbl, and config instead now references a grbl device. (#282)
