@@ -1,9 +1,20 @@
 .status-page .status-message {
-    font-size: 16px;
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
 }
 
 .status-page .button-list {
-    margin: 0;
+  margin: 0;
+}
+
+.status-page-menu .button-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.status-page-grid {
+  height: 100%;
 }

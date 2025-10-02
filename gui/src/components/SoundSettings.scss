@@ -1,3 +1,8 @@
+.sound-events {
+  display: flex;
+  flex-direction: column;
+}
+
 .sound-setting-checkbox {
   padding-top: 5px;
   width: min(440px, 100%);

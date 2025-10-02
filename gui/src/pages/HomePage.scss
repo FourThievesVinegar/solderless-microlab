@@ -1,3 +1,12 @@
 .home-page.page {
-    text-align: center;
+  text-align: center;
+  overflow: hidden; // We don't scroll on the home page. No need and the animation gets weird.
+}
+
+.home-page-column.home-page-column.home-page-column.home-page-column.home-page-column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
