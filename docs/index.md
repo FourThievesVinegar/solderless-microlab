@@ -6,12 +6,12 @@ The MicroLab is part of the MicroLab Suite. Learn more about the hardware/softwa
 
 The MicroLab is made up of:
 
-- **Control Unit** - Runs the software and hardware
+- **Control Unit** - Runs the software and controls the hardware
 - **Heating Unit** - Heats the liquid that circulates outside the reactor to warm it
 - **Cooling Unit** - Cools the liquid that circulates outside the reactor to cool it
 - **Reactor Unit** - Reactor core and pumps box assembled together
-  - Reactor Core - made up of the inner chamber (small glass jar) where compounds are made, outer chamber (large glass jar) where liquid circulates to warm or cool the inner chamber, thermistor to take temperature in the inner chamber, stir rod to mix things in the inner chamber, and the parts to mount and hold all the pieces together.
-  - Pumps Box - houses the circulating pumps, peristaltic pumps and two ports, one for the stir rod and one as an accessory port.
+  - Reactor Core - made up of the inner chamber (small glass bottle) where compounds are made, outer chamber (large glass jar) where liquid circulates to warm or cool the inner chamber, thermistor to take temperature in the inner chamber, stir rod to mix things in the inner chamber, and the parts to mount and hold all the pieces together.
+  - Pumps Box - houses the circulating pumps, peristaltic pumps and extra two ports, one for the stir rod and one as an accessory port.
 
 <IMG ALT="The MicroLab assembled" SRC="./media/ML_units.png" width="600" />
 
@@ -24,8 +24,6 @@ The MicroLab is made up of:
   - [Building the MicroLab](#build)
   - [Using the MicroLab](#use)
   - [Resources](#resources)
-
-Please note that as of v0.6.0, the MicroLab still has limits to its temperature ranges and the solvents that can be used. For more detailed requirements, see our [Development Wiki](https://github.com/FourThievesVinegar/solderless-microlab/wiki)
 
 ## Parts
 
@@ -43,9 +41,9 @@ For the purchased items, we have links to one or more sources. We used the links
 
 <a name="3d"></a>
 
-The MicroLab uses several custom parts, listed on [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx), the raw and printable files for these parts can be found on the [MicroLab Parts' Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6).
+The MicroLab uses several custom parts, listed on [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx), the raw and printable files for these parts can be found on the [MicroLab Parts Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7).
 
-Below we have linked to the printable files in the repo for the parts. These files have the extension .stl at the end. The STL file format is what 3D printers use when printing an item.
+Below we have linked to the printable files in the repo for the parts. These files have the extension .stl at the end. The STL file format is what slicer software uses to make the instructions for the 3D printer.
 
 No 3D printer? If you do not have a 3D printer, there are a few options including:
 
