@@ -1,7 +1,6 @@
 # MicroLab Troubleshooting
 
-Touchscreen for Raspberry Pi (CU-RPI). Make sure you get the proper drivers – different manufacturers may require different drivers. For the linked model, try these: link
-https://www.dropbox.com/scl/fo/hawpkmswazw5h7lv2p8vq/AJa3CosqXNYN0Y3zPbmVNjM/Driver?rlkey=ev89s381ag053wue395hf4ueb&e=1&subfolder_nav_tracking=1&dl=0
+The MicroLab is essentially a Linux box with an Arduino and some relays. You can always connect a keyboard to the open USB slot, hit ctrl + alt + F6 and log in as `thief` pw: `vinegard`. From here, if you know your way around a POSIX/Linux/Unix terminal, you can poke around. Check out [os-services.txt](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/os-services.txt) for more about how the MicroLab interfaces with the operating system.
 
 ## Stepper Motor Calibration
 
@@ -17,7 +16,7 @@ We will need:
 ### Potentiometer tuning
 
 - On the Arduino, each A4988 stepper motor driver board has a small potentiometer that looks like a small phillips head screw on the board.
-- You **DEFINITELY** want to tune the potentiometers. If you don't, the stepper motors will likely behave strangely and could be damaged by excess voltage.
+- If your peristaltic pumps are acting strange (not turning, or moving erratically), you **DEFINITELY** want to tune the potentiometers. In a worst-case scenario, motors may be damaged by excess voltage.
 
 <IMG ALT="Potentiometer" SRC="./media/control-unit/potentiometers-annotated.jpg" WIDTH="600" />
 
@@ -38,11 +37,10 @@ You will **gently** turn the potentiometers on the motor control boards clockwis
 1. Start with the potentiometers in the "closed" position.
 1. Connect the Arduino to the Pi.
 1. Power on the Raspberry Pi, the Arduino shield and the pumps.
-1. On the Raspberry Pi, the MicroLab software will load, locate the Test Recipe and choose to manually run each of the peristaltic pumps. **More detail needed**<br>
-1. Slowly turn the potentiometer counter-clockwise an eighth of a turn at a time to "open" them. Check if the stepper motors turn smoothly. If they do not move, "open" the potentiometer an eighth-turn and try again. If they move erratically, your voltage is likely too high and you "close" the potentiometer.
-1. Once tuned, power off the motors and the Raspberry Pi. Remove the stepper motor cables from the stepper motors of the peristaltic pumps.
+1. On the Raspberry Pi, the MicroLab software will load. Load the Test Recipe and choose the Reagent Pumps test. This test will allow you to make the pumps each dispense 10ml.
+1. When the potentiometer is "closed" nothing should happen. Slowly turn the potentiometer counter-clockwise an eighth of a turn at a time to "open" them. Check if the stepper motors turn smoothly. If they do not move, "open" the potentiometer an eighth-turn and try again. If they move erratically, your voltage is likely too high and you need to "close" the potentiometer.
 
-- You can tune the potentiometers later as well, but the lid on the Control Unit will need to be off.
+- You can tune the potentiometers at any time, but it is easiest during assembly when the Control Unit case is open.
 
 ### Stepper motor verification
 
@@ -58,18 +56,15 @@ If you do not feel any change in resistance, try jumpering other combinations of
 
 ## Pumps Box Assembly
 
-- If your pump does not come with mounting hardware, you may need to get creative. In a pinch, zipties should work although you may want to double them up or drill out the holes to support thicker ties.
-- NOTE: [Suggestions for better solutions are welcome](https://github.com/FourThievesVinegar/solderless-microlab/issues/184).
+- If your pump does not come with mounting hardware, you may need to get creative. In a pinch, zipties should work. You may want to double them up or drill out the holes to support thicker ties.
 
 ### Reactor Core
 
-Please note that we are experimenting with sinking nuts into various components for more reliable and durable connections. This is why the screw holes on top of the manifold are hexagonal at the top. Doing this requires a soldering iron and a steady hand, as the nuts have to be kept flats in order to accept screws.
-
-The new GL-45 reactor does not require as much assembly. We are still developing it, but it is recommended in place of the original v0.6.0 reactore core assembly.
+Make sure you are using the new GL-45 reactor core. The previous multi-part manifold was not chemically or thermally resistant.
 
 ### Optimizing Heat Exchange
 
-We are looking into upcycling heat sinks from old computers but are still experimenting - please reach out if you have done this or have suggestions.
+We recommend having a heat reservoir and a cold reservoir. This can be as simple as a small counter-top deep fryer and a bag of ice (or a small chest freezer). We're currently testing these and if you've got ideas, please [reach out](https://fourthievesvinegar.org/contact/)!
 
 ## Touch Screen Settings
 
@@ -83,13 +78,7 @@ Touchscreen doesn't light up at all
 **Solution:**
 This indicates a hardware problem. It's likely the screen isn't getting power or is broken. If you have extra screens or microcomputers, try a different screen or another computer. If none of this resolves the issue, you may need to order a replacement or reach out to the manufacturer for help
 
-**Issue:**
-Touchscreen lights up but is all white
-
-**Solution:**
-This likely indicates that the drivers are not properly installed. Check the screen manufacturer's documentation and ensure that you're following their instructions for installation. Check to make sure that your microcomputer is compatible with the screen and the display drivers. If the HDMI port still sends video, this may indicate that the driver installation was not completed.
-
-### X or Y touch axis is reversed
+### X or Y touch screen axis is reversed
 
 **Issue:**
 Your touch screen works, but not correctly. Tapping near two of the corners kinda works, but the other two corners seem reversed.
