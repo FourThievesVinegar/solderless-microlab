@@ -10,7 +10,7 @@ For the MicroLab to be accessible to the most people, it was developed as part o
 
 You can find an introduction to the project, what the heck is a CLR, what's in the MicroLab Suite, and why we are doing this at all on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
 
-<IMG ALT="MicroLab roadmap of major features for the next 2 versions. v0.6.1: Open source reagent pumps, Hardened reactor, Simplified heating module, Auxiliary software basic features complete, Hello World recipes complete. v0.6.2: Finalized Printed Parts, Multilingual user interface, International BOMs, Printable / DIY alternatives for all scarce parts, Atmosphere control. v1.0: Raspberry Pi optional, Recipe repo launched, Auxiliary software suite complete and integrated, Optimized off-the-shelf parts list." SRC="https://fourthievesvinegar.org/wp-content/uploads/2024/11/microlab-roadmap.jpg" width="600" />
+<IMG ALT="MicroLab roadmap of major features for the next 2 versions. V 1.1: “Hello World” recipes complete, Open source reagent pumps, International BOMs, Printable / DIY alternatives for all scarce parts, Atmosphere control. v1.2: Raspberry Pi optional, Recipe repo launched, Auxiliary software suite complete and integrated, Optimized off-the-shelf parts list." SRC="https://fourthievesvinegar.org/wp-content/uploads/2025/10/microlab-roadmap.png" width="600" />
 
 ## Getting Started Making Your MicroLab
 
@@ -29,14 +29,9 @@ You will need to get a copy of the MicroLab software, set up your development en
 
 ### Installing the MicroLab software locally
 
-Use the instructions below for a fresh install of the MicroLab software (backend and GUI) on your development machine.
+Use the instructions below for a fresh install of the MicroLab software on your machine.
 
-If you intend to construct a full MicroLab, [we recommend using our pre-made disk images](https://fourthievesvinegar.org/microlab/). There are two:
-
-- A "production" image that runs all software on startup and includes the drivers for a goodtft-compatible 3.5 inch mini-display. This is the software you need if you have assembled a MicroLab and you want to use it to run reactions.
-- A "development" image designed to be used with an external HDMI monitor and a USB mouse and keyboard. This would be the software to run on a computer where the MicroLab hardware can be emulated.
-
-If you are using the development image and running it on a computer with emulated hardware turn on, follow the instructions below.
+If you intend to construct a full MicroLab, [we recommend using our build scripts to make a disk image](https://github.com/FourThievesVinegar/microlab-image). See below if you want to run a development environment on another computer.
 
 ## Dev Environment Option 1: Docker Development
 
