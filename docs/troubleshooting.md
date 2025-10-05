@@ -2,9 +2,11 @@
 
 The MicroLab is essentially a Linux box with an Arduino and some relays. You can always connect a keyboard to the open USB slot, hit ctrl + alt + F6 and log in as `thief` pw: `vinegard`. From here, if you know your way around a POSIX/Linux/Unix terminal, you can poke around. Check out [os-services.txt](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/os-services.txt) for more about how the MicroLab interfaces with the operating system.
 
-## Stepper Motor Calibration
+## I'm getting an error message when I start the MicroLab
 
-Before we continue with assembly, we should tune the potentiometers and test the stepper motor wiring.
+Open the menu and go to the Status page. This should have a button that says 'Reload Hardware'. Tap it gently until the status changes to "idle".
+
+## My stepper motors are being weird! Stepper Motor Calibration.
 
 We will need:
 
@@ -54,11 +56,11 @@ If the motor is wired correctly you should now feel some resistance when you spi
 
 If you do not feel any change in resistance, try jumpering other combinations of pins until you identify the two pairs. See Troubleshooting Stepper Motor if you continue to have issues.
 
-## Pumps Box Assembly
+## My circulation pumps don't have mounting brackets! - Pumps Box Assembly
 
 - If your pump does not come with mounting hardware, you may need to get creative. In a pinch, zipties should work. You may want to double them up or drill out the holes to support thicker ties.
 
-### Reactor Core
+## My Reactor Core is failing somehow!
 
 Make sure you are using the new GL-45 reactor core. The previous multi-part manifold was not chemically or thermally resistant.
 
@@ -66,7 +68,7 @@ Make sure you are using the new GL-45 reactor core. The previous multi-part mani
 
 We recommend having a heat reservoir and a cold reservoir. This can be as simple as a small counter-top deep fryer and a bag of ice (or a small chest freezer). We're currently testing these and if you've got ideas, please [reach out](https://fourthievesvinegar.org/contact/)!
 
-## Touch Screen Settings
+## My touch screen is messed up! - Touch Screen Settings
 
 ### The screen doesn't work
 
