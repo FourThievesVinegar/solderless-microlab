@@ -15,6 +15,8 @@ The MicroLab is made up of:
 
 <IMG ALT="The MicroLab assembled" SRC="./media/ML_units.png" width="600" />
 
+If you are having trouble with your MicroLab, check out our [troubleshooting guide](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/troubleshooting.md).
+
 ## Index
 
 - [About the MicroLab and MicroLab Suite](/docs/motivation.md)
