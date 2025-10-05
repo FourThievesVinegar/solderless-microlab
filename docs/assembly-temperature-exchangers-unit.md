@@ -47,14 +47,23 @@ TC-PMP|Circulating pump|2
 TC-SBH|Submersible heater|1
 TC-CTB|Copper tubing 1/4" OD x 3/16" ID|1
 TC-STB|Silicone tubing 8mm OD x 5mm ID|1
+TC-TCT|	Copper tube cutter tool|1
+TC-CTJ|	Copper tube jig	|1
+
+### Auxiliary heat sources and sinks
+
+Below are the parts for DIY heat sources and sinks. We are currently experimenting with off-the-shelf solutions like countertop deep fryers for heat and chest freezers (or just big coolers full of ice) for cooling. These can use propylene glycol as a fluid as it will stay liquid well within the intended operating parameters of the MicroLab (-10C - 120C).
+
+In short, you probably don't want to do this part, but it is being kept in the docs for now. You can just build the heat exchanger coil and stick in whatever hot or cold thing you end up using.
+
+| Part ID      | Part Name     | Count | Notes |
+| ------------- | ------------- |------| ----|  
+|||
 RX-TEE|Barbed tee fittings for 6mm tubing|2
 TC-JAR|32oz canning jar |2 | We've don't have a optimal size for the jar, we've also used 16oz jars. You may want to experiment to find the best size for your project.
-TC-REL|Not Recommended: Switchable power supply|1
 TC-AQ|Recommended: aquarium temperature controller | 1
 TC-INS|	Insulation for jars|	2
 TC-TAP|	Tape for the insulation|	2
-TC-TCT|	Copper tube cutter tool|1
-TC-CTJ|	Copper tube jig	|1
 TC-CUL|	Cooling Unit Lid (Printed)| 1
 TC-HUL|	Heating Unit Lid (Printed)| 1
 
@@ -119,12 +128,10 @@ This component holds ice water or another cold substance to cool the reactor cor
 ### MicroLab Connector Tubing
 <a name="tubes"></a>
 
-Both the Heating and Cooling Units will need two pieces 16 inch tubing and 1 piece of 8 inch tubing to connect them to MicroLab during operation.
+Both the Heating and Cooling Units will need two pieces 16 inch tubing and 1 piece of 8 inch tubing to connect them to MicroLab during operation. You may want to cut these tubes shorter (or longer) depending on your setup.
 
 * Take the silicone tubing (TC-ST7) and cut four pieces to be 16 inches (16") long.
 * Cut two pieces to be 8 inches (8") long.
 * These lengths have worked for us so far. You may find different lengths works better for you and we'd love to hear what works.
-
-
 
 This concludes the assembly instructions for the Heating and Cooling Units. Next up: [Building the Reactor Unit](/docs/assembly-reactor-unit.md)
