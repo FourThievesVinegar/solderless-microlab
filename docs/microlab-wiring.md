@@ -3,7 +3,7 @@
 The most important part of wiring is to be consistent throughout the project.
 
 We use two kinds of wires for connecting the electronic components in the MicroLab:
-* 16 gauge wire in blue, red, green, black
+* 16 gauge wire in blue, red, green, black (ethernet cables and their wires will also work)
 * 22 gauge breadboard jumper wire
 
 Several of the boards and connectors have a fairly straight forwarding wiring. For example the barrel connectors have 2 wires for power, one red (positive) and one black (negative).
@@ -64,9 +64,9 @@ The 12-pin connector passes 12V along to three peristaltic pumps. When viewed fr
 
 <IMG ALT="Cable order" SRC="./media/wire-order/pumps.png" WIDTH="300" />
 
-The stepper motor cable that comes with the pumps will be cut in half and the cut ends stripped, creating 6 cables. Three will be used in the Control unit and three will be used in the Pumps Box.
+The stepper motor cable that comes with the pumps will be cut in half and the cut ends stripped (you will likely need much less than half), creating 6 cables. Three will be used in the Control unit and three will be used in the Pumps Box.
 
-There are four 12-pin connectors that will need to be wired. One mounted to the Control Unit and one mounted to the Pumps Box. The other two are for the ends of the 12-pin MicroLab cable used to connect the 12-pin connectors on both boxes.
+There are four 12-pin connectors that will need to be wired. One mounted to the Control Unit and one mounted to the Pumps Box. The other two are for the ends of the 12-pin cable used to connect the 12-pin connectors on both boxes.
 
 
 
