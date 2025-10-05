@@ -2,10 +2,11 @@
 Welcome!
 ==========================
 
+This document explains how the MicroLab interfaces with the Linux OS it runs on. To get to a terminal, plug in a keyboard, hit ctrl + alt + F6 ( or F5, F4, etc), and log in as `thief` pw: `vinegard`.
+
 In this file:
 - Configurations for the MicroLab services (API, web server, and browser)
 - Other file locations
-- Converting from dev to production image
 
 ==========================
 Where the services live
@@ -29,7 +30,7 @@ Additionally, in the directory
 
 There is one file for the backend service:
 ```
-microlab.service           # Starts the python backend - celery is no longer in use
+microlab.service           # Starts the python backend
 ```
 
 ===========================
@@ -47,9 +48,4 @@ There are other file locations to take note of:
 
 Note that the latter two directories can be configured in the `microlab.ini` config file.
 
-===========================
-Converting to production
-===========================
-The following needs to happen to convert a microlab image from dev to prod:
-- Run download and run the display drivers appropriate for your screen. These drivers are known to cause issues if run incorrectly, so please be careful and make backup images, especially if you're using a different screen than the one in our parts list.
 	
