@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 
@@ -9,7 +9,6 @@ import { listRecipes, capitalize } from '../utils'
 import { useTranslation } from 'react-i18next'
 
 import './RecipesPage.scss'
-import { getDefaultFormatCodeSettings } from 'typescript'
 
 export function RecipesPage() {
   const { t } = useTranslation()
@@ -51,20 +50,6 @@ export function RecipesPage() {
 
   return (
     <section className="page recipes-page">
-      <section className="recipes-left-nav">
-        {Object.keys(recipeAnchorMap).map(key => {
-          return (
-            <Button
-              key={key}
-              color="purple"
-              onClick={() => {
-                document.querySelector('.recipe-anchor-' + key)?.scrollIntoView()
-              }}>
-              {key}
-            </Button>
-          )
-        })}
-      </section>
       <section className="recipes-list">
         <h1>{t('recipe-list')}</h1>
         {recipes.length ? (
@@ -91,6 +76,20 @@ export function RecipesPage() {
         ) : (
           <p>{t('loading-placeholder')}</p>
         )}
+      </section>
+      <section className="recipes-nav">
+        {Object.keys(recipeAnchorMap).map(key => {
+          return (
+            <Button
+              key={key}
+              color="purple"
+              onClick={() => {
+                document.querySelector('.recipe-anchor-' + key)?.scrollIntoView()
+              }}>
+              {key}
+            </Button>
+          )
+        })}
       </section>
     </section>
   )
