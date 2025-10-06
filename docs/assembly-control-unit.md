@@ -3,6 +3,7 @@
 We'll start by assembling the brains of the operation, the Control Unit. As the most complex component of the MicroLab, this will take some time and patience.
 
 <IMG ALT="Control Unit" SRC="./media/control-unit/control-unit-complete.jpeg" WIDTH="400" />  
+<IMG ALT="Control Unit showing the ports on the back corner" SRC="./media/control-unit/control-unit-complete-2.jpeg" WIDTH="400" />  
 
 
 To wire things up properly we'll tackle different parts of the Control Unit and then put them all together. We've broken it down by these steps:
