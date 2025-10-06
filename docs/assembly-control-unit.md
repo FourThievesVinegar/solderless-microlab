@@ -3,6 +3,7 @@
 We'll start by assembling the brains of the operation, the Control Unit. As the most complex component of the MicroLab, this will take some time and patience.
 
 <IMG ALT="Control Unit" SRC="./media/control-unit/control-unit-complete.jpeg" WIDTH="400" />  
+<IMG ALT="Control Unit showing the ports on the back corner" SRC="./media/control-unit/control-unit-complete-2.jpeg" WIDTH="400" />  
 
 
 To wire things up properly we'll tackle different parts of the Control Unit and then put them all together. We've broken it down by these steps:
@@ -187,7 +188,7 @@ In order to send 12V out to components: the 4-channel relay board, the 8-pin con
 
 #### **Wire Order**
 <a name="wireorder"></a>
-Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
+Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
 **8-pin connector - internal**
 The 8-pin connector passes 12V along to the Accessory port (Acc), Stir rod (Stir), Cooling pump (Cool), and Heating pump (Heat) wires.
@@ -235,7 +236,7 @@ We will attach the positive wires (color coded) and negative wires to the 8-pin 
 <IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/connector_parts.png" width="200" />
 
 
-  - **Wiring the Positives.** Take one of the 8-pin connector sockets and from the back use a small screwdriver to loosen the 8 screw terminals. Working left to right, insert the 4" black, green, red, blue wires into the correct positive (+) terminals and tighten the terminals. Use the photo below or the [wiring order](/docs/microlab-wiring.md) page to confirm placement.
+  - **Wiring the Positives.** Take one of the 8-pin connector sockets and from the back use a small screwdriver to loosen the 8 screw terminals. Working left to right, insert the 4" black, green, red, blue wires into the correct positive (+) terminals and tighten the terminals. Use the photo below or the [wiring order](/docs/wiring.md) page to confirm placement.
     - Don't overtighten the screw terminal. Once done you should be able to lightly tug on the wires without them moving.  
 
 - **Wiring the Negatives.** Next on the 8-pin socket, insert the 6" black cables into the negative (+) terminals and tighten the terminals.
@@ -283,7 +284,7 @@ In order to send 12V out to the peristaltic pumps, the Arduino CNC shield needs 
 #### Wire Order
 
 <a name="wireorder"></a>
-Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
+Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
 **12-pin connector - internal**.
 The 12-pin connector passes 12V to the three peristaltic pumps. When looking at the pumps mounted to their box from left to right we'll call them X, Y and Z.
@@ -706,7 +707,7 @@ To connect your newly assembled Control Unit to the Pumps Unit, you will use a p
 
 **Important Note: The wire order here is different than in other sections.**
 
-Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
+Please read and get comfortable with the wiring order explained on the [MicroLab Wiring](/docs/wiring.md) page. It's important to maintain the same wiring order throughout the project.
 
 **8-pin cable**.
 

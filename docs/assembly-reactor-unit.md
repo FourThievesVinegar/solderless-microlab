@@ -106,7 +106,7 @@ Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the 
 ### **Wire Order**
 
 <a name="wireorder"></a>
-The connectors need to be wired the same as the ones in the Control Unit. The wiring order is further explained on the [MicroLab Wiring](/docs/microlab-wiring.md) page. It's important to maintain the same wiring order throughout the project.
+The connectors need to be wired the same as the ones in the Control Unit. The wiring order is further explained on the [MicroLab Wiring](/docs/wiring.md) page. It's important to maintain the same wiring order throughout the project.
 <br>
 
   <IMG ALT="Pump lid fully assembled" SRC="./media/pumps-unit/pumps-unit-lid-assembled.jpg" WIDTH="400" />

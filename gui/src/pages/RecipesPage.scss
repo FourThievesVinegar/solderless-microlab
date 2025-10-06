@@ -3,16 +3,16 @@
   flex-direction: row;
   padding: 0;
   overflow: hidden;
-  min-height: 0;     /* crucial for nested scroll areas */
+  min-height: 0; /* crucial for nested scroll areas */
 }
 
-.recipes-left-nav,
+.recipes-nav,
 .recipes-list {
-  min-width: 0;      /* prevent horizontal overflow in flex row */
-  min-height: 0;     /* allow vertical shrink within .page */
+  min-width: 0; /* prevent horizontal overflow in flex row */
+  min-height: 0; /* allow vertical shrink within .page */
 }
 
-.recipes-left-nav {
+.recipes-nav {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
