@@ -29,7 +29,6 @@ To wire things up properly we'll tackle different parts of the Control Unit and 
 
 * Wire stripping - one example [video](https://www.youtube.com/watch?v=N__OLJvq2HE)
 * Reading pinout diagrams
-* Torrenting software
 
 ## Tools Needed
 
@@ -105,8 +104,7 @@ The Raspberry Pi runs the show using the MicroLab software and coordinating turn
 The Raspberry Pi runs its software from the SD card. In this section we will have you install the custom MicroLab disk image which has the Raspberry Pi operating system, the MicroLab software and the touchscreen drivers bundled together.
 
 1. **Install Raspberry Pi Imager.** [Follow the Raspberry Pi website instructions](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-using-imager) to install the Raspberry Pi Imager software onto a computer.
-1. **Download the MicroLab production disk image.** Check [our website](https://fourthievesvinegar.org/microlab/) for a link to torrent or download the MicroLab disk image to the computer. Please be sure to [torrent safely](https://www.tomsguide.com/features/how-to-torrent-safely-five-ways-to-reduce-the-risk-of-sharing-p2p).
-   * **NOTE:** If you have a different touchscreen display, you will need to use the development image, then download and install the appropriate drivers.
+1. **Build the disk image.** Check [this repo](https://github.com/FourThievesVinegar/microlab-image/) for scripts to download and build the MicroLab build image. It can take a few hours to complete, but you will get the latest. There are instructions in the BUILD.md file.
 1. **Connect the MicroSD card to your computer.**
 1. **Install the MicroLab disk image onto the SD card** [following the Raspberry Pi website instructions](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-using-imager).
    * Be sure to "Use Custom" for the OS and then select the MicroLab disk image.
@@ -116,10 +114,7 @@ The Raspberry Pi runs its software from the SD card. In this section we will hav
 
 #### Installing the touchscreen
 
-1. Line the touchscreen up with the Raspberry Pi's board. Position the screen's female headers over the Raspberry Pi's header pins (pins 1-26, see picture) and then push down gently until the screen is completely connected to the board.
-<IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_pi_screen.jpeg" WIDTH="1000" />
-
-**NOTE:** We will need to remove the touchscreen to put the GPIO pins in place later in the instructions.
+v1.0 features a new touchscreen. Instead of using the GPIO pins, this one uses the Pi's display port. Instead of attaching to the Pi directly, you will mount the screen to the case lid and connect them using a ribbon cable.
 
 ### Arduino Setup
 <a name="arduino"></a>
