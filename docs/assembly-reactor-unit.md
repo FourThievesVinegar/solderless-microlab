@@ -24,10 +24,9 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 | RU-SRM  | Stir rod motor                               | 1     |
 | RU-STR  | Stir rod                                     | 1     |
 | RU-SRC  | Stir rod coupling                            |
-| RU-LID  | Reactor manifold core and lid (Printed)      | 1     | [YOU PROBABLY WANT TO USE THESE PARTS INSTEAD!](https://github.com/FourThievesVinegar/microlab-parts/tree/master/additional-parts/reactor-manifold-GL45)
-| RU-SRM  | Stir rod mount (Printed)                     | 1     |
+| RU-LID  | Reactor Core manifold (Printed)               | 1     | 
 | RU-RJF  | Jar Flanges (Printed)                        | 2     |
-| RU-COR  | 6 oz mason jar for core chamber              | 1     |
+| RU-COR  | 250ml GL45 Borosilicate Glass Bottle             | 1     |
 | RU-OUT  | 32oz wide mouth mason jar for outer jacket   | 1     |
 | RU-SDH  | Reactor stand - H (Printed)                  | 1     |
 | RU-SDH  | Reactor stand - A (Printed)                  | 1     |
@@ -39,7 +38,7 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 | RU-SYR  | Syringes                                     | 3     |
 | RU-PUB  | Pumps box (Printed)                          | 1     |
 | RU-PUL  | Pumps lid (Printed)                          | 1     |
-| RU-SUP  | Pumps lid (Printed)                          | 1     |
+| RU-SUP  | Wire coat hanger                             | 1     |
 | TC-PMP  | Circulating pump                             | 2     |
 | SP-PC12 | 12-pin connector, panel-mount screw terminal | 1     |
 | SP-PC8  | 8-pin connector, panel-mount screw terminal  | 1     |
@@ -50,12 +49,9 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 <a name="pumps"></a>
 
 
-> **Howdy Partner!** 🤠 There are some updates coming in the next release that you will want to take advantage of. First thing to know is that the new pumps box housing has a solid lid and holes to mount the ports on the bottom of the pumps box itself. The barrel plug sockets are also off to the side now. If you have the latest parts, they should look a little different than the pictures here. We'll be updating this as part of an upcoming release.
-
 The Pumps Box has 3 Peristaltic pumps w/ stepper motors on the front that inject reagents into the Reactor Core and the 2 circulating pumps on the sides that move hot and cold fluids to control the Reactor Core's temperature. It also has plugs on the front for the stirring motor and an accessory port that can be used to power accessories like a light.
 
 <IMG ALT="Pumps Box Front showing three peristaltic pumps and two female barrel connectors on the front of a 7 inch by 7 inch 3D printed box" SRC="./media/pumps-unit/pumps-unit-complete-front.jpg" WIDTH="400" />
-<IMG ALT="Pumps Box Rear showing two connector sockets and screws at the corners." SRC="./media/pumps-unit/pumps-unit-complete-rear.jpg" WIDTH="400" />
 
 ### Tools required
 
@@ -90,7 +86,9 @@ We're going to mount the pumps then install the plugs for the stirring motor and
 
 <IMG ALT="Pump box and parts" SRC="./media/pumps-unit/pumps-unit-box-assembled.jpg" WIDTH="400" />
 
-### Mounting and Wiring the Back Panel
+### Mounting and Wiring the Connectors
+
+> **Hey Now!** 🏜️ These are installed on the bottom of the box now, rather than the lid.
 
 Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the components in the box.
 
@@ -170,13 +168,9 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 
 <a name="core"></a>
 
-> **WOAH THERE!** 🦄 There's a [new Reactor Core](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6/reactor-manifold-GL45) in town, with improved chemical and thermal tolerances. The parts are different, but the overall configuration is basically the same. We'll be updating these docs during the next release. For now, just know that you probably want to get a 1/8" teflon sheet and a [250ml GL45 bottle](https://www.amazon.com/storage-bottles-borosilicate-karter-scientific/dp/B07WTPQJXN), print [the parts](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v6/reactor-manifold-GL45), and use them to assemble the Reactor Core instead of exactly following the instructions below. More detailed pics and documentation coming with the next release and you can see all the pieces on the printable part's readme.
-
 The Reactor Core houses the reaction chamber, which is where the SCIENCE happens. We're going to build the manifold, attach the stirring assembly, and put it all inside the mason jars!
 
-| Old | New |
-| --- | --- |
-|<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400" /> | <img src="./media/reactor-unit/v0.6.5-reactor-assembled.jpeg" width="400"> |
+<img src="./media/reactor-unit/v0.6.5-reactor-assembled.jpeg" width="400"> 
 
 ### Parts
 
@@ -190,7 +184,7 @@ The Reactor Core houses the reaction chamber, which is where the SCIENCE happens
 | RU-LID    | Reactor manifold lid (Printed)                | 1     | You don't need this part if you use the part linked above.
 | RU-SRM    | Stir rod mount (Printed)                      | 1     |
 | RU-RJF    | Jar Flanges (Printed)                         | 2     |
-| RU-COR    | 6 oz regular mouth mason jar for core chamber | 1     | [Use a 250ml GL45 bottle instead](https://www.amazon.com/storage-bottles-borosilicate-karter-scientific/dp/B07WTPQJXN)
+| RU-COR    | 250ml GL45 Borosilicate Glass Bottle          | 1     | 
 | RU-OUT    | 32oz wide mouth mason jar for outer jacket    | 1     |
 | RU-SDH    | Reactor stand - H (Printed)                   | 1     |
 | RU-SDH    | Reactor stand - A (Printed)                   | 1     |
@@ -209,67 +203,41 @@ The Reactor Core houses the reaction chamber, which is where the SCIENCE happens
 
 #### Assembling the Reactor Core Manifold
 
-> 🌵🌵🌵 Don't get stuck in a prickly pass! The new reactor core manifold is just the printed part and the carved PTFE disc!
-
 <IMG ALT="v0.6.5 Reactor Core parts" SRC="./media/reactor-unit/v0.6.5-reactor-parts.jpeg" WIDTH="400" />
+<IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" WIDTH="400"/>
+<IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400"/>
+
 
 The printed manifold screws onto the GL45 250ml bottle, but first you have to carve the PTFE disc to fit between them and insert the stirrer through the central hole. Then you can use the shaft coupler to connect the motor to the stirrer. You may want to shim the motor with some tape to hold it more firmly in place. Then insert the whole thing into the main jar.
 
 The trickiest thing is connecting the barrel plug connector to the motor. Soldering honestly helps here but you can also use thin solid-core wire (wires from ethernet cables are good for this) inserted into the motor's contacts.
 
-> 🌵🌵🌵 If you have the new parts, that's it! you can skip down to the Reactor Stand assembly section.
-
-First, we need to assemble the manifold lid that holds the jars together and allows tubing into the reaction chamber and temperature control chamber.
- <IMG ALT="Reactor manifold parts" SRC="./media/reactor-unit/reactor-manifold-parts.jpg" WIDTH="400" /> 
-
-**Parts:**
-
-- Reactor manifold core (Printed) (RU-COR)
-- Reactor manifold lid (Printed) (RU-LID)
-- 6 oz regular mouth mason jar for core chamber (RU-COR)
-- 12mm M3 screws with nuts (SP-M3S-12)
-- 20mm M3 screws with nuts (SP-M3S-20)
-
-**Assembly:**
-
-- Place the jar lid ring over the manifold core.
-- Insert the manifold core through the manifold lid, then twist the lid slightly so that the manifold core fits snugly in the manifold lid.
-- Check to make sure the holes on the side of the manifold core line up with those on the manifold lid
-- The screwholes on sides of the lid and manifold core should be lined up, screw in the three 12mm M3 screws.
-
-<IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/reactor-manifold-assembled.jpg" WIDTH="400"/>
-
 #### Assembling and Attaching the Stirring Motor Mount
 
-Next, we need to attach the stirring motor mount to the top of the manifold, secure the stirring motor in place, and connect the motor shaft to the paddle.
-
-<IMG ALT="Reactor stirring assembly parts" SRC="./media/reactor-unit/reactor-stirring-assembly-parts.jpg" WIDTH="400"/>
-<IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" WIDTH="400"/>
+Next, we need to secure the stirring motor in place, and connect the motor shaft to the paddle.
 
 **Parts:**
 
 - Stir rod motor (RU-SRM)
 - Stir rod (RU-STR)
 - Stir rod coupler (RU-SRC)
-- Stir rod mount (Printed)(RU-SRM)
-- Possibly necessary: Material such as dense foam to hold it in place.
-- 20mm M3 screws with nuts (SP-M3S-20)
+- Stir rod mount - part of the manifold
+- Possibly necessary: Material such as electrical tape to shim it in place.
 
-<IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/ru_coupler.png" WIDTH="50"/>
+<IMG ALT="Reactor coupler" SRC="./media/reactor-unit/ru_coupler.png" WIDTH="50"/>
 
 **Assembly:**
 
-- **Attach the mount to the manifold.** Use the M3 screws to connect the stirring mount to the top of the manifold.
+- **Cut the PTFE disc.** It should be approximately 35mm across. The central hole for the stirrer shaft should be 8mm in diameter. The three holes around the edge should be 10mm in diameter but they don't need to be perfectly circular. 
+- **Insert stir rod motor into manifold.** Place the stir motor into the recess at the top of the manifold. If it is loose, you may want to apply a small patch of electrical tape on the corners of the gearbox where there aren't any gears.
 - **Attach stir rod motor to coupler.** Push the end of the stir rod coupler with the smaller hole over the motor's shaft and secure it with one of the set screws that came with the coupler.
   - Take care to center it and be aware that the shaft likely has a flat spot that makes it non-symmetrical
-- **Insert motor into mount.** Insert the motor into the hole in the top of the stirring motor mount.
-  - You may need to wrap the motor in dense flexible foam and wrap it in electrical tape for it to fit snugly.
-  - This is one place where soldering may come in handy. The motor in the parts list does not have built-in leads. It is possible to add leads using small solid-core wires. You can strip extra length, feed the wires through the contacts on the motor, then use pliers to fold and twist the wires to themselves to maintain contact. In this case, wrapping with electrical tape, hot glue, or heat shrink is advised. You can use a 2x lever connector to attach the motor leads to the barrel plug connector.
-- **Insert stir rod into manifold.** Strip a few mm of PTFE coating from the end of the stirrer's shaft. Then, from the bottom of Reactor Core manifold insert the mixing paddle's shaft through the center.
-- **Connect stir rod to coupler.** Insert the mixing paddle's shaft into the wide end of the coupler.
+- **Wire the motor.**
+  - This is one place where soldering may come in handy. The motor in the parts list does not have built-in leads. It is possible to add leads using small solid-core wires, such as those from an ethernet cable. You can strip extra length, feed the wires through the contacts on the motor, then use pliers to fold and twist the wires to themselves to maintain contact. In this case, wrapping with electrical tape, hot glue, or heat shrink is advised. You can use a 2x lever connector to attach the motor leads to the barrel plug connector.
+- **Insert stir rod through the disc into the coupler.** Strip a few mm of PTFE coating from the end of the stirrer's shaft. Then thread it through the central hole in the PTFE disc and insert it through the central hole in the manifold up into the shaft coupler attached to the motor
+- **Connect stir rod to coupler.** Tighten the set screws on the coupler to connect the stirrer to the motor.
 - **Be ready to resize.** When fully assembled, the mixing paddle should be suspended in the reaction chamber and should not touch the bottom or sides of the chamber. You will likely need to cut the stirrer's shaft short for this to fit properly. Take your time when cutting the shaft, as cutting it too short will make it impossible to use.
 
-  <IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/ru_manifold_assmebled.png" WIDTH="200" />
   <IMG ALT="Reactor manifold assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" WIDTH="400" />
 
 ### Reactor Unit reaction chamber assembly
@@ -278,14 +246,14 @@ Almost there! Now we just have to put it all together!
 
 **Parts:**
 
-- 6oz Mason jar
+- 250ml Bottle
 - 32oz Mason jar and lid ring
 
 **Assembly:**
 
-- Lower the stir rod into the 6oz jar, seating the manifold lid on top of the jar. Screw the lid ring that is attached to the manifold on to the jar
+- Lower the stir rod into the bottle, screwing the bottle into the manifold.
   - If the stir rod shaft is too long, you will need to remove the it from the manifold, cut it shorter using a hacksaw or bolt cutters, and then reattach it.
-- Place the 6oz jar inside the larger 32oz jar, slide the 32oz jar lid ring over top the manifold and screw it onto the jar.
+- Place the bottle inside the larger 32oz jar, slide the 32oz jar lid ring over top the manifold and screw it onto the jar.
 
 TADA! Your Reactor Core is complete!
 
@@ -297,13 +265,13 @@ TADA! Your Reactor Core is complete!
 
 These instructions assume you have already assembled the Pumps Box and the Reactor Core.
 
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-unit-assembled.jpg" WIDTH="400" />
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg" WIDTH="300" />
 
 ### Assembling the Stand
 
 **Parts:**
 
-- 6 oz mason jar for core chamber| (RU-COR)
+- 250ml GL45 Borosilicate Glass Bottle (RU-COR)
 - 32oz wide mouth mason jar for outer jacket (RU-OUT)
 - Reactor stand - H (Printed) (RU-SDH)
 - Reactor stand - A (Printed) (RU-SDA)
@@ -370,8 +338,6 @@ You've already built the core and the pump. All that's left to do is connect it 
   - Plug the stirring motor's plug into the upper barrel connector socket on the Pumps Box.
   - Attach one piece of tubing to each of the the peristaltic pumps and through the holes in the Reactor Core manifold to reach the 6oz mason jar chamber.
 
-| Old | New |
-| --- | --- |
-| <IMG ALT="Reactor stand assembled" SRC="./media/pumps-unit/ru_add_rc.png" WIDTH="400"/> | <IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg"  WIDTH="400"/> |
+<IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg"  WIDTH="400"/> 
 
 This concludes the assembly instructions for the Reactor Unit. Next up: [MicroLab Setup & Operation](/docs/operation.md).
