@@ -88,7 +88,7 @@ Shared Parts|	SP-ETN|	1 roll|	Electrical tape, narrow
 
 #### **Prepare Wires**
 
-- The Stepper Motor cables (SP-SMC) should have come with the three peristaltic pumps with stepper motors. Take the 3 cables and cut them in half with the wire cuters.
+- The Stepper Motor cables (SP-SMC) should have come with the three peristaltic pumps with stepper motors. Take the 3 cables and cut them in half with the wire cutters.
 - Strip both ends on each of the wires (see [Skills Needed](#skills)) for help with stripping wires). Expect to remove 1/4" or more of the insulation. If the lever connector or screw terminal closes on the insulation the electricity won't pass through.
 - You should now have 6 cables, three to connect the Arduino to the 12-pin connector in the Control Unit and three to connect the pumps to the 12-pin unit in the Pumps box.
 
@@ -520,7 +520,7 @@ Now we can connect some last wires and install all the components in the case:
 * 4-channel Relay Board
 * Arduino w/ CNC shield
 * 12V Wire Connector
-* Raspberry Pi w/ touchscreen
+* Raspberry Pi
 
 
 <IMG ALT="Power manifold parts" SRC="./media/control-unit/case_assembled.jpeg" width="600" />
@@ -688,8 +688,8 @@ Before you close the case, you probably want to test that everything is wired co
 
 **Assembly:**
 
-- Place the lid on top of the Control Unit case, slightly overhanging the front.
-- Slide the lid toward the back so that the tabs on the lid fit into the slots on the case.
+- Place the lid on top of the Control Unit case with the tabs in the tab slots.
+- Check to see that the display cable isn't getting too bent or twisted.
 - Align the screw holes on each and secure the lid in place using the 16mm screws.
 
 

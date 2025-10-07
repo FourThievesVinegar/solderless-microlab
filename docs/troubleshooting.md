@@ -66,7 +66,7 @@ Make sure you are using the new GL-45 reactor core. The previous multi-part mani
 
 ### Optimizing Heat Exchange
 
-We recommend having a heat reservoir and a cold reservoir. This can be as simple as a small counter-top deep fryer and a bag of ice (or a small chest freezer). We're currently testing these and if you've got ideas, please [reach out](https://fourthievesvinegar.org/contact/)!
+We recommend having a heat reservoir and a cold reservoir. This can be as simple as a small counter-top deep fryer with operational temperatures below 188.2 °C / 370.8 °F (the boiling point of propylene glycol) and a cooler of ice (or a small chest freezer). We're currently testing these and if you've got ideas, please [reach out](https://fourthievesvinegar.org/contact/)!
 
 ## My touch screen is messed up! - Touch Screen Settings
 
