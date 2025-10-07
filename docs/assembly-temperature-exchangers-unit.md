@@ -3,7 +3,7 @@
 The Heating Unit and Cooling Units are supporting components of the MicroLab that heat or cool the fluids that circulate in the Reactor Core.
 
 
-<IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tc_temperature_units.png" WIDTH="400" />
+<IMG ALT="Temp Tubing" SRC="./media/temperature-units/ru_therm.png" WIDTH="400"/>
 
 ## 🚨 UNDER ACTIVE DEVELOPMENT🚨
 ```
@@ -44,30 +44,14 @@ We will update with more details as part of the next release.
 | ------------- | ------------- |------| ----|  
 |||
 TC-PMP|Circulating pump|2
-TC-SBH|Submersible heater|1
-TC-CTB|Copper tubing 1/4" OD x 3/16" ID|1
+TC-CTB|10` Copper tubing 1/4" OD x 3/16" ID|2
 TC-STB|Silicone tubing 8mm OD x 5mm ID|1
 TC-TCT|	Copper tube cutter tool|1
 TC-CTJ|	Copper tube jig	|1
 
 ### Auxiliary heat sources and sinks
 
-Below are the parts for DIY heat sources and sinks. We are currently experimenting with off-the-shelf solutions like countertop deep fryers for heat and chest freezers (or just big coolers full of ice) for cooling. These can use propylene glycol as a fluid as it will stay liquid well within the intended operating parameters of the MicroLab (-10C - 120C).
-
-In short, you probably don't want to do this part, but it is being kept in the docs for now. You can just build the heat exchanger coil and stick in whatever hot or cold thing you end up using.
-
-| Part ID      | Part Name     | Count | Notes |
-| ------------- | ------------- |------| ----|  
-|||
-RX-TEE|Barbed tee fittings for 6mm tubing|2
-TC-JAR|32oz canning jar |2 | We've don't have a optimal size for the jar, we've also used 16oz jars. You may want to experiment to find the best size for your project.
-TC-AQ|Recommended: aquarium temperature controller | 1
-TC-INS|	Insulation for jars|	2
-TC-TAP|	Tape for the insulation|	2
-TC-CUL|	Cooling Unit Lid (Printed)| 1
-TC-HUL|	Heating Unit Lid (Printed)| 1
-
-||
+As mentioned above, we are looking for optimal head sources and sinks. Consider ice baths and deep fryers with operational temperatures below 188.2 °C / 370.8 °F (the boiling point of propylene glycol).
 
 
 ## Assembly
@@ -85,22 +69,7 @@ This component heats and stores hot water, or other liquids, which are then used
     - Take care when bending, copper tubing kinks easily, reducing or blocking the flow of the liquid.
     - You can support the tube using a long spring around  it or fill the tube with salt or sand to support it from the inside.
 
-* **Insert tubing into lid.** Take the Heating Unit Lid (TC-HUL). Insert the ends of your copper tube helix up through the holes in the lid.
-* **Add the heating coil.** Take the submersible heater (TC-SBH) and insert its heating coil through the rectangular hole in the top, then twist it 90 degrees so that the top part of the heater fits snugly in the slot in the jar lid.
-  - You may need to cut off a hook or tab meant to hold the heater to the side of a mug.
-- **Attach lid.** Lower the copper tubing into the jar (TC-JAR) as you place the lid on top of the jar. Place the canning jar lid ring (that comes with the Mason jar) over the lid and screw it to the jar to secure the lid in place.
-
-  <IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/temperature-control-units-assembled.jpg" WIDTH="400" />
-
-
-- **Attach the insulating material.** Take the insulation for jars (TC-INS) and wrap it around the jar, securing it with tape.
-<IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tu_reactor_insulation.jpeg" WIDTH="200" />
-
-<IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tu_reactor_insulation2.jpeg" WIDTH="200" />
-
-<IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tu_reactor_insulation3.jpeg" WIDTH="200" />
-
-
+Put this in something hot like a deep fryer with operational temperatures below 188.2 °C / 370.8 °F (the boiling point of propylene glycol)
 
 ### Cooling Unit
 
@@ -110,20 +79,9 @@ This component holds ice water or another cold substance to cool the reactor cor
  - Tips
     - More is better, the more copper tubing you can fit, the more heat will be exchanged.
     - Take care when bending, copper tubing kinks easily, reducing or blocking the flow of the liquid.
-    - You can support the tube using a long spring around  it or fill the tube with salt or sand to support it from the inside.
+    - You can support the tube using a long spring around it or fill the tube with salt or sand to support it from the inside.
 
-* **Insert tubing into lid.** Take the Cooling Unit Lid (TC-CUL). Insert the ends of your copper tube helix up through the holes in the lid.
-* **Attach lid.** Lower the copper tubing into the jar (TC-JAR) as you place the lid on top of the jar. Place the canning jar lid ring (that comes with the Mason jar) over the lid and screw it to the jar to secure the lid in place.
-* **NOTE:** The cooling reservoir is limited by its size and the volume of ice it can hold. You can also simply submerge the heat exchanger coil in an ice bath in a larger container. This may be preferable or necessary for longer-running reactions.
-
-  <IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/temperature-control-units-assembled.jpg" WIDTH="400" />
-
-* **Attach the insulating material.** Take the insulation for jars (TC-INS) and wrap it around the jar, securing it with tape.
-<IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tu_reactor_insulation.jpeg" WIDTH="200" />
-
-<IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tu_reactor_insulation2.jpeg" WIDTH="200" />
-
-<IMG ALT="Temperature Units fully assembled" SRC="./media/temperature-units/tu_reactor_insulation3.jpeg" WIDTH="200" />
+Put this in something very cold like an ice bath or a block of ice in a mini chest freezer. We are exploring the best methods for this.
 
 ### MicroLab Connector Tubing
 <a name="tubes"></a>
@@ -133,5 +91,8 @@ Both the Heating and Cooling Units will need two pieces 16 inch tubing and 1 pie
 * Take the silicone tubing (TC-ST7) and cut four pieces to be 16 inches (16") long.
 * Cut two pieces to be 8 inches (8") long.
 * These lengths have worked for us so far. You may find different lengths works better for you and we'd love to hear what works.
+* You can wrap the tubes in insulating material to increase efficiency. We are looking for affordable options here and will update the docs when we settle on the best / easiest / most available method. For now, you can buy commercial stuff that fits around the silicone tubes or even use silicone tubes with an interal diameter slightly larger than the external diameter of the silicone tubing (TC-ST7).
 
 This concludes the assembly instructions for the Heating and Cooling Units. Next up: [Building the Reactor Unit](/docs/assembly-reactor-unit.md)
+
+<IMG ALT="Temp Tubing" SRC="./media/temperature-units/ru_therm.png" WIDTH="400"/>

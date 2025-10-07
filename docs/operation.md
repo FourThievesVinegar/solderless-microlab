@@ -11,12 +11,12 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 * [Cooling Unit](/docs/assembly-temperature-exchangers-unit.md)
 * [Control Unit](/docs/assembly-control-unit.md)
 * [MicroLab Cables](/docs/assembly-control-unit.md#cables)
-* Cable - Power cord on submersible heater (TC-SBH)
 * Cable - USB cord on Thermistor (RU-TMP)
 * [MicroLab Tubing](/docs/assembly-temperature-exchangers-unit.md#tubing) (6 pieces, four 16" and two 8")
 * Power - MicroLab power supply (CU-POW)
-* Power - Switchable power strip or aquarium temperature controller
-* Water or other liquids (TC-LIQ) for the heating unit, cooling unit, and reactor core
+* Power - Switchable power strip or aquarium temperature controller (unless using a self-regulating heat source like a deep fryer)
+* Cable - Power cord on submersible heater (TC-SBH) (unless using a self-regulating heat source like a deep fryer)
+* Propylene glycol or other liquids (TC-LIQ) for the heating unit, cooling unit, and reactor core
 
 <IMG ALT="Reactor stand assembled" SRC="./media/ML_units.png" WIDTH="400"/>
 
@@ -33,7 +33,7 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
 
 - **Assembled Reactor Unit.** If not already assembled, put together the stand, add the Pumps Box and Reactor Core. You can refer to [Building the Reactor Unit](/docs/assembly-reactor-unit.md) for more information.
 - **Add outer chamber liquid.** Unscrew the 32 oz mason jar outer chamber lid ring. Lift up the manifold lid and add the liquid to the jar. Re-seat the manifold and screw the lid ring back to secure the manifold. You may need to add more liquid after running the circulation pumps.
-- **Add Thermistor** Insert Thermistor in the opening on the manifold so the probe reaches the liquid in the 6oz mason jar inner chamber of the Reactor Core.
+- **Add Thermistor** Insert Thermistor in the slightly larger opening on the manifold so the probe reaches the temperature control liquid.
 
   <IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/ru_thermistor.png" WIDTH="300"/>
 
