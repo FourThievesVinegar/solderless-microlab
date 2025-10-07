@@ -71,6 +71,8 @@ This component heats and stores hot water, or other liquids, which are then used
 
 Put this in something hot like a deep fryer with operational temperatures below 188.2 °C / 370.8 °F (the boiling point of propylene glycol)
 
+<IMG ALT="Temp Tubing" SRC="./media/temperature-units/ru_therm_fryer.png" WIDTH="400"/>
+
 ### Cooling Unit
 
 This component holds ice water or another cold substance to cool the reactor core.
