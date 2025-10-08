@@ -1,6 +1,10 @@
 # MicroLab Troubleshooting
 
-The MicroLab is essentially a Linux box with an Arduino and some relays. You can always connect a keyboard to the open USB slot, hit ctrl + alt + F6 and log in as `thief` pw: `vinegard`. From here, if you know your way around a POSIX/Linux/Unix terminal, you can poke around. Check out [os-services.txt](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/os-services.txt) for more about how the MicroLab interfaces with the operating system.
+## A Note about where to start
+
+The MicroLab is essentially a Linux box with an Arduino and some relays attached. You can always connect a keyboard to the open USB slot, hit ctrl + alt + F6 and log in as `thief` pw: `vinegard`. From here, if you know your way around a POSIX/Linux/Unix terminal, you can poke around. Check out [os-services.txt](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/os-services.txt) for more about how the MicroLab interfaces with the operating system.
+
+If you haven't ever seen a linux terminal before, BE NOT AFRAID! It's the same files / directories as any other computer but instead of double-clicking the folder, you type `cd my-folder`. To list what's in the folder, you type `ls`. To edit a text file, you type `nano my-cool-file`. You can [learn more here](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview).
 
 ## I'm getting an error message when I start the MicroLab
 
@@ -64,7 +68,11 @@ If you do not feel any change in resistance, try jumpering other combinations of
 
 Make sure you are using the new GL-45 reactor core. The previous multi-part manifold was not chemically or thermally resistant.
 
-### Optimizing Heat Exchange
+## My Stirrer is Wobbly!
+
+You can adjust the alignment of your stirring rod by loosening the top set screws on the shaft coupler, carefully religning the coupler with the motor, and tightening the set screws again.
+
+## Optimizing Heat Exchange
 
 We recommend having a heat reservoir and a cold reservoir. This can be as simple as a small counter-top deep fryer with operational temperatures below 188.2 °C / 370.8 °F (the boiling point of propylene glycol) and a cooler of ice (or a small chest freezer). We're currently testing these and if you've got ideas, please [reach out](https://fourthievesvinegar.org/contact/)!
 

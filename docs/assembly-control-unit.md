@@ -494,9 +494,13 @@ SP-M3S-16|16 mm M3 screws with nuts| 6 |
 
 <IMG ALT="Panel-mounted components" SRC="./media/control-unit/Case_12V.png" width="600" />
 
+**BE NOT AFRAID: This image shows the v0.6.0 version of the MicroLab as do a few others. There are some small differences but the wiring and layout are very much the same.
+
 ### Installing the 12/8/2-pin connectors
 
 <IMG ALT="Panel-mounted components installed" SRC="./media/control-unit/connector_parts.png" width="200" />
+
+**NOTE** These parts can be hard to come by and are not essential. They're just very convenient wire connectors. Any 8 and 12-pin connector will do a similar job, just take care to secure the cabling so it doesn't yank on the electronics inside the Control Unit. The 2-pin connector is not required if you are using an off-the-shelf heat source like a deep fryer.
 
 - **Install the 12-pin mount plate.** Orient the mount plate and use 2 M3 screws to install it on the outside of the case.
 - **Connect the 12-pin socket** Take the 12-pin socket attached to the Arduino and connect it to the back of the 12-pin mounting plate.
@@ -672,9 +676,11 @@ The wires we attach to the header GPIO pins let the Raspberry Pi control the rel
 
 <IMG ALT="GPIO pins" SRC="./media/control-unit/cu_5v_gpio_taped.jpeg" width="300" /> <BR><BR>
 
-- **Attach touchscreen.** Attach the touchscreen to the Raspberry Pi.
+- **Attach touchscreen.** 
+   * Attach the touchscreen to the Control Unit lid with the screws it came with.
+   * Connect the ribbon cable to the screen and to the display port on the Pi.
 
-<IMG ALT="GPIO pins" SRC="./media/control-unit/cu_case_inside_t.png" width="400" />
+<IMG ALT="GPIO pins" SRC="./media/control-unit/cu_case_inside_screen_installed.png" width="800" />
 
 
 ## Final Assembly
@@ -689,7 +695,7 @@ Before you close the case, you probably want to test that everything is wired co
 **Assembly:**
 
 - Place the lid on top of the Control Unit case with the tabs in the tab slots.
-- Check to see that the display cable isn't getting too bent or twisted.
+- Check to see that the display cable isn't getting too bent or twisted as the lid closes.
 - Align the screw holes on each and secure the lid in place using the 16mm screws.
 
 
@@ -727,7 +733,8 @@ Note: This assumes you used the 4-wire cable recommended in the parts list. If y
 
 #### **Parts**
 
-- 4-wire cable, into 5 ~2.5-foot lengths
+- 4-wire cable, into 5 2.5-foot+ lengths
+   * You can also use ethernet cable here
 - 8-pin connectors, plug (2)
 - 12-pin connectors, plug (2)
 - Split wire wraps (slightly shorter than the cables)
@@ -738,8 +745,8 @@ Note: This assumes you used the 4-wire cable recommended in the parts list. If y
 
 **Prepare Wires**
 
-- Take the 4-wire cable and cut into five 2.5 foot sections
-- Take the 2.5 foot sections and strip the wires on both ends  (see [Skills Needed](#raspberry) for help with stripping wires).
+- Take the 4-wire cable and cut into five 2.5+ foot sections
+- Take the 2.5+ foot sections and strip the wires on both ends  (see [Skills Needed](#raspberry) for help with stripping wires).
 
 
 **Assembly:**

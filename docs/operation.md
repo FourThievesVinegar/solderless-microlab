@@ -59,7 +59,7 @@ This section describes how to assemble a complete but disassembled MicroLab. If 
   * Attach one piece of 8" silicone tubing from the bottom of cooling circulation pump to one of the copper tubes on the Cooling Unit.
   * Attach one 16" piece of silicone tubing from Cooling Unit copper tube to the Reactor Core manifold.
 
-<IMG ALT="Temp Tubing" SRC="./media/reactor-unit/ru_tubes_crossed.jpeg" WIDTH="400"/>
+<IMG ALT="Temp Tubing" SRC="./media/reactor-unit/ru_thermistor.png" WIDTH="400"/>
 
 ## Cabling the Control Unit
 

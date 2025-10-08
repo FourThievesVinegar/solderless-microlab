@@ -6,7 +6,7 @@ The Reactor Unit is where the action happens, it is made up of the pumps, pump c
 - [Assembling the Reactor Core](#core)
 - [Assembling the Reactor Unit](#unit)
 
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg" WIDTH="300" />
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v1.0-reactor-unit.jpeg" WIDTH="300" />
 
 ## Skills Needed
 
@@ -88,17 +88,13 @@ We're going to mount the pumps then install the plugs for the stirring motor and
 
 ### Mounting and Wiring the Connectors
 
-> **Hey Now!** 🏜️ These are installed on the bottom of the box now, rather than the lid.
-
 Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the components in the box.
 
-<IMG ALT="Pump lid and parts" SRC="./media/control-unit/connector_parts.png" WIDTH="300" />
-
-<IMG ALT="Pump lid and parts" SRC="./media/pumps-unit/pumps-unit-lid-parts.jpg" WIDTH="400" />
+<IMG ALT="Phoenix connector parts" SRC="./media/control-unit/connector_parts.png" WIDTH="300" />
 
 **Assembly:**
 
-- Connect the 12-pin and 8-pin connector sockets with their mounting plates and use 2 M3 screws with each to attach them securely to the lid.
+- Connect the 12-pin and 8-pin connector sockets with their mounting plates and use 2 M3 screws with each to attach them securely to the Pumps Box ccase.
 - Cut and strip the wires on the pumps and barrel plug connectors.
 
 ### **Wire Order**
@@ -106,8 +102,6 @@ Next, we'll install the 8-pin and 12-pin connector sockets and wire them to the 
 <a name="wireorder"></a>
 The connectors need to be wired the same as the ones in the Control Unit. The wiring order is further explained on the [MicroLab Wiring](/docs/wiring.md) page. It's important to maintain the same wiring order throughout the project.
 <br>
-
-  <IMG ALT="Pump lid fully assembled" SRC="./media/pumps-unit/pumps-unit-lid-assembled.jpg" WIDTH="400" />
 
 ### 8-pin wiring
 
@@ -148,7 +142,7 @@ The 8-pin connector is connected to the positive and negative power wires for th
   <IMG ALT="Cable order" SRC="./media/control-unit/12pin_wire.png" WIDTH="300" />
 
 <BR><BR>
-<IMG ALT="Pump unit fully assembled with the lid open and wire connections visible" SRC="./media/pumps-unit/pumps-unit-lid-open.jpg" WIDTH="400" />
+<IMG ALT="Pump unit fully assembled with the lid open and wire connections visible" SRC="./media/pumps-unit/pumps-unit-lid-open.jpg" WIDTH="400" /><IMG ALT="Pump unit fully assembled with the lid open and wire connections visible" SRC="./media/pumps-unit/pumps-unit-lid-open-2.jpg" WIDTH="400" />
 
 ### Finishing it up
 
@@ -170,7 +164,7 @@ Congratulations! You did it. Hopefully it wasn't too bad!
 
 The Reactor Core houses the reaction chamber, which is where the SCIENCE happens. We're going to build the manifold, attach the stirring assembly, and put it all inside the mason jars!
 
-<img src="./media/reactor-unit/v0.6.5-reactor-assembled.jpeg" width="400"> 
+<img src="./media/reactor-unit/v1.0-reactor-assembled.jpeg" width="400"> 
 
 ### Parts
 
@@ -203,7 +197,7 @@ The Reactor Core houses the reaction chamber, which is where the SCIENCE happens
 
 #### Assembling the Reactor Core Manifold
 
-<IMG ALT="v0.6.5 Reactor Core parts" SRC="./media/reactor-unit/v0.6.5-reactor-parts.jpeg" WIDTH="400" />
+<IMG ALT="v1.0 Reactor Core parts" SRC="./media/reactor-unit/v1.0-reactor-parts.jpeg" WIDTH="400" />
 <IMG ALT="Reactor stirring assembly assembled" SRC="./media/reactor-unit/reactor-stirring-assembly-assembled.jpg" WIDTH="400"/>
 <IMG ALT="Assembled reactor core" SRC="./media/reactor-unit/reactor-core-complete.jpg" WIDTH="400"/>
 
@@ -223,8 +217,6 @@ Next, we need to secure the stirring motor in place, and connect the motor shaft
 - Stir rod coupler (RU-SRC)
 - Stir rod mount - part of the manifold
 - Possibly necessary: Material such as electrical tape to shim it in place.
-
-<IMG ALT="Reactor coupler" SRC="./media/reactor-unit/ru_coupler.png" WIDTH="50"/>
 
 **Assembly:**
 
@@ -265,7 +257,7 @@ TADA! Your Reactor Core is complete!
 
 These instructions assume you have already assembled the Pumps Box and the Reactor Core.
 
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg" WIDTH="300" />
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v1.0-reactor-unit.jpeg" WIDTH="300" />
 
 ### Assembling the Stand
 
@@ -338,6 +330,6 @@ You've already built the core and the pump. All that's left to do is connect it 
   - Plug the stirring motor's plug into the upper barrel connector socket on the Pumps Box.
   - Attach one piece of tubing to each of the the peristaltic pumps and through the holes in the Reactor Core manifold to reach the 6oz mason jar chamber.
 
-<IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/v0.6.5-reactor-unit.jpeg"  WIDTH="400"/> 
+<IMG ALT="Reactor stand assembled" SRC="./media/reactor-unit/v1.0-reactor-unit.jpeg"  WIDTH="400"/> 
 
 This concludes the assembly instructions for the Reactor Unit. Next up: [MicroLab Setup & Operation](/docs/operation.md).
