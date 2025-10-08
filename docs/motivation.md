@@ -40,7 +40,7 @@ The MicroLab loads a recipe for a chemical reaction, automatically controls the 
 
 The MicroLab has a similar design as a commerical CLR. The reaction vessel has 2 mason jars nested together. A 250ml glass bottle is attached to the custom lid for a 32 oz Mason jar. When screwed together the 6oz jar is suspended in the 32 oz jar. The lid has ports for reagents, a temperature probe, a stirring rod, and ports for the hot or cold water to be added to the outer vessel.
 
-<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/reactor-core-assembled-and-in-reactor-unit.jpg" WIDTH="400" />
+<IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v1.0-reactor-unit.jpeg" WIDTH="400" />
 
 The reagents are held in syringes or other vessels and loaded into pumps powered by stepper motors.
 The thermal regulator fluid is delivered by pumps controlled by relays. We heat the liquid with tea
