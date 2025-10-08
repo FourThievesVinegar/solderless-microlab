@@ -1,6 +1,6 @@
 # Welcome to The MicroLab
 
-<IMG ALT="The MicroLab assembled" SRC="./media/v1.0-microlab-stirring.gif" width="800" />
+<IMG ALT="The MicroLab assembled" SRC="./media/microlab-stirring-1.gif" width="800" />
 
 The MicroLab is part of the MicroLab Suite. Learn more about the hardware/software stack [here](/docs/motivation.md#Meet-the-MicroLab-Suite)
 
