@@ -1,7 +1,24 @@
+.microlab-header {
+  .header-content {
+    display: flex;
+    gap: 20px;
+
+    .ui.button {
+      max-width: 106px;
+      padding: 8px;
+      font-size: 12px;
+    }
+  }
+  .ui.menu .item {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
 .back-button {
-    min-width: 58px;
+  min-width: 58px;
 }
 
 .back-button.hidden {
-    cursor: none;
+  cursor: none;
 }

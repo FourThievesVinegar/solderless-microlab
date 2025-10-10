@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { Icon, Button, Menu } from 'semantic-ui-react'
+import { Icon, Button, Menu, MenuItem } from 'semantic-ui-react'
 
 import SettingsContext from '../contexts/Settings'
 import { useTranslation } from 'react-i18next'
@@ -37,7 +37,7 @@ export function Header(props: {
 
   return (
     <>
-      <section>
+      <section className="microlab-header">
         <Menu>
           <Menu.Item
             className={`back-button${showBackButton ? '' : ' hidden'}`}
@@ -52,7 +52,9 @@ export function Header(props: {
             {showBackButton && <Icon name={`chevron left`} inverted={settings.darkMode} />}
           </Menu.Item>
 
-          <Menu.Item header>{props.children}</Menu.Item>
+          <Menu.Item header className="header-content">
+            {props.children}
+          </Menu.Item>
 
           <Menu.Item icon position="right" as={Button} onClick={() => setShowMenu(!showMenu)}>
             <Icon name={showMenu ? 'close' : 'bars'} />

@@ -6,11 +6,11 @@ The MicroLab is essentially a Linux box with an Arduino and some relays attached
 
 If you haven't ever seen a linux terminal before, BE NOT AFRAID! It's the same files / directories as any other computer but instead of double-clicking the folder, you type `cd my-folder`. To list what's in the folder, you type `ls`. To edit a text file, you type `nano my-cool-file`. You can [learn more here](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview).
 
-## I'm getting an error message when I start the MicroLab
+## I'm getting an error when I start the MicroLab
 
-Open the menu and go to the Status page. This should have a button that says 'Reload Hardware'. Tap it gently until the status changes to "idle".
+Open the menu and go to the Status page. You should see a button that says 'Reload Hardware'. Tap it gently until the status changes to "idle".
 
-## My stepper motors are being weird! Stepper Motor Calibration.
+## My stepper motors are being weird! Stepper Motor Calibration
 
 We will need:
 
@@ -70,7 +70,7 @@ Make sure you are using the new GL-45 reactor core. The previous multi-part mani
 
 ## My Stirrer is Wobbly!
 
-You can adjust the alignment of your stirring rod by loosening the top set screws on the shaft coupler, carefully religning the coupler with the motor, and tightening the set screws again.
+You can adjust the alignment of your stirring rod by loosening the top set screws on the shaft coupler, carefully religning the coupler with the motor, and tightening the set screws again. Make sure the central hole in the PTFE disc is centered.
 
 ## Optimizing Heat Exchange
 
