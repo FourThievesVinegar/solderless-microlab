@@ -8,7 +8,11 @@ The MicroLab is an open-source, DIY, automated controlled lab reactor (CLR) that
 
 For the MicroLab to be accessible to the most people, it was developed as part of a hardware/software stack called the MicroLab Suite. The different software programs help take the information about a compound you want to make and translate it into a recipe (code) that the MicroLab runs to create the compound.
 
-You can find an introduction to the project, what the heck is a CLR, what's in the MicroLab Suite, and why we are doing this at all on the [About the MicroLab and MicroLab Suite](docs/motivation.md) page.
+On the [About the MicroLab and MicroLab Suite](docs/motivation.md) page, you can find an introduction to the project with answers to common questions like:
+- What the heck is a CLR?
+- What's in the MicroLab Suite? 
+- And...
+- Why we are doing this at all?
 
 <IMG ALT="MicroLab roadmap of major features for the next 2 versions. V 1.1: “Hello World” recipes complete, Open source reagent pumps, International BOMs, Printable / DIY alternatives for all scarce parts, Atmosphere control. v1.2: Raspberry Pi optional, Recipe repo launched, Auxiliary software suite complete and integrated, Optimized off-the-shelf parts list." SRC="https://fourthievesvinegar.org/wp-content/uploads/2025/10/microlab-roadmap.png" width="600" />
 
