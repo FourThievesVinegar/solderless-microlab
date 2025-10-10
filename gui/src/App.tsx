@@ -17,7 +17,9 @@ import { useTranslation } from 'react-i18next'
 
 import './styles/app.css'
 import './styles/4tv.scss'
-import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-css/semantic.min.css'
+import { ReloadHardware } from './components/ReloadHardware'
+import { Divider } from 'semantic-ui-react'
 
 export function App() {
   const { t } = useTranslation()
@@ -65,14 +67,28 @@ export function App() {
     }
   }, [status?.status, status?.step])
 
+  const statusString = status
+    ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
+        typeof status?.temp === 'number' ? `${status?.temp.toFixed(2)}C` : ''
+      }`
+    : t('waiting-for-backend')
+
   return (
     <div className={`lcd-wrapper${settings.darkMode ? ' dark-mode' : ''}`}>
       <Header>
-        {status
-          ? `${status?.step ? `${status?.step}: ` : ''}${status?.status} ${
-              typeof status?.temp === 'number' ? `${status?.temp.toFixed(2)}C` : ''
-            }`
-          : t('waiting-for-backend')}
+        {status ? (
+          <>
+            {statusString}
+            {status.status === MicrolabStatus.ERROR && (
+              <>
+                <Divider />
+                <ReloadHardware />
+              </>
+            )}
+          </>
+        ) : (
+          t('waiting-for-backend')
+        )}
       </Header>
       <Switch>
         <Route exact path="/">
