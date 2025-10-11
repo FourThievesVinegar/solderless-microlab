@@ -4,8 +4,15 @@
 
 ### Added
 
+### Changed
+
+## [1.0.0]
+
+### Added
+
 - Support for controlling gpio pins on the arduino when using custom grbl firmware. (#282)
 - Ability to delete recipes from the microlab on the recipe details page. (#288)
+- New `microlab-image` [build scripts](https://github.com/FourThievesVinegar/microlab-image)
 
 ### Changed
 
