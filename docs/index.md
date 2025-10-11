@@ -58,31 +58,23 @@ No 3D printer? If you do not have a 3D printer, there are a few options includin
 **Printable Files (STLs) for the 3D Parts**
 
 - Control Unit
-  - [Case for the Control Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-flat-v.1.0.stl)
-  - [Lid for the Control Unit Case](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/control-box-lid-flat-v.1.0.stl)
-  - Internal Subcomponent - [Case for the 4-channel Relay Board](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/sub-components/relay-board-case-50x73x17mm-no-top.stl)
-  - Internal Subcomponent- [Case for the 12V to 5V Converter](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/control-box/sub-components/stepdown-case-63x27x14mm.stl)
-- Cooling Unit
-  - [Lid for Cooling Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/temperature-units/cold-unit-lid-v.1.0.stl)
-- Heating Unit
-  - [Lid for Heating Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/temperature-units/hot-unit-lid-v.1.0.stl)
+  - [Case for the Control Unit](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/control-box/control-box-v.1.0.stl)
+  - [Lid for the Control Unit Case](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/control-box/control-box-lid-v.1.1.stl)
+  - Internal Subcomponents - [Case for the 4-channel Relay Board and 12v to 5v converter](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/control-box/sub-components/relay-board-case-50x73x17mm-no-top.stl)
+  - Internal Subcomponents- [Case for the 12V to 5V Converter](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/control-box/sub-components/stepdown-case-63x27x14mm.stl)
 - Reactor Unit
   - Pumps box
-    - [Box for the Pumps](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/pumps-box/pumps-box-v.1.1.stl)
-    - [Lid for the Pumps Box](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/pumps-box/pumps-box-lid-v0.4-no-connectors.stl)
+    - [Box for the Pumps](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/pumps-box/pumps-box-v.1.1.stl)
+    - [Lid for the Pumps Box](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/pumps-box/pumps-box-lid-v0.4-no-connectors.stl)
   - Reactor Core
     - GL-45 Version (experimental but recommended)
-      - [Manifold](https://github.com/FourThievesVinegar/microlab-parts/tree/master/additional-parts/reactor-manifold-GL45)
-    - Legacy three-piece version
-      - [Manifold Core](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-manifold/reactor-manifold-core-v0.1.stl)
-      - [Manifold Lid](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-manifold/reactor-manifold-lid-v0.1.stl)
-      - [Stirring Mount](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-manifold/stirring-mount-screws-accessible.stl)
+      - [Manifold](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7/reactor-manifold-GL45)
   - Reactor stand
-    - [Piece 1: H shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-H.v1.0.stl)
-    - [Piece 2: A shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-A.v1.0.stl)
-    - [Piece 3: ¢ shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-c.v1.0.stl)
-    - [Piece 4: K shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-k.v1.0.stl)
-    - [Piece 5: Jar flange shape (2)](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v6/reactor-stand/reactor-stand-jar-flange.v0.1.STL)
+    - [Piece 1: H shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-H.v1.0.stl)
+    - [Piece 2: A shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-A.v1.0.stl)
+    - [Piece 3: ¢ shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-c.v1.0.stl)
+    - [Piece 4: K shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-k.v1.0.stl)
+    - [Piece 5: Jar flange shape (2)](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-jar-flange.v0.1.STL)
   - Syringe Pumps (if not using peristaltic pumps)
     - [See assembly docs here](https://github.com/FourThievesVinegar/microlab-parts/tree/master/syringe-pump)
 
