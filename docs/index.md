@@ -7,11 +7,11 @@ The MicroLab is part of the MicroLab Suite. Learn more about the hardware/softwa
 The MicroLab is made up of:
 
 - **Control Unit** - Runs the software and controls the hardware
-- **Heating Unit** - Heats the liquid that circulates outside the reactor to warm it
-- **Cooling Unit** - Cools the liquid that circulates outside the reactor to cool it
-- **Reactor Unit** - Reactor core and pumps box assembled together
-  - Reactor Core - made up of the inner chamber (small glass bottle) where compounds are made, outer chamber (large glass jar) where liquid circulates to warm or cool the inner chamber, thermistor to take temperature in the inner chamber, stir rod to mix things in the inner chamber, and the parts to mount and hold all the pieces together.
-  - Pumps Box - houses the circulating pumps, peristaltic pumps and extra two ports, one for the stir rod and one as an accessory port.
+- **Heating Unit** - Heats the liquid that circulates in the Reactor Core to warm it
+- **Cooling Unit** - Cools the liquid that circulates in the Reactor Core to cool it
+- **Reactor Unit** - Reactor Core, Pumps Box, and Reactor Stand assembled together
+  - Reactor Core - made up of the inner chamber (small glass bottle) where compounds are made, outer chamber (large glass jar) where liquid circulates to warm or cool the inner chamber, thermistor to take temperature in the inner chamber, stir rod to mix things in the inner chamber, and the parts to mount and hold all the pieces together
+  - Pumps Box - houses the circulating pumps, peristaltic pumps and two ports, one for the stir rod and one as an additional accessory port
 
 <IMG ALT="The MicroLab assembled" SRC="./media/ML_units.png" width="600" />
 
@@ -37,15 +37,15 @@ We created a parts list with all the purchased and printed parts that you will n
 
 For the purchased items, we have links to one or more sources. We used the links more as reference so you can see the item and specifications. We did not optimize for price or local availablity. We encourage everyone to look for the best price and supplier for themselves.
 
-[The MicroLab's Parts List](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx)
+Download the file here: [The MicroLab's Parts List](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx)
 
 ### Printed Parts
 
 <a name="3d"></a>
 
-The MicroLab uses several custom parts, listed on [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx), the raw and printable files for these parts can be found on the [MicroLab Parts Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7).
+The MicroLab uses several custom parts, which are listed on the downloadable [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx). The raw and printable files for these parts can be found on the [MicroLab Parts Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7).
 
-Below we have linked to the printable files in the repo for the parts. These files have the extension .stl at the end. The STL file format is what slicer software uses to make the instructions for the 3D printer.
+Below are quick links to the repo for the printable parts. These files have the extension .stl at the end. The STL file format is what slicer software uses to make the instructions for the 3D printer.
 
 No 3D printer? If you do not have a 3D printer, there are a few options including:
 
@@ -67,8 +67,8 @@ No 3D printer? If you do not have a 3D printer, there are a few options includin
     - [Box for the Pumps](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/pumps-box/pumps-box-v.1.1.stl)
     - [Lid for the Pumps Box](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/pumps-box/pumps-box-lid-v0.4-no-connectors.stl)
   - Reactor Core
-    - GL-45 Version (experimental but recommended)
-      - [Manifold](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7/reactor-manifold-GL45)
+    - GL-45 Version
+      - [See STL files and assembly instructions here.](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7/reactor-manifold-GL45)
   - Reactor stand
     - [Piece 1: H shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-H.v1.0.stl)
     - [Piece 2: A shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-A.v1.0.stl)
@@ -76,7 +76,7 @@ No 3D printer? If you do not have a 3D printer, there are a few options includin
     - [Piece 4: K shape](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-k.v1.0.stl)
     - [Piece 5: Jar flange shape (2)](https://github.com/FourThievesVinegar/microlab-parts/blob/master/v7/reactor-stand/reactor-stand-jar-flange.v0.1.STL)
   - Syringe Pumps (if not using peristaltic pumps)
-    - [See assembly docs here](https://github.com/FourThievesVinegar/microlab-parts/tree/master/syringe-pump)
+    - [See STL files and assembly docs here](https://github.com/FourThievesVinegar/microlab-parts/tree/master/syringe-pump)
 
 ## Building the MicroLab
 
