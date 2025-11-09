@@ -6,7 +6,7 @@ The Heating Unit and Cooling Units are supporting components of the MicroLab tha
 <IMG ALT="Temp Tubing" SRC="./media/temperature-units/ru_therm.png" WIDTH="400"/>
 
 ## 🚨 UNDER ACTIVE DEVELOPMENT🚨
-```
+
 Please note that this part of the project is under active development.
 While these instructions show jars for the heat source and heat sink, these can be limited and impractical for many applications.
 Our development team is exploring additional options like:
@@ -16,7 +16,7 @@ Our development team is exploring additional options like:
 - You can also insulate the tubing and reactor core for added efficiency.
 
 We will update with more details as part of the next release.
-```
+
 
 ## Skills Needed
 
