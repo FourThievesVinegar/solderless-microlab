@@ -45,7 +45,7 @@ To wire things up properly we'll tackle different parts of the Control Unit and 
 
 **Printer parts info.** Parts listed as printed, like "CU-CB Control Case (Printed)", are 3D printed, check the [3D Printed Parts section ](docs/index.md#3d) of the "How to build the MicroLab" page.
 
-| Section | Part ID      | Part Name     | Count | Notes |
+| Section | Part ID      | Count      | Part Name | Notes |
 |--- | ------------- | ------------- |------| ----|
 Control Unit (CU)|	CU-RPI|	1|	Raspberry Pi 3 Model B Board
 Control Unit (CU)|	CU-SCR|	1|	Touchscreen for Raspberry Pi
@@ -129,34 +129,33 @@ Detailed pin diagram here [https://blog.protoneer.co.nz/arduino-cnc-shield-v3-00
 
 **Critical Safety Note:** ALWAYS disconnect the power before connecting or disconnecting the stepper motors from the CNC shield. Failure to do so can hurt both you and the component.
 
-1. **Installing the CNC shield controller software.** The Arduino Uno board requires the [GRBL](https://github.com/gnea/grbl/) software to control the CNC shield. Execute the following script with root permissions from the Raspberry Pi to download and flash the GRBL:
+**Installing the CNC shield controller software.** The Arduino Uno board requires the [GRBL](https://github.com/gnea/grbl/) software to control the CNC shield. Execute the following script with root permissions from the Raspberry Pi to download and flash the GRBL:
     ```shell
     sudo /home/thief/solderless-microlab/scripts/flash-grbl-arduino.sh
     ``` 
     NOTE: you can access detailed how-to instructions [here](https://github.com/gnea/grbl/wiki/Compiling-Grbl) to compile and flash ```grbl``` to the arduino manually.
 
-1. **Watch the installation video** This external video shows the assembly of the CNC shield and stepper motor driver boards. [YouTube Video link](https://youtu.be/zUb8tiFCwmk?t=37)  
+**Watch the installation video** This external video shows the assembly of the CNC shield and stepper motor driver boards. [YouTube Video link](https://youtu.be/zUb8tiFCwmk?t=37)  
     NOTE: We use 3 motor driver modules (the X, Y and Z) while the video shows 4 being installed.
 
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/arduino.jpg" WIDTH="1000" />
 
-1. **Install the CNC shield.** Place CNC shield on the Arduino, push the CNC pins into the header sockets on the Arduino until it is fully connected.
+**Install the CNC shield.** Place CNC shield on the Arduino, push the CNC pins into the header sockets on the Arduino until it is fully connected.
 
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_shield.png" WIDTH="200" />
 
-1. **Add Heatsinks to Stepper Motor Driver Modules.** Each Stepper Motor Driver module comes with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
+**Add Heatsinks to Stepper Motor Driver Modules.** Each Stepper Motor Driver module comes with a small heatsink. Peel the adhesive and attach a heatsink to the square black chip on the top of each Stepper Motor Driver module.
 
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_motor_driver.jpeg" WIDTH="300" />
 <IMG ALT="Installing the touchscreen" SRC="./media/control-unit/cu_driver_heat.png" WIDTH="200" />
 
-1. **Add the Stepper Motor Driver Modules.** Orient and insert the stepper motors driver boards into the X, Y, and Z slots on the shield.
+**Add the Stepper Motor Driver Modules.** Orient and insert the stepper motors driver boards into the X, Y, and Z slots on the shield.
 
 <IMG ALT="Adding Stepper Motor Driver Boards" SRC="./media/control-unit/cu_arduino_assembled.png" WIDTH="300" />
 
-1. OPTIONAL: **Set Enable Pin to Ground.** Place a female-female jumper on the Enable and Ground pins to enable the board.
+OPTIONAL: **Set Enable Pin to Ground.** Place a female-female jumper on the Enable and Ground pins to enable the board.
 
-1. **Add Stepper Motor Cables.** The stepper motors cables have a female connector on one end and bare wire on the other. Connect a female connector to the X header, Y header, and Z header on the CNC shield.
-
+**Add Stepper Motor Cables.** The stepper motors cables have a female connector on one end and bare wire on the other. Connect a female connector to the X header, Y header, and Z header on the CNC shield.
 
 
 ## Assembling the 12V Circuit
