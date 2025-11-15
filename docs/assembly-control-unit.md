@@ -105,7 +105,7 @@ The Raspberry Pi runs the show using the MicroLab software and coordinating turn
 The Raspberry Pi runs its software from the SD card. In this section we will have you install the custom MicroLab disk image which has the Raspberry Pi operating system, the MicroLab software and the touchscreen drivers bundled together.
 
 1. **Install Raspberry Pi Imager.** [Follow the Raspberry Pi website instructions](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-using-imager) to install the Raspberry Pi Imager software onto a computer.
-1. **Build the disk image.** Check [this repo](https://github.com/FourThievesVinegar/microlab-image/) for scripts to download and build the MicroLab build image. It can take a few hours to complete, but you will get the latest. There are instructions in the BUILD.md file.
+1. **Build the disk image.** Check [this repo](https://github.com/FourThievesVinegar/microlab-image/) for scripts to download and build the MicroLab build image. It can take a few hours to complete, but you will get the latest. There are instructions in the BUILD.md file. You can also find the latest release of the disk image scripts in this repo in the `/scripts/disk-image` directory. We do not recommend running these scripts directly on the Raspberry Pi.
 1. **Connect the MicroSD card to your computer.**
 1. **Install the MicroLab disk image onto the SD card** [following the Raspberry Pi website instructions](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-using-imager).
    * Be sure to "Use Custom" for the OS and then select the MicroLab disk image.

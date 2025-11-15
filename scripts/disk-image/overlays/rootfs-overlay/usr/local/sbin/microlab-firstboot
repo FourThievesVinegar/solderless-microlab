@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+LOG=/var/log/microlab-firstboot.log
+FLAG=/var/lib/microlab/firstboot.flag
+LOCK=/run/lock/microlab-firstboot.lock
+
+# ----- logging & locking -----
+mkdir -p "$(dirname "$LOG")" /run/lock /var/lib/microlab
+exec > >(tee -a "$LOG") 2>&1
+exec 9>"$LOCK"
+flock -n 9 || { echo "Another firstboot instance is running; exiting."; exit 0; }
+
+echo "==> microlab-firstboot starting at $(date -Is)"
+
+# If the flag is missing, nothing to do (service has ConditionPathExists, but be extra safe)
+if [[ ! -f "$FLAG" ]]; then
+  echo "Flag $FLAG not found; nothing to do."
+  exit 0
+fi
+
+# ----- FIRST BOOT CONFIG BELOW -----
+
+
+# ----- mark done -----
+rm -f "$FLAG"
+echo "First-boot tasks complete; removed $FLAG. Exiting."
+exit 0

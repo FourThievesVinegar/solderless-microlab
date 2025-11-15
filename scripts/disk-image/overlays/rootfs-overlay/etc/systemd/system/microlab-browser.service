@@ -1,0 +1,43 @@
+[Unit]
+Description=Microlab Browser (X11 Kiosk on vt7)
+After=network-online.target systemd-logind.service
+Wants=network-online.target
+
+# OR conditions using the '|' prefix — if any exists, the unit may start
+ConditionPathExists=|/dev/fb0
+ConditionPathExists=|/sys/class/graphics/fb0
+ConditionPathExistsGlob=|/sys/class/backlight/*
+ConditionPathExistsGlob=|/sys/class/drm/*/status
+
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=thief
+WorkingDirectory=/home/thief
+
+# Let systemd create /run/microlab-browser with correct owner/mode
+RuntimeDirectory=microlab-browser
+RuntimeDirectoryMode=0700
+
+# Use that as the runtime dir for X/Chromium
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=%t/microlab-browser
+
+# Open a PAM session so logind grants seat/DRM/input access.
+# Attach to a VT we control (not the tty1 getty).
+StandardInput=tty
+TTYPath=/dev/tty7
+TTYReset=yes
+PAMName=login
+
+# Launch Xorg on :0 bound to vt7 and run startBrowser as *thief*
+# (no --no-sandbox needed because we're not root)
+ExecStart=/usr/bin/xinit /opt/solderless-microlab/scripts/startBrowser.sh -- :0 -nolisten tcp -s 0 -dpms -nocursor vt7
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

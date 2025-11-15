@@ -1,0 +1,12 @@
+[Unit]
+Description=Microlab Backend
+After=network.target
+
+[Service]
+ExecStart=/opt/solderless-microlab/scripts/startFlask.sh
+WorkingDirectory=/opt/solderless-microlab/
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target
