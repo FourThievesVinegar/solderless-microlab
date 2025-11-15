@@ -10,7 +10,7 @@ echo "==> Installing minimal X stack and Chromium..."
 apt-get update
 apt-get install -y --no-install-recommends \
   xserver-xorg xinit x11-xserver-utils \
-  chromium-browser \
+  chromium \
   xdotool \
   unclutter
 

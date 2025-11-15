@@ -37,7 +37,7 @@ echo "==> Installing Python 3 stack..."
 apt-get install -y python3 python3-pip
 
 echo "==> Installing Chromium browser..."
-apt-get install -y chromium-browser
+apt-get install -y chromium
 
 # Delegate XServer installation
 bash /tmp/install-x11-kiosk.sh
