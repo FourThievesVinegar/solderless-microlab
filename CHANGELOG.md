@@ -6,6 +6,17 @@
 
 ### Changed
 
+## [1.0.1]
+
+### Added
+
+- Build scripts for disk image merged into main repo
+- Custom GRBL included in main repo
+
+### Changed
+
+- Updated docs generally and to reflect included scripts
+
 ## [1.0.0]
 
 ### Added
