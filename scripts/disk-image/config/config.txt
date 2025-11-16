@@ -1,0 +1,2 @@
+# config.txt directly controls how the Pi firmware sets up clocks, pin muxes, device trees, memory allocation, and other low-level parameters.
+# Not for installing software, creating users, or running scripts

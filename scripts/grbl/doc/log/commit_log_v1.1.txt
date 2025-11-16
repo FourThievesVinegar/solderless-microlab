@@ -1,0 +1,1187 @@
+----------------
+Date: 2019-08-30
+Author: Sonny Jeon
+Subject: Fixed typo bug effecting dual-axis build with Y.
+
+
+----------------
+Date: 2019-08-25
+Author: Sonny Jeon
+Subject: Update grbl.h
+
+
+----------------
+Date: 2019-08-25
+Author: Sonny Jeon
+Subject: Update system.c
+
+
+----------------
+Date: 2019-07-30
+Author: Sonny Jeon
+Subject: Dual motor support for self-squaring gantry homing.
+
+- New dual motor support feature for gantry CNC machines. An axis motor is  efficiently mirrored to a dedicated set of step and direction pins (D12/D13 or A3/A4) with no detectable loss of performance. Primarily used to independently home both sides of a dual-motor gantry with a pair of limit switches (second shared with Z-axis limit pin). When the limit switches are setup correctly, Grbl will self-square the gantry (and stay square if $1=255 is programmed). Beware use at your own risk! Grbl is not responsible for any damage to any machines.
+
+- Dual axis motors is only supported on the X-axis or Y-axis. And deletes the spindle direction(D13) and optional coolant mist (A4) features to make room for the dual motor step and direction pins.
+
+- Dual axis homing will automatically abort homing if one limit switch triggers and travels more than 5% (default) of the non-dual axis max travel setting. For example, if the X-axis has dual motors and one X-axis triggers during homing, Grbl will abort 5% of the Y-axis max travel and the other X-axis limit fails to trigger. This will help keep any misconfigurations or failed limit switches from damaging the machine, but not completely eliminate this risk. Please take all precautions and test thouroughly before using this.
+
+- Dual axis motors supports two configurations:
+
+- Support for Arduino CNC shield clones. For these, step/dir on pins D12/D13, and spindle enable is moved to A3 (old coolant enable), while coolant enable is moved to A4 (SDA pin). Variable spindle/laser mode option is NOT supported for this shield.
+
+- Support for Protoneer CNC Shield v3.51. Step/dir on pins A3/A4, and  coolant enable is moved to D13 (old spindle direction pin). Variable spindle/laser mode option IS supported for this shield.
+
+- Added Bob's CNC E3 and E4 CNC machine defaults.
+
+
+----------------
+Date: 2018-11-12
+Author: Sonny Jeon
+Subject: Update grbl.h
+
+----------------
+Date: 2018-11-12
+Author: Sonny Jeon
+Subject: Update system.c
+
+Correct control pin state checking within pin change interrupt. Improper if-else statements could lead to missed signal.
+
+----------------
+Date: 2018-11-12
+Author: Sonny Jeon
+Subject: Update gcode.c
+
+If statement bug fix related to jog motion modal group error checking.
+
+----------------
+Date: 2018-06-14
+Author: Sonny Jeon
+Subject: Spindle/coolant rare bug fixes. Free more flash.
+
+[new] Altered the way default settings are stored and restored. Saved about 300 bytes(!) of flashed size. Should free up enough for certain configurations of CoreXY machines.
+
+[fix] When the optional M7 mist coolant IO was enabled, coolant overrides was not disabling correctly.
+
+[fix] Coolant override states was not restored correctly after a parking motion in certain situations. It would restore programmed state, rather than current overridden state.
+
+[fix] Now allow coolant overrides to operate during jogging motion.
+
+[fix] Invert control pin mask typo.
+
+[new] Added a new build info feedback mechanism for enabling the safety door input pin.
+
+
+----------------
+Date: 2018-06-09
+Author: Jon
+Subject: Fix apparent error in restore masking that causes the call to coolant_set_state to not re-enable the mist (M7) output if it was previously enabled. (#469)
+
+
+
+----------------
+Date: 2018-04-06
+Author: Sonny Jeon
+Subject: Updated instructions in fit_nonlinear_spindle.py
+
+- repl.it has changed since the last time fit_nonlinear_spindle.py was tested. Updated instructions.
+
+
+----------------
+Date: 2017-08-01
+Author: Sonny Jeon
+Subject: Improved fix for rare lowering feed/rapid override bug.
+
+[fix] In the previous hot fix, there was still (rarer) potential for
+very small floating point errors incorrectly handle an override
+deceleration and crash Grbl. Re-factored the if-then statement in terms
+of speed changes, rather than distance, to completely eliminate the
+issue.
+
+
+----------------
+Date: 2017-07-31
+Author: Sonny Jeon
+Subject: Hot fix for rare lowering feed override bug.
+
+[fix] Squashed a very rare bug when lowering the feedrate (or rapid) override. When in the very strict set of circumstances with acceleration settings, override step size, and current speed, an internal calculation would cause Grbl to crash. The fix was an overlooked equality statement that should have been a less than or equal, not a less than.
+
+
+----------------
+Date: 2017-07-17
+Author: Sonny Jeon
+Subject: Clean up and new streaming script check-mode feature.
+
+[new] The stream.py streaming script now has a check-mode option, where it will place Grbl in $C check mode automatically and then stream the g-code program. It's a very fast way to check if the g-code program has any errors.
+
+[fix] The debug variable was not initialized if the debug option was enabled in config.h
+
+[fix] Updated error_codes CSV file to the same format as the others.
+
+
+----------------
+Date: 2017-05-31
+Author: chamnit
+Subject: New nonlinear spindle speed PWM output model and solution. Updated scripts.
+
+[new] A nonlinear spindle speed/PWM output option via a piecewise
+linear fit model. Enabled through config.h and solved by a Python
+script in /doc/script
+
+[new] fit_nonlinear_spindle.py. A solver script that can be run on
+http://repl.it for free. No Python install necessary. All instructions
+are available in the script file comments.
+
+[new] stream.py has been updated to include status reports feedback at
+1 second interval.
+
+[fix] stream.py bug fix with verbose mode disabled.
+
+
+----------------
+Date: 2017-03-24
+Author: Sonny Jeon
+Subject: Added an error code for laser mode when VARIABLE_SPINDLE is disabled.
+
+- When trying to enable laser mode with $32=1 and VARIABLE_SPINDLE is
+disabled, the error code shown was improperly stating it was a homing
+failure. Added an new error code specifically for the laser mode being
+disabled without VARIABLE_SPINDLE.
+
+
+----------------
+Date: 2017-03-19
+Author: Sonny Jeon
+Subject: Housekeeping.
+
+- Moved Grbl logo files to a separate repo.
+
+- Added PocketNC FR4 defaults. Needs some additional work though to be
+compatible.
+
+- Updated README image links.
+
+
+----------------
+Date: 2017-03-19
+Author: Sonny Jeon
+Subject: Update README.md
+
+----------------
+Date: 2017-03-02
+Author: Sonny Jeon
+Subject: Fixed $G report issue with M7 and M8 both enabled.
+
+[fix] When M7 and M8 are both enabled, $G report would show `M78`,
+rather than `M7 M8`. This only effects systems that enable M7 mist
+coolant in config.h. Not the default build.
+
+
+----------------
+Date: 2017-02-27
+Author: Sonny Jeon
+Subject: Fixed shared build info code.
+
+- The build info options of “two switches on an axis” and “homing init
+lock” shared the same letter ‘L’. The former is now ’T’.
+
+
+----------------
+Date: 2017-02-23
+Author: Sonny Jeon
+Subject: Restrict coincident target updates to M3 constant laser only.
+
+- Restrict M3 forced updates when there is a motion block with a
+coincident target. Force syncing of the spindle state can lead to some
+pauses during a job that has coincident targets. That’s not
+particularly desirable. This ensures M4 dynamic mode is not effected by
+this force-sync.
+
+
+----------------
+Date: 2017-02-23
+Author: Sonny Jeon
+Subject: Fixed issue with M3 laser state changes and coincident targets.
+
+[fix] When in M3 constant laser power mode, a change from G0 to G1
+would not set the laser on, if G1 was passed with a coincident target.
+Motion controller now checks for a coincident target situation and will
+force a spindle sync when detected.
+
+
+----------------
+Date: 2017-01-31
+Author: Sonny Jeon
+Subject: Additional build info in the $I printout.
+
+- [new] Added total available planner buffer blocks (15 shown, but
+there are 16. one is used by the ring buffer and to execute system
+motions) and serial RX buffer bytes. This information is useful for
+GUIs to setup and optimize their streaming protocols easily.
+
+[doc] Updated the interface document to reflect the change.
+
+
+----------------
+Date: 2017-01-29
+Author: Sonny Jeon
+Subject: Tidying up parking override control implementation
+
+[new] Added a default configuration for the parking override control
+upon a reset or power-up. By default, parking is enabled, but this may
+be disabled via a config.h option.
+
+[fix] Parking override control should be checking if the command word
+is passed, rather than the value.
+
+
+----------------
+Date: 2017-01-28
+Author: chamnit
+Subject: v1.1f. Parking override control. Spindle enable pin option.
+
+[ver] v1.1f update due to tweaks to interface from new parking override
+control.
+
+[new] Parking motion override control via new `M56 P0` and `M56 P1`
+command, which disables and enables the parking motion, respectively.
+Requires ENABLE_PARKING_OVERRIDE_CONTROL and PARKING_ENABLE enabled in
+config.h. Primarily for OEMs.
+
+[new] `M56` appears in the $G report when enabled.
+
+[new] Five new build info identification letters. Some were missing and
+a couple are new. Updated the CSV and documentation to reflect these
+new items.
+
+[new] Spindle enable pin configuration option to alter its behavior
+based on how certain lasers work. By default, Grbl treats the enable
+pin separately and leaves it on when S is 0. The new option turns the
+enable pin on and off with S>0 and S=0. This only is in effect when a
+user enables the USE_SPINDLE_DIR_AS_ENABLE_PIN option.
+
+[fix] M4 is now allowed to work when USE_SPINDLE_DIR_AS_ENABLE_PIN is
+enabled. Previously this was blocked and was problematic for laser
+folks using M4.
+
+[fix] Properly declared system variables as extern. Not sure how that
+went unnoticed or why it worked up until now but it has.
+
+[fix] EXTREMELY RARE. When AMASS is intentionally disabled and sent a
+motion command that is _one step_ in length, Grbl would not actuate the
+step due to numerical round-off. Applied a fix to prevent the round-off
+issue.
+
+[fix] Added a compile-time check for AMASS settings to make sure that
+the numerical round-off issue doesn’t effect it. This would only happen
+if someone set AMASS max levels to zero. It does not effect AMASS with
+its current defaults.
+
+[fix] Wrapped the mc_parking_motion() function in an ifdef for porting
+purposes.
+
+[fix] Fixed an issue when in inverse time mode and G0’s would require a
+F word. This was not correct.
+
+[fix] Added a note in the defaults.h file that MAX_TRAVEL values must
+be positive. Some users were setting this negative and it was causing
+issues.
+
+
+----------------
+Date: 2017-01-14
+Author: Sonny Jeon
+Subject: Tool number bug fix. Updated documentation.
+
+- [fix] Tool numbers were not being tracked and reported correctly. Now
+shows tool number values in $G when programmed.
+
+- [fix] Added a max tool number value check to the g-code parser.
+
+- [doc] Added a new error code for invalid tool number. Updated CSV and
+interface documents.
+
+- [doc] Added a implementation note for buffer state in status reports.
+Don’t rely on this data for streaming.
+
+
+----------------
+Date: 2017-01-03
+Author: Sonny Jeon
+Subject: Spindle enable pin with variable spindle option fix.
+
+- [fix] When USE_SPINDLE_DIR_AS_ENABLE_PIN is enabled in config.h, the
+enable pin was not being set when spindle speed is zero. This behavior
+should now be fixed.
+
+
+----------------
+Date: 2016-12-19
+Author: Sonny Jeon
+Subject: Fixed homing fail alarm handling. Re-integrated software debouncing.
+
+- [bug] Fixed a homing fail issue, where the alarm was not being set
+right, not cleared correctly. It would report the wrong code and enter
+an infinite alarm loop. This was due to how alarm codes were altered a
+while back. Now updated and fixed to show the right codes.
+
+- [feature] Re-installed optional software debouncing for hard limit
+switches. By request.
+
+
+----------------
+Date: 2016-12-18
+Author: Sonny Jeon
+Subject: Addressed optional PWM min value issue. Updated docs.
+
+- [fix] Spindle PWM minimum value had some typos. Fixed the macros to
+compile correctly. Only effects users that enable SPINDLE_MINIMUM_PWM.
+The name changed to SPINDLE_PWM_MIN_VALUE for consistency sake.
+
+- Updated the laser documentation.
+
+
+----------------
+Date: 2016-12-12
+Author: Sonny Jeon
+Subject: Updating steam.py streaming script
+
+- Added push message capability to the stream.py streaming script. It
+prints out as a `Debug:` string in the output.
+
+
+----------------
+Date: 2016-12-11
+Author: Sonny Jeon
+Subject: Updated documentation.
+
+
+----------------
+Date: 2016-12-10
+Author: Sonny Jeon
+Subject: Updated documentation. Cleaned up a bit.
+
+- [doc] Updated the markdown documents for the v1.1 release.
+
+- [doc] Removed references to classic GUI mode.
+
+
+----------------
+Date: 2016-12-09
+Author: Sonny Jeon
+Subject: Update README.md
+
+----------------
+Date: 2016-12-09
+Author: Sonny Jeon
+Subject: Update README.md
+
+----------------
+Date: 2016-12-09
+Author: Sonny Jeon
+Subject: Update README.md
+
+----------------
+Date: 2016-12-08
+Author: Sonny Jeon
+Subject: Removed classic GUI interface. Fixed typo with line number support.
+
+- [config] Permanently removed classic GUI interface support. This
+unintentionally created a problem where some users/GUI devs used this
+compatibility mode and did not update to the new interface. So, there
+were two interfaces in use, rather than just one like it was intended.
+This removal should help everyone by forcing all GUIs to update and
+updated GUI not having to support yet another interface.
+
+- Fixed typo with line number support in jog mode.
+
+
+----------------
+Date: 2016-12-04
+Author: chamnit
+Subject: Fixed unintended laser mode pausing. Updated documentation. Min SS OVR lowered to 10%.
+
+- [laser] Tested a working version and pushed the wrong one for the
+last! 20161203 was pausing upon every spindle speed change. That’s not
+right. Fixed so nearly all motions are passed through and does not stop.
+
+- Minimum spindle speed override lower from 50% to 10%. Lasers could
+use the lower speeds.
+
+- Fixed a very minor bug related to G80 error checking. Allowed no
+error with non-modal motions with axis words. Not correct and fixed.
+
+- Fixed a compile error when disabling VARIABLE_SPINDLE
+
+- [doc] Updated some obsolete documentation.
+
+- [doc] Started a “Laser Mode” document that summarizes how Grbl’s new
+laser mode works.
+
+
+----------------
+Date: 2016-12-03
+Author: Sonny Jeon
+Subject: v1.1e: New laser features. G-code parser refactoring. CoreXY homing fix.
+
+- Increment to v1.1e due to new laser features.
+
+- After several discussions with some prominent laser people, a few
+tweaks to the new laser mode has been installed.
+
+- LASER: M3 behaves in a constant power mode.
+
+- LASER: M4 behaves in a dynamic power mode, where the laser power is
+automatically adjusted based on how fast Grbl is moving relative to the
+programmed feed rate. This is the same as the  CONSTANT_POWER_PER_RATE
+config.h option in the last version. NOTE: When not in motion in M4,
+Grbl automatically turns off the laser. Again, it only operates while
+moving!
+
+- LASER: Only G1, G2, and G3 motion modes will turn on the laser. So,
+this means that G0, G80 motion modes will always keep the laser
+disabled. No matter if M3/M4 are active!
+
+- LASER: A spindle stop override is automatically invoked when a laser
+is put in a feed hold. This behavior may be disabled by a config.h
+option.
+
+- Lots of little tweaks to the g-code parser to help streamline it a
+bit. It should no effect how it operates. Generally just added a parser
+flag to track and execute certain scenarios a little more clearly.
+
+- Jog motions now allow line numbers to be passed to it and will be
+displayed in the status reports.
+
+- Fixed a CoreXY homing bug.
+
+- Fixed an issue when $13 is changed, WCO isn’t sent immediately.
+
+- Altered how spindle PWM is set in the stepper ISR. Updated on a step
+segment basis now. May need to change this back if there are any
+oddities from doing this.
+
+- Updated some documentation. Clarified why M0 no longer showing up in
+$G and why a `1.` floating point values are shown with no decimals,
+like so `1`.
+
+
+----------------
+Date: 2016-11-12
+Author: Sonny Jeon
+Subject: PWM calculation correction.
+
+- The PWM calculation was a little bit off and has been corrected.
+
+- Edited the unused settings strings to be smaller and just show what
+the settings are, rather than include units. May include this in the
+master build, if it fits.
+
+- The minimum spindle PWM define in config.h needed to be update for
+cpu map compatibilty.
+
+
+----------------
+Date: 2016-11-04
+Author: Sonny Jeon
+Subject: Fixed a g-code parser issue caused by last commit.
+
+- G-code parser refactoring in the last commit wasn’t tested. Found and
+fixed issues with G28.1/30.1 and G38.x probe commands. They were not
+being accepted due to a borked mantissa check.
+
+
+----------------
+Date: 2016-11-04
+Author: Sonny Jeon
+Subject: Improved constant laser power per rate mode. Re-factored for flash size. Minor bug fixes.
+
+- NOTE: This commit has largely been untested.
+
+- Constant laser power per rate mode has been improved. Altered its
+implementation to be more responsive and accurate.
+
+- Based on LaserWeb dev feedback, only G1, G2, and G3 moves operate
+with constant laser power mode. Meaning that G0, G38.x, and $J jogging
+motions operate without it and will keep a constant power output. This
+was specifically requested as a way to focus the laser by keeping the
+laser on when not moving. Operationally, this shouldn’t alter how the
+laser mode operates.
+
+- Re-factored parts of the g-code parser and g-code state reports to
+save a few hundred bytes of flash. What was done makes the code a bit
+more unreadable (bad), but the flash space was in dire need. So, I’m
+willing to live with it for now.
+
+- Fixed a problem with $G g-code state reports. Showed `M0` program
+pause during a run state. Now fixed to show nothing during a run state.
+Also, `M30` program end was shown as `M2`. This was also corrected.
+
+- Improved spindle stop override responsiveness by removing the
+enforced spindle restoring delay. It’s not needed for a feature that is
+user controlled.
+
+- Fixed a bug with G2/3 arcs in inverse time mode.
+
+- Updated the interface.md document to make it more clear how WPos: or
+MPos: can be calculated from WCO:. Some GUI devs have failed to catch
+this in the documentation.
+
+
+----------------
+Date: 2016-10-27
+Author: Sonny Jeon
+Subject: Spindle speed overrides behavior tweak. New experimental laser dynamic power mode.
+
+- Spindle speed overrides now update immediately if they are changed
+while in a HOLD state. Previously, they would update after exiting the
+HOLD, which isn’t correct.
+
+- New experimental dynamic laser power mode that adjusts laser power
+based on current machine speed. Enabled by uncommenting
+LASER_CONSTANT_POWER_PER_RATE in config.h
+
+  - It assumes the programmed rate is the intended power/rate for the
+motion.
+  - Feed rate overrides (FRO) do not effect the power/rate. Meaning
+that spindle PWM will automatically lower with lower FRO and increase
+with higher FRO to keep it the same.
+  - Spindle speed overrides (SSO) will directly increase and decrease
+the power/rate. So 150% SSO will increase the PWM output by 150% for
+the same speed.
+  - The combination of FRO and SSO behaviors should allow for subtle
+and highly flexible tuning of how the laser cutter is operating in
+real-time and during the job.
+
+- Re-factored planner block rapid rate handling for the dynamic laser
+power feature. Should have had no effect on how Grbl operates.
+
+
+----------------
+Date: 2016-10-26
+Author: Sonny Jeon
+Subject: Add high-frequency spindle output option. Minor parking motion re-factoring.
+
+- Some laser controllers were reported to need a very high PWM
+frequency. Added a line to enable this in cpu_map.h, if needed.
+
+- Cleaned up some of the parking code. Mostly just editing the comments.
+
+- Moved the accessory state resetting after the initial parking
+retract. Should ensure the accessory state is properly handled upon an
+aborted parking restore. Not certain if this was a problem before
+though. Just to be sure.
+
+
+----------------
+Date: 2016-10-25
+Author: chamnit
+Subject: Mandate all probe cycles ignore feed overrides.
+
+- For repeatability reasons, all G38.x probe cycles ignore feed rate
+overrides and move at their programmed speed.
+
+- The mandate can be removed with a new config.h option.
+
+- Updated the documentation to reflect the change.
+
+
+----------------
+Date: 2016-10-25
+Author: chamnit
+Subject: Resolved parking accessory handling issue.
+
+- Yikes. Totally borked the last parking “fix”. Testing shows that all
+accessories are now properly handled when retracting and restoring. It
+was caused by not accounting for the planner re-factoring correctly in
+the parking code.
+
+
+----------------
+Date: 2016-10-24
+Author: Sonny Jeon
+Subject: Minor re-factoring. Fix an issue with parking and spindle restore.
+
+- Altered the report counters to be count down, rather than count up.
+Simplified some of the logic.
+
+- Fixed an issue with parking restore. The spindle state would disable
+then reenable.
+
+- Clarified some of the config.h descriptions.
+
+- Moved the compile-time checks from config.h to grbl.h. They don’t
+belong in the config.h file.
+
+- Refactored the initialization of the system variables in main.c.
+System position and probe position were undefined when power cycled,
+but were zero anyway. Added clear vector code to make it explicit.
+
+
+----------------
+Date: 2016-10-23
+Author: Sonny Jeon
+Subject: Spindle speed close to minimum fix.
+
+- When spindle speed is close to the minimum rpm, the PWM value would
+be zero or lower than allowed. The computation error was caused by
+setting the minimum PWM value to zero, when it should have been 1.
+
+- Added a compiler check for minimum PWM to be greater than zero.
+
+- Moved some of the spindle PWM macros to a more appropriate place in
+the cpu_map.h.
+
+
+----------------
+Date: 2016-10-22
+Author: Will Winder
+Subject: Minor VARIABLE_SPINDLE feature toggle refactoring (#16)
+
+* Modify code CSV format.
+
+- Wrap value in quotes to avoid issue with embedded commas. This occurs
+  in one of the alarm codes.
+
+- Change header row format to allow same parsing code as data rows.
+
+* VARIABLE_SPINDLE feature flag experiment.
+
+- Use a macro for 'spindle_set_speed' and 'spindle_sync' to reduce the
+  number of required VARIABLE_SPINDLE checks.
+
+
+----------------
+Date: 2016-10-18
+Author: Sonny Jeon
+Subject: Improved option for v0.9 GUI compatibility.
+
+- Addressed an issue with backward compatibility with Grbl v0.9-style
+GUIs.
+
+- It still may not work due to new data and states coming back from
+Grbl v1.1. Regardless, DO NOT TRY TO USE THE COMPATIBILITY MODE UNTIL
+THERE IS A REALLY GOOD REASON TO.
+
+- v0.9 GUI compatibility mode will be removed in future versions.
+You’ve been warned. It’s highly recommended for GUIs to update to the
+new v1.1 interface.
+
+- Compability mode will only fit on an Arduino Uno due to size
+increases.
+
+- Removed the REPORT_GUI_MODE compile option since it’s part of the
+v1.1 interface standard.
+
+- Updated the documentation to better describe the compatibility mode
+build option.
+
+
+----------------
+Date: 2016-10-17
+Author: Sonny Jeon
+Subject: v1.1d: Tweaked interface a bit. Added realtime spindle speed and build option data. Minor bug fixes.
+
+- Increment to v1.1d due to interface tweaks.
+
+- Based on GUI dev feedback, the toggle overrides report was removed
+and replace with showing “accessory state”. This shows a character if a
+particular accessory is enabled, like the spindle or flood coolant.
+These can be directly altered by the toggle overrides, so when they
+execute, a GUI will be able to observe the state altering as feedback.
+
+- Altered the real-time feed rate to show real-time spindle speed as
+well. It was an over-sight on my part. It’s needed because it’s hard to
+know what the current spindle speed is when overrides are altering it.
+Especially during something like a laser cutting job when its important
+to know how spindle speed overrides are effecting things.
+
+- Real-time spindle speed is not shown if VARIABLE_SPINDLE is disabled.
+The old real-time feed rate data field will show instead.
+
+- Compile-time option data is now included in another message
+immediately following the build info version string, starting with
+`[OPT:`. A character code follows the data type name with each
+indicating a particular option enabled or disabled. This will help
+immensely with debugging Grbl as well as help GUIs know exactly how
+Grbl was compiled.
+
+- These interface changes are detailed in the updated documentation.
+
+- Reduced the default planner buffer size from 17 to 16. Needed to free
+up some memory…
+
+- For increasing the serial TX buffer size from 90 to 104 bytes. The
+addition of real-time spindle speeds and accessory enable data required
+a bigger buffer. This is to ensure Grbl is performing at optimal levels.
+
+- Refactored parts of the spindle and coolant control code to make it
+more consistent to each other and how it was called. It was a little
+messy. The changes made it easier to track what each function call was
+doing based on what was calling it.
+
+- Created a couple of new get_state functions for the spindle and
+coolant. These are called by the accessory state report to look
+directly at the pin state, rather than track how it was set. This
+guarantees that the state is reported correctly.
+
+- Updated the g-code parser, parking motion, sleep mode, and spindle
+stop calls to refactored spindle and coolant code.
+
+- Added a compile-time option to enable homing individual axes, rather
+than having only the main homing cycle. The actual use case for this is
+pretty rare. It’s not recommended you enable this, unless you have a
+specific application for it. Otherwise, just alter the homing cycle
+itself.
+
+- Refactored the printFloat() function to not show a decimal point if
+there are no trailing values after it. For example, `1.` now shows `1`.
+
+- Fixed an issue regarding spindle speed overrides no being applied to
+blocks without motions.
+
+- Removed the toggle_ovr_mask system variable and replaced with
+spindle_stop_ovr system variable. Coolant toggles don’t need to be
+tracked.
+
+- Updated README
+
+
+----------------
+Date: 2016-10-17
+Author: Will Winder
+Subject: Modify code CSV format. (#10)
+
+- Wrap value in quotes to avoid issue with embedded commas. This occurs
+  in one of the alarm codes.
+
+- Change header row format to allow same parsing code as data rows.
+
+----------------
+Date: 2016-10-12
+Author: chamnit
+Subject: Merge branch 'dev' into edge
+
+
+----------------
+Date: 2016-10-12
+Author: chamnit
+Subject: Added settings documentation. Very minor bug fix to step direction handling.
+
+- Added v1.1 settings documentation to the markdown folder.
+
+- Fixed a very minor bug in the step direction handling upon wakeup.
+The direction mask would temporarily go back to default mask for about
+a millisecond when moving in the same non-default direction. It did not
+effect Grbl behavior before, but fixed for consistency.
+
+
+----------------
+Date: 2016-10-12
+Author: Sonny Jeon
+Subject: Spindle speed bug fix.
+
+- Spindle speed updating wasn’t working in the g-code parser due to
+some borked up logic on my part. Fixed it and should be operating as
+intended for both normal and laser spindle modes.
+
+- Elaborated a little more on the new sleep mode in the documentation.
+
+
+----------------
+Date: 2016-10-11
+Author: Sonny Jeon
+Subject: v1.1c: New sleep mode. Laser mode and other bug fixes.
+
+- New $SLP sleep mode that will disable spindle, coolant, and stepper
+enable pins. Allows users to disable their steppers without having to
+alter their settings. A reset is required to exit and re-initializes in
+alarm state.
+
+- Laser mode wasn’t updating the spindle PWM correctly (effected
+spindle speed overrides) and not checking for modal states either.
+Fixed both issues.
+
+- While in laser mode, parking motions are ignored, since the power off
+delay with the retract motion would burn the material. It will just
+turn off and not move. A restore immediately powers up and resumes. No
+delays.
+
+- Changing rpm max and min settings did not update the spindle PWM
+calculations. Now fixed.
+
+- Increased default planner buffer from 16 to 17 block. It seems to be
+stable, but need to monitor this carefully.
+
+- Removed software debounce routine for limit pins. Obsolete.
+
+- Fixed a couple parking motion bugs. One related to restoring
+incorrectly and the other the parking rate wasn’t compatible with the
+planner structs.
+
+- Fixed a bug caused by refactoring the critical alarms in a recent
+push. Soft limits weren’t invoking a critical alarm.
+
+- Updated the documentation with the new sleep feature and added some
+more details to the change summary.
+
+
+----------------
+Date: 2016-09-28
+Author: Sonny Jeon
+Subject: New jog cancel real-time command. Parser typo fix from last push.
+
+- Added a new jog cancel real-time command. Rather than depending on a
+feed hold to cancel a jogging motion, this realtime command can be used
+instead. The main advantage is if a feed hold is used, you can
+accidentally hold the machine right when Grbl returns to IDLE after
+completing a jog. And the GUI doesn’t have to worry about tracking this
+either.
+
+- Fixed a typo in the g-code parser edits from the last push. Was
+causing the G10 set coordinate system command to not work correctly.
+
+- Updated the documentation with the jog cancel command.
+
+
+----------------
+Date: 2016-09-27
+Author: Sonny Jeon
+Subject: Refactored g-code parser. Saved 60bytes flash and some ram. Edited Readme.
+
+- Freed up another 60 bytes of flash and 12-24 bytes of stack RAM by
+using the pre-allocated IJK arc offset vector that is guaranteed to be
+not in use. Only G10 and G28/30 require fetching from EEPROM and
+retaining extra data. Both commands use axis words, which rules out
+G2/3 arcs using IJK offsets existing in same block. Not ideal, but
+every byte helps.
+
+- Edited README.
+
+
+----------------
+Date: 2016-09-27
+Author: Sonny Jeon
+Subject: Update README and clarifications in jogging document.
+
+
+----------------
+Date: 2016-09-26
+Author: Sonny Jeon
+Subject: v1.1b: Tweaked Bf reports, jogging doc, saved another 160 bytes, minor bug fixes
+
+- Increment to v1.1b due to status report tweak.
+
+- Tweaked the buffer state status reports to show bytes and blocks
+available, rather than in use. This does not require knowing the buffer
+sizes beforehand. It’s implicit.
+
+- Also, since buffer states are not used by most devs (after
+inquiries), it is no longer enabled by default and a status mask option
+was added for this.
+
+- Fixed some typos and updated for the report tweak in the
+documentation.
+
+- Wrote a joystick implementation concept in the jogging markdown
+document. Outlines how to get a low-latency feel to a joystick (and
+other input devices).
+
+- Removed XON/XOFF support. It’s not used by anyone because of its
+inherent problems. Remains in older versions for reference.
+
+- Added a compile option on how to handle the probe position during a
+check mode.
+
+- Fixed a jogging bug. If G93 is the modal state before a jogging
+motion, the feed rate did not get calculated correctly. Fixed the issue.
+
+- Refactored some code to save another 160+ bytes. Included an improved
+float vector comparison macro and reducing a few large and repetitive
+function calls.
+
+- Fixed a probing bug (existing in v0.9 too) where the target positions
+were not set correct and error handling was improper.
+
+
+----------------
+Date: 2016-09-25
+Author: Sonny Jeon
+Subject: Addressed much larger flash size with avr-gcc v4.9.2. Refactored reports to save 160KB.
+
+- The newest Arduino IDE 1.6.12 has recently updated to avr-gcc v4.9.2.
+Unfortunately, it produces a compiled size almost 0.7KB to 1KB larger
+than prior versions! This can easily cause the base build to exceed the
+Arduino Duemilanove/Nano flash limit of 30.5KB. The Arduino Uno seems
+to be ok still with its 31.5KB flash limit.
+
+- Makefile `-flto` compile flag added to cut down on the horrible flash
+size when using the new avr-gcc. (Edit Makefile and remove comment on
+COMPILE definition). This brings it in-line with what the IDE produces.
+
+- Functionalized repetitive tasks in report.c to try to reduce overall
+flash size. Successfully cut down about 160bytes.
+
+- Removed printFloat_SettingValue() and printFloat_RPMValue()
+functions. These aren’t required and can be replaced with a direct call
+to printFloat() because they don’t require a unit conversion check.
+
+
+----------------
+Date: 2016-09-24
+Author: Sonny Jeon
+Subject: Serial RX count bug fix. Settings codes CSV. More documentation.
+
+- Reverted back the serial RX count function to how it was. The
+variable type was unsigned and cause an integer underflow whenever the
+calculation produced a negative number. The old way was the correct way.
+
+- Lots of minor edits to the code CSVs and markdown documents.
+
+- Expanded on explaining feedback messages and startup line execution
+feedback.
+
+- Created a new settings codes CSV to help GUIs import the values and
+meanings.
+
+
+----------------
+Date: 2016-09-22
+Author: Sonny Jeon
+Subject: Increment to v1.1a, minor compile bug fix, tweaked communication protocol, more docs.
+
+- Incremented to v1.1a, rather than keep 1.0e. This is because there
+are existing v1.0 installations. Don’t want to confuse people further.
+
+- Certain version of the Arduino IDE did not like the `inline` in the
+function header. Removed from spindle_control files to fix the problem.
+
+- Tweaked the communication protocol slightly. Added message type
+indicators for all `[]`bracketed feedback messages. It’s been
+problematic for GUI dev to try to determine the context of a message
+and how it should be handled. These indictors should help tremendously
+to remove context all together.
+
+- Also altered how `$N` startup lines are presented when executed. They
+now start with an open chevron ‘>’ followed by the line and an ‘:ok’ to
+indicate it executed. The ‘ok’ is on the same line intentionally so it
+doesn’t mess up a streaming protocol counter.
+
+- Managed to save a 100+KB from refactoring parts of report.c. (Thanks
+Vasilis!) Freed up room to alter the protocol a little.
+
+- Wrote a markdown document on interface messaging to make it clear how
+it’s intended to work. See interface.md in /doc/markdown
+
+- Started to pull in some Wiki pages from the old grbl site and
+beginning to update them for v1.1.
+
+- Created new commit log for v1.1.
+
+
+----------------
+Date: 2016-09-22
+Author: Sonny Jeon
+Subject: Merge pull request #1 from winder/dev
+
+Add locale to code CSVs.
+
+----------------
+Date: 2016-09-22
+Author: winder
+Subject: Add locale to code CSVs.
+
+
+----------------
+Date: 2016-09-21
+Author: chamnit
+Subject: Grbl v1.0e huge beta release. Overrides and new reporting.
+
+- Feature: Realtime feed, rapid, and spindle speed overrides. These
+alter the running machine state within tens of milliseconds!
+    - Feed override: 100%, +/-10%, +/-1% commands with values 1-200% of
+programmed feed
+    - Rapid override: 100%, 50%, 25% rapid rate commands
+    - Spindle speed override: 100%, +/-10%, +/-1% commands with values
+50-200% of programmed speed
+    - Override values have configurable limits and increments in
+config.h.
+- Feature: Realtime toggle overrides for spindle stop, flood coolant,
+and optionally mist coolant
+    - Spindle stop: Enables and disables spindle during a feed hold.
+Automatically restores last spindles state.
+    - Flood and mist coolant: Immediately toggles coolant state until
+next toggle or g-code coolant command.
+- Feature: Jogging mode! Incremental and absolute modes supported.
+    - Grbl accepts jogging-specific commands like $J=X100F50. An axis
+word and feed rate are required. G20/21 and G90/G91 commands are
+accepted.
+    - Jog motions can be canceled at any time by a feed hold `!`
+command. The buffer is automatically flushed. (No resetting required).
+    - Jog motions do not alter the g-code parser state so GUIs don’t
+have to track what they changed and correct it.
+- Feature: Laser mode setting. Allows Grbl to execute continuous
+motions with spindle speed and state changes.
+- Feature: Significantly improved status reports. Overhauled to cram in
+more meaningful data and still make it smaller on average.
+    - All available data is now sent by default, but does not appear if
+it doesn’t change or is not active.
+    - Machine position(MPos) or work position(WPos) is reported but not
+both at the same time. Instead, the work coordinate offsets (WCO)are
+sent intermittently whenever it changes or refreshes after 10-30 status
+reports. Position vectors are easily computed by WPos  = MPos - WCO.
+    - All data has changed in some way. Details of changes are in the
+markdown documents and wiki.
+- Feature: 16 new realtime commands to control overrides. All in
+extended-ASCII character space.
+    - While they are not easily typeable and requires a GUI, they can’t
+be accidentally triggered by some latent character in the g-code
+program and have tons of room for expansion.
+- Feature: New substates for HOLD and SAFETY DOOR. A `:x` is appended
+to the state, where `x` is an integer and indicates a substate.
+    - For example, each integer of a door state describes in what phase
+the machine is in during parking. Substates are detailed in the
+documentation.
+- Feature: With the alarm codes, homing and probe alarms have been
+expanded with more codes to provide more exact feedback on what caused
+the alarm.
+- Feature: New hard limit check upon power-up or reset. If detected, a
+feedback message to check the limit switches sent immediately after the
+welcome message.
+    - May be disabled in config.h.
+
+- OEM feature: Enable/disable `$RST=` individual commands based on
+desired behavior in config.h.
+- OEM feature: Configurable EEPROM wipe to prevent certain data from
+being deleted during firmware upgrade to a new settings version or
+`RST=*` command.
+- OEM feature: Enable/disable the `$I=` build info write string with
+external EEPROM write example sketch.
+    - This prevents a user from altering the build info string in
+EEPROM. This requires the vendor to write the string to EEPROM via
+external means. An Arduino example sketch is provided to accomplish
+this. This would be useful for contain product data that is
+retrievable.
+
+- Tweak: All feedback has been drastically trimmed to free up flash
+space for the v1.0 release.
+    - The `$` help message is just one string, listing available
+commands.
+    - The `$$` settings printout no longer includes descriptions. Only
+the setting values. (Sorry it’s this or remove overrides!)
+    - Grbl `error:` and `ALARM:` responses now only contain codes. No
+descriptions. All codes are explained in documentation.
+    - Grbl’s old feedback style may be restored via a config.h, but
+keep in mind that it will likely not fit into the Arduino’s flash space.
+- Tweak: Grbl now forces a buffer sync or stop motion whenever a g-code
+command needs to update and write a value to EEPROM or changes the work
+coordinate offset.
+    - This addresses two old issues in all prior Grbl versions. First,
+an EEPROM write requires interrupts to be disabled, including stepper
+and serial comm. Steps can be lost and data can be corrupted. Second,
+the work position may not be correlated to the actual machine position,
+since machine position is derived from the actual current execution
+state, while work position is based on the g-code parser offset state.
+They are usually not in sync and the parser state is several motions
+behind. This forced sync ensures work and machine positions are always
+correct.
+    - This behavior can be disabled through a config.h option, but it’s
+not recommended to do so.
+- Tweak: To make status reports standardized, users can no longer
+change what is reported via status report mask, except for only
+toggling machine or work positions.
+    - All other data fields are included in the report and can only be
+disabled through the config.h file. It’s not recommended to alter this,
+because GUIs will be expecting this data to be present and may not be
+compatible.
+- Tweak: Homing cycle and parking motion no longer report a negative
+line number in a status report. These will now not report a line number
+at all.
+- Tweak: New `[Restoring spindle]` message when restoring from a
+spindle stop override. Provides feedback what Grbl is doing while the
+spindle is powering up and a 4.0 second delay is enforced.
+- Tweak: Override values are reset to 100% upon M2/30. This behavior
+can be disabled in config.h
+- Tweak: The planner buffer size has been reduced from 18 to 16 to free
+up RAM for tracking and controlling overrides.
+- Tweak: TX buffer size has been increased from 64 to 90 bytes to
+improve status reporting and overall performance.
+- Tweak: Removed the MOTION CANCEL state. It was redundant and didn’t
+affect Grbl’s overall operation by doing so.
+- Tweak: Grbl’s serial buffer increased by +1 internally, such that 128
+bytes means 128, not 127 due to the ring buffer implementation. Long
+overdue.
+- Tweak: Altered sys.alarm variable to be set by alarm codes, rather
+than bit flags. Simplified how it worked overall.
+- Tweak: Planner buffer and serial RX buffer usage has been combined in
+the status reports.
+- Tweak: Pin state reporting has been refactored to report only the
+pins “triggered” and nothing when not “triggered”.
+- Tweak: Current machine rate or speed is now included in every report.
+- Tweak: The work coordinate offset (WCO) and override states only need
+to be refreshed intermittently or reported when they change. The
+refresh rates may be altered for each in the config.h file with
+different idle and busy rates to lessen Grbl’s load during a job.
+- Tweak: For temporary compatibility to existing GUIs until they are
+updated, an option to revert back to the old style status reports is
+available in config.h, but not recommended for long term use.
+- Tweak: Removed old limit pin state reporting option from config.h in
+lieu of new status report that includes them.
+- Tweak: Updated the defaults.h file to include laser mode, altered
+status report mask, and fix an issue with a missing invert probe pin
+default.
+
+- Refactor: Changed how planner line data is generated and passed to
+the planner and onto the step generator. By making it a struct
+variable, this saved significant flash space.
+- Refactor: Major re-factoring of the planner to incorporate override
+values and allow for re-calculations fast enough to immediately take
+effect during operation. No small feat.
+- Refactor: Re-factored the step segment generator for re-computing new
+override states.
+- Refactor: Re-factored spindle_control.c to accommodate the spindle
+speed overrides and laser mode.
+- Refactor: Re-factored parts of the codebase for a new jogging mode.
+Still under development though and slated to be part of the official
+v1.0 release. Hang tight.
+- Refactor: Created functions for computing a unit vector and value
+limiting based on axis maximums to free up more flash.
+- Refactor: The spindle PWM is now set directly inside of the stepper
+ISR as it loads new step segments.
+- Refactor: Moved machine travel checks out of soft limits function
+into its own since jogging uses this too.
+- Refactor: Removed coolant_stop() and combined with
+coolant_set_state().
+- Refactor: The serial RX ISR forks off extended ASCII values to
+quickly assess the new override realtime commands.
+- Refactor: Altered some names of the step control flags.
+- Refactor: Improved efficiency of the serial RX get buffer count
+function.
+- Refactor: Saved significant flash by removing and combining print
+functions. Namely the uint8 base10 and base2 functions.
+- Refactor: Moved the probe state check in the main stepper ISR to
+improve its efficiency.
+- Refactor: Single character printPgmStrings() went converted to direct
+serial_write() commands to save significant flash space.
+
+- Documentation: Detailed Markdown documents on error codes, alarm
+codes, messages, new real-time commands, new status reports, and how
+jogging works. More to come later and will be posted on the Wiki as
+well.
+- Documentation: CSV files for quick importing of Grbl error and alarm
+codes.
+
+- Bug Fix: Applied v0.9 master fixes to CoreXY homing.
+- Bug Fix: The print float function would cause Grbl to crash if a
+value was 1e6 or greater. Increased the buffer by 3 bytes to help
+prevent this in the future.
+- Bug Fix: Build info and startup string EEPROM restoring was not
+writing the checksum value.
+- Bug Fix: Corrected an issue with safety door restoring the proper
+spindle and coolant state. It worked before, but breaks with laser mode
+that can continually change spindle state per planner block.
+- Bug Fix: Move system position and probe position arrays out of the
+system_t struct. Ran into some compiling errors that were hard to track
+down as to why. Moving them out fixed it.
+

@@ -35,7 +35,7 @@ You will need to get a copy of the MicroLab software, set up your development en
 
 Use the instructions below for a fresh install of the MicroLab software on your machine.
 
-If you intend to construct a full MicroLab, [we recommend using our build scripts to make a disk image](https://github.com/FourThievesVinegar/microlab-image). See below if you want to run a development environment on another computer.
+If you intend to construct a full MicroLab, [we recommend using our build scripts to make a disk image](https://github.com/FourThievesVinegar/microlab-image). You can also find the latest release of the disk image scripts in this repo in the `/scripts/disk-image` directory. We do not recommend running these scripts directly on the Raspberry Pi. See below if you want to run a development environment on another computer.
 
 ## Dev Environment Option 1: Docker Development
 

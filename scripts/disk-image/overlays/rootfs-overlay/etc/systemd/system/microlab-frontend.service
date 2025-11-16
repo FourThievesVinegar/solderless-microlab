@@ -1,0 +1,11 @@
+[Unit]
+Description=Microlab Frontend Webserver
+After=network.target
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/opt/yarn/bin/serve -s /opt/solderless-microlab/gui/build
+Restart=always
+
+[Install]
+WantedBy=default.target

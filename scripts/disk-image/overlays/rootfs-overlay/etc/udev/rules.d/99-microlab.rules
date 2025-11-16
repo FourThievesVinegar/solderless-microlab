@@ -1,0 +1,7 @@
+# Give the CH340 clone a non-default priority of 10
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="arduino_usb", OPTIONS+="link_priority=10"
+
+# Give the official Arduino Uno a higher priority so it wins the link
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="0043", SYMLINK+="arduino_usb", OPTIONS+="link_priority=20"
+
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="5523", SYMLINK+="thermometer_usb"
