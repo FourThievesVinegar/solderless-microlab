@@ -12,6 +12,7 @@
 
 - Build scripts for disk image merged into main repo
 - Custom GRBL included in main repo
+- Parts files included in main repo
 
 ### Changed
 
