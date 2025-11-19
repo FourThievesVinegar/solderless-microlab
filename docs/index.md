@@ -51,6 +51,7 @@ No 3D printer? If you do not have a 3D printer, there are a few options includin
 
 - Have a friend with a 3D printer print the parts.
 - Check if a local library or makerspace has a 3D printer you can use -- and maybe get help with printing.
+- Realistically, you can make most of the printed parts (but probably not the reactor core!) out of a material like wood or corrugated plastic. If you use alternate materials, be sure to double-check that the stand is strong enough and that all of the components will be protected and supported. You can use conventional standoffs to support the electronic components if you can't print the control unit case.
 - Use an online 3D printing service. We don't endorse any service but have linked a couple sites below as a starting point. We urge you to look at reviews and get quotes to find the best option for you.
   - https://www.pcbway.com/rapid-prototyping/manufacture/
   - https://www.shapeways.com/
