@@ -16,7 +16,7 @@ Reactor Core parts list:
 - Shaft coupler.
 - Motor with barrel plug attached
 
-Refer to [the parts list](https://github.com/FourThievesVinegar/solderless-microlab/raw/refs/heads/main/docs/microlab-parts-list.xlsx) for exact specifications and notes.
+Refer to [the parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/parts-list.md) for exact specifications and notes.
 
 ## PTFE Disc
 

@@ -37,13 +37,13 @@ We created a parts list with all the purchased and printed parts that you will n
 
 For the purchased items, we have links to one or more sources. We used the links more as reference so you can see the item and specifications. We did not optimize for price or local availablity. We encourage everyone to look for the best price and supplier for themselves.
 
-Download the file here: [The MicroLab's Parts List](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx)
+Get the file here: [The MicroLab's Parts List](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/parts-list.md)
 
 ### Printed Parts
 
 <a name="3d"></a>
 
-The MicroLab uses several custom parts, which are listed on the downloadable [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/microlab-parts-list.xlsx). The raw and printable files for these parts can be found on the [MicroLab Parts Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7).
+The MicroLab uses several custom parts, which are listed on the [parts list](https://github.com/FourThievesVinegar/solderless-microlab/blob/main/docs/parts-list.md). The raw and printable files for these parts can be found on the [MicroLab Parts Github repo](https://github.com/FourThievesVinegar/microlab-parts/tree/master/v7).
 
 Below are quick links to the repo for the printable parts. These files have the extension .stl at the end. The STL file format is what slicer software uses to make the instructions for the 3D printer.
 
