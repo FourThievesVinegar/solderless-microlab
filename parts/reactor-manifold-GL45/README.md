@@ -27,3 +27,11 @@ The disc itself is approximately 35mm in diameter. The stirrer in the parts list
 ## Assembled
 
 <img src="./reactor-assembled.jpeg" width="400">
+
+## Increasing Temperature Tolerance
+
+The temperature tolerance of the Reactor Core is a major reason for the transition to this new design. In order to increase tolerances further, we have conducted annealing experiments involving heat treating the part. Based on these experiments, we recommend the following:
+
+- Print the part in PETG filament, which has more thermal resistance than PLA. If you have used other materials, and especially if you have conducted temperature tests, please contact us with your findings. 
+- Anneal the PETG manifold in an oven for 60 minutes at 185°F / 85°C.
+- This will cause the part to shrink in the X/Y dimensions and expand slightly in the Z direction. To account for this deformation, we recommend scaling the model to 103.5% in the X and Y dimensions while scaling it to 97.5% in the Z dimension.
