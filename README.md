@@ -16,6 +16,20 @@ On the [About the MicroLab and MicroLab Suite](docs/motivation.md) page, you can
 
 <IMG ALT="MicroLab roadmap of major features for the next 2 versions. V 1.1: “Hello World” recipes complete, Open source reagent pumps, International BOMs, Printable / DIY alternatives for all scarce parts, Atmosphere control. v1.2: Raspberry Pi optional, Recipe repo launched, Auxiliary software suite complete and integrated, Optimized off-the-shelf parts list." SRC="https://fourthievesvinegar.org/wp-content/uploads/2025/10/microlab-roadmap.png" width="600" />
 
+In this repo:
+```
+solderless-microlab
+├─ backend/ - Python files for the services that control the state and hardware
+├─ design/  - Desktop wallpaper and other design files
+├─ docker/  - Docker files 
+├─ docs/    - Documentation for the project including build instructions, background, parts list, and troubleshooting
+├─ gui/     - React app that runs the GUI 
+├─ parts/   - 3d-printable part files for the 1.0+ version
+├─ scripts/ - Scripts that start / stop services and flash the Arduino
+│  ├─ disk-image - Scripts that build a MicroLab disk image
+│  ├─ grbl       - Custom grbl code that allows the Arduino to control the hardware
+```
+
 ## Getting Started Making Your MicroLab
 
 This section is for you if you want to build a MicroLab and start using it. We tried to make building the MicroLab friendly for folks newer to electronics, but you will need some knowledge and skills with electronics (or the patience to learn a few things).
