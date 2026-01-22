@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "humanize-duration": "^3.25.1",
     "i18next": "^23.15.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^15.0.1",
