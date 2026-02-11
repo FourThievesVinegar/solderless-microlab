@@ -30,6 +30,21 @@ solderless-microlab
 │  ├─ grbl       - Custom grbl code that allows the Arduino to control the hardware
 ```
 
+
+## Architecture
+
+### The Microlab stack
+
+The Microlab is essentially a full-stack web application whose backend has access to control a set of hardware.
+
+<IMG ALT="MicroLab architecture diagram. It shows how the user actions, javascript gui, python API, Linux OS, Raepberry Pi micro-computer, and Arduino microcontroller relate to one another." SRC="./docs/media/ML_architecture.jpeg" width="1000" />
+
+### Running a Recipe
+
+Running a recipe involves taking user input in the form of a recipe file and tapping on the touchscreen to perform a series of automated and manual tasks to execute a chemical reaction.
+
+<IMG ALT="MicroLab recipe flow diagram. It shows how the user actions, javascript gui, python API, python task queue, python hardware controller, and physical hardware relate to one another." SRC="./docs/media/ML_recipe_execution.jpeg" width="1000" />
+
 ## Getting Started Making Your MicroLab
 
 This section is for you if you want to build a MicroLab and start using it. We tried to make building the MicroLab friendly for folks newer to electronics, but you will need some knowledge and skills with electronics (or the patience to learn a few things).
@@ -38,8 +53,6 @@ This section is for you if you want to build a MicroLab and start using it. We t
 - **Start here for [How to build & use the MicroLab and MicroLab Suite](docs/index.md)**
 
 ## Getting Started Developing the MicroLab
-
-<IMG ALT="MicroLab architecture diagram" SRC="./docs/media/ML_architecture.jpeg" width="1000" />
 
 This section is for you if you want to help develop the MicroLab and will need to tinker with the code base. If you're thinking about doing this, be sure to check out the [development wiki](https://github.com/FourThievesVinegar/solderless-microlab/wiki) and the [current issues](https://github.com/FourThievesVinegar/solderless-microlab/issues) planned for development.
 
