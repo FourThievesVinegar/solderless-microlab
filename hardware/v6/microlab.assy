@@ -1,0 +1,12 @@
+links:
+  - assembly: control-unit
+    name: control-unit
+  - assembly: heating-unit
+    name: heating-unit
+    location: [[500, -100, 0], [1, 0, 0], 0]
+  - assembly: cooling-unit
+    name: cooling-unit
+    location: [[300, -100, 165], [0, 1, 0], 180]
+  - assembly: reactor-unit
+    name: reactor-unit
+    location: [[300, 100, 0], [1, 0, 0], 0]
