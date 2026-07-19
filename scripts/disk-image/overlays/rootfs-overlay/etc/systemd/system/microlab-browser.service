@@ -34,7 +34,7 @@ PAMName=login
 
 # Launch Xorg on :0 bound to vt7 and run startBrowser as *thief*
 # (no --no-sandbox needed because we're not root)
-ExecStart=/usr/bin/xinit /opt/solderless-microlab/scripts/startBrowser.sh -- :0 -nolisten tcp -s 0 -dpms -nocursor vt7
+ExecStart=/usr/bin/xinit /usr/local/sbin/microlab-start-browser-session -- :0 -nolisten tcp -s 0 -dpms -nocursor vt7
 
 Restart=on-failure
 RestartSec=5
