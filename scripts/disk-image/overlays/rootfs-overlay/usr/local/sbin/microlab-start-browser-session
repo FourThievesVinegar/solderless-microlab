@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Minimal window manager so dialog windows (e.g. Chromium's native file
+# picker) get resized/repositioned to fit small screens instead of
+# rendering off-screen with no visible buttons. matchbox is purpose-built
+# for embedded/kiosk displays and auto-fits oversized dialogs to the
+# screen rather than leaving them to float at their natural GTK size.
+matchbox-window-manager -use_titlebar no &
+
+# Give the WM a moment to take over window management before Chromium
+# starts, so it doesn't miss the initial window-map events.
+sleep 1
+
+# Chromium's native file picker uses GIO's volume monitor to list
+# removable drives, which is backed by udisks2 over the D-Bus *session*
+# bus. Plain xinit doesn't start one, so wrap the real browser launch
+# in a private, ad-hoc session bus via dbus-run-session. This avoids
+# needing full systemd --user/logind session-bus activation, which
+# isn't set up in this minimal kiosk environment.
+exec dbus-run-session -- /opt/solderless-microlab/scripts/startBrowser.sh

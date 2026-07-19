@@ -25,9 +25,9 @@
    To target a particular release tag, add it after the `build-image.sh` script
 
    ```bash
-   # This will build from the v1.0.0 tag
+   # This will build from the v1.0.1 tag
    docker run --rm --privileged -v "$(pwd)":/workspace microlab-image-builder \
-        bash -lc "cd /workspace && bash scripts/build-image.sh v1.0.0"   
+        bash -lc "cd /workspace && bash scripts/build-image.sh v1.0.1"   
    ```
 
 4. **Retrieve your image**
