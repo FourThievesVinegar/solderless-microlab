@@ -1,5 +1,6 @@
 import time
 from datetime import datetime, timedelta
+from typing import Optional
 
 import serial
 
@@ -19,35 +20,68 @@ class SerialTempSensor(TempSensor):
         super().__init__(thermometer_config["id"])
         self.last_temp: float = 0.0
         self.next_temp_reading_time = datetime.now()
+        self.serial_device = thermometer_config["serialDevice"]
+        self.device: Optional[serial.Serial] = None
 
         try:
-            self.device = serial.Serial(thermometer_config["serialDevice"], timeout=0.5)
+            self._connect()
         except serial.SerialException as e:
-            self.device = None
             raise HardwareLoadError(
-                "Thermometer could not be detected at {}, make sure it is plugged in, try another USB port if it is, or change the device name in your lab hardware config file to the correct device name.".format(
-                    thermometer_config["serialDevice"]
-                )
+                f"Thermometer could not be detected at {self.serial_device}, make sure it is plugged in, try another "
+                "USB port if it is, or change the device name in your lab hardware config file to "
+                "the correct device name."
             ) from e
 
-    def read_sensor(self, max_attempts: int = 10, retry_interval: float = 0.5) -> str:
-        for attempt in range(1, max_attempts + 1):
+    def _connect(self) -> None:
+        """(Re)opens the serial connection. Closes any existing handle first."""
+        if self.device is not None:
             try:
-                reading = self.device.readline().decode("utf-8", errors="ignore")
-            except Exception as e:
+                self.device.close()
+            except serial.SerialException as e:
+                # best-effort close of a possibly-dead handle
+                self.logger.error(f"Could not close existing Serial thermometer: {e}")
+        self.device = serial.Serial(self.serial_device, timeout=0.5)
+
+    def read_sensor(
+        self,
+        max_attempts: int = 10,
+        retry_interval: float = 0.5,
+        max_reconnect_attempts: int = 5,
+        reconnect_backoff: float = 2.0,
+    ) -> str:
+        """Read from serial until we get a line containing '\\n', '=' and '.'.
+        Attempts a reconnect if the device stops responding entirely."""
+        for reconnect_attempt in range(max_reconnect_attempts + 1):
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    reading = self.device.readline().decode("utf-8", errors="ignore")
+                except Exception as e:
+                    self.logger.error(
+                        f"{self.t['error-reading-thermometer']} (attempt {attempt}/{max_attempts})"
+                    )
+                    self.logger.exception(str(e))
+                else:
+                    self.logger.debug(
+                        self.t["ser-read"].format(str(len(reading)), reading)
+                    )
+                    if all(token in reading for token in ("\n", "=", ".")):
+                        return reading
+                time.sleep(retry_interval)
+
+            if reconnect_attempt < max_reconnect_attempts:
                 self.logger.error(
-                    f"{self.t['error-reading-thermometer']} (attempt {attempt}/{max_attempts})"
+                    f"Thermometer at {self.serial_device} unresponsive after {max_attempts} reads; "
+                    f"attempting reconnect ({reconnect_attempt + 1}/{max_reconnect_attempts})..."
                 )
-                self.logger.exception(str(e))
-            else:
-                self.logger.debug(self.t["ser-read"].format(str(len(reading)), reading))
-                if all(token in reading for token in ("\n", "=", ".")):
-                    return reading
-            time.sleep(retry_interval)
+                try:
+                    self._connect()
+                except serial.SerialException as e:
+                    self.logger.error(f"Reconnect attempt failed: {e}")
+                time.sleep(reconnect_backoff)
 
         raise HardwareLoadError(
-            f"Thermometer at {self.thermometer_config['serialDevice']} stopped responding after "
-            f"{max_attempts} attempts. It may have disconnected or the OS reassigned its device path."
+            f"Thermometer at {self.serial_device} stopped responding and could not be reconnected "
+            f"after {max_reconnect_attempts} attempts. Check the physical USB connection."
         )
 
     def get_temp(self) -> float:
