@@ -19,7 +19,9 @@ from recipes.model import RecipeTaskRunnable
 from util.logger import MultiprocessingLogger
 
 
-def heat(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def heat(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Turn on the heater and reach a target temperature.
 
@@ -36,8 +38,8 @@ def heat(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
     t = load_translation()
     logger = MultiprocessingLogger.get_logger(__name__)
 
-    target_temp = parameters['temp']
-    logger.info(t['heating-water'].format(target_temp))
+    target_temp = parameters["temp"]
+    logger.info(t["heating-water"].format(target_temp))
     microlab.turn_heater_on()
     microlab.turn_heater_pump_on()
     while True:
@@ -49,7 +51,9 @@ def heat(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
         yield 1.0
 
 
-def cool(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def cool(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Turn on the cooler and reach a target temperature.
 
@@ -66,8 +70,8 @@ def cool(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
     t = load_translation()
     logger = MultiprocessingLogger.get_logger(__name__)
 
-    target_temp = parameters['temp']
-    logger.info(t['cooling-water'].format(target_temp))
+    target_temp = parameters["temp"]
+    logger.info(t["cooling-water"].format(target_temp))
     microlab.turn_cooler_on()
     while True:
         if microlab.get_temp() <= target_temp:
@@ -77,7 +81,9 @@ def cool(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
         yield 1.0
 
 
-def maintain_cool(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def maintain_cool(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the cooler for a specified amount of time.
 
@@ -94,11 +100,13 @@ def maintain_cool(microlab: MicroLabHardware, parameters: dict) -> Generator[Opt
         * If the cooling task is finished and no further scheduling is required, yield `None`.
         * Otherwise, yield a float indicating how many seconds to wait before this generator should be re‐invoked.
     """
-    parameters['type'] = 'cool'
+    parameters["type"] = "cool"
     return maintain(microlab, parameters)
 
 
-def maintain_heat(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def maintain_heat(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the heater for a specified amount of time.
 
@@ -115,11 +123,13 @@ def maintain_heat(microlab: MicroLabHardware, parameters: dict) -> Generator[Opt
         * If the heating task is finished and no further scheduling is required, yield `None`.
         * Otherwise, yield a float indicating how many seconds to wait before this generator should be re‐invoked.
     """
-    parameters['type'] = 'heat'
+    parameters["type"] = "heat"
     return maintain(microlab, parameters)
 
 
-def maintain(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def maintain(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
 
@@ -150,7 +160,9 @@ def maintain(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional
         return maintain_pid(microlab, parameters)
 
 
-def maintain_simple(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def maintain_simple(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
 
@@ -178,24 +190,26 @@ def maintain_simple(microlab: MicroLabHardware, parameters: dict) -> Generator[O
     t = load_translation()
     logger = MultiprocessingLogger.get_logger(__name__)
 
-    duration = parameters['time']
-    target_temp = parameters['temp']
-    tolerance = parameters['tolerance']
-    maintain_type = parameters.get('type', 'both')
-    heater_enabled = maintain_type in ('heat', 'both')
-    cooler_enabled = maintain_type in ('cool', 'both')
+    duration = parameters["time"]
+    target_temp = parameters["temp"]
+    tolerance = parameters["tolerance"]
+    maintain_type = parameters.get("type", "both")
+    heater_enabled = maintain_type in ("heat", "both")
+    cooler_enabled = maintain_type in ("cool", "both")
 
     interval = 0.5
     start_time = microlab.uptime_seconds()
 
-    logger.info(t['maintaining-specific-temperature'].format(target_temp, duration, tolerance))
-    logger.debug(t['maintaining-default-temperature'])
+    logger.info(
+        t["maintaining-specific-temperature"].format(target_temp, duration, tolerance)
+    )
+    logger.debug(t["maintaining-default-temperature"])
 
     while True:
         current_temp = -9999.9999
         try:
             current_temp = microlab.get_temp()
-            logger.debug(f'temperature @ {current_temp}')
+            logger.debug(f"temperature @ {current_temp}")
             if (microlab.uptime_seconds() - start_time) >= duration:
                 microlab.turn_heater_off()
                 microlab.turn_heater_pump_off()
@@ -220,11 +234,14 @@ def maintain_simple(microlab: MicroLabHardware, parameters: dict) -> Generator[O
 
         except Exception as e:
             logger.error(
-                t['error-maintaining-temperature'].format(current_temp, target_temp, e)
+                t["error-maintaining-temperature"].format(current_temp, target_temp, e)
             )
+            yield interval
 
 
-def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def maintain_pid(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Maintain a certain temperature using the cooler and/or heater for a specified amount of time.
     Uses a PID control loop.
@@ -250,37 +267,43 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
         * If the task is finished and no further scheduling is required, yield `None`.
         * Otherwise, yield a float indicating how many seconds to wait before this generator should be re‐invoked.
     """
-    translations = load_translation()  # not 't' for avoiding ambiguity with already present t variable
+    translations = (
+        load_translation()
+    )  # not 't' for avoiding ambiguity with already present t variable
     logger = MultiprocessingLogger.get_logger(__name__)
 
-    duration = parameters['time']
-    target_temp = parameters['temp']
-    tolerance = parameters['tolerance']
-    maintain_type = parameters.get('type', 'both')
-    heater_enabled = maintain_type in ('heat', 'both')
-    cooler_enabled = maintain_type in ('cool', 'both')
+    duration = parameters["time"]
+    target_temp = parameters["temp"]
+    tolerance = parameters["tolerance"]
+    maintain_type = parameters.get("type", "both")
+    heater_enabled = maintain_type in ("heat", "both")
+    cooler_enabled = maintain_type in ("cool", "both")
 
     start_time = microlab.uptime_seconds()
 
     logger.info(
-        translations['maintaining-specific-temperature'].format(target_temp, duration, tolerance)
+        translations["maintaining-specific-temperature"].format(
+            target_temp, duration, tolerance
+        )
     )
-    logger.debug(translations['maintaning-PID-temperature'])
+    logger.debug(translations["maintaning-PID-temperature"])
 
     pid_config = microlab.get_pid_config()
-    max_output = pid_config['maxOutput']
-    min_output = pid_config['minOutput']
+    max_output = pid_config["maxOutput"]
+    min_output = pid_config["minOutput"]
 
     pid = PID(
-        Kp=pid_config['P'], Ki=pid_config['I'], Kd=pid_config['D'],
+        Kp=pid_config["P"],
+        Ki=pid_config["I"],
+        Kd=pid_config["D"],
         output_limits=(min_output, max_output),
-        proportional_on_measurement=pid_config['proportionalOnMeasurement'],
-        differential_on_measurement=pid_config['differentialOnMeasurement'],
-        setpoint=target_temp
+        proportional_on_measurement=pid_config["proportionalOnMeasurement"],
+        differential_on_measurement=pid_config["differentialOnMeasurement"],
+        setpoint=target_temp,
     )
 
     # total length in seconds of one on/off cycle
-    cycle_length_sec = pid_config['dutyCycleLength']
+    cycle_length_sec = pid_config["dutyCycleLength"]
 
     # convert from "PID units" to seconds of on-time
     sec_per_unit_heater = cycle_length_sec / max_output
@@ -296,7 +319,11 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
         on_time_cooler = max(0.0, -control_signal) * sec_per_unit_cooler
 
         p, i, d = pid.components
-        logger.info(translations['heater-PID-values'].format(current_temp, control_signal, p, i, d))
+        logger.info(
+            translations["heater-PID-values"].format(
+                current_temp, control_signal, p, i, d
+            )
+        )
 
         # We split the duty cycle length up into 1 second boxes,
         # based on the control_signal value, duty cycle length, and
@@ -311,7 +338,7 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
             t = microlab.get_temp()
             c_s = pid(t)
             p, i, d = pid.components
-            logger.debug(translations['heater-PID-values'].format(t, c_s, p, i, d))
+            logger.debug(translations["heater-PID-values"].format(t, c_s, p, i, d))
 
             if (microlab.uptime_seconds() - start_time) >= duration:
                 microlab.turn_heater_off()
@@ -321,7 +348,9 @@ def maintain_pid(microlab: MicroLabHardware, parameters: dict) -> Generator[Opti
                 return  # terminate generator: further next() calls raise StopIteration
 
 
-def pump(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def pump(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Dispense a certain amount of liquid from a pump.
 
@@ -340,19 +369,19 @@ def pump(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
     t = load_translation()
     logger = MultiprocessingLogger.get_logger(__name__)
 
-    pump_name: Literal['X', 'Y', 'Z'] = parameters['pump']
-    target_volume = parameters['volume']
-    duration = parameters.get('time')
-    logger.info(t['dispensing'].format(target_volume, pump_name))
+    pump_name: Literal["X", "Y", "Z"] = parameters["pump"]
+    target_volume = parameters["volume"]
+    duration = parameters.get("time")
+    logger.info(t["dispensing"].format(target_volume, pump_name))
 
     limits = microlab.get_pump_limits(pump_name)
-    min_rate, max_rate = limits['minSpeed'], limits['maxSpeed']
+    min_rate, max_rate = limits["minSpeed"], limits["maxSpeed"]
     rate = (target_volume / duration) if duration else max_rate
 
     # Fast‐or‐normal dispensing (rate >= min_rate)
     if rate >= min_rate:
         if rate > max_rate:
-            logger.info(t['dispensing-max-speed'].format(pump_name))
+            logger.info(t["dispensing-max-speed"].format(pump_name))
             dispense_time = microlab.pump_dispense(pump_name, target_volume, None)
         else:
             dispense_time = microlab.pump_dispense(pump_name, target_volume, duration)
@@ -372,7 +401,7 @@ def pump(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
             dispensed_volume += min_rate
 
             exec_time = microlab.uptime_seconds() - start
-            logger.debug(t['dispensing-time'].format(exec_time))
+            logger.debug(t["dispensing-time"].format(exec_time))
 
             # Wait the remainder of the burst cycle
             yield max(interval - exec_time, 0.0)
@@ -387,7 +416,9 @@ def pump(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
     yield None
 
 
-def stir(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[float], Any, Any]:
+def stir(
+    microlab: MicroLabHardware, parameters: dict
+) -> Generator[Optional[float], Any, Any]:
     """
     Turn on the stirrer for a predefined amount of time.
 
@@ -402,8 +433,8 @@ def stir(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
     t = load_translation()
     logger = MultiprocessingLogger.get_logger(__name__)
 
-    duration = parameters['time']
-    logger.info(t['stirring'].format(duration))
+    duration = parameters["time"]
+    logger.info(t["stirring"].format(duration))
     start = microlab.uptime_seconds()
     microlab.turn_stirrer_on()
     while True:
@@ -415,17 +446,19 @@ def stir(microlab: MicroLabHardware, parameters: dict) -> Generator[Optional[flo
 
 
 RECIPE_COMMANDS: dict[str, Callable[..., Generator[Optional[float], Any, Any]]] = {
-    'heat': heat,
-    'cool': cool,
-    'maintainCool': maintain_cool,
-    'maintainHeat': maintain_heat,
-    'maintain': maintain,
-    'pump': pump,
-    'stir': stir,
+    "heat": heat,
+    "cool": cool,
+    "maintainCool": maintain_cool,
+    "maintainHeat": maintain_heat,
+    "maintain": maintain,
+    "pump": pump,
+    "stir": stir,
 }
 
 
-def run_task(microlab: MicroLabHardware, task: str, parameters: dict) -> RecipeTaskRunnable:
+def run_task(
+    microlab: MicroLabHardware, task: str, parameters: dict
+) -> RecipeTaskRunnable:
     """
     Creates a generator for running a task.
 
