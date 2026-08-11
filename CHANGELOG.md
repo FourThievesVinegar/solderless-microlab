@@ -6,6 +6,22 @@
 
 ### Changed
 
+## [1.0.4]
+
+### Changed
+- Updated thermometer reading to better handle errors and reset connection when errors persist
+
+## [1.0.3]
+
+### Changed
+- Tweaked control box lid tolerances
+- Updated build scripts to include Matchbox window manager to fix file upload dialog usability issues
+
+## [1.0.2]
+
+### Changed
+- Fixed unreliable Chromium browser installation
+
 ## [1.0.1]
 
 ### Added
