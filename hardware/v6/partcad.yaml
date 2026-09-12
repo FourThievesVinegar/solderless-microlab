@@ -33,6 +33,12 @@ sketches:
     circle: 5
     inner:
       circle: 3
+  tube-5-4:
+    desc: Tube cross-section - annular ring (5 mm outer, 4 mm inner)
+    type: basic
+    circle: 5
+    inner:
+      circle: 4
 
 interfaces:
   {% for size in [3, 6, 13] %}
@@ -482,8 +488,6 @@ parts:
   hot-unit-tube:
     desc: Spiral tube for heating unit
     type: cadquery
-    # fileFrom: url
-    # fileUrl: {{ url }}/temperature-units/cold-unit-tube-v.0.3.step
     path: parts/hot-unit-tube.py
     implements:
       "/pub/std/metric/m:m10-shaft":
