@@ -1,0 +1,28 @@
+# TODO: there are also screws but holes are not yet in the models
+links:
+  - part: stand-part-h
+    name: part-h
+
+  - part: stand-part-a
+    name: part-a    
+    connect:
+      # TODO: so far - only one
+      withInstance: hook-left-upper
+      toInstance: eye-back-upper
+      name: part-h
+
+  - part: stand-part-k
+    name: part-k
+    connect:
+      # TODO: so far - only one
+      withInstance: eye-back-upper
+      toInstance: hook-right-upper
+      name: part-a
+
+  - part: stand-part-c
+    name: part-c
+    connect:
+      # TODO: so far - only one
+      withInstance: hook-front-left
+      toInstance: eye-front-1
+      name: part-h
