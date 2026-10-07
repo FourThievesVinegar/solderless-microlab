@@ -1,4 +1,4 @@
-# /pub/medical/4tvc/microlab
+# //pub/medical/4tvc/microlab
 
 Microlab by Four Thieves Vinegar Collective.
 
@@ -15,7 +15,7 @@ for manufacturing or ordering Microlab parts.*
 
 ## Sub-Packages
 
-### [/pub/medical/4tvc/microlab/v6](./../hardware/v6/README.md)
+### [//pub/medical/4tvc/microlab/v6](./../hardware/v6/README.md)
 The latest version of MicroLab.
 
 ## Assemblies

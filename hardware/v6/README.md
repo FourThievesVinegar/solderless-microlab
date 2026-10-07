@@ -1,4 +1,4 @@
-# /pub/medical/4tvc/microlab/v6
+# //pub/medical/4tvc/microlab/v6
 
 The latest version Microlab by Four Thieves Vinegar Collective.
 

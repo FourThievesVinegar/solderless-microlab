@@ -15,7 +15,7 @@ links:
 
   # TODO: add nuts here (now - only screws)
   {% for corner in ['lower-left-front', 'upper-left-front', 'upper-right-front', 'lower-right-front'] %}
-  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
+  - part: //pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
     params:
       size: M3-0.5
       length: 16
@@ -58,7 +58,7 @@ links:
       name: box
   
   {% for corner in ['lower-left', 'upper-left', 'upper-right', 'lower-right'] %}
-  - part: /pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
+  - part: //pub/std/metric/cqwarehouse:fastener/{{ param_screw_type }}
     params:
       size: M3-0.5
       length: 30

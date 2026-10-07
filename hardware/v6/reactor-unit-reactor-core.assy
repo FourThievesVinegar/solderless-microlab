@@ -20,9 +20,9 @@ links:
       toInstance: side-back
       name: manifold-core
   
-{% for side in ['back', 'left', 'right'] %}
-  # TODO: parameterize screw type
-  - part: /pub/std/metric/cqwarehouse:fastener/raisedcheesehead-iso7045
+  {% for side in ['back', 'left', 'right'] %}
+    # TODO: parameterize screw type
+  - part: //pub/std/metric/cqwarehouse:fastener/raisedcheesehead-iso7045
     name: {{ side }}-screw-manifold-lid
     params:
       size: M3-0.5
@@ -45,7 +45,7 @@ links:
   
 {% for side in ['back', 'left', 'right'] %}
     # TODO: parameterize screw type
-  - part: /pub/std/metric/cqwarehouse:fastener/raisedcheesehead-iso7045
+  - part: //pub/std/metric/cqwarehouse:fastener/raisedcheesehead-iso7045
     name: {{ side }}-screw-stir-rod-mount
     params:
       size: M3-0.5
