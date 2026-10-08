@@ -19,7 +19,7 @@ docs:
 {% set url = url_prefix + '/v6' %}
 
 {% set sizes = [46, 60, 74, 80] %}
-{% set sketch_sizes = [45, 46, 59, 60, 73, 74, 79, 80] %}
+{% set sketch_sizes = [3, 6, 13, 45, 46, 59, 60, 73, 74, 79, 80] %}
 
 sketches:
   {% for size in sketch_sizes %}
@@ -33,8 +33,36 @@ sketches:
     circle: 5
     inner:
       circle: 3
+  tube-5-4:
+    desc: Tube cross-section - annular ring (5 mm outer, 4 mm inner)
+    type: basic
+    circle: 5
+    inner:
+      circle: 4
 
 interfaces:
+  {% for size in [3, 6, 13] %}
+  m{{ size }}:
+    desc: Abstract {{ size }} mm circular interface
+    abstract: True
+    ports:
+      m{{ size }}:
+        location: [[0, 0, 0], [0, 0, 1], 0]
+        sketch: m{{ size }}
+
+  m{{ size }}-opening:
+    desc: Abstract {{ size }} mm circular opening
+    inherits:
+      m{{ size }}: opening
+
+  m{{ size }}-shaft:
+    desc: Abstract {{ size }} mm shaft
+    inherits:
+      m{{ size }}: shaft
+    mates:
+      - m{{ size }}-opening
+  {% endfor %}
+
   {% for size in sizes %}
   m{{ size }}:
     desc: Abstract {{ size }} mm circular interface
@@ -157,7 +185,7 @@ parts:
     fileFrom: url
     fileUrl: {{ url }}/control-box/sub-components/relay-case-50x73x17mm.step
   stepdown-case:
-    desc: A case fir 12V-to-5V stepdown converter
+    desc: A case for 12V-to-5V stepdown converter
     type: step
     fileFrom: url
     fileUrl: {{ url }}/control-box/sub-components/stepdown-case-63x27x14mm.step
@@ -365,8 +393,34 @@ parts:
         bottom-back: [[67.85, 116.85, 459], [1, 0, 0], 0]
         bottom-left: [[86.7, 128, 459], [1, 0, 0], 0]
         bottom-right: [[86.95, 106.15, 459], [1, 0, 0], 0]
-                
+  stir-rod-motor:
+    desc: Stir rod DC gearmotor
+    type: cadquery
+    path: parts/stir-rod-motor.py
+    implements:
+      "m13-shaft":
+        body: [[0, 0, 18], [0, 0, 1], 0]
+      "m3-shaft":
+        shaft: [[0, 0, 0], [0, 0, 1], 0]
+  stir-rod-coupler:
+    desc: Shaft coupler between the stir rod motor and stir rod
+    type: cadquery
+    path: parts/stir-rod-coupler.py
+    implements:
+      "m3-opening":
+        motor-side: [[0, 0, 0], [0, 0, 1], 180]
+      "m6-opening":
+        rod-side: [[0, 0, -20], [0, 0, 1], 0]
+  stir-rod:
+    desc: PTFE-coated stir rod and paddle
+    type: cadquery
+    path: parts/stir-rod.py
+    implements:
+      "m6-shaft":
+        coupler-end: [[0, 0, 0], [0, 0, 1], 0]
+
   # Temperature Exchange Units
+  # -- Cooling unit --
   cold-unit-jar:
     desc: Jar for cooling unit
     type: cadquery
@@ -400,11 +454,48 @@ parts:
       "//pub/std/metric/m:m10-shaft":
         right: [[-15, 28, 160], [1, 0, 0], 0]
         left: [[-15, -20, 160], [1, 0, 0], 0]
+
+    # -- Heating unit --
+  hot-unit-jar:
+    desc: Jar for heating unit
+    type: cadquery
+    path: parts/mason-jar-64oz-wide-mouth.py
+    implements:
+      "m74-jar-mouth":
+        mouth: [[0, 0, 235], [1, 0, 0], 180]
+  hot-unit-jar-band:
+    desc: Jar band for heating unit
+    type: cadquery
+    path: parts/mason-jar-band-wide-mouth.py
+    implements:
+      "m74-jar-threaded-lid": [[0, 0, 5], [1, 0, 0], 180]
   hot-unit-lid:
     desc: Lid for heating unit
     type: step
     fileFrom: url
     fileUrl: {{ url }}/temperature-units/hot-unit-lid-v.1.0.step
+    implements:
+      "/pub/std/metric/m:m10-thru":
+        left-outer: [[-24, 0, 0], [1, 0, 0], 0]
+        right-outer: [[24, 0, 0], [1, 0, 0], 0]
+        # TODO: should be another (rectangular) one
+        center: [[0, -7, 5], [0, 0, 1], 90]
+      "m74-jar-closing":
+        bottom: [[0, 0, 4], [1, 0, 0], 180]
+  hot-unit-tube:
+    desc: Spiral tube for heating unit
+    type: cadquery
+    path: parts/hot-unit-tube.py
+    implements:
+      "/pub/std/metric/m:m10-shaft":
+        left: [[-36, -12, 190], [0, 0, 1], -90]
+        right: [[12, -12, 190], [0, 0, 1], -90]
+  hot-unit-heater:
+    desc: Immersion heater of heating unit
+    type: step
+    path: immersion-heater.step
+    implements:
+      "/pub/std/metric/m:m10-shaft": [[12, 0, 0], [0, 0, 1], 180]
 
 assemblies:
   microlab:

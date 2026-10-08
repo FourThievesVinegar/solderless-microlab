@@ -1,3 +1,22 @@
 links:
   - part: hot-unit-lid
     name: lid
+
+  - part: hot-unit-tube
+    name: tube
+    connect:
+      withInstance: left
+      toInstance: left-outer
+      name: lid
+
+  - part: hot-unit-jar
+    name: jar
+    connect:
+      withInstance: mouth
+      toInstance: bottom
+      name: lid
+
+  - part: hot-unit-jar-band
+    name: jar-band
+    connect:
+      name: jar            

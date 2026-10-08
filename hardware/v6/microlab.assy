@@ -3,7 +3,7 @@ links:
     name: control-unit
   - assembly: heating-unit
     name: heating-unit
-    location: [[500, -100, 0], [1, 0, 0], 0]
+    location: [[500, -100, 235], [0, 1, 0], 180]
   - assembly: cooling-unit
     name: cooling-unit
     location: [[300, -100, 165], [0, 1, 0], 180]
