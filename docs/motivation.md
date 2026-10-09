@@ -53,13 +53,13 @@ The user selects "recipes" - reactions to run - from an integrated touch screen 
 
 ## Meet the MicroLab Suite
 
-The microlab suite is a hardware/software stack that enables the full drug development lifecycle from the chemistry itself back through reaction planning, and even initial research in scientific literature.
+The microlab suite is a hardware/software stack that enables the full drug development lifecycle from the chemistry itself back through reaction planning.
 |||
 |-----|-----|
 |![MicroLab](media/microlab_logo.png)|**The MicroLab** - A DIY automated lab that you download, 3D print, and assemble with commonly available hardware. The MicroLab works together with a suite of apps to guide and automate a variety of lifesaving drugs from your home.|
 | ![Recipe Press](media/apoth_logo.png) | **Recipe Press** - A simple web app to create "recipes" - sets of instructions the MicroLab uses to run chemical reactions. Best accessed through Vinni (see below). |
 | ![Chemhacktica](media/chem_logo.png) | **[Chemhacktica](https://synth.fourthievesvinegar.org/)** - A tool that uses machine learning to automagically discover reaction pathways to target compounds. Please use the link gently, it's our development server. |
-| ![Vinni](media/vinni_logo.png) | **[Vinni](https://vinni.fourthievesvinegar.org/)** - Your guide to your new medical laboratory. Vinni keeps track of your projects including "recipes" from the Recipe Press and compounds of interest from Chemhacktica. Stay tuned for updates on Vinni's ability to help you sift through all the latest scientific literature. |
+| ![Vinni](media/vinni_logo.png) | **[Vinni](https://vinni.fourthievesvinegar.org/)** - Your guide to your new medical laboratory. Vinni keeps track of your projects including "recipes" from the Recipe Press and compounds of interest from Chemhacktica. (Please note that as of Oct 2026 this is and may ever remain an early alpha) |
 |||
 
 ## Being the change we want to see in the Cyberpunk Dystopia
