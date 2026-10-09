@@ -38,13 +38,12 @@ The MicroLab loads a recipe for a chemical reaction, automatically controls the 
 
 ## How the MicroLab Works
 
-The MicroLab has a similar design as a commerical CLR. The reaction vessel has 2 mason jars nested together. A 250ml glass bottle is attached to the custom lid for a 32 oz Mason jar. When screwed together the 6oz jar is suspended in the 32 oz jar. The lid has ports for reagents, a temperature probe, a stirring rod, and ports for the hot or cold water to be added to the outer vessel.
+The MicroLab's Reactor Core has a design similar to a commericial CLR. A 250ml glass bottle is attached to the custom lid for a 32 oz Mason jar. When screwed together the bottle jar is suspended in the 32 oz jar. The lid has ports for reagents, a temperature probe, a stirring rod, and ports for the hot or cold water to be added to the outer vessel.
 
 <IMG ALT="Reactor unit fully assembled" SRC="./media/reactor-unit/v1.0-reactor-unit.jpeg" WIDTH="400" />
 
 The reagents are held in syringes or other vessels and loaded into pumps powered by stepper motors.
-The thermal regulator fluid is delivered by pumps controlled by relays. We heat the liquid with tea
-warmer coils and cool it with an ice water bucket.
+The thermal regulator fluid is delivered by pumps controlled by relays. We heat with a hot plate or deep fryer. We cool with an ice bath or a freezer.
 
 The hardware is driven by a Raspberry Pi, which controls relays and stepper motors used to activate the MicroLab's various features. The parts can be assembled without soldering.
 
