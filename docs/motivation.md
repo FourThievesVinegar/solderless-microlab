@@ -49,7 +49,7 @@ The hardware is driven by a Raspberry Pi, which controls relays and stepper moto
 
 The user selects "recipes" - reactions to run - from an integrated touch screen menu. The recipe guides them, step-by-step, through the reaction, controls the temperature, and automatically dispenses the correct amount of reagents at the right times.
 
-<IMG ALT="MicroLab fully assembled with all units" SRC="https://fourthievesvinegar.org/wp-content/uploads/2024/07/microlab-stirring-3.gif" width="600" />
+<IMG ALT="MicroLab fully assembled with all units" SRC="https://github.com/FourThievesVinegar/solderless-microlab/raw/main/docs/media/microlab-stirring-1.gif" width="600" />
 
 ## Meet the MicroLab Suite
 
