@@ -4,7 +4,7 @@
 
 Our goal is to build an open-source DIY controlled lab reactor that people can assemble with parts available online. We hope this will do for chemistry what the 3D printer did for manufacturing: provide a DIY, hackable, low-cost method to design and produce certain needful things that otherwise would be out of reach.
 
-Eventually, we hope this will allow people to make certain medicines at home. We also hope it will empower them to believe more deeply in their own bodily autonomy. This is in line with our mission to deliver a de facto "Right to Repair for the human body" as a way of providing *harm reduction for the living*.
+Eventually, we hope this will allow people to make certain medicines at home. We also hope it will empower them to believe more deeply in their own bodily autonomy. This is in line with our mission to deliver a de facto "Right to Repair for the human body" as a way of enabling *harm reduction for the living*.
 
 ## What is a Controlled Lab Reactor?
 
