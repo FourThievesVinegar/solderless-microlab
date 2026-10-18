@@ -349,12 +349,12 @@ parts:
     type: cadquery
     path: parts/mason-jar-32oz-wide-mouth.py
     implements:
-      "m74-jar-threaded-top": [[0, 0, 165], [1, 0, 0], 180]
+      "m74-jar-threaded-top": [[0, 0, 170], [1, 0, 0], 0]
       # TODO: most probably this should be a new "shimmed" interface
       # together with 2 flanges
       "m80-shaft":
-        neck-lower: [[0, 0, 140], [0, 0, 1], 180]
-        neck-upper: [[0, 0, 150.5], [0, 0, 1], 180]  
+        neck-lower: [[0, 0, 140.18], [0, 0, 1], 180]
+        neck-upper: [[0, 0, 150.72], [0, 0, 1], 180]
   reactor-core-outer-jar-band:
     desc: Band for bigger/outer jar of Reactor core
     type: cadquery
@@ -370,7 +370,7 @@ parts:
     path: parts/mason-jar-6oz-regular-mouth.py
     implements:
       "m60-jar-threaded-top":
-        top: [[0, 0, 81], [1, 0, 0], 0]
+        top: [[0, 0, 83], [1, 0, 0], 0]
   reactor-core-inner-jar-band:
     desc: Band for smaller/inner jar of Reactor core
     type: cadquery
@@ -378,7 +378,7 @@ parts:
     implements:
       # TODO: a different interface most probably
       "m60-opening":
-        lid-place: [[0, 0, 2], [1, 0, 0], 180]
+        lid-place: [[0, 0, -4], [1, 0, 0], 180]
       "m60-jar-threaded-lid": [[0, 0, 5], [1, 0, 0], 0]
   reactor-core-stir-rod-mount:
     desc: Mount for stirring rod
@@ -386,6 +386,8 @@ parts:
     fileFrom: url
     fileUrl: {{ url }}/reactor-manifold/stirring-mount-v0.1.step
     implements:
+      "m13-opening":
+        motor-seat: [[80.5, 117, 517.5], [1, 0, 0], 180]
       "//pub/std/metric/m:m3-hole-20":
         upper-back: [[67.85, 116.85, 469], [1, 0, 0], 180]
         upper-left: [[86.7, 128, 469], [1, 0, 0], 180]
@@ -408,9 +410,9 @@ parts:
     path: parts/stir-rod-coupler.py
     implements:
       "m3-opening":
-        motor-side: [[0, 0, 0], [0, 0, 1], 180]
+        motor-side: [[0, 0, 2], [1, 0, 0], 180]
       "m6-opening":
-        rod-side: [[0, 0, -20], [0, 0, 1], 0]
+        rod-side: [[0, 0, 0], [1, 0, 0], 180]
   stir-rod:
     desc: PTFE-coated stir rod and paddle
     type: cadquery
@@ -469,7 +471,7 @@ parts:
     type: cadquery
     path: parts/mason-jar-band-wide-mouth.py
     implements:
-      "m74-jar-threaded-lid": [[0, 0, 5], [1, 0, 0], 180]
+      "m74-jar-threaded-lid": [[0, 0, 6], [1, 0, 0], 180]
   hot-unit-lid:
     desc: Lid for heating unit
     type: step
@@ -546,7 +548,7 @@ assemblies:
     path: reactor-unit-reactor-core.assy
     implements:
       "m80-shaft":
-        stand-neck: [[0, 0, -29], [1, 0, 0], 0]
+        stand-neck: [[0, 0, -35.24], [1, 0, 0], 0]
   reactor-unit:
     type: assy
     path: reactor-unit.assy
