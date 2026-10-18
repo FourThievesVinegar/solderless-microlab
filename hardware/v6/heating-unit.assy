@@ -9,6 +9,13 @@ links:
       toInstance: left-outer
       name: lid
 
+  - part: hot-unit-heater
+    name: heater
+    connect:
+      withInstance: m10
+      toInstance: center
+      name: lid
+
   - part: hot-unit-jar
     name: jar
     connect:
