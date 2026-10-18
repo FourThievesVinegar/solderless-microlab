@@ -493,7 +493,8 @@ parts:
   hot-unit-heater:
     desc: Immersion heater of heating unit
     type: step
-    path: immersion-heater.step
+    fileFrom: url
+    fileUrl: {{ url }}/temperature-units/immersion-heater.step
     implements:
       "/pub/std/metric/m:m10-shaft": [[12, 0, 0], [0, 0, 1], 180]
 
