@@ -353,8 +353,8 @@ parts:
       # TODO: most probably this should be a new "shimmed" interface
       # together with 2 flanges
       "m80-shaft":
-        neck-lower: [[0, 0, 140.18], [0, 0, 1], 180]
-        neck-upper: [[0, 0, 150.72], [0, 0, 1], 180]
+        neck-lower: [[0, 0, 140.1], [0, 0, 1], 180]
+        neck-upper: [[0, 0, 150.7], [0, 0, 1], 180]
   reactor-core-outer-jar-band:
     desc: Band for bigger/outer jar of Reactor core
     type: cadquery
@@ -548,7 +548,7 @@ assemblies:
     path: reactor-unit-reactor-core.assy
     implements:
       "m80-shaft":
-        stand-neck: [[0, 0, -35.24], [1, 0, 0], 0]
+        stand-neck: [[0, 0, -35.2], [1, 0, 0], 0]
   reactor-unit:
     type: assy
     path: reactor-unit.assy
