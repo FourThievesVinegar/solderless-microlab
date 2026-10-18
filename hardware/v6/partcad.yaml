@@ -33,12 +33,12 @@ sketches:
     circle: 5
     inner:
       circle: 3
-  tube-5-4:
-    desc: Tube cross-section - annular ring (5 mm outer, 4 mm inner)
+  tube-copper-1-4:
+    desc: Copper tube 1/4 in OD x 3/16 in ID (6.35 mm x 4.7625 mm)
     type: basic
-    circle: 5
+    circle: 3.175
     inner:
-      circle: 4
+      circle: 2.38125
 
 interfaces:
   {% for size in [3, 6, 13] %}
@@ -446,6 +446,7 @@ parts:
       "m74-jar-closing":
         bottom: [[0, 0, 4], [1, 0, 0], 180]
   cold-unit-tube:
+    # TODO: rework to a sweep
     desc: Spiral tube for cooling unit
     type: step
     fileFrom: url
@@ -482,21 +483,27 @@ parts:
         center: [[0, -7, 5], [0, 0, 1], 90]
       "m74-jar-closing":
         bottom: [[0, 0, 4], [1, 0, 0], 180]
+  # TODO: make this a helix that does not overlap the jar or immersion heater.
   hot-unit-tube:
-    desc: Spiral tube for heating unit
-    type: cadquery
-    path: parts/hot-unit-tube.py
+    # TODO: add a purchase or manufacturing definition for the copper tube
+    desc: U-shaped tube for heating unit, swept from the copper tube sketch
+    type: sweep
+    sketch: tube-copper-1-4
+    manufacturable: false
+    axis: [[0.5, 0, -120], [-0.5, 0, -70], [24, 0, -110], [24, 0, 110], [-0.5, 0, 70], [0.5, 0, 120]]
     implements:
       "/pub/std/metric/m:m10-shaft":
-        left: [[-36, -12, 190], [0, 0, 1], -90]
-        right: [[12, -12, 190], [0, 0, 1], -90]
+        left: [[0.219, 0, -40], [0, 0, 1], -90]
+        right: [[47.781, 0, -40], [0, 0, 1], -90]
   hot-unit-heater:
     desc: Immersion heater of heating unit
     type: step
     fileFrom: url
     fileUrl: {{ url }}/temperature-units/immersion-heater.step
     implements:
-      "/pub/std/metric/m:m10-shaft": [[12, 0, 0], [0, 0, 1], 180]
+      # Rotation 0 instead of 180: the heater is mounted turned 180 degrees
+      # about Z, as the turnZ on its connect used to do.
+      "/pub/std/metric/m:m10-shaft": [[12, 0, 0], [0, 0, 1], 0]
 
 assemblies:
   microlab:
