@@ -21,9 +21,11 @@ docs:
 {% set sizes = [46, 60, 74, 80] %}
 {% set sketch_sizes = [3, 6, 13, 45, 46, 59, 60, 73, 74, 79, 80] %}
 
+# A boundary sketch is "m<size>-boundary": a name is one object of a package,
+# and "m<size>" is the interface.
 sketches:
   {% for size in sketch_sizes %}
-  m{{ size }}:
+  m{{ size }}-boundary:
     type: basic
     circle: {{ size / 2.0 }}  # radius
   {% endfor %}
@@ -48,7 +50,7 @@ interfaces:
     ports:
       m{{ size }}:
         location: [[0, 0, 0], [0, 0, 1], 0]
-        sketch: m{{ size }}
+        sketch: m{{ size }}-boundary
 
   m{{ size }}-opening:
     desc: Abstract {{ size }} mm circular opening
@@ -70,7 +72,7 @@ interfaces:
     ports:
       m{{ size }}:
         location: [[0, 0, 0], [0, 0, 1], 0] # redundant, for demonstration
-        sketch: m{{ size }}
+        sketch: m{{ size }}-boundary
 
   m{{ size }}-opening:
     desc: Abstract {{ size }} mm circular opening
@@ -87,7 +89,7 @@ interfaces:
     ports:
       m{{ size }}-threaded:
         location: [[0, 0, 0], [0, 0, 1], 0] # redundant, for demonstration
-        sketch: m{{ size - 1}}
+        sketch: m{{ size - 1}}-boundary
 
   m{{ size }}-jar-threaded-lid:
     # TODO: desc: ...

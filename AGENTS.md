@@ -14,7 +14,7 @@ Notes for agents and contributors working on the PartCAD model of the MicroLab.
 Run `pc` from the repository root. From `hardware/v6` the `urls.j2` import fails.
 
 - Parts: `pc test v6:<part>`, `pc render -t png -O <dir> v6:<part>`.
-- Assemblies need `--assembly` (`-a`): `pc test --assembly v6:<assembly>`, `pc export -a -t step -O <dir> v6:<assembly>`. Without it they are "not found". `pc render` does not work for assemblies here.
+- A PartCAD without partcad/partcad#828 needs `--assembly` (`-a`) for an assembly: `pc test --assembly v6:<assembly>`, `pc export -a -t step -O <dir> v6:<assembly>`, or it says "not found". With it, the kind is found by name and the flag is optional. `pc render` does not work for assemblies here.
 - Custom parts with no supplier fail the `manufacturability` check. Until a part has a purchase or manufacturing definition, mark it `manufacturable: false` with a TODO.
 
 ## Ports and placement
