@@ -1,0 +1,38 @@
+devices:
+  - id: "reactor-thermometer"
+    type: "thermometer"
+    implementation: "serial"
+    # Which device to read data from.
+    serialDevice: "/dev/thermometer_usb"
+
+  - id: "reactor-temperature-controller"
+    type: "tempController"
+    implementation: "basic"
+    # device ID of the thermometer to use for detecting reactor temperature
+    thermometerID: "reactor-thermometer"
+    # Maximum and minimum temperature in Celsius that the hardware can support
+    # We currently recommend printing with PETG rather than PLA, which can only reach ~60C before
+    # it begins to mechanically fail (95C for PETG). If you print with a different material,
+    # this may be increased, search for the glass transition temperature for your material.
+    # Water of course also boils at 100C, and will slowly boil off somewhat below that
+    # so consider something like Propylene Glycol instead of water as a heat exchanger fluid.
+    # Also keep in mind the recommended thermometer (DS18S20) only supports -55 to 125C.
+    maxTemp: 85
+    minTemp: -20
+    gpioID: "gpio-primary"
+    # GPIO pin for activating the heating element
+    heaterPin: BCM_26
+    # GPIO pin for activating the heater pump(s)
+    heaterPumpPin: BCM_20
+    # GPIO pin for activating the cooler pump(s)
+    coolerPin: BCM_21
+    # list of device IDs that must be setup before this device
+    dependencies: ["reactor-thermometer"]
+
+  - id: "reactor-reagent-dispenser"
+    type: "reagentDispenser"
+    implementation: "simulation"
+
+  - id: "reactor-stirrer"
+    type: "stirrer"
+    implementation: "simulation"
