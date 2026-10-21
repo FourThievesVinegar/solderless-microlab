@@ -1,0 +1,105 @@
+Table 1
+MicroLab Parts List							
+							
+NOTE 1: We link to places that have the parts that we used. They aren't picked for best price or universal availability							
+"NOTE 2: Saving money - check the price of a part in multiples, it may be cheaper than buying just one"							
+							
+Section	Part ID	Count	Name	Primary Link	Secondary Link	Description / Notes	
+							
+							
+CONTROL UNIT (CU)							
+Control Unit (CU)	CU-RPI	1	Raspberry Pi 3 Model B Board	Amazon link	Amazon Le Potato link2	"Primary link is to a Raspberry 3b+'s which is the most extensively tested. 
+
+Second link is for devlopers, we have experimental support for Le Potato by Libre Computer (link2) although as of v0.6 we do not yet have a production image with display drivers installed."	
+Control Unit (CU)	CU-SCR	1	Touchscreen for Raspberry Pi	Amazon link		Touchscreen for Raspberry Pi (CU-RPI). 	
+Control Unit (CU)	CU-SD32	1	"Micro SD card, 32GB"	Amazon link		"32GB is the minimum. If you make a new image on a larger card, you can use Pi Shrink to remove empty space from the disk image. If you shrink to the minimum, you may need to re-expand or your partition will run out of space."	
+Control Unit (CU)	CU-UPC	1	" Micro USB Cable, right angle"	Amazon Link		"Power cable for Raspberry Pi (CU-RPI). The right angle (90 degree) connector will fit better in the Control Unit case. You will need a cable that fits your Pi, we linked to a Micro USB (although newer board usually use USB C). "	
+Control Unit (CU)	CU-UNO	1	Arduino UNO	"Ali Express link (kit)
+- be sure to pick option with UNO board"	Amazon link	"Links to kit will include Uno, CNC shield, motor drivers modules andle USB A/B cable."	
+Control Unit (CU)	CU-CNC	1	Arduino CNC shield		Amazon Link (Kit)		
+Control Unit (CU)	CU-SMD	3	Stepper Motor Drivers [For CU-CNC]		Amazon Link	Link 1 includes UNO and 4988 but 4988KIR may be of lesser quality	
+Control Unit (CU)	CU-A2B	1	USB A/B cable for Raspberry Pi to Arduino				
+Control Unit (CU)	CU-RLY	1	4-Channel Relay Board	Amazon link			
+Control Unit (CU)	CU-WCL	1	"Wire Connector (lever), 2-in-6-out"	Ali Express link	Amazon link - assortment	"Called the 12V Wire Connector. The 2-in-6-out wire connector is used for 12V wiring. The 65-pack in the second link is enough to make multiple MicroLabs, smaller packs are avaiable but will be a higher cost per connector.  "	
+Control Unit (CU)	CU-JMP	5	"Breadboard Jumper Wires, male-female"	Amazon link		Small wires to connect the pins on the Pi to other components.  	
+Control Unit (CU)	CU-RLY	1	"4 Channel Relay Board, 5V"	Amazon link			
+Control Unit (CU)	CU-POW	1	"Power Supply, 12V 5A"	Amazon link		"This a 12v 5A power brick. If you’ve got one from an old laptop with a 5.5 x 2.1 mm plug, it may work just fine. Powers the MicroLab. "	
+Control Unit (CU)	CU-CBC	1	Control Case (Printed)	MicroLab link	Github Link	The MicroLab index page goes into more detail about the 3D printed parts. 	
+Control Unit (CU)	CU-CBL	1	Control Lid (Printed)	MicroLab link	Github Link	The MicroLab index page goes into more detail about the 3D printed parts. 	
+Control Unit (CU)	CU-CCP	1	Converter case (Printed)	MicroLab link	Github Link	The MicroLab index page goes into more detail about the 3D printed parts. 	
+Control Unit (CU)	CU-RCP	1	Relay case (Printed)	MicroLab link	Github Link	The MicroLab index page goes into more detail about the 3D printed parts. 	
+Control Unit (CU)	CU-PLG	2	"Barrel plug connectors, 5.5mm x 2.1mm"	Amazon link		"Connector with wires, 1 female and 1 male."	
+Control Unit (CU)	CU-USB	2	Mountable USB cables	Ali Express Link			
+Control Unit (CU)	CU-USB	2	Mountable USB cables	Ali Express Link			
+Control Unit (CU)	CU-SDC	1	"12V to 5V Converter, stepdown "	Amazon link	Ali Express Link	Stepdown converter with barrel connector and USB ports.	
+Control Unit (CU)	CU-UTS	1	USB to Screw Terminal adapter		Amazon link	Used with 12V to 5V Converter (CU-SDC)	
+Control Unit (CU)	CU-RAH	1	Right angle header row	Amazon link			
+Control Unit (CU)	CU-WCS	1	Wire Cutter and Stripper	Amazon link			
+Control Unit (CU)	CU-FCT	1	Flush cutters	Amazon link			
+Control Unit (CU)	CU-NNP	1	Needle-nose pilers	Amazon link			
+							
+							
+Shared Parts							
+Shared Parts	SP-CAB	15ft roll	"4-wire cable, 18 gauge"	Amazon link		[Control Unit] [Pumps Box] 10 feet will be used to make cables to connect the Control Unit and the Pumps unit. Some of the rest will be used to wire components within the Control Unit. 	
+Shared Parts	SP-RBW	40ft roll	"2-wire cable, red and Black , 18 gauge"	Amazon link		"We won't use all of it, you may want to get a smaller amount if you can find it cheaper. "	
+Shared Parts	SP-SWW	15ft roll	Split Wire Wrap	Amazon link		[Control Unit] [Pumps Box]	
+Shared Parts	SP-PC12	2	"12-pin connector, panel-mount screw terminal "	Amazon link		"[Control Unit] [Pumps Box]  connector has three pieces: plug, mount plate and socket"	
+Shared Parts	SP-PC8	2	"8-pin connector, panel-mount screw terminal "			"[Control Unit] [Pumps Box] connector has three pieces: plug, mount plate and socket"	
+Shared Parts	SP-PC2	1	"2-pin connector, panel-mount screw terminal "			"[Control Unit] connector has three pieces: plug, mount plate and socket"	
+Shared Parts	SP-M3S-12	23	12mm M3 screws with nuts	Amazon link - assortment		[Reactor Unit]  3 for reactor unit and 20 for reactor stand	
+Shared Parts	SP-M3S-16	28	16mm M3 screws with nuts			"[Control Unit] [Pumps]  20 for Pumps Box, 8 Control Unit"	
+Shared Parts	SP-M3S-20	5	20mm M3 screws with nuts			"[Control Unit] [Reactor]  2 for Control Unit, 3 for Reactor Unit"	
+Shared Parts	SP-M3S-30	5	30mm M3 screws with nuts			Pumps Box 4	
+Shared Parts	SP-SMC	6	Stepper motor cables	included w/ peristaltic pumps	Amazon link	"The 3 stepper motors come with their own cable, but will need to cut  in half and both ends stripped. The linked ones are ready to use. "	
+Shared Parts	SP-ETN	1 roll	"Electrical tape, narrow"	Amazon link		"1"" is most common, 1/2"" should be narrow enough"	
+							
+							
+							
+TEMPERATURE CONTROL UNIT							
+Temp Control (TC)	TC-PMP	2	Circulating pump	Amazon link		"To run both heating and cooling in the same recipe without hardware reconfiguration between recipe steps, 2 pumps are required.
+
+NOTE: Operational limits to pumps in terms of capacity and temperature have not been determined. Larger pumps may be desired for optimal operation, especially at high temperatures. Self-priming pumps are HIGHLY recommended.
+
+NOTE: These will actually be installed in the Pumps Unit."	
+Temp Control (TC)	TC-SBH	1	Submersible heater	Amazon link			
+Temp Control (TC)	TC-CTB	1	"Copper tubing 1/4"" OD x 3/16"" ID"	Amazon link for raw copper tubing	"Ebay Link for beer cooler
+
+Amazon link for oil cooler"	"Copper tubing should fit snugly within the silicone tubing. This 10’ length should be enough to make 1 dense or 2 loose heat exchanger coils. 
+
+Pre-formed coils used for chilling in beer brewing are more expensive, but easier. These are also typically too large for even wide-mouth mason jars, so another container may be needed.
+
+We are also looking into automotive transmission oil coolers although aluminum is almost 50% less conductive than copper!"	
+Temp Control (TC)	TC-ST7	1	Silicone tubing 8mm OD x 5mm ID	Amazon link		Silicone tubing should fit snugly around the copper tubing	
+Temp Control (TC)	TC-TEE	2	Barbed tee fittings for 6mm tubing	McMaster link		Purchase tubing compatible with your circulation pump and the copper tubing!	
+Temp Control (TC)	TC-JAR	2	32oz wide mouth canning jar 	Amazon link		A 32oz wide mouth jar will contain the heating coils and the copper coils. Link is to a multi-pack but single jars are not easy to find and buying in bulk is often cheaper. 	
+Temp Control (TC)	TC-REL	1	Switchable power supply	Amazon link			
+Temp Control (TC)	TC-INS	2	Insulation for jars			"Although you could use a knit hat or any other insulator for this, we find that upcycling the foil bubblewrap bags used for shipping cold things is a light and convenient way to insulate the jars"	
+Temp Control (TC)	TC-TAP	1	Tape for the insulation				
+Temp Control (TC)	TC-TCT	1	Copper tube cutter tool	Amazon link			
+Temp Control (TC)	TC-CTJ	1	Copper tube jig			"Currently we are using the Reactor Core manifold as a jig, other options include, a cylinder with a smaller diameter than the jar or a medium-to-large dowel/tube
+      "	
+Temp Control (TC)	TC-CUL	1	Cooling Unit Lid (Printed)	MicroLab link	Github Link	Lid for the  jar 	
+Temp Control (TC)	TC-HUL	1	Heating Unit Lid (Printed)	MicroLab link	Github Link	Lid for the jar 	
+Temp Control (TC)	TC-LIQ	1	"Liquid, water or other"			"We have been using water for this version, but other liquids may be more effective for the temperature control."	
+							
+REACTOR UNIT							
+Reactor Unit	RU-SRM	1	Stir rod motor	Amazon link		Amazon link  This link is to a 100 RPM 12v motor. You can also buy a faster motor and use a PWM controller to adjust the speed manually.	
+Reactor Unit	RU-STR	1	Stir rod 	Amazon link		Mixing paddle needs to be coated / PTFE. Stainless steel may react. Paddle should be small enough to fit easily in the 6oz mason jar	
+Reactor Unit	RU-SRC	1	Stir rod coupler	Amazon link			
+Reactor Unit	RU-COR	1	Reactor manifold core (Printed)	MicroLab link	Github Link		
+Reactor Unit	RU-LID	1	Reactor manifold lid (Printed)	MicroLab link	Github Link		
+Reactor Unit	RU-SRM	1	Stir rod mount (Printed)	MicroLab link	Github Link	NOTE: the motor mount is under development and does not exactly fit the linked motor	
+Reactor Unit	RU-RJF	2	Jar Flanges (Printed)	MicroLab link	Github Link		
+Reactor Unit	RU-COR	1	6 oz regular mouth mason jar for core chamber	Amazon 4oz link	Amazon 6oz link	6oz jars are optimal but are hard to find individually	
+Reactor Unit	RU-OUT	1	32oz wide mouth mason jar for outer jacket	Amazon link		Same jar as the temperature control units	
+Reactor Unit	RU-SDH	1	Reactor stand - H  (Printed)	MicroLab link	Github Link	H shaped piece for the reactor stand	
+Reactor Unit	RU-SDA	1	Reactor stand - A  (Printed)	MicroLab link	Github Link	A shaped piece for the reactor stand	
+Reactor Unit	RU-SDC	1	Reactor stand - ¢  (Printed)	MicroLab link	Github Link	¢ shaped piece for the reactor stand	
+Reactor Unit	RU-SDK	1	Reactor stand - K  (Printed)	MicroLab link	Github Link	K  shaped piece for the reactor stand	
+Reactor Unit	RU-TMP	1	Thermistor	Ali Express link		Used to monitor the temperature in the reaction chamber. This is a link to a USB DS18B20 	
+Reactor Unit	RU-PPM	3	Peristaltic pumps with stepper motors	Amazon link	Alibaba Link	"The 3 stepper motors should come with their own cable, but will need to cut in half and split between the Control Unit and the pumps box. "	
+Reactor Unit	RU-SYR	3	Syringes	Amazon link		20 or 30mL are standard sizes. You may want more of these or different sizes.	
+Reactor Unit	RU-PUB	1	Pumps box (Printed)	MicroLab link	Github Link	Case to put pumps and motors in 	
+Reactor Unit	RU-PUL	1	Pumps lid (Printed)	MicroLab link	Github Link	Lid for pumps case	
+Reactor Unit	RU-ST8	1	Silicone tubing 8mm OD x 5mm ID	Amazon link		Silicone tubing should fit snugly around the copper tubing	
+Reactor Unit	RU-SUP	1	Wire coat hanger			Used to support the syringes	
