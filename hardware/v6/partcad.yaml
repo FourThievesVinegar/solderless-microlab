@@ -416,9 +416,20 @@ parts:
       "m6-opening":
         rod-side: [[0, 0, 0], [1, 0, 0], 180]
   stir-rod:
-    desc: PTFE-coated stir rod and paddle
+    # TODO: add a purchase definition (RU-STR)
+    desc: PTFE-coated stir rod and paddle (approximation, see script)
     type: cadquery
     path: parts/stir-rod.py
+    manufacturable: false
+    parameters:
+      paddle_length:
+        type: float
+        desc: Blade reach from the rod axis, mm
+        default: 24.0
+      shaft_length:
+        type: float
+        desc: Shaft length below the coupler, cut to fit at assembly, mm
+        default: 145.0
     implements:
       "m6-shaft":
         coupler-end: [[0, 0, 0], [0, 0, 1], 0]

@@ -43,10 +43,11 @@ The STEP export loses instance names. Parts are listed by tree path (e.g. `1/3/1
 
 - Reactor core: the outer jar is upright, with its rim against the manifold lid's underside and its band resting on the upper neck flange. The two neck flanges clamp the stand's C-part (8 mm thick). The inner jar hangs from its band under the manifold core.
 - `parts/mason-jar-32oz-wide-mouth.py` is shared by the reactor core's outer jar and the cooling unit's jar.
+- Stir paddle: it must not touch the inner jar's bottom or sides (`docs/assembly-reactor-unit.md`). Its `paddle_length` and `shaft_length` are part parameters; the builder cuts the real shaft to fit.
 
 ## Known issues
 
-- The stir rod paddle is wider than the 6 oz inner jar and overlaps its wall.
+- `stir-rod`, `stir-rod-motor` and `stir-rod-coupler` are CadQuery approximations with guessed dimensions, not models of the linked products. `stir-rod.py` says where each value comes from.
 - The pumps box's front slot sits 2 mm higher than its side slots allow for part C's tab. C is raised 2.1 mm (H `eye-front-1`, with the stand's `core-holder`) and floats about 1.85 mm above its seat on H.
 - Inside the pumps box, the box overlaps its pumps (23–34 mm³ each).
 - Inside the reactor core, the stir rod mount overlaps its motor (18 mm³).
