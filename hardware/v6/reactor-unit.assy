@@ -4,10 +4,10 @@ links:
   
   - assembly: reactor-unit-pumps-box
     name: pumps-box
-    # TODO: Attention, minor vertical discrepancy 
-    # with -reactor-stand mounts
-    # TODO: rework using interface(s)
-    location: [[4, 96, 132.5], [1, 0, 0], 0]
+    connect:
+      withInstance: opening
+      toInstance: shaft
+      name: reactor-stand
   
   - assembly: reactor-unit-reactor-core
     name: reactor-core

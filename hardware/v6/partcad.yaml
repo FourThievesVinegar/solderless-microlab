@@ -266,7 +266,7 @@ parts:
       "//pub/std/metric/m:m10-thru":
         eye-back-upper: [[13, 175, 134], [1, 1, 0], 180]
         eye-back-lower: [[13, 175, 10], [1, 1, 0], 180]
-        eye-front-1: [[13, 10, 151.5], [1, 1, 0], 180]
+        eye-front-1: [[13, 10, 153.6], [1, 1, 0], 180]
         eye-front-2: [[13, 38.5, 151.5], [1, 1, 0], 180]
   stand-part-a:
     desc: Reactor stand "A" part
@@ -278,7 +278,7 @@ parts:
       "//pub/std/metric/m:m10-shaft":
         hook-left-upper: [[57, 9, 54], [0, 0, 1], 180]
         hook-left-lower: [[57, 9, -70], [0, 0, 1], 180]
-        hook-right-upper: [[-113.5, 9, -44], [0, 0, 1], 0]
+        hook-right-upper: [[-113.6, 9, -44], [0, 0, 1], 0]
         hook-right-lower: [[-113.5, 9, -70], [0, 0, 1], 0]
   stand-part-c:
     desc: Reactor stand "¢" part
@@ -539,12 +539,17 @@ assemblies:
         desc: Type of the screws attaching lid to the pumps box
         enum: [raisedcountersunkovalhead-iso7047, raisedcheesehead-iso7045]
         default: raisedcountersunkovalhead-iso7047
+    implements:
+      "m46-opening":
+        opening: [[94, 0, 26], [1, 1, -1], 120]
   reactor-unit-reactor-stand:
     type: assy
     path: reactor-unit-reactor-stand.assy
     implements:
       "m80-opening":
-        core-holder: [[98, 22, 155.5], [1, 0, 0], 0]
+        core-holder: [[98, 22, 157.6], [1, 0, 0], 0]
+      "m46-shaft":
+        shaft: [[98.2, 96, 158.5], [-1, 0, 0], 90]
   reactor-unit-reactor-core:
     type: assy
     path: reactor-unit-reactor-core.assy
