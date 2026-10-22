@@ -49,7 +49,11 @@ The STEP export loses instance names. Parts are listed by tree path (e.g. `1/3/1
 
 - `stir-rod`, `stir-rod-motor` and `stir-rod-coupler` are CadQuery approximations with guessed dimensions, not models of the linked products. `stir-rod.py` says where each value comes from.
 - The pumps box's front slot sits 2 mm higher than its side slots allow for part C's tab. C is raised 2.1 mm (H `eye-front-1`, with the stand's `core-holder`) and floats about 1.85 mm above its seat on H.
-- Inside the pumps box, the box overlaps its pumps (23–34 mm³ each).
+- The pump models (`peristaltic-pump.step`, `circulation-pump.step`) disagree with the pumps box, which is the built 4TV design:
+  - The circulation pump's barrel is 27.2 mm across in the box's 27.0 mm hole (34 mm³ each).
+  - The peristaltic pump's hole pattern is 37.5 x 54 mm against the box's 37.9 x 55, so its lower M3 screws cut into the hole walls. `pc test` skips these screws as invalid solids.
+  - The fix belongs in the parts repo's STEP files.
+- The peristaltic pumps stand 1 mm off the box's front: their head screws stick out 1 mm behind the mounting plate.
 - Inside the reactor core, the stir rod mount overlaps its motor (18 mm³).
 - `cold-unit-tube` and `hot-unit-tube` are CadQuery approximations of the hand-bent coils; their scripts say where each value comes from.
 - `hot-unit-heater` is a single solid of about 1300 faces. Exact booleans against it can take minutes; screen with plane sections first.

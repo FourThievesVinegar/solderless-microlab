@@ -207,9 +207,9 @@ parts:
         # upper-right: [[183, 64, 183], [1, 0, 0], 90]
         # lower-left: [[5, 64, 5], [1, 0, 0], 90]
         # lower-right: [[183, 64, 5], [1, 0, 0], 90]
-        pump-x-upper-left: [[12.5, 0, 179], [1, 0, 0], -90]
-        pump-y-upper-left: [[75, 0, 179], [1, 0, 0], -90]
-        pump-z-upper-left: [[137.5, 0, 179], [1, 0, 0], -90]
+        pump-x-upper-left: [[12.5, -1, 179], [1, 0, 0], -90]
+        pump-y-upper-left: [[75, -1, 179], [1, 0, 0], -90]
+        pump-z-upper-left: [[137.5, -1, 179], [1, 0, 0], -90]
       # TODO: simplification here, concrete mounting to be elaborated
       "//pub/std/metric/m:m24-thru":
         heat-pump-opening: [[4, 19, 64], [0, 1, 0], 90]
