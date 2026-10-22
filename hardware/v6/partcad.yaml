@@ -448,7 +448,7 @@ parts:
     type: cadquery
     path: parts/mason-jar-band-wide-mouth.py
     implements:
-      "m74-jar-threaded-lid": [[0, 0, 5], [1, 0, 0], 180]
+      "m74-jar-threaded-lid": [[0, 0, 6], [1, 0, 0], 180]
   cold-unit-lid:
     desc: Lid for cooling unit
     type: step
@@ -461,15 +461,15 @@ parts:
       "m74-jar-closing":
         bottom: [[0, 0, 4], [1, 0, 0], 180]
   cold-unit-tube:
-    # TODO: rework to a sweep
-    desc: Spiral tube for cooling unit
-    type: step
-    fileFrom: url
-    fileUrl: {{ url }}/temperature-units/cold-unit-tube-v.0.3.step
+    # TODO: add a purchase or manufacturing definition for the copper tube
+    desc: Copper coil for cooling unit (approximation, see script)
+    type: cadquery
+    path: parts/cold-unit-tube.py
+    manufacturable: false
     implements:
       "//pub/std/metric/m:m10-shaft":
-        right: [[-15, 28, 160], [1, 0, 0], 0]
-        left: [[-15, -20, 160], [1, 0, 0], 0]
+        left: [[-24, 0, 0], [1, 1, 0], 180]
+        right: [[24, 0, 0], [1, 1, 0], 180]
 
     # -- Heating unit --
   hot-unit-jar:
@@ -495,21 +495,19 @@ parts:
         left-outer: [[-24, 0, 0], [1, 0, 0], 0]
         right-outer: [[24, 0, 0], [1, 0, 0], 0]
         # TODO: should be another (rectangular) one
-        center: [[0, -7, 5], [0, 0, 1], 90]
+        center: [[0.5, 11.1, 10.9], [0, 0, 1], 90]
       "m74-jar-closing":
         bottom: [[0, 0, 4], [1, 0, 0], 180]
-  # TODO: make this a helix that does not overlap the jar or immersion heater.
   hot-unit-tube:
     # TODO: add a purchase or manufacturing definition for the copper tube
-    desc: U-shaped tube for heating unit, swept from the copper tube sketch
-    type: sweep
-    sketch: tube-copper-1-4
+    desc: Copper coil for heating unit (approximation, see script)
+    type: cadquery
+    path: parts/hot-unit-tube.py
     manufacturable: false
-    axis: [[0.5, 0, -120], [-0.5, 0, -70], [24, 0, -110], [24, 0, 110], [-0.5, 0, 70], [0.5, 0, 120]]
     implements:
       "/pub/std/metric/m:m10-shaft":
-        left: [[0.219, 0, -40], [0, 0, 1], -90]
-        right: [[47.781, 0, -40], [0, 0, 1], -90]
+        left: [[-24, 0, 0], [1, 1, 0], 180]
+        right: [[24, 0, 0], [1, 1, 0], 180]
   hot-unit-heater:
     desc: Immersion heater of heating unit
     type: step
